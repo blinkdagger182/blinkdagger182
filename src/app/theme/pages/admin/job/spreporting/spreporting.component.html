@@ -1,0 +1,446 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.13/semantic.min.css">
+<div class="m-subheader">
+    <div class="d-flex align-items-center">
+        <div class="mr-auto">
+            <h3 class="m-subheader__title m-subheader__title--separator">
+                Succession Depth : Successor Reporting
+            </h3>
+            <ul class="m-subheader__breadcrumbs m-nav m-nav--inline">
+                <li class="m-nav__item m-nav__item--home">
+                    <a routerLink="/admin/index" class="m-nav__link m-nav__link--icon">
+                        <i class="m-nav__link-icon la la-home"></i>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div class="m-content">
+    <div class="row">
+
+        <!-- <div class="col-lg-12 centred my-auto">
+            <ng-template #alertError></ng-template>
+        </div> -->
+
+        <div class="col-lg-12 centred my-auto" *ngIf="loading2">
+            <div class="m-section__content">
+                <div class="m-demo" data-code-preview="true" data-code-html="true" data-code-js="false">
+                    <div class="m-demo__preview">
+                        <div class="m-stack m-stack--ver m-stack--general m-stack--demo">
+
+                            <div class="m-stack__item m-stack__item--center m-stack__item--middle">
+                                <span>
+                                    Loading data. Please wait...
+                                </span>
+                                <span>
+                                    <div class="m-loader m-loader--lg m-loader--success"
+                                        style="width: 30px; display: inline-block;"></div>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-12" *ngIf="!loading2">
+            <div class="m-portlet m-portlet--rounded">
+                <div class="m-portlet__head m--bg-focus" style="background: #FF5A00!important">
+                    <div class="m-portlet__head-caption">
+                        <div class="m-portlet__head-title">
+                            <h3 class="m-portlet__head-text  m--font-inverse-primary">
+                                Succession Depth
+                                <small>
+                                    <!--portlet sub title-->
+                                </small>
+                            </h3>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="m-portlet__body">
+                    <div class="m-section container" style="max-width: 100% !important;">
+
+                        <form [formGroup]="filterForm" autocomplete="off" (click)="resetDDVal()">
+                            <div class="m-accordion m-accordion--default" id="m_accordion_1" role="tablist">
+                                <div class="m-accordion__item">
+                                    <div class="m-accordion__item-head collapsed" role="tab"
+                                        id="m_accordion_1_item_1_head" data-toggle="collapse"
+                                        href="#m_accordion_1_item_1_body" aria-expanded="    false">
+                                        <span class="m-accordion__item-icon">
+                                            <i class="fa fa-filter" style="font-size:25px;"></i>
+                                        </span>
+                                        <span class="m-accordion__item-title" style="font-size:1rem;">
+                                            Filter By
+                                        </span>
+                                        <span class="m-accordion__item-mode"></span>
+                                    </div>
+                                    <div class="m-accordion__item-body collapse show" id="m_accordion_1_item_1_body">
+                                        <div class="m-accordion__item-content">
+
+                                            <div class="row">
+                                                <div class="col-md-3">
+                                                    <div class="row">
+                                                        <div class="col-md-3">
+                                                            <label style="margin-top:9px;">State: </label>
+                                                        </div>
+                                                        <div class="col-md-9">
+                                                            <select name="fltrState" id="fltrState"
+                                                                class="form-control m-input"
+                                                                formControlName="fltrState">
+                                                                <option value="">All</option>
+                                                                <option [value]="item.state"
+                                                                    *ngFor="let item of stateInfo">{{item.state}}
+                                                                </option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div class="row">
+                                                        <div class="col-md-4">
+                                                            <label style="margin-top:9px;">LOB: </label>
+                                                        </div>
+                                                        <div class="col-md-8">
+                                                            <!-- <select name="fltrLOB" id="fltrLOB"
+                                                                class="form-control m-input" formControlName="fltrLOB">
+                                                                <option value="">All</option>
+                                                                <option [value]="item.lob" *ngFor="let item of lobOptions">{{item.lob}}</option>
+                                                            </select> -->
+                                                            <select name="fltrLOB" id="fltrLOB"
+                                                                class="form-control m-input" formControlName="fltrLOB">
+                                                                <option value="" *ngIf="mylob===''">All</option>
+                                                                <option *ngFor="let item of optLobList"
+                                                                    value="{{item.lob}}">{{item.lob}}</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-5">
+                                                    <div class="row">
+                                                        <div class="col-md-2">
+                                                            <label style="margin-top:9px;">Dept: </label>
+                                                        </div>
+                                                        <div class="col-md-10">
+                                                            <input type="text" formControlName="fltrDept"
+                                                                autocomplete="off" class="form-control search-input"
+                                                                (keyup)="onNameKeyUpDept($event)" placeholder="All">
+                                                        </div>
+                                                    </div>
+                                                    <div class="row" *ngIf="selectDeptMult">
+                                                        <div class="col-md-2"></div>
+                                                        <div class="col-md-10">
+                                                            <select name="dept" id="dept" class="form-control m-input"
+                                                                *ngIf="displayNoResult" (click)="resetDept()" multiple>
+                                                                <option value="" *ngIf="displayNoResult"
+                                                                    (click)="resetDept()">No results
+                                                                </option>
+                                                            </select>
+                                                            <select name="dept" id="dept" class="form-control m-input"
+                                                                *ngIf="!displayNoResult"
+                                                                multiple>
+                                                                <option [value]="option"
+                                                                    *ngFor="let option of newDataDept"
+                                                                    (click)="getFlDept(option)">
+                                                                    {{option.orgUnitDept}}</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="row" style="padding-top: 5px;">
+                                                <div class="col-md-3">
+                                                    <div class="row">
+                                                        <div class="col-md-3">
+                                                            <label style="margin-top:9px;">Batch: </label>
+                                                        </div>
+                                                        <div class="col-md-9">
+                                                            <select name="fltrBatch" id="fltrBatch"
+                                                                class="form-control m-input"
+                                                                formControlName="fltrBatch">
+                                                                <!-- <option value="">All</option> -->
+                                                                <option [value]="item.batch_id"
+                                                                    *ngFor="let item of allbatchInfo">{{item.batch_id}}
+                                                                </option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div class="row">
+                                                        <div class="col-md-4">
+                                                            <label style="margin-top:9px;">Pernr No: </label>
+                                                        </div>
+                                                        <div class="col-md-8">
+                                                            <input [value]="" id="fltrStaffID"
+                                                                class="form-control form-control- m-input" type="search"
+                                                                placeholder="All" formControlName="fltrStaffID">
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-5">
+                                                    <div class="row">
+                                                        <div class="col-md-2">
+                                                            <label style="margin-top:9px;">Unit: </label>
+                                                        </div>
+                                                        <div class="col-md-10">
+                                                            <input type="text" formControlName="fltrUnit"
+                                                                autocomplete="off" class="form-control search-input"
+                                                                (keyup)="onNameKeyUpUnit($event)" placeholder="All">
+                                                        </div>
+                                                    </div>
+                                                    <div class="row" *ngIf="selectUnitMult">
+                                                        <div class="col-md-2"></div>
+                                                        <div class="col-md-10">
+                                                            <select name="unit" id="unit" class="form-control m-input"
+                                                                *ngIf="displayNoResult2" (click)="resetUnit()" multiple>
+                                                                <option value="" *ngIf="displayNoResult2"
+                                                                    (click)="resetUnit()">No results</option>
+                                                            </select>
+                                                            <select name="unit" id="unit" class="form-control m-input"
+                                                                *ngIf="!displayNoResult2"
+                                                                multiple>
+                                                                <option [value]="option"
+                                                                    *ngFor="let option of newDataUnit"
+                                                                    (click)="getFlUnit(option)">
+                                                                    {{option.orgUnit}}
+                                                                </option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row" style="padding-top: 5px;">
+                                                <div class="col-md-3">
+                                                    <div class="row">
+                                                        <div class="col-md-3">
+                                                            <label style="margin-top:9px;">Band: </label>
+                                                        </div>
+                                                        <div class="col-md-9"><select name="fltrBand" id="fltrBand"
+                                                                class="form-control m-input" formControlName="fltrBand">
+                                                                <option value="">All</option>
+                                                                <!-- <option value="1">Band 1</option> -->
+                                                                <option value="2">Band 2</option>
+                                                                <option value="3">Band 3</option>
+                                                                <option value="4">Band 4</option>
+                                                                <option value="5">Band 5</option>
+                                                                <!-- <option [value]="item.band" *ngFor="let item of bandOptions">Band {{item.band}}</option> -->
+                                                            </select>
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div class="row">
+                                                        <div class="col-md-4">
+                                                            <label style="margin-top:9px;">Post ID: </label>
+                                                        </div>
+                                                        <div class="col-md-8">
+                                                            <input [value]="" id="fltrPostID"
+                                                                class="form-control form-control- m-input" type="search"
+                                                                placeholder="All" formControlName="fltrPostID">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-5 text-right">
+                                                    <button
+                                                        class="btn m-btn m-btn--gradient-from-primary m-btn--gradient-to-info"
+                                                        type="button"
+                                                        [disabled]="loadingBatch || loadingLob || loadingState || loadingAllBatch || loadingDept || loadingUnit"
+                                                        (click)="submitFilter(1)"
+                                                        style="background: #FF5A00; background-color: #FF5A00; border-color: #FF5A00;">Submit</button>
+                                                    <button
+                                                        class="btn m-btn m-btn--gradient-from-danger m-btn--gradient-to-warning ml-3"
+                                                        type="button" (click)="submitFilter(2)"
+                                                        style="background: darkgrey; background-color: darkgrey; border-color: darkgrey;">Reset</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!--end::Item-->
+                            </div>
+                        </form>
+
+                        <!-- start: no data - successor -->
+                        <div class="col-lg-12 centred my-auto" *ngIf="!loading2&&pagedItems2.length<1">
+
+                            <div class="m-demo__preview" style="padding-top:20px">
+                                <div class="m-stack m-stack--ver m-stack--general m-stack--demo">
+                                    <div class="m-stack__item m-stack__item--center m-stack__item--middle">
+
+                                        <span>
+                                            <br>
+                                            {{descEmptyData2}}
+                                            <br><br>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- end: no data - successor -->
+
+                        <!-- start: display data - successor -->
+                        <div class="table-responsive" *ngIf="!loading2&&pagedItems2.length>0">
+
+                            <table class="table table-striped  table-hover">
+                                <thead class="thead-inverse">
+                                    <tr>
+                                        <th>No</th>
+
+                                        <th>Staff Name</th>
+                                        <!-- <th>Band</th> -->
+                                        <th>LOB</th>
+                                        <th>Department</th>
+                                        <th>Successor For</th>
+                                        <th>Readiness</th>
+
+                                    </tr>
+                                    <tr>
+                                        <th></th>
+
+                                        <th>
+                                            <input class="form-control form-control-sm" name="Successor_Name"
+                                                [(ngModel)]="Successor_Name">
+                                        </th>
+                                        <!-- <th>
+                                            <input class="form-control form-control-sm" name="Band" [(ngModel)]="Band">
+                                        </th> -->
+                                        <th>
+                                            <input class="form-control form-control-sm" name="Successor_LOB"
+                                                [(ngModel)]="Successor_LOB">
+                                        </th>
+                                        <th>
+                                            <input class="form-control form-control-sm" name="Successor_Division"
+                                                [(ngModel)]="Successor_Division">
+                                        </th>
+                                        <th>
+                                            <input class="form-control form-control-sm" name="Position_Name"
+                                                [(ngModel)]="Position_Name">
+                                        </th>
+                                        <th>
+                                            <input class="form-control form-control-sm" name="Readiness"
+                                                [(ngModel)]="Readiness">
+                                        </th>
+
+                                    </tr>
+                                </thead>
+
+                                <tbody>
+                                    <!-- if all, data2 -->
+                                    <tr
+                                        *ngFor="let item of pagedItems2 | filter : Successor_Name : Successor_LOB : Successor_Division : Position_Name : Readiness ; let i = index">
+
+                                        <td>{{(pageSize2 * (pager2.currentPage - 1)) + i + 1 }}</td>
+
+
+                                        <td>
+                                            <span>{{item.Successor_Name}}</span>
+
+                                        </td>
+                                        <!-- <td>
+                                            <span>{{item.Successor_Band}}</span>
+                                            
+                                        </td> -->
+                                        <td>
+                                            <span>{{item.Successor_LOB}}</span>
+
+                                        </td>
+                                        <td>
+                                            <span>{{item.Successor_Division}}</span>
+
+                                        </td>
+                                        <td>
+                                            <span>{{item.Position_Name}}</span>
+
+                                        </td>
+                                        <td>
+                                            <span>{{item.Readiness}}</span>
+
+                                        </td>
+
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <!-- end: display data - successor -->
+
+                        <!-- start: paging - successor -->
+                        <div class="row">
+                            <div class="col-12">
+                                <nav aria-label="Page navigation example">
+                                    <ul *ngIf="pager2.pages && pager2.pages.length"
+                                        class="pagination justify-content-end">
+                                        <li class="page-item" [ngClass]="{disabled:pager2.currentPage === 1}">
+                                            <button (click)="setPage2(1)" class="page-link" aria-label="Previous">
+                                                <span aria-hidden="true">&laquo;</span>
+                                                <span class="sr-only">First</span>
+                                            </button>
+                                        </li>
+                                        <li class="page-item" [ngClass]="{disabled:pager2.currentPage === 1}">
+                                            <button (click)="setPage2(pager2.currentPage - 1)" class="page-link"
+                                                aria-label="Previous">
+                                                <span aria-hidden="true">&lt;</span>
+                                                <span class="sr-only">Previous</span>
+                                            </button>
+                                        </li>
+                                        <li class="page-item" *ngFor="let page of pager2.pages"
+                                            [ngClass]="{active:pager2.currentPage === page}">
+                                            <button (click)="setPage2(page)" class="page-link">{{page}}</button>
+                                        </li>
+                                        <li class="page-item"
+                                            [ngClass]="{disabled:pager2.currentPage === pager2.totalPages}">
+                                            <button (click)="setPage2(pager.currentPage + 1)" class="page-link"
+                                                aria-label="Previous">
+                                                <span aria-hidden="true">&gt;</span>
+                                                <span class="sr-only">Next</span>
+                                            </button>
+                                        </li>
+                                        <li class="page-item"
+                                            [ngClass]="{disabled:pager2.currentPage === pager2.totalPages}">
+                                            <button (click)="setPage2(pager2.totalPages)" class="page-link"
+                                                aria-label="Next">
+                                                <span aria-hidden="true">&raquo;</span>
+                                                <span class="sr-only">Last</span>
+                                            </button>
+                                        </li>
+                                    </ul>
+                                </nav>
+                            </div>
+                        </div>
+                        <!-- end: paging - successor -->
+
+                        <!-- start: download csv - successor -->
+                        <div class="row" *ngIf="!loading2&&pagedItems2.length>0">
+                            <div class="col-12" style="text-align: right; margin-top:20px">
+                                <div class="m-demo__preview m-demo__preview--btn">
+                                    <button href="#" class="btn btn-primary m-btn m-btn--icon" (click)="download2()"
+                                        [disabled]="downloading2">
+                                        <span>
+                                            <i class="la la-download"></i>
+                                            <span>Download</span>
+                                        </span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- end: download csv - successor -->
+
+
+
+
+
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+
+
+    <!--end::Modal APPLICANT INFO -->

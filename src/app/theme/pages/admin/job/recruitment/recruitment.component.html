@@ -1,0 +1,2012 @@
+<notifier-container></notifier-container>
+<div class="m-content">
+    <div class="smallroundbg" id="smallround"></div>
+    <div class="bigroundbg" id="biground"></div>
+    <div class="row pb-5">
+        <div class="col-lg-12">
+            <div class="m-portlet m-portlet--rounded">
+                <div class="m-portlet__head">
+                    <div class="m-portlet__head-caption">
+                        <div class="m-portlet__head-title">
+                            <h3 class="m-portlet__head-text">
+                                Recruitment
+                            </h3>
+                        </div>
+                    </div>
+                </div>
+                <div style="text-align: center; padding: 5rem;height: 300px;vertical-align: top;" *ngIf="loading2">
+                    <img src="../assets/img/user/ERA.gif" style="width:auto;height:100px;">
+                </div>
+                <div style="text-align: center; padding: 5rem;vertical-align: top;" *ngIf="!loading2 && !displayEmpty && nodata">
+                    <img src="../assets/img/user/ERA.gif" style="width:auto;height:100px;">
+                </div>
+                <div class="m-portlet__body" *ngIf="!loading2">
+                    <div class="m-portlet m-portlet--tabs" *ngIf="displayEmpty && !displayHistory">
+                        <div class="m-portlet__body" style="width: 100%;">
+                            No Upcoming Interview Session
+                        </div>
+                    </div>            
+                    <div class="m-portlet m-portlet--tabs" *ngIf="!nodata || displayHistory">
+                        <div class="m-portlet__head">
+                            <div class="m-portlet__head-tools">
+                                <ul class="nav nav-tabs nav-fill" role="tablist">
+                                    <li *ngIf="!clicked && !nodata" class="nav-item text-nowrap"
+                                    style="width: 150px;max-width: 25%;">
+                                        <a class="nav-link a font-lato blue-text active"
+                                            style="font-weight: bold; text-align: center;" data-toggle="tab"
+                                            href="#tab_session" (click)="reset()" role="tab">
+                                            1. Session </a>
+                                    </li>
+                                    <li *ngIf="clicked && !nodata" class="nav-item text-nowrap"
+                                    style="width: 150px;max-width: 25%;">
+                                        <a class="nav-link a font-lato "
+                                            style="font-weight: bold; text-align: center;cursor: pointer !important;"
+                                            (click)="reset()" role="tab">
+                                            1. Session </a>
+                                    </li>
+                                    <li class="nav-item text-nowrap" aria-readonly="true" style="width: 150px;max-width: 25%;"
+                                        *ngIf="!clicked && !nodata">
+                                        <a class="nav-link a font-lato " style="font-weight: bold; text-align: center; border:none;
+                                                                        color: #A6ACAF;cursor: not-allowed !important;"
+                                            role="tab">
+                                            2. Assessment</a>
+                                    </li>
+                                    <li class="nav-item text-nowrap" style="width: 150px;max-width: 25%;" *ngIf="clicked && !nodata">
+                                        <a class="nav-link a font-lato blue-text active"
+                                            style="font-weight: bold;  text-align: center;" data-toggle="tab"
+                                            role="tab">
+                                            2. Assessment</a>
+                                    </li>
+                                    <li *ngIf="isHead.length>0 && !nodata" class="nav-item text-nowrap"
+                                        style="width: 150px;max-width: 25%;">
+                                        <a class="nav-link a font-lato blue-text"
+                                            *ngIf="!loadingHead && HeadData.length>0"
+                                            style="font-weight: bold; text-align: center;" data-toggle="tab"
+                                            href="#tab_moderation" (click)="reset()" role="tab">
+                                            3. Moderation</a>
+                                        <a class="nav-link a font-lato" *ngIf="!loadingHead && HeadData.length < 1 "
+                                            style="font-weight: bold; text-align: center; border:none;
+                                                                            color: #A6ACAF;cursor: not-allowed !important;"
+                                            role="tab">
+                                            3. Moderation</a>
+                                    </li>
+                                    <li *ngIf="!nodata || displayHistory" class="nav-item text-nowrap"
+                                        style="width: 150px;max-width: 25%;">
+                                        <a class="{{fontstyleH}}" style="font-weight: bold; text-align: center;"
+                                            data-toggle="tab" href="#tab_history" (click)="reset()" role="tab">
+                                            <span *ngIf="isHead.length>0 && !displayHistory">4. </span>
+                                            <span *ngIf="isHead.length<1 && !displayHistory">3. </span>
+                                            History</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="m-portlet__body" style="width: 100%;">
+                            <div class="tab-content">
+
+                                <!-- start session -->
+                                <div class="tab-pane active" id="tab_session" role="tabpanel">
+                                    <div style="text-align: center;" *ngIf="!clicked && loadingPanelist">
+                                        <img src="../assets/img/user/ERA.gif" style="width:auto;height:100px;">
+                                    </div>
+                                    <div *ngIf="!clicked && !loadingPanelist">
+                                        <div class="col-lg-12">
+                                            <!-- display session here -->
+                                            <div *ngFor="let item of sessionList">
+                                                <fieldset class="well"
+                                                    [ngStyle]="item.dtdiff > 0  ?  {'border-color':'red'} 
+                                                    : returndate(item.start_time) === returndate(nextActiveInt)  &&  {'background-color':'#FAFAFD'} ">
+                                                    <legend class="well-legend" style="margin-left: 30px;">
+                                                        {{item.job_title}} - {{item.start_time | date:'EEE, dd-MMM-yy h.mm a'}}</legend>
+                                                    <div class="row" style="padding: 10px;">
+                                                        <div class="col-md-8">
+                                                            <b>You have been selected as
+                                                                <span
+                                                                    style="color:#0438B9;font-weight: bold;">{{item.name}}</span>
+                                                                
+                                                                for above position :-</b><br>
+                                                            {{item.company}}<br>
+                                                            {{item.division}}<br>
+                                                            {{item.location}}<br>
+                                                            <span *ngIf="item.venue_type == 'Physical'" style="font-weight: bold;">Venue:
+                                                                {{item.venue}}</span>
+                                                            <span *ngIf="item.venue_type == 'Virtual'" style="font-weight: bold;text-decoration: underline;">
+                                                                <a href="{{item.venue}}" target="_blank">Join Meeting</a>
+                                                            </span><br>
+                                                            <span style="font-weight: bold;">
+                                                                Position ID: {{item.position_id}}
+                                                            </span><br>
+                                                            <span *ngIf="item.dtdiff > 0"
+                                                                style="color: red;"><br><b>Pending Submit
+                                                                    Report</b></span>
+                                                        </div>
+                                                        
+                                                    </div>
+                                                    <!-- Add declare Integrity form -->
+                                                    <div class="col-md-12 text-right">
+                                                        <span style="height: 25px;color: #25A23E;cursor: pointer;"
+                                                            class="fa fa-caret-down" (click)="expandCompareRow(item)" 
+                                                            *ngIf="!item.expanded && item.panelDeclaration == null"
+                                                            data-toggle="modal" data-target="#declare_Integrity_modal" 
+                                                            data-backdrop="static" data-keyboard="false">
+                                                             Show Candidates
+                                                        </span>
+                                                        <span style="height: 25px;color: #25A23E;cursor: pointer;"
+                                                            class="fa fa-caret-down" (click)="expandCompareRow(item)" 
+                                                            *ngIf="!item.expanded && (item.panelDeclaration == 1)"> 
+                                                            Show Candidates
+                                                        </span>
+                                                        <!-- <span style="height: 25px;color: #25A23E;cursor: pointer;"
+                                                            class="fa fa-caret-down" (click)="expandCompareRow(item)" 
+                                                            *ngIf="!item.expanded"> 
+                                                            Show Candidates
+                                                        </span> -->
+                                                        <span style="height: 25px;color: red;cursor: pointer;"
+                                                            class="fa fa-caret-up" (click)="expandCompareRow(item)"
+                                                            *ngIf="item.expanded"> Hide Candidates
+                                                        </span>
+                                                    </div>
+                                                    <div *ngIf="item.expanded">
+                                                        <div *ngFor="let item of item.applicant;let i=item;let last=last;"
+                                                            style="padding:0;">
+
+                                                            <div class="row" style="height: 10px;"> &nbsp; </div>
+                                                            <div class="row" style="padding: 10px;">
+                                                                <div class="col-md-5">
+                                                                    <table>
+                                                                        <tr>
+                                                                            <td
+                                                                                style="width: 100px;text-align: center;">
+                                                                                <span>
+                                                                                    <img class="rounded"
+                                                                                        style="max-width: 100px !important;"
+                                                                                        [src]="returnImg(item.image_url)"
+                                                                                        onError="this.src='./assets/app/media/img/users/ghcm-user-default.jpg'"
+                                                                                        alt="" />
+                                                                                </span>
+                                                                            </td>
+                                                                            <td 
+                                                                                style="vertical-align:top;text-align: left;padding-left: 8px;">
+                                                                                <span
+                                                                                    style="font-weight: bold;">{{item.name}}</span>
+                                                                                <a ngbTooltip="Email to Candidate"
+                                                                                    href="mailto:{{item.email}}">
+                                                                                    <!-- <i class="material-icons" style="font-size:14px;color:blue;vertical-align: middle;"></i> -->
+                                                                                    <i class="material-icons"
+                                                                                        style="font-size:14px;color:blue;vertical-align: middle;">&#xe0be;</i>
+                                                                                </a>
+
+                                                                                <br *ngIf = "item.type != 3">
+                                                                                <Span *ngIf = "item.type != 3">
+                                                                                    <span
+                                                                                        style="font-weight: bold;color: blue;"
+                                                                                        *ngIf="item.criteria == null">Still
+                                                                                        In-Progress</span>
+                                                                                    <span
+                                                                                        style="font-weight: bold;color: blue;"
+                                                                                        *ngIf="item.criteria == 0">Lateral</span>
+                                                                                    <span
+                                                                                        style="font-weight: bold;color: blue;"
+                                                                                        *ngIf="item.criteria == 1">Promotion
+                                                                                        <i class="fa fa-check m--font-success"
+                                                                                            ngbTooltip="Meet Promotion Criteria"></i></span>
+                                                                                    <span
+                                                                                        style="font-weight: bold;color: blue;"
+                                                                                        *ngIf="item.criteria == 2">Promotion
+                                                                                        <i class="fa fa-remove m--font-danger"
+                                                                                            ngbTooltip="Does Not Meet Promotion Criteria"></i>
+                                                                                    </span>
+                                                                                </Span>
+                                                                                <br>
+                                                                                <span style="color: blue;">{{item.YIB}}
+                                                                                    Years in Band
+                                                                                </span>
+                                                                                <div style="width: 200px;" 
+                                                                                    *ngIf="(item.criteria == 1 || item.criteria == 2) && item.type != 3">
+                                                                                    <span
+                                                                                        *ngIf="item.skillMatchPerctg != null">{{item.skillMatchPerctg}}%
+                                                                                        Skillset Match</span>
+                                                                                </div>
+                                                                            </td>
+                                                                        </tr>
+                                                                    </table>
+
+                                                                </div>
+                                                                <div class="col-md-5" 
+                                                                    *ngIf="(item.criteria==1 || item.criteria==2) && (item.type != 3)"
+                                                                    style="border-left: 1px dashed #D7D7D7;border-right: 1px dashed #D7D7D7;">
+                                                                    <div class="row">
+                                                                        <div class="col-lg-7" style="width: 100%;">
+                                                                            <table
+                                                                                style="margin-bottom: 10px;width: 100%;">
+                                                                                <tr>
+                                                                                    <td>Harrison Assessment
+                                                                                        {{item.harrisonResults}}%</td>
+                                                                                </tr>
+                                                                                <tr>
+                                                                                    <td>
+                                                                                        <div class="progress"
+                                                                                            style="width: 100%;">
+                                                                                            <div *ngIf="item.harrisonResults < 40"
+                                                                                                class="progress-bar progress-bar-striped bg-warning"
+                                                                                                role="progressbar"
+                                                                                                [attr.aria-valuenow]="item.harrisonResults"
+                                                                                                [style.width]="item.harrisonResults+'%'"
+                                                                                                aria-valuemin="0"
+                                                                                                aria-valuemax="100">
+                                                                                                Low
+                                                                                            </div>
+                                                                                            <div *ngIf="item.harrisonResults >= 40 && item.harrisonResults < 80"
+                                                                                                class="progress-bar progress-bar-striped bg-success"
+                                                                                                role="progressbar"
+                                                                                                [attr.aria-valuenow]="item.harrisonResults"
+                                                                                                [style.width]="item.harrisonResults+'%'"
+                                                                                                aria-valuemin="0"
+                                                                                                aria-valuemax="100">
+                                                                                                Moderate
+                                                                                            </div>
+                                                                                            <div *ngIf="item.harrisonResults >= 80"
+                                                                                                class="progress-bar progress-bar-striped bg-info"
+                                                                                                role="progressbar"
+                                                                                                [attr.aria-valuenow]="item.harrisonResults"
+                                                                                                [style.width]="item.harrisonResults+'%'"
+                                                                                                aria-valuemin="0"
+                                                                                                aria-valuemax="100">
+                                                                                                High
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </td>
+                                                                                </tr>
+                                                                                <tr>
+                                                                                    <td style="padding-top: 10px;">
+                                                                                        Functional Competency
+                                                                                        {{item.functionalResults}}%</td>
+                                                                                </tr>
+                                                                                <tr>
+                                                                                    <td>
+                                                                                        <div class="progress">
+                                                                                            <div *ngIf="item.functionalResults < 40"
+                                                                                                class="progress-bar progress-bar-striped bg-warning"
+                                                                                                role="progressbar"
+                                                                                                [attr.aria-valuenow]="item.functionalResults"
+                                                                                                [style.width]="item.functionalResults+'%'"
+                                                                                                aria-valuemin="0"
+                                                                                                aria-valuemax="100">
+                                                                                                Low
+                                                                                            </div>
+                                                                                            <div *ngIf="item.functionalResults >= 40 && item.functionalResults < 80"
+                                                                                                class="progress-bar progress-bar-striped bg-success"
+                                                                                                role="progressbar"
+                                                                                                [attr.aria-valuenow]="item.functionalResults"
+                                                                                                [style.width]="item.functionalResults+'%'"
+                                                                                                aria-valuemin="0"
+                                                                                                aria-valuemax="100">
+                                                                                                Moderate
+                                                                                            </div>
+                                                                                            <div *ngIf="item.functionalResults >= 80"
+                                                                                                class="progress-bar progress-bar-striped bg-info"
+                                                                                                role="progressbar"
+                                                                                                [attr.aria-valuenow]="item.functionalResults"
+                                                                                                [style.width]="item.functionalResults+'%'"
+                                                                                                aria-valuemin="0"
+                                                                                                aria-valuemax="100">
+                                                                                                High
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </td>
+                                                                                </tr>
+                                                                                <tr>
+                                                                                    <td style="padding-top: 10px;">
+                                                                                        Talent Assessment -
+                                                                                        {{item.talent_class}}
+                                                                                        {{item.TCResults}}%
+                                                                                    </td>
+                                                                                </tr>
+                                                                                <tr>
+                                                                                    <td>
+                                                                                        <div class="progress">
+                                                                                            <div *ngIf="item.TCcolor=='blue'"
+                                                                                                class="progress-bar progress-bar-striped bg-info"
+                                                                                                role="progressbar"
+                                                                                                [attr.aria-valuenow]="(item.TCResults/10*100)"
+                                                                                                [style.width]="(item.TCResults/10*100)+'%'"
+                                                                                                aria-valuemin="0"
+                                                                                                aria-valuemax="100">
+                                                                                            </div>
+                                                                                            <div *ngIf="item.TCcolor=='green'"
+                                                                                                class="progress-bar progress-bar-striped bg-success"
+                                                                                                role="progressbar"
+                                                                                                [attr.aria-valuenow]="(item.TCResults/10*100)"
+                                                                                                [style.width]="(item.TCResults/10*100)+'%'"
+                                                                                                aria-valuemin="0"
+                                                                                                aria-valuemax="100">
+                                                                                            </div>
+                                                                                            <div *ngIf="item.TCcolor=='red'"
+                                                                                                class="progress-bar progress-bar-striped bg-danger"
+                                                                                                role="progressbar"
+                                                                                                [attr.aria-valuenow]="(item.TCResults/10*100)"
+                                                                                                [style.width]="(item.TCResults/10*100)+'%'"
+                                                                                                aria-valuemin="0"
+                                                                                                aria-valuemax="100">
+                                                                                            </div>
+                                                                                            <div *ngIf="item.TCcolor=='yellow'"
+                                                                                                class="progress-bar progress-bar-striped bg-warning"
+                                                                                                role="progressbar"
+                                                                                                [attr.aria-valuenow]="(item.TCResults/10*100)"
+                                                                                                [style.width]="(item.TCResults/10*100)+'%'"
+                                                                                                aria-valuemin="0"
+                                                                                                aria-valuemax="100">
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </td>
+                                                                                </tr>
+                                                                            </table>
+                                                                        </div>
+                                                                        <div class="col-sm-5">
+                                                                            <div class="rounded"
+                                                                                style="background-color: #E9E6E6;width: 100%;height:95%;text-align: center;">
+                                                                                <br>Achievement<br> Score<br><br>
+                                                                                <span *ngIf="item.tm_band==='1'"
+                                                                                    style="font-size: 26px;font-weight: bold;">
+                                                                                    {{(item.harrisonResults/100*30)+(item.functionalResults/100*30)+(item.TCResults/10*10) | number : '1.2-2'}}
+                                                                                </span>
+                                                                                <span *ngIf="item.tm_band==='2'"
+                                                                                    style="font-size: 26px;font-weight: bold;">
+                                                                                    {{(item.harrisonResults/100*40)+(item.functionalResults/100*20)+(item.TCResults/10*10) | number : '1.2-2'}}
+                                                                                </span>
+                                                                                <span *ngIf="item.tm_band==='3'"
+                                                                                    style="font-size: 26px;font-weight: bold;">
+                                                                                    {{(item.harrisonResults/100*50)+(item.functionalResults/100*10)+(item.TCResults/10*10) | number : '1.2-2'}}
+                                                                                </span>
+                                                                                <span
+                                                                                    *ngIf="item.tm_band !== '1' && item.tm_band !== '2' && item.tm_band !== '3'"
+                                                                                    style="font-size: 26px;font-weight: bold;">
+                                                                                    Undefined
+                                                                                </span>
+                                                                                <br><br>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <!-- Start Assessment for NE Promo -->
+                                                                <div class="col-md-5" *ngIf="item.type == 3"
+                                                                 style="border-left: 1px dashed #D7D7D7;border-right: 1px dashed #D7D7D7;">
+                                                                    <div class="row">
+                                                                        <div class="col-lg-7" style="width: 100%;">
+                                                                            <table
+                                                                                style="margin-bottom: 10px;width: 100%;">
+                                                                                <tr>
+                                                                                    <td>Organizational Knowledge Assessment:
+                                                                                        <span style="color:blue">{{item.Organisational_Knowledge}}%
+                                                                                        </span>
+                                                                                    </td>
+                                                                                </tr>
+                                                                                <tr>
+                                                                                    <td style="padding-top: 10px;">
+                                                                                        Behavioral Assessment:
+                                                                                        <span style="color:blue">{{item.Behavioral_Competency}}%</span>
+                                                                                    </td>
+                                                                                </tr>
+                                                                                <tr>
+                                                                                    <td style="padding-top: 10px;">
+                                                                                        Leadership Assessment:
+                                                                                        <span style="color:blue">{{item.Leadership_Assessments}}%
+                                                                                        </span>
+                                                                                    </td>
+                                                                                </tr>
+                                                                            </table>
+                                                                        </div>
+                                                                        <div class="col-sm-5">
+                                                                            <div class="rounded"
+                                                                                style="background-color: #E9E6E6;width: 100%;height:95%;text-align: center;">
+                                                                                <br>Interview<br> Score<br><br>
+                                                                                <span style="font-size: 26px;font-weight: bold;">{{item.ivtotalmark_ne}}
+                                                                                </span>
+                                                                                <br><br>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <!-- End Assessment for NE Promo -->
+
+                                                                <!-- Exceptional - Ne Promo -->
+                                                                <div class="col-md-5" *ngIf="item.criteria==0  && (item.type != 3)"
+                                                                    style="border-left: 1px dashed #D7D7D7;border-right: 1px dashed #D7D7D7;">
+                                                                    <b>
+                                                                        <!-- <span *ngIf="item.skillMatchPerctg == null">null</span> -->
+                                                                        <span
+                                                                            *ngIf="item.skillMatchPerctg != null">{{item.skillMatchPerctg}}%</span>
+                                                                        Skillset Match</b>
+                                                                    <div class="progress">
+                                                                        <div *ngIf="item.skillMatchPerctg != null && item.skillMatchPerctg < 40"
+                                                                            class="progress-bar progress-bar-striped bg-warning"
+                                                                            role="progressbar"
+                                                                            [attr.aria-valuenow]="item.skillMatchPerctg"
+                                                                            [style.width]="item.skillMatchPerctg+'%'"
+                                                                            aria-valuemin="0" aria-valuemax="100">
+                                                                            Low
+                                                                        </div>
+                                                                        <div *ngIf="item.skillMatchPerctg != null && item.skillMatchPerctg >= 40 && item.skillMatchPerctg < 80"
+                                                                            class="progress-bar progress-bar-striped bg-success"
+                                                                            role="progressbar"
+                                                                            [attr.aria-valuenow]="item.skillMatchPerctg"
+                                                                            [style.width]="item.skillMatchPerctg+'%'"
+                                                                            aria-valuemin="0" aria-valuemax="100">
+                                                                            Medium
+                                                                        </div>
+                                                                        <div *ngIf="item.skillMatchPerctg != null && item.skillMatchPerctg >= 80"
+                                                                            class="progress-bar progress-bar-striped bg-info"
+                                                                            role="progressbar"
+                                                                            [attr.aria-valuenow]="item.skillMatchPerctg"
+                                                                            [style.width]="item.skillMatchPerctg+'%'"
+                                                                            aria-valuemin="0" aria-valuemax="100">
+                                                                            High
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                             
+                                                                <div class="col-md-5" *ngIf="item.criteria==null"
+                                                                    style="border-left: 1px dashed #D7D7D7;border-right: 1px dashed #D7D7D7;">
+                                                                    &nbsp;
+                                                                </div>
+                                                                <div class="col-md-2" style="text-align: center;">
+                                                                    <!-- <div class="row" > -->
+                                                                    <table>
+                                                                        <tr>
+                                                                            <td *ngIf="item.finalResult === null && item.type !== 3"
+                                                                                style="text-align: center;">
+                                                                                <button id="performIntvw"
+                                                                                    [disabled]="item.isActive === null || item.isActive === 0"
+                                                                                    (click)="getAsmtRating(item.id,item.no)"
+                                                                                    (click)="reset2()" type="button"
+                                                                                    class="btn m-btn--pill btn-sm"
+                                                                                    style="width: 120px;background-color: #0066ff;color: white;">
+                                                                                    Start Assessment
+                                                                                </button>
+                                                                            </td>
+                                                                            <!-- NE Promo -->
+                                                                            <td *ngIf="item.finalResult === null && item.type === 3"
+                                                                                style="text-align: center;">
+                                                                                <button id="performIntvw"
+                                                                                    [disabled]="item.isActive === null || item.isActive === 0"
+                                                                                    (click)="postAssRatingNE(item.id,item.no)"
+                                                                                    (click)="reset2()" type="button"
+                                                                                    class="btn m-btn--pill btn-sm"
+                                                                                    style="width: 120px;background-color: #0066ff;color: white;">
+                                                                                    Start Assessment
+                                                                                </button>
+                                                                            </td>
+                                                                            <td *ngIf="item.finalResult !== null && item.type !== 3"
+                                                                                style="text-align: center;">
+                                                                                <button id="performIntvw"
+                                                                                    (click)="getAsmtRating(item.id,item.no)"
+                                                                                    (click)="reset2()" type="button"
+                                                                                    class="btn m-btn--pill btn-sm"
+                                                                                    style="width: 130px;background-color: #FFD300;color: white; text-align: center;">
+                                                                                    Update Assessment
+                                                                                </button>
+                                                                            </td>
+                                                                            <!-- NE Promo -->
+                                                                            <td *ngIf="item.finalResult !== null && item.type === 3"
+                                                                                style="text-align: center;">
+                                                                                <button id="performIntvw"
+                                                                                    (click)="postAssRatingNE(item.id,item.no)"
+                                                                                    (click)="reset2()" type="button"
+                                                                                    class="btn m-btn--pill btn-sm"
+                                                                                    style="width: 130px;background-color: #FFD300;color: white; text-align: center;">
+                                                                                    Update Assessment
+                                                                                </button>
+                                                                            </td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td><button type="button"
+                                                                                    style="width: 120px;margin-top: 5px;"
+                                                                                    class="btn m-btn--pill btn-sm btn-outline-success"
+                                                                                    (click)="getUserCP(item.id)">
+                                                                                    <span class="fa fa-download">
+                                                                                        Career Profile
+                                                                                    </span>
+                                                                                </button>
+                                                                            </td>
+                                                                            <td>&nbsp;</td>
+                                                                        </tr>
+                                                                    </table>
+                                                                    <!-- </div> -->
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-12" *ngIf="!last"
+                                                                style="height: 10px;border-bottom: 1px solid #D7D7D7;width: 100%;">
+                                                                <br>
+                                                            </div>
+                                                            <div class="row" *ngIf="last"
+                                                                style="height: 10px;width: 100%;">
+                                                                <div class="col-md-12">
+                                                                    &nbsp;
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+
+                                                </fieldset>
+                                                <br>
+                                            </div>
+                                            <!-- display session here -->
+                                        </div>
+                                    </div>
+                                    <div style="text-align: center;" *ngIf="clicked && loadingAsmt">
+                                        <img src="../assets/img/user/ERA.gif" style="width:auto;height:100px;">
+                                    </div>
+                                    <div class="row" *ngIf="clicked && !loadingAsmt">
+                                        <div class="col-lg-12">
+                                            <div class="row">
+                                                <div class="col-md-2 text-right"><img src="{{imgDataUrl}}"
+                                                        class="rounded" style="max-width: 120px !important; font-size: medium;"></div>
+                                                <div class="col-md-10">
+                                                    <span style="font-weight: bold;">{{personal[0].name}}</span><br>
+                                                    <span style="font-weight: bold;">Email:
+                                                        {{personal[0].email}}</span><br>
+                                                    <span style="font-weight: bold; color: blue;">Apply For:
+                                                        {{personal[0].job_title}}</span>
+                                                    <br><br>
+                                                    <span style="font-weight: bold;"
+                                                        *ngIf="personal[0].finalresult !== null">
+                                                        Assesment Status : Completed</span>
+                                                </div>
+                                            </div>
+                                            <br>
+                                            <div *ngIf = "personal[0].type != 3" class="row" 
+                                                style="background-color: #DAECFF;display: flex;
+                                                    justify-content: center;align-items: center;padding:10px;">
+                                                <div class="col-md-5">
+                                                    <span style="font-weight: bold;">PART A : SUCCESS</span>
+                                                </div>
+                                                <div class="col-md-2" style="margin: 0 auto;">
+                                                    <div style="text-align: center;font-weight: bold;">
+                                                        Rating (1 – 10)</div>
+                                                    <div style="margin: 0 auto;display: inline-block;
+                                                                display: flex;
+                                                    justify-content: center;align-items: center;font-size: small;">
+                                                        Very Poor (1)<br>Average (5)<br>Excellent (10)
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-5">
+                                                    <span style="font-weight: bold;">Remarks</span>
+                                                </div>
+                                            </div>
+                                        <!-- NE Promo -->
+                                        <div *ngIf = "personal[0].type == 3" class="row" style="background-color: #DAECFF;display: flex;
+                                            justify-content: center;align-items: center;padding:10px;">
+                                            <div class="col-md-5">
+                                                <span style="font-weight: bold;">PART A : 90%</span>
+                                                <p style="font-weight: bold;">Marking Scheme:</p>
+                                                <p> i.	Advanced – (range 8 - 10 marks)
+                                                    <br>
+                                                    ii.	Intermediate – (range 4 - 7 marks)
+                                                    <br>
+                                                    iii. Fundamental – (range 1-3 marks)
+                                                </p>
+                                            </div>
+                                            <div class="col-md-2" style="margin: 0 auto;">
+                                                <div style="text-align: center;font-weight: bold;">
+                                                    Rating (0 – 10)</div>
+                                                <div style="margin: 0 auto;display: inline-block;
+                                                            display: flex;
+                                                justify-content: center;align-items: center;font-size: small;">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-5">
+                                                <span style="font-weight: bold;">Panel Comment</span>
+                                            </div>
+                                        </div>
+                                            <br>
+
+                                            <form [formGroup]="ratingForm">
+                                                <!-- start success form -->
+                                                <div *ngFor="let c of auxArray;let i =index" formArrayName="aux">
+                                                    <div [formGroupName]="i">
+                                                        <div class="row">
+                                                            <div class="col-md-5">
+                                                                <div
+                                                                    style="font-weight: bold;color: blue;text-transform: uppercase;">
+                                                                    {{i+1}}.
+                                                                    {{ratingForm.get('aux').controls[i].get('SUC_DESC').value}}
+                                                                </div>
+                                                                <div style="margin-top: 10px;margin-bottom: 10px;margin-left: 14px;font-size: medium;text-align: justify;"
+                                                                    [innerHTML]="ratingForm.get('aux').controls[i].get('DETAILS').value">
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-2" style="margin: 0 auto;">
+                                                                <div>&nbsp;</div>
+                                                                <div *ngIf = "personal[0].type != 3"
+                                                                    style="margin-top:15px;display: inline-block;display: flex;
+                                                                        justify-content: center;align-items: center;font-size: small;">
+                                                                    <input pattern="\d+"
+                                                                        class="form-control m-input m-input--air"
+                                                                        id="rating" formControlName="rating" min="1"
+                                                                        max="10" type="number" style="width: 70px;background-color: #d8eef7;"
+                                                                        (keyup)="sum()" (keypress)="numericOnly($event)" (change)="sum()" maxlength="2"
+                                                                        [ngClass]="{'is-invalid':submitted && !ratingForm.get('aux').controls[i].get('rating').valid}"
+                                                                        oninput="javascript: if (this.value > 10) this.value = 10;">
+                                                                </div>
+                                                                <!-- NE Promo- sum rating success -->
+                                                                <div *ngIf = "personal[0].type == 3"
+                                                                style="margin-top:15px;display: inline-block;display: flex;
+                                                                    justify-content: center;align-items: center;font-size: small;">
+                                                                <input pattern="\d+"
+                                                                    class="form-control m-input m-input--air"
+                                                                    id="rating" formControlName="rating" min="0"
+                                                                    max="10" type="number" style="width: 70px;background-color: #d8eef7;"
+                                                                    (keyup)="sumNe()" (keypress)="numericOnly($event)" (change)="sumNe()" maxlength="2"
+                                                                    [ngClass]="{'is-invalid':submitted && !ratingForm.get('aux').controls[i].get('rating').valid}"
+                                                                    oninput="javascript: if (this.value > 10) this.value = 10;">
+                                                            </div>
+                                                                <br>
+                                                            </div>
+                                                            <div class="col-md-5">
+                                                                <div>&nbsp;</div>
+                                                                <div style="margin-top: 15px;">
+                                                                    <textarea class="form-control m-input m-input--air"
+                                                                        rows="8" formControlName="remark"
+                                                                        placeholder="" style="background-color: #d8eef7;">
+                                                                    </textarea>
+                                                                </div>
+                                                                <br>
+                                                            </div>
+                                                        </div><br>
+                                                    </div>
+                                                </div>
+                                                <!-- end success form -->
+
+                                                <div class="row" *ngIf = "personal[0].type != 3"
+                                                    style="background-color: #DAECFF;display: flex;justify-content: center;align-items: center;padding:10px;">
+                                                    <div class="col-md-5" >
+                                                        <span style="font-weight: bold;">PART B : FUNCTIONAL</span>
+                                                    </div>
+                                                    <div class="col-md-2" style="margin: 0 auto;">
+                                                        <div style="text-align: center;font-weight: bold;">
+                                                            Rating (1– 30)</div>
+                                                    </div>
+                                                    <div class="col-md-5">
+                                                        <span style="font-weight: bold;">Remarks</span>
+                                                    </div>
+                                                </div>
+                                                <!-- NE Promo - header -->
+                                                <div class="row" *ngIf = "personal[0].type == 3" 
+                                                    style="background-color: #DAECFF;display: flex;justify-content: center;align-items: center;padding:10px;">
+                                                    <div class="col-md-5">
+                                                        <span style="font-weight: bold;">PART B :10%</span>
+                                                        <p style="font-style: italic; font-weight: bold;">Note: Marks will be given based on higher level of achievement and involvement</p>
+                                                    </div>
+                                                    <div class="col-md-2" style="margin: 0 auto;">
+                                                        <div style="text-align: center;font-weight: bold;">
+                                                            Rating (0 – 5)</div>
+                                                    </div>
+                                                    <div class="col-md-5">
+                                                        <span style="font-weight: bold;">Panel Comment</span>
+                                                    </div>
+                                                </div>
+                                                <br>
+                                                <!-- start functional, if more than 1 need to change to formarray -->
+                                                <div class="row" *ngIf = "personal[0].type != 3" >
+                                                    <div class="col-md-12" *ngIf="functional.length>0;">
+                                                        <div class="row">
+                                                            <div class="col-md-5">
+                                                                <div
+                                                                    style="margin-left: 14px;font-weight: bold;color: blue;text-transform: uppercase;">
+                                                                    {{this.functional[0].fSUC_DESC}}</div>
+                                                                <div style="margin-top: 10px;margin-bottom: 10px;margin-left: 14px;font-size: small;text-align: justify;"
+                                                                    [innerHTML]="this.functional[0].fDETAILS">
+                                                                </div>
+
+                                                            </div>
+                                                            <div class="col-md-2" style="margin: 0 auto;">
+                                                                <div>&nbsp;</div>
+                                                                <div
+                                                                    style="margin-top:15px;display: inline-block;display: flex;
+                                                                        justify-content: center;align-items: center;font-size: small;">
+                                                                    <input (keyup)="sum()" (keypress)="numericOnly($event)" (change)="sum()" (keypress)="numericOnly($event)"
+                                                                        pattern="\d+"
+                                                                        class="form-control m-input m-input--air"
+                                                                        formControlName="ratingF" min="1" max="30"
+                                                                        type="number" style="width: 70px; background-color: #d8eef7;" maxlength="2"
+                                                                        [ngClass]="{'is-invalid':submitted && !ratingForm.get('ratingF').valid}"
+                                                                        oninput="javascript: if (this.value > 30) this.value = 30;">
+                                                                    <!-- oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength); -->
+                                                                </div>
+                                                               <br>
+                                                            </div>
+                                                            <div class="col-md-5">
+                                                                <div>&nbsp;</div>
+                                                                <div style="margin-top: 15px;">
+                                                                    <textarea class="form-control m-input m-input--air"
+                                                                        rows="8" formControlName="remarkF"
+                                                                        placeholder="" style="background-color: #d8eef7;">
+                                                                    </textarea>
+                                                                </div>
+                                                                <br>
+                                                            </div>
+                                                        </div><br>
+                                                    </div>
+                                                </div>
+                                                <!-- Functional for NE Promo -->
+                                                <div *ngIf = "personal[0].type == 3" >
+                                                    <div *ngFor="let f of funcNeArray;let j =index" formArrayName="functNE">
+                                                        <div [formGroupName]="j">
+                                                            <div class="row">
+                                                                <div class="col-md-5">
+                                                                    <div
+                                                                        style="font-weight: bold;color: blue;text-transform: uppercase;">   
+                                                                        {{j+1}}.  
+                                                                        {{ratingForm.get('functNE').controls[j].get('fSUC_NAME').value}}
+                                                                    </div>
+                                                                    <div style="margin-top: 10px;margin-bottom: 10px;margin-left: 14px;font-size: medium;text-align: justify;"
+                                                                    [innerHTML]="ratingForm.get('functNE').controls[j].get('fSUC_DESC').value">
+                                                                    </div>  
+                                                                    <div style="margin-top: 12px;margin-bottom: 10px;margin-left: 14px;font-size: medium;text-align: justify;"
+                                                                    [innerHTML]="ratingForm.get('functNE').controls[j].get('fDETAILS').value">
+                                                                    </div> 
+                                                                </div>
+                                                                <div class="col-md-2" style="margin: 0 auto;">
+                                                                    <div>&nbsp;</div>
+                                                                    <div
+                                                                        style="margin-top:15px;display: inline-block;display: flex;
+                                                                            justify-content: center;align-items: center;font-size: small;">
+
+                                                                            <input pattern="\d+"
+                                                                            class="form-control m-input m-input--air"
+                                                                            id="ratingNe" formControlName="rating" min="0"
+                                                                            max="5" type="number" style="width: 70px;background-color: #d8eef7;"
+                                                                            (keyup)="sumNe()" (keypress)="numericOnly($event)" (change)="sumNe()" maxlength="2"
+                                                                            [ngClass]="{'is-invalid':submitted && !ratingForm.get('functNE').controls[j].get('rating').valid}"
+                                                                            oninput="javascript: if (this.value > 5) this.value = 5;">
+                                                                    </div>
+                                                                    <br>
+                                                                </div>   
+                                                                <div class="col-md-5">
+                                                                    <div>&nbsp;</div>
+                                                                    <div style="margin-top: 15px;">
+                                                                        <textarea class="form-control m-input m-input--air"
+                                                                            rows="8" formControlName="remarks"
+                                                                            placeholder="" style="background-color: #d8eef7;">
+                                                                        </textarea>
+                                                                    </div>
+                                                                    <br>
+                                                                </div>  
+                                                            </div><br>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!-- end functional -->
+                                                <br>
+                                                <hr><br>
+                                                <div class="row">
+                                                    <div class="col-md-3">
+                                                        <div class="row" style="display: flex;
+                                                                justify-content: center;align-items: center;">
+                                                            <div class="col-md-10">&nbsp;</div>
+                                                            <div class="col-md-10">&nbsp;</div>
+                                                            <div class="col-md-10"
+                                                                style=" background: linear-gradient(to right, #0033cc 0%, #33ccff 100%);height: 5px;">
+                                                            </div>
+                                                            <div class="col-md-10" *ngIf="personal[0].type !== 3">
+                                                                <table style="width: 100%;font-weight: bold;">
+                                                                    <tr>
+                                                                        <td>&nbsp;</td>
+                                                                        <td>&nbsp;</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>Part A : Success</td>
+                                                                        <td>
+                                                                            <span
+                                                                                *ngIf="personal[0].totalRating !== null && !edited">{{personal[0].totalRating}}%</span>
+                                                                            <span
+                                                                                *ngIf="personal[0].totalRating === null || edited">{{totalSuccess}}%</span>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>&nbsp;</td>
+                                                                        <td>&nbsp;</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>Part B : Functional</td>
+                                                                        <td>
+                                                                            <span
+                                                                                *ngIf="functional[0].rating !== null && !edited">{{functional[0].rating}}%</span>
+                                                                            <span
+                                                                                *ngIf="functional[0].rating === null || edited">{{totalFunc}}%</span>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>&nbsp;</td>
+                                                                        <td>&nbsp;</td>
+                                                                    </tr>
+                                                                </table>
+                                                            </div>
+
+                                                            <!-- NE Promo Result-->
+                                                            <div class="col-md-10" *ngIf="personal[0].type === 3">
+                                                                <table style="width: 100%;font-weight: bold; font-size: small;">
+                                                                    <tr>
+                                                                        <td>&nbsp;</td>
+                                                                        <td>&nbsp;</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>Part A : </td>
+                                                                        <td>
+                                                                            <span
+                                                                                *ngIf="personal[0].totalRating !== null && !edited">{{personal[0].totalRating}}%</span>
+                                                                            <span
+                                                                                *ngIf="personal[0].totalRating === null || edited">{{totalSuccessNe}}%</span>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>&nbsp;</td>
+                                                                        <td>&nbsp;</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>Part B : </td>
+                                                                        <td>
+                                                                            <span
+                                                                                *ngIf="totalFuncNe !== null && !edited">{{totalFuncNe}}%</span>
+                                                                            <span
+                                                                                *ngIf="totalFuncNe === null|| edited">{{totalFuncNe}}%</span>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>&nbsp;</td>
+                                                                        <td>&nbsp;</td>
+                                                                    </tr>
+                                                                </table>
+                                                            </div>
+                                                            <!-- End NE Promo result -->
+                                                            <div class="col-md-10" 
+                                                                style=" background: linear-gradient(to right, #0033cc 0%, #33ccff 100%);height: 5px;">
+                                                            </div>
+                                                            <div class="col-md-10" *ngIf="personal[0].type !== 3"
+                                                                style="display: flex;
+                                                                justify-content: center;align-items: center;font-weight: bold;color: #084D95;font-size: 28px;margin-top: 10px;">
+                                                                {{totalResult}}%
+                                                            </div>
+                                                            <div class="col-md-10" *ngIf="personal[0].type === 3"
+                                                                style="display: flex;
+                                                                justify-content: center;align-items: center;font-weight: bold;color: #084D95;font-size: 28px;margin-top: 10px;">
+                                                                {{totalResultNe}}%
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-5">
+                                                        <div class="row" *ngIf="personal[0].type != 3">
+                                                            <div class="col-md-12"><b>Overall Remarks (<span
+                                                                        style="color: red;">*</span>)</b></div>
+                                                            <div class="col-md-12"
+                                                                style="color: red;font-size: smaller;">
+                                                                Compulsory will be shared with candidate for their improvement
+                                                                purposes
+                                                            </div>
+                                                            <div class="col-md-12" style="font-weight: bold; color:blue; size: smaller;" 
+                                                                *ngIf = "ratingForm.get('panelResult').value == 'Reserved'">
+                                                                Reserved is a 2nd option if the recommended candidate is unable to fulfill the position.
+                                                            </div>
+                                                            <div class="col-md-12"
+                                                                style="display: flex;
+                                                                        justify-content: center;align-items: center;margin-top: 3px;">
+                                                                <textarea class="form-control m-input" rows="9"
+                                                                    [ngClass]="{'is-invalid':submitted && !ratingForm.get('overallRem').valid}"
+                                                                    formControlName="overallRem" placeholder="" style="background-color: #d8eef7;"> 
+                                                                </textarea>
+                                                            </div>
+                                                        </div>
+                                                            <!-- NE Promo -->
+                                                            <div class="row" *ngIf = "personal[0].type == 3">
+                                                                <div class="col-md-12"><b>Overall Remarks (<span
+                                                                            style="color: red; font-size: small;">*</span>)</b></div>
+                                                                <div class="col-md-12"
+                                                                    style="color: red;font-size: small;">
+                                                                    Compulsory will be shared with candidate for their improvement
+                                                                    purposes.
+                                                                    <p> (Strength and Area of Improvement)</p>
+                                                                </div>
+                                                                <div class="col-md-12" style="font-weight: bold; color:blue; size: small;" 
+                                                                    *ngIf = "ratingForm.get('panelResult').value == 'Reserved'">
+                                                                    Reserved is a 2nd option if the recommended candidate is unable to fulfill the position.
+                                                                </div>
+                                                                <div class="col-md-12"
+                                                                    style="display: flex;
+                                                                            justify-content: center;align-items: center;margin-top: 3px;">
+                                                                    <textarea class="form-control m-input" rows="9"
+                                                                        [ngClass]="{'is-invalid':submitted && !ratingForm.get('overallRem').valid}"
+                                                                        formControlName="overallRem" placeholder="" style="background-color: #d8eef7;"> 
+                                                                    </textarea>
+                                                                </div>
+                                                            </div>
+                                                    </div>
+
+                                                    <div class="col-md-4">
+                                                        <div class="row">
+                                                            <div class="col-md-12"><b>Result (<span
+                                                                        style="color: red;">*</span>)</b></div>
+                                                            <div class="col-md-12">&nbsp;</div>
+                                                            <div class="col-md-12">
+                                                                <select name="status" id="panelResult" 
+                                                                    class="form-control m-input"
+                                                                    formControlName="panelResult"
+                                                                    [ngClass]="{'is-invalid':submitted && !ratingForm.get('panelResult').valid}">
+                                                                    <option value="">-- Please Select --</option>
+                                                                    <option value="Recommended">Recommended</option>
+                                                                    <option value="Reserved">Reserved</option>
+                                                                    <option value="Not Recommended">Not Recommended
+                                                                    </option>
+                                                                </select>
+                                                            </div>
+                                                            <div class="col-md-12">&nbsp;</div>
+                                                            <div class="col-md-12">
+                                                                <b>{{personal[0].roleName}}<br></b>
+                                                                Name : {{personal[0].panelName}}<br>
+                                                                Position : {{personal[0].post_desc}}<br>
+                                                                Band : {{personal[0].psgroup}}<br>
+
+                                                                <span *ngIf="personal[0].dateSubmit !== null">Date
+                                                                    Submit :
+                                                                    {{personal[0].dateSubmit | date:'dd MMM yyyy'}}</span>
+                                                            </div>
+                                                            <div class="col-md-12" style="text-align: center;" *ngIf = "personal[0].type != 3"><br>
+                                                                <button (click)="submit()"
+                                                                    class="btn m-btn m-btn--gradient-from-danger m-btn--gradient-to-warning ml-3"
+                                                                    [class.spinner]="loading" [disabled]="loading"
+                                                                    type="button"
+                                                                    style="background: #FF5A00; background-color: #FF5A00; border-color: #FF5A00;">
+                                                                    <span
+                                                                        *ngIf="personal[0].dateSubmit !== null">Update</span>
+                                                                    <span
+                                                                        *ngIf="personal[0].dateSubmit === null">Submit</span>
+                                                                </button>
+                                                            </div>
+                                                            <!-- NE Promo - submit -->
+                                                            <div class="col-md-12" style="text-align: center;" *ngIf = "personal[0].type == 3"><br>
+                                                                <button (click)="submitNe()"
+                                                                    class="btn m-btn m-btn--gradient-from-danger m-btn--gradient-to-warning ml-3"
+                                                                    [class.spinner]="loading" [disabled]="loading"
+                                                                    type="button"
+                                                                    style="background: #FF5A00; background-color: #FF5A00; border-color: #FF5A00;">
+                                                                    <span
+                                                                        *ngIf="personal[0].dateSubmit !== null">Update</span>
+                                                                    <span
+                                                                        *ngIf="personal[0].dateSubmit === null">Submit</span>
+                                                                </button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- end session -->
+
+                                <!-- start moderation -->
+                                <div style="text-align: center;" *ngIf="loadingHead">
+                                    <img src="../assets/img/user/ERA.gif" style="width:auto;height:100px;">
+                                </div>
+                                <div class="tab-pane" id="tab_moderation" role="tabpanel">
+
+                                    <!-- start moderation one record -->
+                                    <div *ngIf="!loadingHead && HeadData.length===1 && !showpending">
+                                        <div style="text-align: center;" *ngIf="loadingRept">
+                                            <img src="../assets/img/user/ERA.gif" style="width:auto;height:100px;">
+                                        </div>
+                                        <div class="col-lg-12" *ngIf="!loadingRept">
+                                            <fieldset class="well">
+                                                <legend class="well-legend" style="margin-left: 30px;">
+                                                    {{HeadData[0].job_title}} - {{HeadData[0].start_time | date:'EEE, dd-MMM-yy h.mm a'}}</legend>
+                                                <div>
+                                                    <div *ngIf="!loadingRept" class="row">
+                                                        <div class="col-md-12" style="margin-left: 14px;">
+                                                            <br>
+                                                            <table style="font-size: small;width: 100%;">
+                                                                <tbody>
+                                                                    <tr>
+                                                                        <td> {{HeadData[0].company}}</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>{{HeadData[0].division}}</td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                    <div *ngIf="!loadingRept" class="table-responsive"
+                                                        style="text-align: center;">
+                                                        <br>
+                                                        <form [formGroup]="reportForm">
+                                                            <table class="table-responsive table table-hover"
+                                                                cellspacing="3px"
+                                                                style="font-size: small;width:98%;display:inline-block;text-align: left;">
+                                                                <thead class="thead-light">
+
+                                                                    <tr>
+                                                                        <!-- <th>No</th> -->
+                                                                        <th style="vertical-align: top;">Name</th>
+                                                                        <th style="vertical-align: top;">LOB</th>
+                                                                        <th *ngIf= "dataSession[0].type != 3" style="vertical-align: top;">Job Type</th>
+                                                                        <th style="vertical-align: top;">Rank</th>
+                                                                        <th *ngIf= "dataSession[0].type != 3" style="vertical-align: top;">Promotion Score(%)</th>
+                                                                        <th *ngIf= "dataSession[0].type == 3" style="vertical-align: top;">Assessment Score(%)</th> 
+                                                                        <th style="vertical-align: top;">Interview Score (%)</th>
+                                                                        <th *ngIf= "dataSession[0].type != 3" style="vertical-align: top;">Final Score (%)</th>
+                                                                        <th style="vertical-align: top;">Result</th>
+                                                                        <th style="vertical-align: top;">Head Panel Remarks</th>
+                                                                        <th style="vertical-align: top;">View Details</th> 
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody style="border-bottom: 1px solid #f4f5f8;">
+                                                                    <tr *ngFor="let itm of dataCandidate;let i=index;"
+                                                                        formArrayName="rept">
+                                                                        <td>{{itm.name}}</td>
+                                                                        <td>{{itm.lob}}</td>
+                                                                        <td *ngIf= "dataSession[0].type != 3">
+                                                                            <span *ngIf="itm.criteria == null">Still
+                                                                                In-Progress</span>
+                                                                            <span *ngIf="itm.criteria == 0">Lateral</span>
+                                                                            <span *ngIf="itm.criteria == 1">Promotion</span>
+                                                                            <span *ngIf="itm.criteria == 2">Promotion</span>
+                                                                        </td>
+                                                                        <td>{{i+1}}</td>
+                                                                        <td *ngIf= "dataSession[0].type != 3">
+                                                                            <span *ngIf="itm.criteria == null">-</span>
+                                                                            <span *ngIf="itm.criteria == 0">-</span>
+                                                                            <span
+                                                                                *ngIf="itm.criteria == 1">{{itm.competencyFnlM | number : '1.2-2'}}</span>
+                                                                            <span
+                                                                                *ngIf="itm.criteria == 2">{{itm.competencyFnlM | number : '1.2-2'}}</span>
+                                                                        </td>
+                                                                        <td *ngIf= "dataSession[0].type == 3">{{itm.Total_Assessment}}</td>
+                                                                        <td *ngIf= "dataSession[0].type != 3">
+                                                                            <span *ngIf="itm.criteria == null"></span>
+                                                                            <span *ngIf="itm.criteria == 0">{{itm.average | number : '1.2-2'}}</span>
+                                                                            <span *ngIf="itm.criteria == 1">{{itm.average/100*30 | number : '1.2-2'}}</span>
+                                                                            <span *ngIf="itm.criteria == 2">{{itm.average/100*30 | number : '1.2-2'}}</span>    
+                                                                        </td>    
+                                                                        <!-- <td>
+                                                                            <span *ngIf="itm.criteria == null">Still
+                                                                                In-Progress</span>
+                                                                            <span
+                                                                                *ngIf="itm.criteria == 0">Lateral</span>
+                                                                            <span
+                                                                                *ngIf="itm.criteria == 1">Promotion</span>
+                                                                            <span
+                                                                                *ngIf="itm.criteria == 2">Promotion</span>
+                                                                        </td> -->
+                                                                        <!-- <td>{{i+1}}</td> -->
+                                                                        <!-- <td>
+                                                                            <span *ngIf="itm.criteria == null">-</span>
+                                                                            <span *ngIf="itm.criteria == 0">-</span>
+                                                                            <span
+                                                                                *ngIf="itm.criteria == 1">{{itm.competencyFnlM | number : '1.2-2'}}</span>
+                                                                            <span
+                                                                                *ngIf="itm.criteria == 2">{{itm.competencyFnlM | number : '1.2-2'}}</span>
+                                                                        </td> -->
+                                                                        <!-- <td>
+                                                                            <span *ngIf="itm.criteria == null">-</span>
+                                                                            <span
+                                                                                *ngIf="itm.criteria == 0">{{itm.average | number : '1.2-2'}}</span>
+                                                                            <span
+                                                                                *ngIf="itm.criteria == 1">{{itm.average/100*30 | number : '1.2-2'}}</span>
+                                                                            <span
+                                                                                *ngIf="itm.criteria == 2">{{itm.average/100*30 | number : '1.2-2'}}</span>
+                                                                        </td> -->
+                                                                        <!-- <td [formGroupName]="i">
+                                                                            {{itm.ttlmarks| number : '1.2-2'}}
+                                                                   
+                                                                        </td> -->
+                                                                        <td [formGroupName]="i" *ngIf= "dataSession[0].type != 3">
+                                                                            {{itm.ttlmarks| number : '1.2-2'}}
+                                                                        </td>
+                                                                        <td [formGroupName]="i" *ngIf= "dataSession[0].type == 3">
+                                                                            {{itm.ivttlmarks_ne| number : '1.2-2'}}
+                                                                        </td>
+                                                                        <td [formGroupName]="i">
+                                                                            <select name="result" id="result"
+                                                                                class="form-control m-input"
+                                                                                formControlName="result"
+                                                                                style="width: 155px;height: 35px;font-size: small;font-family: Roboto !important;"
+                                                                                [ngClass]="{'is-invalid':submittedF && !reportForm.get('rept').controls[i].get('result').valid}">
+                                                                                <!-- <option value="">-- Please
+                                                                        Select --</option> -->
+                                                                                <option value="Recommended">
+                                                                                    Recommended</option>
+                                                                                <option value="Reserved">
+                                                                                    Reserved</option>
+                                                                                <option value="Not Recommended">
+                                                                                    Not Recommended
+                                                                                </option>
+                                                                            </select>
+                                                                        </td>
+                                                                        <td [formGroupName]="i"><textarea rows="5"
+                                                                                formControlName="remark"
+                                                                                [ngClass]="{'is-invalid':submittedF && !reportForm.get('rept').controls[i].get('remark').valid}"
+                                                                                class="form-control m-input"
+                                                                                style="width: 160px;font-size: small;font-family: Roboto !important;"
+                                                                                placeholder="">
+                                                                            </textarea>
+                                                                        </td>
+                                                                        <td><button class="btn" and
+                                                                                style="padding:2px;background-color:transparent"
+                                                                                id="view" type="button"
+                                                                                data-toggle="modal"
+                                                                                data-target="#summary_modal"
+                                                                                (click)="getApplicantResult(itm.candidateID)"
+                                                                                ngbTooltip="View Details">
+                                                                                <i class="fa fa-search"></i>
+                                                                            </button></td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
+
+                                                        </form>
+                                                    </div>
+                                                   
+                                                    <div *ngIf="!loadingRept" style="margin-left: 10px;">
+                                                        <div class="row">
+                                                            <div *ngFor="let itemP of dataPanel" class="column"
+                                                                style="margin: 20px;">
+                                                                <span
+                                                                    *ngIf="itemP.rolename === 'Head Interview Panel'"><b>Approved
+                                                                        by </b></span>
+                                                                <b>
+                                                                    {{itemP.rolename}}
+                                                                    <span
+                                                                        *ngIf="itemP.replacement==1">(Replacement)</span>
+                                                                </b>
+                                                                <br>Name: {{itemP.name}} <br>Position:
+                                                                {{itemP.post_Desc}}
+                                                                <br>Band: {{itemP.psgroup}}<br>Date: {{myDate}}
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-md-12 text-right">
+                                                                <button (click)="submitFinal()" type="button"
+                                                                    class="btn m-btn m-btn--gradient-from-danger m-btn--gradient-to-warning ml-3"
+                                                                    style="background: #FF5A00; background-color: #FF5A00; border-color: #FF5A00;margin-right: 10px;"
+                                                                    [class.spinner]="loadingFinal"
+                                                                    [disabled]="loadingFinal">
+                                                                    Submit
+                                                                </button><br><br>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </fieldset>
+
+                                        </div>
+                                    </div>
+
+                                    <div *ngIf="!loadingHead && HeadData.length===1 && showpending">
+                                        <!-- start: got pending assessment -->
+                                        <fieldset class="well">
+                                            <legend class="well-legend" style="margin-left: 30px;">
+                                                {{HeadData[0].job_title}} - {{HeadData[0].start_time | date:'EEE, dd-MMM-yy h.mm a'}}</legend>
+                                            <div class="col-lg-12"><br><span
+                                                    style="color: red;"><b>{{HeadData[0].cntNotCmplt}} Pending on Submit
+                                                        Assessment Form</b></span><br><br>
+                                                <div class="table-responsive">
+                                                    <table class="table table-hover" cellspacing="5px"
+                                                        style="font-size: small;">
+                                                        <thead class="thead-light">
+                                                            <tr>
+                                                                <th>No</th>
+                                                                <th>Panel Name</th>
+                                                                <th>Role</th>
+                                                                <th>Candidate </th>
+                                                                <th>Status </th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr
+                                                                *ngFor="let res1 of HeadData[0].pendingAsmt;let i=index">
+                                                                <td>{{i+1}}</td>
+                                                                <td>{{res1.panelName}}</td>
+                                                                <td>{{res1.roleName}} <span
+                                                                        *ngIf="res1.replacement==1">(Replacement)</span>
+                                                                </td>
+                                                                <td>{{res1.candidateName}}</td>
+                                                                <td>
+                                                                    <span *ngIf="res1.asmtStatus=='Submitted'"
+                                                                        style="color: green;">
+                                                                        <b>{{res1.asmtStatus}}</b>
+                                                                    </span>
+                                                                    <span *ngIf="res1.asmtStatus=='Pending'"
+                                                                        style="color: red;">
+                                                                        <b>{{res1.asmtStatus}}</b>
+                                                                    </span>
+                                                                </td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </fieldset>
+                                        <!-- end: got pending assessment -->
+                                    </div>
+                                    <!-- end moderation one record -->
+
+                                    <!-- start moderation more than 1 rec -->
+                                    <div class="row" *ngIf="!loadingHead && HeadData.length>1">
+                                        <div class="col-md-12" *ngIf="!displayRept">
+                                            <div *ngFor="let itm of HeadData">
+                                                <fieldset class="well">
+                                                    <legend class="well-legend" style="margin-left: 30px;">
+                                                        {{itm.job_title}}  - {{itm.start_time | date:'EEE, dd-MMM-yy h.mm a'}}</legend>
+                                                    <div class="col-md-12 text-right">
+                                                        <span style="height: 25px;color: #25A23E;cursor: pointer;"
+                                                            class="fa fa-caret-down" (click)="expandCompareRow(itm)"
+                                                            *ngIf="!itm.expanded"> Show Details</span>
+                                                        <span style="height: 25px;color: red;cursor: pointer;"
+                                                            class="fa fa-caret-up" (click)="expandCompareRow(itm)"
+                                                            *ngIf="itm.expanded"> Hide Details</span>
+                                                    </div>
+                                                    <!-- start: all assessment complete -->
+                                                    <div *ngIf="itm.expanded && itm.cntNotCmplt<1">
+                                                        <div class="col-md-12"><span style="color: red;"><b>Proceed for
+                                                                    Moderation</b></span>
+                                                            <br><br>
+                                                            <table style="font-size: small;width: 100%;">
+                                                                <tbody>
+                                                                    <tr>
+                                                                        <td> {{itm.company}}</td>
+                                                                        <td rowspan="2"
+                                                                            style="text-align: right;vertical-align: top;">
+                                                                            <button id="performMod"
+                                                                                style="width: 140px;margin-right: 20px;"
+                                                                                type="button"
+                                                                                (click)="getReport(itm.adv_id)"
+                                                                                class="btn m-btn--pill btn-primary btn-sm">
+                                                                                Perform Moderation
+                                                                            </button></td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>{{itm.division}}</td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table><br>
+                                                        </div>
+                                                    </div>
+                                                    <!-- end: all assessment complete -->
+
+                                                    <!-- start: got pending assessment -->
+                                                    <div *ngIf="itm.expanded && itm.cntNotCmplt>0">
+                                                        <div class="col-lg-12">
+                                                            <span style="color: red;"><b>{{itm.cntNotCmplt}} Pending on
+                                                                    Submit Assessment Form</b></span><br><br>
+                                                            <div class="table-responsive">
+                                                                <table class="table table-hover" cellspacing="5px"
+                                                                    style="font-size: small;">
+                                                                    <thead class="thead-light">
+                                                                        <tr>
+                                                                            <th>No</th>
+                                                                            <th>Panel Name</th>
+                                                                            <th>Role</th>
+                                                                            <th>Candidate </th>
+                                                                            <th>Status </th>
+                                                                        </tr>
+                                                                    </thead>
+                                                                    <tbody>
+                                                                        <tr
+                                                                            *ngFor="let res1 of itm.pendingAsmt;let i=index">
+                                                                            <td>{{i+1}}</td>
+                                                                            <td>{{res1.panelName}}</td>
+                                                                            <td>{{res1.roleName}} <span
+                                                                                    *ngIf="res1.replacement==1">(Replacement)</span>
+                                                                            </td>
+                                                                            <td>{{res1.candidateName}}</td>
+                                                                            <td>
+                                                                                <span
+                                                                                    *ngIf="res1.asmtStatus=='Submitted'"
+                                                                                    style="color: green;">
+                                                                                    <b>{{res1.asmtStatus}}</b>
+                                                                                </span>
+                                                                                <span *ngIf="res1.asmtStatus=='Pending'"
+                                                                                    style="color: red;">
+                                                                                    <b>{{res1.asmtStatus}}</b>
+                                                                                </span>
+                                                                            </td>
+                                                                        </tr>
+                                                                    </tbody>
+                                                                </table>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <!-- end: got pending assessment -->
+
+                                                </fieldset>
+                                                <div class="row" style="height: 10px;width: 100%;">
+                                                    <div class="col-md-12">&nbsp;</div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-lg-12" *ngIf="displayRept">
+                                            <div style="text-align: center;" *ngIf="loadingRept">
+                                                <img src="../assets/img/user/ERA.gif" style="width:auto;height:100px;">
+                                            </div>
+                                            <div *ngIf="!loadingRept" class="row">
+                                                <div class="col-md-12">
+                                                    <span
+                                                        style="font-weight: bold; color: blue;">
+                                                        {{dataSession[0].position}}
+                                                    </span><br>
+                                                        {{dataSession[0].company}}<br>
+                                                        {{dataSession[0].division}}<br><br>
+                                                </div>
+                                            </div>
+                                            <div *ngIf="!loadingRept" style="text-align: center;">
+                                                <br>
+                                                <form [formGroup]="reportForm">
+                                                    <table class="table-responsive table table-hover" cellspacing="3px"
+                                                        style="font-size: small;width:98%;display:inline-block;text-align: left;">
+                                                        <thead class="thead-light">
+
+                                                            <tr>
+                                                                <!-- <th>No</th> -->
+                                                                <th style="vertical-align: top;">Name</th>
+                                                                <th style="vertical-align: top;">LOB</th>
+                                                                <th *ngIf= "dataSession[0].type != 3" style="vertical-align: top;">Job Type</th>
+                                                                <th style="vertical-align: top;">Rank</th>
+                                                                <th *ngIf= "dataSession[0].type != 3" style="vertical-align: top;">Promotion Score(%)</th>
+                                                                <th *ngIf= "dataSession[0].type == 3" style="vertical-align: top;">Assessment Score(%)</th> 
+                                                                <th style="vertical-align: top;">Interview Score (%)</th>
+                                                                <th *ngIf= "dataSession[0].type != 3" style="vertical-align: top;">Final Score (%)</th>
+                                                                <th style="vertical-align: top;">Result</th>
+                                                                <th style="vertical-align: top;">Head Panel Remarks</th>
+                                                                <th style="vertical-align: top;">View Details</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody style="border-bottom: 1px solid #f4f5f8;">
+                                                            <tr *ngFor="let itm of dataCandidate;let i=index;"
+                                                                formArrayName="rept">
+                                                                <!-- <td>{{i+1}}.</td> -->
+                                                                <td>{{itm.name}}</td>
+                                                                <td>{{itm.lob}}</td>
+                                                                <td *ngIf= "dataSession[0].type != 3">
+                                                                    <span *ngIf="itm.criteria == null">Still
+                                                                        In-Progress</span>
+                                                                    <span *ngIf="itm.criteria == 0">Lateral</span>
+                                                                    <span *ngIf="itm.criteria == 1">Promotion</span>
+                                                                    <span *ngIf="itm.criteria == 2">Promotion</span>
+                                                                </td>
+                                                                <td>{{i+1}}</td>
+                                                                <td *ngIf= "dataSession[0].type != 3">
+                                                                    <span *ngIf="itm.criteria == null">-</span>
+                                                                    <span *ngIf="itm.criteria == 0">-</span>
+                                                                    <span
+                                                                        *ngIf="itm.criteria == 1">{{itm.competencyFnlM | number : '1.2-2'}}</span>
+                                                                    <span
+                                                                        *ngIf="itm.criteria == 2">{{itm.competencyFnlM | number : '1.2-2'}}</span>
+                                                                </td>
+                                                                <td *ngIf= "dataSession[0].type == 3">{{itm.Total_Assessment}}</td>
+                                                                <td *ngIf= "dataSession[0].type != 3">
+                                                                    <span *ngIf="itm.criteria == null">-</span>
+                                                                    <span
+                                                                        *ngIf="itm.criteria == 0">{{itm.average | number : '1.2-2'}}</span>
+                                                                    <span
+                                                                        *ngIf="itm.criteria == 1">{{itm.average/100*30 | number : '1.2-2'}}</span>
+                                                                    <span
+                                                                        *ngIf="itm.criteria == 2">{{itm.average/100*30 | number : '1.2-2'}}</span>
+                                                                </td>
+                                                                <td [formGroupName]="i" *ngIf= "dataSession[0].type != 3">
+                                                                    {{itm.ttlmarks| number : '1.2-2'}}
+                                                                </td>
+                                                                <td [formGroupName]="i" *ngIf= "dataSession[0].type == 3">
+                                                                    {{itm.ivttlmarks_ne| number : '1.2-2'}}
+                                                                </td>
+                                                                <td [formGroupName]="i">
+                                                                    <select name="result" id="result"
+                                                                        class="form-control m-input"
+                                                                        formControlName="result"
+                                                                        style="width: 155px;height: 35px;font-size: small;font-family: Roboto !important;"
+                                                                        [ngClass]="{'is-invalid':submittedF && !reportForm.get('rept').controls[i].get('result').valid}">
+                                                                        <!-- <option value="">-- Please
+                                                                        Select --</option> -->
+                                                                        <option value="Recommended">
+                                                                            Recommended</option>
+                                                                        <option value="Reserved">
+                                                                            Reserved</option>
+                                                                        <option value="Not Recommended">
+                                                                            Not Recommended
+                                                                        </option>
+                                                                    </select>
+                                                                </td>
+                                                                <td [formGroupName]="i"><textarea rows="5"
+                                                                        formControlName="remark"
+                                                                        [ngClass]="{'is-invalid':submittedF && !reportForm.get('rept').controls[i].get('remark').valid}"
+                                                                        class="form-control m-input"
+                                                                        style="width: 160px;font-size: small;font-family: Roboto !important;"
+                                                                        placeholder="">
+                                                                    </textarea>
+                                                                </td>
+                                                                <td><button class="btn" and
+                                                                        style="padding:2px;background-color:transparent"
+                                                                        id="view" type="button" data-toggle="modal"
+                                                                        data-target="#summary_modal"
+                                                                        (click)="getApplicantResult(itm.candidateID)"
+                                                                        ngbTooltip="View Details">
+                                                                        <i class="fa fa-search"></i>
+                                                                    </button></td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+
+                                                </form>
+                                            </div>
+                                            <div *ngIf="!loadingRept">
+                                                <div class="row">
+                                                    <div *ngFor="let itemP of dataPanel" class="column"
+                                                        style="margin: 20px;">
+                                                        <span *ngIf="itemP.rolename === 'Head Interview Panel'"><b>Approved
+                                                                by </b></span><b>{{itemP.rolename}}
+                                                            <span *ngIf="itemP.replacement==1">(Replacement)</span>
+                                                        </b>
+                                                        <br>Name: {{itemP.name}} <br>Position:
+                                                        {{itemP.post_Desc}}
+                                                        <br>Band: {{itemP.psgroup}}<br>Date: {{myDate}}
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-md-12 text-right">
+                                                       <button (click)="submitFinal()" type="button" *ngIf = "dataSession[0].type != 3"
+                                                            class="btn m-btn m-btn--gradient-from-danger m-btn--gradient-to-warning ml-3"
+                                                            style="background: #FF5A00; background-color: #FF5A00; border-color: #FF5A00;"
+                                                            [class.spinner]="loadingFinal" [disabled]="loadingFinal">
+                                                            Submit
+                                                        </button><br><br>
+                                                        <button (click)="submitFinalNE()" type="button" *ngIf = "dataSession[0].type == 3"
+                                                            class="btn m-btn m-btn--gradient-from-danger m-btn--gradient-to-warning ml-3"
+                                                            style="background: #FF5A00; background-color: #FF5A00; border-color: #FF5A00;"
+                                                            [class.spinner]="loadingFinal" [disabled]="loadingFinal">
+                                                            Submit
+                                                    </button><br><br>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- end moderation more than 1 rec -->
+
+                                </div>
+                                <!-- end moderation -->
+
+                                <!-- start history -->
+                                <div class="{{tabclass}}" id="tab_history" role="tabpanel">
+
+                                    <div style="text-align: center;" *ngIf="loadingHistory">
+                                        <img src="../assets/img/user/ERA.gif" style="width:auto;height:100px;">
+                                    </div>
+                                    <div class="row" *ngIf="!loadingHistory">
+                                        <div class="col-lg-12">
+                                            <div class="m-portlet m-portlet"
+                                                *ngFor="let job of HistoryData; let i=index">
+                                                <div class="job-portlet m-portlet__body">
+                                                    <div class="m-widget4">
+                                                        <div class="row">
+                                                            <div class="text-left job-details col-md-6"
+                                                                (click)="jobInfoClicked(job.adv_id)">
+                                                                <span class="job_title m-widget4__title">
+                                                                    {{job.job_title}}
+                                                                </span> <br>
+                                                                <span class="job_title_sub m-widget4__sub">
+                                                                    {{job.location}}
+                                                                </span><br><br>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-md-4"><img class="job_img"
+                                                                    src="{{job.image_url}}"></div>
+                                                            <div class="col-md-8">
+                                                                <div>
+                                                                    <span class="job_title_sub m-widget4__sub">
+                                                                        <div class="m-wizard m-wizard--2 m-wizard--success m-wizard--step-first"
+                                                                            id="m_wizard">
+                                                                            <div class="m-portlet__padding-x">
+                                                                                <!-- Here you can put a message or alert -->
+                                                                            </div>
+
+                                                                            <div
+                                                                                class="m-wizard__head m-portlet__padding-x">
+                                                                                <div class="m-wizard__progress">
+                                                                                    <div class="progress">
+                                                                                        <div class="progress-bar"
+                                                                                            role="progressbar"
+                                                                                            aria-valuenow="100"
+                                                                                            aria-valuemin="0"
+                                                                                            aria-valuemax="100"
+                                                                                            [ngStyle]="{ 'width' : chkProgressWidth(job.currentStatus) }"
+                                                                                            style="background: #fd5806">
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+
+                                                                                <div class="m-wizard__nav">
+                                                                                    <div class="m-wizard__steps">
+                                                                                        <div [class.m-wizard__step--current]="checkStatus(job.currentStatus, 1)"
+                                                                                            class="m-wizard__step"
+                                                                                            m-wizard-target="m_wizard_form_step_1">
+                                                                                            <span
+                                                                                                class="m-wizard__step-number">
+                                                                                                <span
+                                                                                                    class="step-number">
+                                                                                                    1
+                                                                                                    <!-- <i class="fa  flaticon-placeholder"></i> -->
+                                                                                                </span>
+                                                                                            </span>
+                                                                                        </div>
+
+                                                                                        <div [class.m-wizard__step--current]="checkStatus(job.currentStatus,2)"
+                                                                                            class="m-wizard__step "
+                                                                                            m-wizard-target="m_wizard_form_step_2">
+                                                                                            <span
+                                                                                                class="m-wizard__step-number">
+                                                                                                <span
+                                                                                                    class="step-number">
+                                                                                                    2
+                                                                                                    <!-- <i class="fa  flaticon-layers"></i> -->
+                                                                                                </span>
+                                                                                            </span>
+                                                                                        </div>
+
+                                                                                        <div [class.m-wizard__step--current]="checkStatus(job.currentStatus, 3)"
+                                                                                            class="m-wizard__step"
+                                                                                            m-wizard-target="m_wizard_form_step_3">
+                                                                                            <span
+                                                                                                class="m-wizard__step-number">
+                                                                                                <span
+                                                                                                    class="step-number">
+                                                                                                    3
+                                                                                                    <!-- <i class="fa  flaticon-layers"></i> -->
+                                                                                                </span>
+                                                                                            </span>
+                                                                                        </div>
+
+                                                                                        <div [class.m-wizard__step--current]="checkStatus(job.currentStatus, 4)"
+                                                                                            class="m-wizard__step"
+                                                                                            m-wizard-target="m_wizard_form_step_4">
+                                                                                            <span
+                                                                                                class="m-wizard__step-number">
+                                                                                                <span
+                                                                                                    class="step-number">
+                                                                                                    4
+                                                                                                    <!-- <i class="fa  flaticon-layers"></i> -->
+                                                                                                </span>
+                                                                                            </span>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+
+                                                                            </div>
+                                                                        </div>
+                                                                    </span>
+                                                                    <br><br><br>
+                                                                </div>
+                                                            </div>
+
+                                                        </div>
+
+                                                        <div class="m-widget4__item" style="width: 100% !important">
+                                                            <div class="m-accordion m-accordion--default m-accordion--solid m-accordion--section  
+                                                                                                                        m-accordion--toggle-arrow"
+                                                                role="tablist">
+                                                                <div class="m-accordion__item">
+                                                                    <div class="m-accordion__item-head collapsed"
+                                                                        role="tab" [attr.id]="'m_accordion_'+i"
+                                                                        [attr.href]="'#m_accordion_body'+i"
+                                                                        data-toggle="collapse" aria-expanded="false">
+                                                                        <!-- [class.red_color]="checkReject(job.status_code)" -->
+                                                                        <span
+                                                                            class="info_title m-accordion__item-title">
+                                                                            Status : {{job.currentStatus}}
+                                                                        </span>
+                                                                        <span
+                                                                            style="padding-right:1rem; font-size:1.2rem ">Details</span>
+                                                                        <span class="m-accordion__item-mode"></span>
+                                                                    </div>
+                                                                    <div class="m-accordion__item-body collapse"
+                                                                        [attr.id]="'m_accordion_body'+i" role="tabpanel"
+                                                                        [attr.data-parent]="'#m_accordion_'+i">
+                                                                        <div
+                                                                            class="acc_content m-accordion__item-content">
+
+                                                                            <div id="mCSB_4_container"
+                                                                                style="position: relative; top: 0px; left: 0px;"
+                                                                                dir="ltr">
+
+                                                                                <!--Begin::Timeline 2 -->
+                                                                                <div class="m-timeline-2">
+                                                                                    <div class="m-timeline-2__items ">
+                                                                                        <div class="m-timeline-2__item">
+                                                                                            <div
+                                                                                                class="m-timeline-2__item-cricle">
+                                                                                                <i
+                                                                                                    class="full theme_color fa fa-circle"></i>
+
+                                                                                            </div>
+                                                                                            <div
+                                                                                                class="m-timeline-2__item-text m-timeline-2__item-text--bold">
+                                                                                                <span
+                                                                                                    style="font-size: 15px !important">Interview
+                                                                                                    Session</span>
+                                                                                                <br>
+                                                                                                <span
+                                                                                                    style="font-size: 13px !important">
+                                                                                                    Date :
+                                                                                                    {{job.start_time | date:'dd MMM yyyy'}}<br>
+                                                                                                    Venue :</span>
+                                                                                                <span
+                                                                                                    style="font-size: 13px"
+                                                                                                    *ngIf="job.venue_type == 'Physical'">{{job.venue}}</span>
+                                                                                                <span
+                                                                                                    style="font-size: 13px"
+                                                                                                    *ngIf="job.venue_type == 'Virtual'">Virtual
+                                                                                                    Meeting</span>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                        <div
+                                                                                            class="m-timeline-2__item m--margin-top-30">
+                                                                                            <div
+                                                                                                class="m-timeline-2__item-cricle">
+                                                                                                <i *ngIf="checkStatus(job.currentStatus, 2)"
+                                                                                                    class="full theme_color fa fa-circle"></i>
+                                                                                                <i *ngIf="!checkStatus(job.currentStatus, 2)"
+                                                                                                    class="not-full fa fa-genderless"></i>
+                                                                                            </div>
+                                                                                            <div
+                                                                                                class="m-timeline-2__item-text m-timeline-2__item-text--bold">
+                                                                                                <span
+                                                                                                    style="font-size: 15px !important">Assessment
+                                                                                                    In
+                                                                                                    Progress
+                                                                                                </span>
+                                                                                                <br>
+                                                                                                <span
+                                                                                                    style="font-size: 13px !important"
+                                                                                                    *ngIf="job.currStatus >= 2">
+                                                                                                    Date :
+                                                                                                    {{job.start_time | date:'dd MMM yyyy'}}
+                                                                                                </span>
+                                                                                                <span
+                                                                                                    style="font-size: 13px !important;color: red;"
+                                                                                                    *ngIf="job.report == null && job.dtdiff > 0">
+                                                                                                    <br>Pending
+                                                                                                    Submission
+                                                                                                </span>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                        <div
+                                                                                            class="m-timeline-2__item m--margin-top-30">
+                                                                                            <div
+                                                                                                class="m-timeline-2__item-cricle">
+                                                                                                <i *ngIf="checkStatus(job.currentStatus, 3)"
+                                                                                                    class="full theme_color fa fa-circle"></i>
+                                                                                                <i *ngIf="!checkStatus(job.currentStatus, 3)"
+                                                                                                    class="not-full fa fa-genderless"></i>
+                                                                                            </div>
+                                                                                            <div
+                                                                                                class="m-timeline-2__item-text m-timeline-2__item-text--bold">
+                                                                                                <span
+                                                                                                    style="font-size: 15px !important">Report
+                                                                                                    Submission</span>
+                                                                                                <br>
+                                                                                                <span
+                                                                                                    style="font-size: 13px !important"
+                                                                                                    *ngIf="job.report != null">
+                                                                                                    Date :
+                                                                                                    {{job.intvwReportDt | date:'dd MMM yyyy'}}
+                                                                                                </span>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                        <div
+                                                                                            class="m-timeline-2__item m--margin-top-30">
+                                                                                            <div
+                                                                                                class="m-timeline-2__item-cricle">
+                                                                                                <i *ngIf="checkStatus(job.currentStatus, 4)"
+                                                                                                    class="full theme_color fa fa-circle"></i>
+                                                                                                <i *ngIf="!checkStatus(job.currentStatus, 4)"
+                                                                                                    class="not-full fa fa-genderless"></i>
+                                                                                            </div>
+                                                                                            <div
+                                                                                                class="m-timeline-2__item-text m-timeline-2__item-text--bold">
+                                                                                                <span
+                                                                                                    style="font-size: 15px !important">Completed</span>
+                                                                                                <br>
+                                                                                                <span
+                                                                                                    style="font-size: 13px !important"
+                                                                                                    *ngIf="job.currStatus == 4">
+                                                                                                    Date :
+                                                                                                    {{job.completed_on | date:'dd MMM yyyy'}}
+                                                                                                </span>
+                                                                                            </div>
+                                                                                        </div>
+
+                                                                                    </div>
+                                                                                </div>
+                                                                                <!--End::Timeline 2 -->
+
+                                                                            </div>
+
+                                                                        </div>
+                                                                    </div>
+
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- end history -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="summary_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                    <div style="text-align: center; padding: 5rem" *ngIf="loadingResult">
+                        <img src="../assets/img/user/ERA.gif" style="width:auto;height:100px;">
+                    </div>
+                    <div class="modal-header" *ngIf="!loadingResult">
+                        <h5 class="modal-title" id="exampleModalLabel" style="margin-left: 0;">
+                            Interview Score
+                        </h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">
+                                &times;
+                            </span>
+                        </button>
+                    </div>
+                    <div class="modal-body" *ngIf="!loadingResult">
+                        <table>
+                            <tr>
+                                <td>
+                                    <img src="{{imgApplicant}}" class="rounded" style="max-width: 120px !important;">
+                                </td>
+                                <td style="vertical-align:top;text-align: left;padding-left: 10px;">
+                                    <span style="font-weight: bold;">{{appResultData[0].candidateName}}</span>
+                                    <br *ngIf = "appResultData[0].type != 3">
+                                    <span *ngIf = "appResultData[0].type != 3">
+                                        <span style="font-weight: bold;color: blue;"
+                                            *ngIf="appResultData[0].criteria == null">Still
+                                            In-Progress</span>
+                                        <span style="font-weight: bold;color: blue;"
+                                            *ngIf="appResultData[0].criteria == 0">Lateral</span>
+                                        <span style="font-weight: bold;color: blue;"
+                                            *ngIf="appResultData[0].criteria == 1">Promotion
+                                            <i class="fa fa-check m--font-success"
+                                                ngbTooltip="Meet Promotion Criteria"></i></span>
+                                        <span style="font-weight: bold;color: blue;"
+                                            *ngIf="appResultData[0].criteria == 2">Promotion
+                                            <i class="fa fa-remove m--font-danger"
+                                                ngbTooltip="Does Not Meet Promotion Criteria"></i></span>
+                                    </span>
+                                    <br>
+                                    Email:
+                                    <span style="color: blue;text-decoration: underline;"><a
+                                            href="mailto:{{appResultData[0].Email}}">{{appResultData[0].Email}}</a></span>
+                                    <br>
+                                    <span style="color: blue;">{{appResultData[0].YIB}}
+                                        Years in Band
+                                    </span>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="modal-body" *ngIf="!loadingResult">
+                        <!-- <h4 class="modal-title" id="exampleModalLongTitle">Result</h4>-->
+                        <table class="table table-hover" style="font-size: small;">
+                            <thead class="thead-light">
+                                <tr>
+                                    <th style="width: 5%;">No</th>
+                                    <th style="width: 40%;">Panel</th>
+                                    <th style="width: 10%;">Score</th>
+                                    <th style="width: 45%;">Remark</th>
+                                </tr>
+                            </thead>
+                            <tbody style="border-bottom: 1px solid #f4f5f8;">
+                                <tr *ngFor="let itemC of appResultData;let i = index;">
+                                    <td>{{i+1}}.</td>
+                                    <td> <b>{{itemC.roleName}} <span
+                                                *ngIf="itemC.replacement==1">(Replacement)</span></b><br>
+                                        Name: {{itemC.panelName}}
+                                        <br>Position: {{itemC.Post_Desc}}<br>{{itemC.dateSubmit | date:'dd MMM yyyy'}}
+                                    </td>
+                                    <td style="vertical-align: top;">{{itemC.finalScore}}%</td>
+                                    <td style="vertical-align: top;">{{itemC.remarks}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <!-- <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="resetForm()">
+                                Close
+                            </button>          
+                        </div> -->
+                </div>
+            </div>
+        </div>
+        <!-- NE Promo -->
+        <button [hidden]="true" id="declareIntegrityModal" data-toggle="modal" data-target="#declare_Integrity_modal">x</button>
+       
+        <!-- START: Declaration Integrity Dialog -->
+        <div class="modal fade" id="declare_Integrity_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" *ngIf = "selDeclare == null"
+        aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <form [formGroup]="declareForm">
+                <div class="modal-content">
+                    <div class="container">
+                        <div class="col-md-12" style="text-align: right;">
+                            <img src="../assets/frontpage/images/files/tm-logo.png" alt="" style="width:auto;height:30px; position: initial; margin:10%">
+                        </div> 
+                        <div style="text-align: center;">
+                        <label style ="font-size: medium; padding-left:10; padding-right: 10; font-family: Arial, Helvetica, sans-serif; font-weight: bold;">
+                            INTERVIEW PANEL
+                            <p>DECLARATION OF INTEGRITY, NO CONFLICT OF INTEREST AND CONFIDENTIALITY</p>   
+                        </label>
+                        <label class="col-md-10" style ="font-size: medium; font-family: Arial, Helvetica, sans-serif">
+                            (To be completed prior to the interview session, allowing time to excuse or replace an interview panel 
+                                member, if needed, because of a conflict of interest)
+                        </label>
+                        </div>
+                    </div> 
+                    <div class="modal-body">
+                        <div class="form-group m-form__group">
+                            <div class="container" style="font-family: Arial, Helvetica, sans-serif; font-size: medium;">
+                                <div class="container" style= "border: 1px solid black; border-collapse: collapse;">
+                                    <div class="row">
+                                        <div class="col-md-3">Position Title</div>
+                                        <div class="col-md-1">:</div>
+                                        <div class="col-md-6">{{selPosition}}</div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-3">Position No.</div>
+                                        <div class="col-md-1">:</div>
+                                        <div class="col-md-6">{{selPosId}}</div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-3">Position Placement</div>
+                                        <div class="col-md-1">:</div>
+                                        <div class="col-md-6" *ngIf = "selVenueType == 'Physical'">{{selVenue}}</div>
+                                        <div class="col-md-6" *ngIf = "selVenueType == 'Virtual'">
+                                            <a href= "{{selVenue}}" target="_blank">
+                                                Ms Team link
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-3">Interview Date</div>
+                                        <div class="col-md-1">:</div>
+                                        <div class="col-md-6">{{selStart | date:'dd MMM yyyy h:mma'}} - {{selEnd | date:'dd MMM yyyy h:mma'}}</div>
+                                    </div>
+                            </div>
+                            <br><br>
+                            <div style="text-align: justify;">
+                                I, the undersigned, hereby declare, acting as member of the interviewing panel (“Member”) for 
+                                employment of external candidates for the abovementioned position in TM Group (“Purpose”), I shall 
+                                execute my responsibilities honestly and fairly. I, in performing my responsibilities hereunder, declare 
+                                and confirm that: 
+                            </div>
+                            <br>
+                            <div class="row" style="text-align: justify;">
+                                <div class="col-md-1">(a)</div>
+                                <div class="col-md-10">I do not have any conflict of interest in connection to the selection of the applications. I will inform 
+                                    the Head Human Capital Business Operations, without delay, of any situation constituting a conflict 
+                                    of interest or could give rise to a conflict of interest as specified in the Code of Conduct and 
+                                    Business Ethics issued by TM;
+                                </div>
+                            </div>
+                            <br>
+                            <div class="row" style="text-align: justify;">
+                                <div class="col-md-1">(b)</div>
+                                <div class="col-md-10">I have not made, and will not to make, any offer of any type whatsoever from which an advantage 
+                                    can be derived under the Purpose;
+                                </div>
+                            </div>
+                            <br>
+                            <div class="row" style="text-align: justify;">
+                                <div class="col-md-1">(c)</div>
+                                <div class="col-md-10">I have not granted, sought, attempted to obtain or accepted and will not grant, seek, attempt to 
+                                    obtain, or accept any advantage, financial or in kind, to or from any party whatsoever, constituting 
+                                    an illegal or corrupt practice, either directly or indirectly, as an incentive or reward relating to the 
+                                    Purpose. 
+                                </div>
+                            </div>
+                            <br>
+                            <div style="text-align: justify;">
+                                I understand that the Head Human Capital Business Operations reserves the right to verify this 
+                                information and that I am aware of the consequences which may derive from any false declaration in 
+                                respect of the information required by the Head Human Capital Business Operations as a condition of 
+                                participation in the Purpose.
+                            </div>
+                            <br>
+                            <div style="text-align: justify;">
+                                I, understanding the importance of the principles of integrity and independence in the Purpose, am 
+                                committed to: 
+                            </div>
+                            <div class="row" style="text-align: justify;">
+                                <div class="col-md-1">(a)</div>
+                                <div class="col-md-10">act with honesty and integrity, and do not allow commercial, financial or other pressure which 
+                                    might compromise my integrity; 
+                                </div>
+                            </div>
+                            <br>
+                            <div class="row" style="text-align: justify;">
+                                <div class="col-md-1">(b)</div>
+                                <div class="col-md-10">not to propose and not to provide consultations to applicants; 
+                                </div>
+                            </div>
+                            <br>
+                            <div class="row" style="text-align: justify;">
+                                <div class="col-md-1">(c)</div>
+                                <div class="col-md-10">to take decisions based only on objective evidences and prevent influence of personal interests 
+                                    or interests of other parties.
+                                </div>
+                            </div>
+                            <br>
+                            <div style="text-align: justify;">
+                                I agree to hold in trust and confidence any information or documents (“confidential information”) including 
+                                personal data and sensitive personal data as defined in the Personal Data Protection Act 2010 disclosed 
+                                to me or discovered by me or prepared by me in the course of acting as a Member. I agree that it shall 
+                                be used only for the described purposes and shall not be disclosed to any third party. I also agree not to 
+                                retain copies of any written or electronic information or prototypes supplied. I shall take all necessary 
+                                actions to reduce and/or eliminate any possible leakage of the Confidential Information and safeguard 
+                                against thereof.
+                            </div>
+                            <br>
+                            <div style="text-align: justify;">
+                                I duly understand that the failure to comply with this Declaration may result in disciplinary action taken 
+                                against me, including termination and dismissal and commencement of legal action against me.
+                            </div>
+                            <br>
+                            <div style="text-align: justify;">
+                                This Declaration shall be governed by and construed and enforced in accordance with the laws of 
+                                Malaysia. Notwithstanding anything contrary herein, I agree that my obligations provided herein are 
+                                necessary and reasonable in order to protect TM’s business and interest, and I expressly agree that 
+                                monetary damages would be inadequate to compensate TM for any breach which I have incurred of its 
+                                covenants set forth herein.
+                            </div>
+                            <br>
+                            <div></div>
+                            </div>
+                            <br><br>
+                            <div class="row">
+                                <div class="col-md-12" style="text-align: left; font-size: medium;">
+                                    <div> <input type="checkbox" formControlName="chxBoxAgree" id="checkIntegrityFrm" name="checkIntegrityFrm" (click)="checkBtn($event)"> 
+                                        <span style= "color: rgb(255, 136, 0); font-weight: bold;">&nbsp;I Agree</span> 
+                                    </div>
+                                </div>
+                            </div>
+                            <div style="text-align: right;">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal" 
+                                (click)="getPanelist()" (click)="resetdeclareForm()" (click)="resetAddBtn()">
+                                        Cancel
+                                </button>&nbsp;
+                                <button *ngIf="ischeck" [disabled]="!declareForm.valid" type="submit" 
+                                class="btn m-btn m-btn--gradient-from-primary m-btn--gradient-to-info"
+                                    onclick="$('.modal').modal('hide')" (click)="resetdeclareForm()" 
+                                    (click)="resetAddBtn()" (click)= "panelAcceptForm(selAdsId)">
+                                    OK
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+        </div>
+        <!-- END: End Declaration Integrity Dialog -->
+
+    </div>
+</div>

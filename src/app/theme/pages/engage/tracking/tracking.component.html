@@ -1,0 +1,255 @@
+
+<!-- START: Subheader -->
+<div class="m-subheader" appunwraptag="">
+    <div class="d-flex align-items-center">
+        <div class="mr-auto">
+            <h3 class="m-subheader__title m-subheader__title--separator">
+                Happy Meter
+            </h3>
+            <ul class="m-subheader__breadcrumbs m-nav m-nav--inline">
+                
+                <li class="m-nav__item">
+                    <span class="m-nav__link-text" style="font-size: 16px">
+                        Tracking
+                    </span>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+<!-- END: Subheader -->
+
+
+<div class="m-content">
+    <div class="row">   
+        <div class="col-xl-12">
+
+            <div class="col-lg-12 centred my-auto" *ngIf="loading">
+                <app-engage-loading></app-engage-loading>
+            </div>
+
+            <div class="m-portlet m-portlet--rounded m-portlet--full-height" *ngIf="!loading">
+                <div class="m-portlet__head m--bg-focus" style="background: #FF5A00!important">
+                    <div class="m-portlet__head-caption">
+                        <div class="m-portlet__head-title">
+                            <h3 class="m-portlet__head-text m--font-inverse-primary" style="font-size: 18px">
+                                Tracking Filter
+                            </h3>
+                        </div>
+                    </div>
+                </div>
+                        
+                <div class="m-portlet__body">
+                    <form [formGroup]="filterForm" autocomplete="off">
+                        <div class="row">
+
+                            <div class="col-md-4">
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        <label style="margin-top:9px;">LOB: </label>
+                                    </div>
+                                    <div class="col-md-9">
+                                        <select name="lob" id="lob" class="form-control m-input" formControlName="filterLob">
+                                            <option value="">All</option>
+                                            <option [value]="item.lob" *ngFor="let item of filterData.lob">{{item.lob}}</option>
+                                        </select> 
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        <label style="margin-top:9px;">TYPE: </label>
+                                    </div>
+                                    <div class="col-md-9">
+                                        <select name="type" id="type" class="form-control m-input" formControlName="filterType">
+                                            <option value="">All</option>
+                                            <option [value]="item.id" *ngFor="let item of filterData.type">{{item.type}}</option>
+                                        </select> 
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        <label style="margin-top:9px;">REASON: </label>
+                                    </div>
+                                    <div class="col-md-9">
+                                        <select name="reason" id="reason" class="form-control m-input" formControlName="filterReason">
+                                            <option value="">All</option>
+                                            <option [value]="item.reason" *ngFor="let item of filterData.reason">{{item.reason}}</option>
+                                        </select> 
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-4" style="margin-top: 1rem !important">
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <label style="margin-top:9px;">START DATE: </label>
+                                    </div>
+                                    <div class="col-md-8">
+                                        <input class="form-control m-input" (blur)="updateStartDt()" id="startDt" formControlName="filterStart" 
+                                            placeholder="dd-mm-yyyy" >
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-4" style="margin-top: 1rem !important">
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <label style="margin-top:9px;">END DATE: </label>
+                                    </div>
+                                    <div class="col-md-8">
+                                        <input class="form-control m-input" (blur)="updateEndDt()" id="endDt" formControlName="filterEnd" placeholder="dd-mm-yyyy">
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="col-md-4" style="text-align: right !important; margin-top: 1rem !important">
+                                <button  class="btn btn-focus m-btn m-btn--pill m-btn--custom m-btn--air m-login__btn m-login__btn--primary" style="background: #FF5A00!important; background-color: #FF5A00!important; border-color: #FF5A00!important;width: 8rem"
+                                    [disabled]="loading2"
+                                    type="button" (click)="searchSubmit()">
+                                    Apply
+                                </button>
+                            </div>
+
+                            <div class="col-md-12">
+                                <span style="color:red" *ngIf="errDate">End date should not be less than start date.</span>
+                            </div>
+
+                        </div>
+                    </form>
+
+                    <div class="centred my-auto" style="padding-top: 2rem" *ngIf="loading2">
+                        <app-engage-loading></app-engage-loading>
+                    </div>
+
+                    <!-- :start no data -->
+                    <div class="centred my-auto" *ngIf="!loading2&&pagedItems.length<1">
+                        <div class="m-demo__preview" style="padding-top:20px">
+                            <div class="m-stack m-stack--ver m-stack--general m-stack--demo">
+                                <div class="m-stack__item m-stack__item--center m-stack__item--middle">
+                                    <span style="color:red" *ngIf="errorOnTrackdata">
+                                        Something went wrong. Please try again in sometime.
+                                    </span>
+                                    <span *ngIf="!errorOnTrackdata">
+                                        List is empty
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- :end no data -->
+
+                    <div class="row" *ngIf="!loading2&&pagedItems.length>0" style="margin-top: 2rem;">
+                        <div class="col-12" style="text-align: right; margin-top:20px">
+                            <div class="m-demo__preview m-demo__preview--btn">
+                                <button href="#" class="btn btn-primary m-btn m-btn--icon" (click)="download()" [disabled]="downloading" [ngClass]="{'m-loader m-loader--right m-loader--light': downloading}">
+                                    <span>
+                                        <i class="la la-download"></i>
+                                        <span>Download CSV</span>
+                                    </span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="table-responsive" *ngIf="!loading2&&pagedItems.length>0" style="margin-top: 1rem;">
+
+                        <table class="table table-striped  table-hover" style="margin-top: 1rem;">
+                            <thead class="thead-inverse" style="background: #00aabd; color: white; text-align: center">
+                                <tr>
+                                    <!-- <th>Pers No</th> -->
+                                    <th style="width: 10%">LOB</th>
+                                    <th>Position</th>
+                                    <th>Unit</th>
+                                    <th>Group</th>
+                                    <th style="width: 12%">Feel</th>
+                                    <th>Reason</th>
+                                    <th style="width: 20%">Feedback</th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                                <!-- if all, data2 -->
+                                <tr *ngFor="let item of pagedItems; let i = index">
+                                    <!-- <td><span *ngIf="item.pernr_no; else NoempNo">{{item.pernr_no}}</span>
+                                        <ng-template #NoempNo>-</ng-template>
+                                    </td> -->
+                                    <td><span *ngIf="item.lob; else noLob">{{item.lob}}</span>
+                                        <ng-template #noLob>-</ng-template>
+                                    </td>
+                                    <td><span *ngIf="item.position; else noPos">{{item.position}}</span>
+                                        <ng-template #noPos>-</ng-template>
+                                    </td>
+                                    <td><span *ngIf="item.org_unit; else noUnit">{{item.org_unit}}</span>
+                                        <ng-template #noUnit>-</ng-template>
+                                    </td>
+                                    <td><span *ngIf="item.group; else noGroup">{{item.group}}</span>
+                                        <ng-template #noGroup>-</ng-template>
+                                    </td>
+                                    <td>
+                                        <span class="m-badge m-badge--wide" style="width:6.5rem !important; color: white" 
+                                            *ngIf="item.meter_desc; else noMeter" [style.background-color]="getColor(item.meter)">
+                                            {{item.meter_desc}}
+                                        </span>
+                                        <ng-template #noMeter>-</ng-template>
+                                    </td>
+                                    <td><span *ngIf="item.reason; else noRes">{{item.reason}}</span>
+                                        <ng-template #noRes>-</ng-template>
+                                    </td>
+                                    <td><span *ngIf="item.comment; else noComnt">{{item.comment}}</span>
+                                        <ng-template #noComnt>-</ng-template>
+                                    </td>
+                                </tr>
+                            </tbody>       
+                        </table>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-12">
+                            <nav aria-label="Page navigation example">
+                                <ul *ngIf="pager.pages && pager.pages.length" class="pagination justify-content-end">
+                                    <li class="page-item" [ngClass]="{disabled:pager.currentPage === 1}">
+                                        <button (click)="setPage(1)" class="page-link" aria-label="Previous">
+                                            <span aria-hidden="true">&laquo;</span>
+                                            <span class="sr-only">First</span>
+                                        </button>
+                                    </li>
+                                    <li class="page-item" [ngClass]="{disabled:pager.currentPage === 1}">
+                                        <button (click)="setPage(pager.currentPage - 1)" class="page-link"  
+                                            aria-label="Previous">
+                                            <span aria-hidden="true">&lt;</span>
+                                            <span class="sr-only">Previous</span>
+                                        </button>
+                                    </li>
+                                    <li class="page-item" *ngFor="let page of pager.pages" [ngClass]="{active:pager.currentPage === page}">
+                                        <button (click)="setPage(page)" class="page-link" >{{page}}</button>
+                                    </li>
+                                    <li class="page-item" [ngClass]="{disabled:pager.currentPage === pager.totalPages}">
+                                        <button (click)="setPage(pager.currentPage + 1)" class="page-link" 
+                                            aria-label="Previous">
+                                            <span aria-hidden="true">&gt;</span>
+                                            <span class="sr-only">Next</span>
+                                        </button>
+                                    </li>
+                                    <li class="page-item" [ngClass]="{disabled:pager.currentPage === pager.totalPages}">
+                                        <button (click)="setPage(pager.totalPages)" class="page-link"  
+                                            aria-label="Next">
+                                            <span aria-hidden="true">&raquo;</span>
+                                            <span class="sr-only">Last</span>
+                                        </button>
+                                    </li>
+                                </ul>
+                            </nav>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+

@@ -1,0 +1,220 @@
+<div>
+    <div class="m-content">
+        <div class="smallroundbg" id="smallround"></div>
+        <div class="bigroundbg" id="biground"></div>
+        <div ng-if="!env_prod" class="row pb-5">
+            <div class="col-lg-12">
+                <div class="m-portlet m-portlet--rounded">
+                    <div class="m-portlet__head">
+                        <div class="m-portlet__head-caption">
+                            <div class="m-portlet__head-title">
+                                <h3 class="m-portlet__head-text">
+                                    Dashboard
+                                </h3>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="m-portlet__body ">
+                        <form [formGroup]="filterForm" autocomplete="off">
+                            <div class="row">
+
+                                <div class="col-md-1">
+                                    <label style="margin-top:9px;">LOB: </label>
+                                </div>
+                                <div class="col-md-3">
+                                    <select name="fltrLOB" id="fltrLOB" class="form-control m-input"
+                                        formControlName="fltrLOB" #fltrLOB (change)="changeyr()">
+                                        <option value="" *ngIf="mylob===''">All</option>
+                                        <option *ngFor="let item of optLobList" value="{{item.lob}}">{{item.lob}}
+                                        </option>
+                                    </select>
+                                </div>
+                            </div>
+                        </form><br><br>
+                        <div style="text-align: center; padding: 5rem" *ngIf="loading2">
+                            <img src="../assets/img/user/ERA.gif" style="width:auto;height:100px;">
+                        </div>
+                        <div class="row pr-5 pl-5 pb-5" *ngIf="!loading2">
+                            <div class="col-sm-3 pb-1">
+                                <div class="m-portlet m-portlet--rounded mb-0 grid-enlarge">
+                                    <div class="m-portlet__body text-center responsive-grid">
+                                        <div class="m--font-bolder text-adapt">Total Position By Band</div>
+                                        <div class="row">
+                                            <div class="col-md-4" style="margin:auto; text-align: center">
+                                                <img src="../../../../../../assets/blank/images/icon/iconSP_Successor.png"
+                                                    class="pt-1 responsive-img">
+                                                <div class="text-center value-adapt-2"
+                                                    style="font-size: smaller;font-weight: bold;">Band 4</div>
+                                                <div class="text-center value-adapt-2">{{total_band4}}</div>
+                                            </div>
+                                            <div class="col-md-4" style="margin:auto; text-align: center">
+                                                <img src="../../../../../../assets/blank/images/icon/iconSP_Successor.png"
+                                                    class="pt-1 responsive-img">
+                                                <div class="text-center value-adapt-2"
+                                                    style="font-size:smaller;font-weight: bold;">Band 5</div>
+                                                <div class="text-center value-adapt-2">{{total_band5}}</div>
+                                            </div>
+                                            <div class="col-md-4" style="margin:auto; text-align: center">
+                                                <img src="../../../../../../assets/blank/images/icon/iconSP_Successor.png"
+                                                    class="pt-1 responsive-img">
+                                                <div class="text-center value-adapt-2"
+                                                    style="font-size: smaller;font-weight: bold;">NS</div>
+                                                <div class="text-center value-adapt-2">{{total_bandNS}}</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-3 pb-1">
+                                <div class="m-portlet m-portlet--rounded mb-0 grid-enlarge">
+                                    <div class="m-portlet__body text-center responsive-grid">
+                                        <div class="m--font-bolder text-adapt">Total Critical Position</div>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <img src="../../../../../../assets/blank/images/icon/iconSP_Critical.png"
+                                                    class="pt-1 responsive-img">
+                                            </div>
+                                            <div class="col-md-6 value-adapt">
+                                                {{total_critical}}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-3 pb-1">
+                                <div class="m-portlet m-portlet--rounded mb-0 grid-enlarge">
+                                    <div class="m-portlet__body text-center responsive-grid">
+                                        <div class="m--font-bolder text-adapt">Total No of Position Without Successor
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <img src="../../../../../../assets/blank/images/icon/iconSP_Without_Successor.png"
+                                                    class="pt-1 responsive-img">
+                                            </div>
+                                            <div class="col-md-6 value-adapt">
+                                                {{total_postnosuccessor}}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="row pr-5 pl-5 pb-5" *ngIf="!loading2">
+                            <!-- <div class="col-sm-3 pb-1"> -->
+                            <!-- <span class="m--font-boldest" style="font-size:80px;">ACTION</span>
+                            <span style="font-size:80px;">CENTRE</span> -->
+                            <!-- </div> -->
+                            <div class="col-sm-3 pb-1">
+                                <div class="m-portlet m-portlet--rounded mb-0 grid-enlarge">
+                                    <div class="m-portlet__body text-center responsive-grid">
+                                        <div class="m--font-bolder text-adapt">Total No of Successor</div>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <img src="../../../../../../assets/blank/images/icon/iconSP_Successor.png"
+                                                    class="pt-1 responsive-img">
+                                            </div>
+                                            <div class="col-md-6 value-adapt">
+                                                <!---current month download-->
+                                                {{total_successor}}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-3 pb-1">
+                                <div class="m-portlet m-portlet--rounded mb-0 grid-enlarge">
+                                    <div class="m-portlet__body text-center responsive-grid">
+                                        <div class="m--font-bolder text-adapt">Total No of Duplicate Successor</div>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <img src="../../../../../../assets/blank/images/icon/iconSP_Duplicate.png"
+                                                    class="pt-1 responsive-img">
+                                            </div>
+                                            <div class="col-md-6 value-adapt">
+                                                <!---current month download-->
+                                                {{total_duplicate}}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-3 pb-1">
+                                <div class="m-portlet m-portlet--rounded mb-0 grid-enlarge">
+                                    <div class="m-portlet__body text-center responsive-grid">
+                                        <div class="m--font-bolder text-adapt">Total No of Successor for Emergency</div>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <img src="../../../../../../assets/blank/images/icon/iconSP_Emergency.png"
+                                                    class="pt-1 responsive-img">
+                                            </div>
+                                            <div class="col-md-6 value-adapt">
+                                                <!---current month download-->
+                                                {{total_emergency}}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="row pr-5 pl-5 pb-5" *ngIf="!loading2">
+
+                            <div class="col-sm-3 pb-1">
+                                <div class="m-portlet m-portlet--rounded mb-0 grid-enlarge">
+                                    <div class="m-portlet__body text-center responsive-grid">
+                                        <div class="m--font-bolder text-adapt">Total No of Successor for Ready Now</div>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <img src="../../../../../../assets/blank/images/icon/iconSP_ReadyNow.png"
+                                                    class="pt-1 responsive-img">
+                                            </div>
+                                            <div class="col-md-6 value-adapt">
+                                                {{total_readynow}}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-3 pb-1">
+                                <div class="m-portlet m-portlet--rounded mb-0 grid-enlarge">
+                                    <div class="m-portlet__body text-center responsive-grid">
+                                        <div class="m--font-bolder text-adapt">Total No of Successor for Ready 2 to 3
+                                            Years</div>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <img src="../../../../../../assets/blank/images/icon/iconSP_2-3y.png"
+                                                    class="pt-1 responsive-img">
+                                            </div>
+                                            <div class="col-md-6 value-adapt">
+                                                {{total_ready23}}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-3 pb-1">
+                                <div class="m-portlet m-portlet--rounded mb-0 grid-enlarge">
+                                    <div class="m-portlet__body text-center responsive-grid">
+                                        <div class="m--font-bolder text-adapt">Total No of Successor for Ready 3 to 5
+                                            Years</div>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <img src="../../../../../../assets/blank/images/icon/iconSP_3-5y.png"
+                                                    class="pt-1 responsive-img">
+                                            </div>
+                                            <div class="col-md-6 value-adapt">
+                                                {{total_ready35}}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

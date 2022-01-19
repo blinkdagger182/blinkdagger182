@@ -1,0 +1,592 @@
+
+    <!-- <div id="m_scroll_top" class="m-scroll-top">
+        <i class="la la-arrow-up"></i>
+    </div> -->
+    <!-- end::Scroll Top -->		  
+    
+    <!-- begin::Quick Nav -->
+    <nav *ngIf="oldDesign"><!--*ngIf="oldDesign"-->
+        <ul class="m-nav-sticky" style="margin-top: 30px;">
+            <li class="m-nav-sticky__item" data-toggle="m-tooltip" title="Dashboard" data-placement="left">
+                <a (click)="scrollToElement('home')">
+                    <i class="fa fa-circle"></i></a>
+            </li>
+            <li class="m-nav-sticky__item" data-toggle="m-tooltip" title="Extraordinaire" data-placement="left">
+                <a (click)="scrollToElement('Project')">
+                    <i class="fa fa-circle"></i></a>
+            </li>
+            <li class="m-nav-sticky__item" data-toggle="m-tooltip" title="Circle" data-placement="left">
+                <a (click)="scrollToElement('Circle')">
+                    <i class="fa fa-circle"></i></a>
+            </li>
+            <li class="m-nav-sticky__item" data-toggle="m-tooltip" title="Jobs" data-placement="left">
+                <a (click)="scrollToElement('Jobs')">
+                    <i class="fa fa-circle"></i></a>
+            </li>
+            <li class="m-nav-sticky__item" data-toggle="m-tooltip" title="Ask Us" data-placement="left">
+            <a (click)="scrollToElement('contactUs')">
+                <i class="fa fa-circle"></i></a>
+            </li>
+        </ul>
+    </nav>
+    <div class="row">
+        <div class="smallroundbg" id="smallround" *ngIf="newDesign"></div>
+        <div class="bigroundbg" id="biground" *ngIf="newDesign"></div>
+        
+        <div class="container-pages text-center content_pages_0" *ngIf="newDesign">
+            <div id="home1" #home1 style="position: absolute; margin-top:-69px;" class="row pt-5 pb-5"></div>
+            <div class="grouppeople">
+                <img src="../../../../../../assets/blank/images/peoplebg.png" class="imggrouppeople">
+            </div>
+            <!-- <div class="row pt-5">
+                
+            </div> -->
+            
+            <div class="row icons-row">
+
+                <div class="col-sm-4 p-t-d15" *ngIf="showTalent || showTalent2"> <!--Talent Classification-->
+                    <div class="m-portlet m-portlet--rounded mb-0 grid-enlarge" (click)="menuClicked('/talent')">
+                        <div class="m-portlet__body text-center">
+                            <span class="new-badge m-badge m-badge--danger m-badge--wide m-badge--rounded">
+                                New
+                            </span>
+                            <div class="badgeicon" *ngIf="!loading">
+                                <div style="padding-top: 7px;">
+                                    {{getTalentSummary(14)}}
+                                </div>
+                            </div>
+                            <img src="../../../../../../assets/blank/images/talent_icon.png" class="pt-0 icons-size">
+                            <div class="m--font-bolder box-text">Talent Classification</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-sm-4 p-t-d15" *ngIf="showNomination"> <!-- Succession Depth -->
+                    <div class="m-portlet m-portlet--rounded mb-0 grid-enlarge" (click)="menuClicked('/nomination')">
+                        <div class="m-portlet__body text-center">
+                            <span class="new-badge m-badge m-badge--danger m-badge--wide m-badge--rounded">
+                                New
+                            </span>
+                            <!--<div class="badgeicon" *ngIf="!loading">
+                                <div style="padding-top: 7px;">
+ 
+                                </div> 
+                            </div>-->
+                            <img src="../../../../../../assets/blank/images/nomination.png" class="pt-0 icons-size">
+                            <div class="m--font-bolder box-text">Succession Depth</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-sm-4 p-t-d15"><!--Job-->
+                    <div class="m-portlet m-portlet--rounded mb-0 grid-enlarge" (click)="menuClicked('/user-job')">
+                        <div class="m-portlet__body text-center">
+                            <div class="badgeicon" *ngIf="!loading">
+                                <div style="padding-top: 7px;">
+                                    {{getSummaryNum(7)}}
+                                </div>
+                            </div>
+                            <img src="../../../../../../assets/blank/images/job.png" class="pt-0 icons-size">
+                            <div class="m--font-bolder box-text">Job Vacancy</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-sm-4 p-t-d15"> <!--Tracking-->
+                    <div class="m-portlet m-portlet--rounded mb-0 grid-enlarge" (click)="menuClicked('/user-job/tracking')">
+                        <div class="m-portlet__body text-center">
+                            <div class="badgeicon" *ngIf="!loading">
+                                <div style="padding-top: 7px;">
+                                    {{getTrackingNum()}}
+                                </div>
+                            </div>
+                            <img src="../../../../../../assets/blank/images/tracking.png" class="pt-0 icons-size">
+                            <div class="m--font-bolder box-text">Tracking</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-sm-4 p-t-d15"> <!--Circle-->
+                    <div class="m-portlet m-portlet--rounded mb-0 grid-enlarge" (click)="menuClicked('/circle')">
+                        <div class="m-portlet__body text-center">
+                            <div class="badgeicon" *ngIf="!loading">
+                                <div style="padding-top: 7px;">
+                                    {{getSummaryNum(6)}}
+                                </div>
+                            </div>
+                            <img src="../../../../../../assets/blank/images/circle.png" class="pt-0 icons-size">
+                            <div class="m--font-bolder box-text">Circle</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-sm-4 p-t-d15" *ngIf="showIDP"> <!--IDP-->
+                    <div class="m-portlet m-portlet--rounded mb-0 grid-enlarge" (click)="menuClicked('/idp')">
+                        <div class="m-portlet__body text-center">
+                            <div class="badgeicon" *ngIf="!loading">
+                                <div style="padding-top: 7px;">
+                                    {{getIDPSum(11,12)}}
+                                </div>
+                            </div>
+                            <img src="../../../../../../assets/blank/images/idp.png" class="pt-0 icons-size">
+                            <div class="m--font-bolder box-text">IDP</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-4 p-t-d15" *ngIf="env_prod && !showIDP"> <!--FAQ-->
+                    <div class="m-portlet m-portlet--rounded mb-0 grid-enlarge" (click)="menuClicked('/faq')">
+                        <div class="m-portlet__body text-center">
+                            <img src="../../../../../../assets/blank/images/FAQ_icon.png" class="pt-0 icons-size">
+                            <div class="m--font-bolder box-text">FAQ</div>  
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-4 p-t-d15" *ngIf="showExtra"> <!--5G-Academy/ extraordinaire-->
+                    <div class="m-portlet m-portlet--rounded mb-0 grid-enlarge" (click)="menuClicked('/extraordinaire')">
+                        <div class="m-portlet__body text-center">
+                            <div class="badgeicon" *ngIf="!loading">
+                                <div style="padding-top: 7px;">
+                                    {{getSummaryNum(5)}}
+                                </div>
+                            </div>
+                            <img src="../../../../../../assets/blank/images/extra.png" class="pt-0 icons-size">
+                            <div class="m--font-bolder box-text">{{displayName}}</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-4 p-t-d15" *ngIf="!showExtra && !showNomination"><!--Profile-->
+                    <div class="m-portlet m-portlet--rounded mb-0 grid-enlarge" (click)="menuClicked('/profile')">
+                        <div class="m-portlet__body text-center">
+                            <div class="badgeicon" *ngIf="!loading">
+                                <div style="padding-top: 7px;">
+                                    {{getSummaryNum(10)}}
+                                </div>
+                            </div>
+                            <img src="../../../../../../assets/blank/images/profile.png" class="pt-0 icons-size" >
+                            <div class="m--font-bolder box-text">Profile</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-sm-4 p-t-d15" *ngIf="!showTalent"> <!--Notification--> 
+                    <div class="m-portlet m-portlet--rounded mb-0 grid-enlarge" (click)="menuClicked('/notifications')">
+                        <div class="m-portlet__body text-center">
+                            <div class="badgeicon" *ngIf="!loading">
+                                <div style="padding-top: 7px;">
+                                    {{getSummaryNum(8)}}
+                                </div>
+                            </div>
+                            <img src="../../../../../../assets/blank/images/notification.png" class="pt-0 icons-size">
+                            <div class="m--font-bolder box-text">Notifications</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-sm-4 p-t-d15" *ngIf="showMaps"> <!--MAPS-->
+                    <div class="m-portlet m-portlet--rounded mb-0 grid-enlarge" (click)="menuClicked('/maps')">
+                        <div class="m-portlet__body text-center">
+                            <!-- <div class="badgeicon" *ngIf="!loading">
+                                <div style="padding-top: 7px;">
+                                    {{getSummaryNum(8)}}
+                                </div>
+                            </div> -->
+                            <img src="../../../../../../assets/blank/images/icon-maps-ne.png" class="pt-0 icons-size">
+                            <div class="m--font-bolder box-text">MAPS</div>
+                        </div>
+                    </div>
+                </div>
+                
+
+                <div class="col-sm-4 p-t-d15"  *ngIf="showVrp"><!--MESRA2021-->
+                    <div class="m-portlet m-portlet--rounded mb-0 grid-enlarge" (click)="menuClicked('/vrp')">
+                        <div class="m-portlet__body text-center">
+                            <!-- <div class="badgeicon" *ngIf="!loading">
+                                <div style="padding-top: 7px;">
+                                    {{getSummaryNum(8)}}
+                                </div>
+                            </div> -->
+                            <img src="../../../../../assets/svg/vrp-mesra-icon.svg" class="pt-0 icons-size">
+                            <div class="m--font-bolder box-text">MESRA 2021</div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <!-- <div class="row pr-5 pl-5 pt-5 pb-2"> 
+                <div class="col-sm-1" style="margin-right: 8%!important">&nbsp;</div>
+                
+            </div> -->
+
+            <div class="row" style="padding-left:48%!important; width: 20%; padding-top: 0rem !important;" id="scrollText">
+                <div class="col-sm-2 pb-5" style="position: fixed;z-index:1!important;">
+                    <span style="font-size: 10px;" *ngIf="scrollback === false">Scroll down</span>
+                    <span style="font-size: 10px;" *ngIf="scrollback === true">Scroll up</span>
+                </div>
+                <div class="col-sm-2 mt-4" style="position: fixed;z-index:1!important;">
+                    <img id="scroll" src="../../../../../../assets/blank/images/scroll.png" class="pt-0" style="cursor:pointer;width: 22px;background: #fff;border-radius: 10px;box-shadow: 0px 0px 5px #fff;" (click)="scrollToElementAnimate()">
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="container-pages text-center content_pages_1" *ngIf="newDesign">
+            <div id="askus" #askus style="position: absolute; margin-top:-69px;"></div>
+              <div class="row text-center"  style="padding:10px !important; max-width: 1200px; margin:auto">
+                
+                <div class="col-md-6 askUs-col">
+                    <div class="text-center contactus">
+                        <div class="text-left askUsForm pl-3">
+                          <span style="font-size: 34px;">Ask </span> <span style="font-size: 34px; color:#FF5A00">Us!</span> 
+                        </div>
+                        <form [formGroup]="feedbackForm" class="askUsForm">
+                            <div class="col-sm-12 text-left">
+                                <h4 class="font">Category</h4>
+                            </div>
+                            <select formControlName="fbCat" class="form-control m-input" style="border: 1px solid #FF5A00">
+                                <option [value]="cat" *ngFor="let cat of feedbackCat">{{cat}}</option>
+                            </select>
+                            <br>
+                            <div class="col-sm-12 text-left">
+                                <h4 class="font">Title</h4>
+                            </div>   
+                            <input type="text" class="form-control m-input" style="border: 1px solid #FF5A00"  placeholder="Title" formControlName="fbTitle" required #fbTitle> <br>
+                            
+                            <div class="col-sm-12 text-left form-group">
+                                <h4 class="font">Description</h4>
+                            </div>
+                            <textarea class="form-control" id="comments" style="border: 1px solid #FF5A00" formControlName="fbMsg" name="comments" placeholder="Description" rows="3"></textarea><br>
+                            
+                            <div class="col-sm-12 text-left form-group">
+                                <h4 class="font">Screenshots (Optional)
+                                    &nbsp;
+                                    <div class="btn btn-outline-orange m-btn m-btn--outline-2x" style="padding: 0.2rem 2rem!important; align-content: center;align-items: center" (click)="addImageTrigger()">
+                                        <i class="la la-plus"></i>
+                                    </div>
+                                </h4>
+                            </div>
+
+                            <table>
+                                <tr>
+                                    <td>
+                                        <p class="sel-files files">Selected Files : </p>
+                                    </td>
+                                </tr>
+                                        
+                                <tr>
+                                    <span *ngIf="imgFiles?.length">    
+                                        <p class="files" *ngFor="let iName of imgFiles;">
+                                            {{iName.name}} 
+                                        </p>      
+                                    </span>
+                                </tr>
+                            </table>
+                                
+                            <input type="file" id="ssImg" [(ngModel)]="scShots" [ngModelOptions]="{standalone: true}" 
+                                accept="image/x-png,image/PNG,image/gif,image/jpeg" style="display: none !important"
+                                (change)="fileChange($event)" class="col-sm-12 form-control m-input" name="screenshot" multiple size="3" > 
+                            <br>
+                            
+                            <div class="col-sm-12 form-group" style="margin-top:4rem">
+                                <button (click)="feedbackFormSubmit()" 
+                                class="btn btn-askussubmit" type="submit" [disabled]="!feedbackForm.valid" style="width: 150px; float: left;">Submit</button> <!--[disabled]="!feedbackForm.valid"-->
+                            </div>
+                        </form>
+                    </div>
+                   
+                </div>
+                 <div class="col-md-6">
+                    <img src="../../../../../../assets/blank/images/questionmark.png" alt="" class="imgquestionmark">
+                 </div>
+              </div>
+        </div>
+    </div>
+    <br>
+
+    <footer *ngIf="newDesign">
+        <div class="col-sm-12 text-center" style="background: #fff; font-size: 12px!important">
+            Copyright &#169; 2020 <b>GHCM</b> Powered by <b>TM R&D</b> All rights reserved.
+        </div>
+    </footer>
+
+    <div class="row" *ngIf="oldDesign">
+       	<div #home id="home" class="container-pages text-center content_pages_0">
+            <div class="row pt-0">
+                <div class="col-sm-5 col-md-5 col-lg-5 home_div">
+                    <div>
+                        <br> <img class="logoEra" alt="" src="./assets/app/media/img//logos/ghcm-logo.png"/><br><br>
+                    </div>
+                    <span class="h3_size">New Opportunities</span> <br>
+                    <span class="h5">New ERA</span>
+                </div>
+                <br>
+                <div class="col-sm-7 col-md-7 col-lg-7 dashboard" style="position: relative !important; margin-top:5rem"  >
+                    <div class="action-tab">
+                        <div class="action_center col-lg-12">Action Center</div>
+
+                        <div class="centred my-auto" style="padding-top: 9vw !important" *ngIf="loading">
+                            <div class="m-stack__item m-stack__item--center m-stack__item--middle">
+                                <span>
+                                    <div class="m-loader m-loader--lg m-loader--success" style="width: 30px; display: inline-block;"></div>
+                                </span>
+                            </div>
+                        </div>
+
+                        <div class="action_center col-lg-12 col-sm-12 row action-btn-row" *ngIf="!loading">
+
+                            <div class="col-lg-4 col-sm-4 icons job_icon" (click)="viewPages(1)">
+                                <span class="m-menu__link-badge total-badge">
+                                    <span class="m-badge m-badge--danger badge-design">
+                                        {{getSummaryNum(7)}}
+                                    </span>
+                                </span>
+                            </div>
+
+                            <div class="col-lg-4 col-sm-4 icons extra_icon" (click)="viewPages(2)">
+                                <span class="m-menu__link-badge total-badge">
+                                    <span class="m-badge m-badge--danger badge-design">
+                                        {{getSummaryNum(5)}}
+                                    </span>
+                                </span>
+                            </div>
+
+                            <div class="col-lg-4 col-sm-4 icons circle_icon" (click)="viewPages(3)">
+                                <span class="m-menu__link-badge total-badge">
+                                    <span class="m-badge m-badge--danger badge-design">
+                                        {{getSummaryNum(6)}}
+                                    </span>
+                                </span>
+                            </div>
+
+                            <div class="col-lg-4 col-sm-4 icons approval_icon" (click)="viewPages(4)" *ngIf="checkApprovalSum(9)">
+                                <span class="m-menu__link-badge total-badge">
+                                    <span class="m-badge m-badge--danger badge-design">
+                                        {{getApprovalSum(0,1)}}
+                                    </span>
+                                </span>
+                            </div>
+
+                            <div class="col-lg-4 col-sm-4 icons profile_icon" (click)="viewPages(9)" *ngIf="!checkApprovalSum(9)">
+                                <span class="m-menu__link-badge total-badge">
+                                    <span class="m-badge m-badge--danger badge-design">
+                                        {{getSummaryNum(10)}}
+                                    </span>
+                                </span>
+                            </div>
+
+                            <div class="col-lg-4 col-sm-4 icons tracking_icon" (click)="viewPages(5)">
+                                <span class="m-menu__link-badge total-badge">
+                                    <span class="m-badge m-badge--danger badge-design">
+                                        {{getSummaryNum(3)}}
+                                    </span>
+                                </span>
+                            </div>
+
+                            <div class="col-lg-4 col-sm-4 icons notification_icon" (click)="viewPages(6)">
+                                <span class="m-menu__link-badge total-badge">
+                                    <span class="m-badge m-badge--danger badge-design">
+                                        {{getSummaryNum(8)}}
+                                    </span>
+                                </span>
+                            </div>
+
+                        </div>
+                        <button type="button" style="display: none;" id="appr-btn" data-toggle="modal" data-target="#approval"></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+       
+    <div class="modal fade appr-modal" *ngIf="!loading" id="approval" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" style="display: none;" aria-hidden="true">
+        <div class="modal-dialog modal-sm modal-dialog-centered" role="document" style="max-width: 420px !important; margin: auto !important">
+            <div class="modal-content">
+                <div class="modal-header" style="padding-bottom: 20px !important">
+                    <div class="modal-title" style="margin:auto !important" id="exampleModalLabel">
+                        <h4 style="margin:auto !important; text-align: center !important">
+                            Approval
+                        </h4>
+                    </div>
+                </div>
+                <div class="modal-body col-lg-12" style="text-align:center">
+                    <div class="extraOrd text-white btn m-btn" (click)="viewPages(7)"
+                            style="margin-right: 3rem; width: 40%; height: 9rem; border-radius: 1.5vw !important;">
+                            Extraordinaire
+                        <br>
+                        <hr style="background: white">
+                        <span class="item-num2" >
+                            {{getApprModalSum(0)}}
+                        </span>                                  
+                    </div>
+                    <div class="jonVac text-white btn m-btn" (click)="viewPages(8)"
+                            style="width: 40%; height: 9rem; border-radius: 1.5vw !important;">
+                        Jobs id="contactUs"
+                        <br>
+                        <hr style="background: white">
+                        <span class="item-num2" >
+                            {{getApprModalSum(1)}}
+                        </span>                                  
+                    </div>                    
+                </div>
+                <div class="modal-footer" style="display: none">
+                    <div style="width: 100% !important; text-align: center !important">
+                        <button type="button" id="cancel_btn" style="margin-right: 3rem !important" class="btn btn-secondary" data-dismiss="modal">
+                            cancel
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="row" *ngIf="oldDesign">
+        <div #Project id="Project" class="container-pages text-center content_pages content_pages_1 extra_area">
+            <div class="row pt-0">
+                <div class="col-sm-6" style="padding-top: 12rem; ">
+                  <span style="font-size: 80px;" class="h5">Extraordinaire</span><br>
+                  <span class="h2">Making great ideas <br>come to life</span>
+                  <p></p>
+                  <br><button class="btn m-btn--pill  m-btn m-btn--custom" routerLink="/extraordinaire">Click Me</button>
+                </div>
+              <div class="col-sm-6 text-center" style="padding-top: 6rem; ">
+                  <img class="extra_plane" alt="" src="./assets/app/media/img//logos/origamiPlane.png"/>
+              </div>
+            </div>
+
+         </div> 
+     
+        <div #Circle id="Circle" class="container-pages text-center content_pages circle_area">
+            <div class="row pt-0">
+              <div class="col-sm-6" style="padding-top: 7rem; ">
+                <span style="font-size: 80px;" class="h5">Circle</span><br>
+                <span class="h4">Connect & Endorse<br>
+                <span style="padding-left: 2em;">your<span class="friends" > Friends..</span></span></span><br><br>
+                <span class="h2">"Circle keeps you connected with your<br>
+                friends, wherever there are. Discover <br>
+                their hidden talent and capabilities,<br>
+                and endorse them"</span> <br> <br>
+                <br>
+                <button routerLink="/circle" class="btn m-btn--pill  m-btn m-btn--custom">Click Me</button>
+                
+              </div>
+              <div class="col-sm-4 text-center" >
+                  <img class="circle_hands"alt="" src="./assets/app/media/img//logos/hpApps.png"/>
+              </div>
+            </div>
+          </div>
+      
+          <div #Jobs id="Jobs" class="container-pages text-center content_pages content_pages_2 job_area">
+              <div class="row">
+                <div class="col-sm-6" style="padding-top: 5rem; " >
+                  <span class="h5"  style="font-size: 80px;">Jobs</span><br>
+                  <span class="h2">"Job Application and<br>
+                  Tracking Page that provides<br>
+                  you a seamless experience<br>
+                  from the ERA Mobile App"</span>
+                  <p></p>
+                  <br>
+                  <button routerLink="/user-job" class="btn m-btn--pill  m-btn m-btn--custom">Click Me</button>
+                </div>
+              <div class="col-sm-6 text-center">
+                  <img class="jobs_bag"alt="" style="max-height: 68%;" src="./assets/app/media/img//logos/beg.png"/>
+              </div>
+              </div>
+          </div>
+
+       <div #contactUs id="contactUs" class="container-pages content_pages_2" style="min-height: 87vh !important;">
+            <div class="row">            
+                <div class="col-sm-6" >
+                    <div class="text-center contactus">
+                        <span class="h5" style="font-size: 80px;">Ask Us</span>
+                        <form [formGroup]="feedbackForm" class="askUsForm">
+                            <div class="col-sm-12 text-left">
+                                <h4 class="font">Title</h4>
+                            </div>   
+                            <input type="text" class="form-control m-input"  placeholder="Title" formControlName="fbTitle" required #fbTitle> <br>
+                            
+                            <div class="col-sm-12 text-left form-group">
+                                <h4 class="font">Description</h4>
+                            </div>
+                            <textarea class="form-control" id="comments" formControlName="fbMsg" name="comments" placeholder="Description" rows="5"></textarea><br>
+                            
+                            <div class="col-sm-12 text-left form-group">
+                                <h4 class="font">Screenshots (Optional)</h4>
+                            </div>
+
+                            <div class="col-sm-3  add-imgs btn btn-outline-info m-btn m-btn--outline-2x" (click)="addImageTrigger()">
+                                <i class="la la-plus-circle" style="font-size: 2.5rem;"></i>
+                            </div>
+                            <p class="sel-files files">Selected Files :</p><br><br>
+                            <span *ngIf="imgFiles?.length">    
+                                <p class="files" *ngFor="let iName of imgFiles;">
+                                    {{iName.name}} 
+                                </p>      
+                            </span>
+                                
+                            <input type="file" id="ssImg" [(ngModel)]="scShots" [ngModelOptions]="{standalone: true}" 
+                                accept="image/x-png,image/PNG,image/gif,image/jpeg" style="display: none !important"
+                                (change)="fileChange($event)" class="col-sm-12 form-control m-input" name="screenshot" multiple size="3" > 
+                            <br>
+                            
+                            <div class="col-sm-12 form-group" style="margin-top:8rem">
+                                <button (click)="feedbackFormSubmit()" 
+                                class="btn m-btn--pill btn-primary m-btn m-btn--custom" type="submit" [disabled]="!feedbackForm.valid">Send</button> 
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <div class="col-sm-6 text-center" >
+                    <img alt="" class="askUsImg" src="./assets/app/media/img/logos/contactusPage.jpg">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="fab-container" style="margin-bottom: 0px !important;">
+        <div class="h_meter" ngDraggable (started)="onStart($event)" (stopped)="onStop($event)" >
+          <tr>
+            <td style='width:39%'>
+                <div> 
+                    <!-- <img src="/assets/app/media/img/emoji/floaticon.png" class="floatIcon" style="padding-bottom: 8px;"> -->
+                    <img src = "/assets/app/media/img/emoji/floaticon.png" class = "floatIcon" style = "padding-top: 8px">
+                </div>
+            </td>
+            <td>
+                &nbsp;
+            </td>
+        </tr>   
+        </div>
+    </div>
+
+    <notifier-container></notifier-container>
+    
+    <div class="copyright-section1 index-footer1 pt-5" *ngIf="oldDesign">
+        <p class="p1">
+            2019 copyright by GHCM - Powered by TM R&D <br>
+            <button class="btn btn-link" routerLink="/faq">
+                <span style="font-size: 15px">FAQs</span>
+            </button>
+        </p>
+    </div>
+
+    <div class="modal fade" #annc_modal id="annc_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content responsive-content">
+                <div class="badgecloseicon" style="margin-left: 8%;z-index: 1051;">
+                    <div style="padding-left: 8px;">
+                        <button type="button" class="close" id="annc_close_modal" #annc_close_modal data-dismiss="modal" aria-label="Close" style="float: none!important">
+                                <span style="font-size: 35px;color: #fff">&times;</span>
+                        </button>
+                    </div>
+                </div>
+                <div class="screenshot-carousel owl-carousel owl-theme" style="display: block!important;" *ngFor="let myannc of annc_data;">
+                    <div class="screenshot-item"><img src="{{myannc.imageHash}}" style="width: 100%!important;cursor: pointer; border-radius: 10px" alt="announcement" (click)="goToLink(myannc.action)"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <a #AnncModalButton id="AnncModalButton" data-toggle="modal" data-target="#annc_modal" data-backdrop="static" style="display: none" >Modal Announcement</a>

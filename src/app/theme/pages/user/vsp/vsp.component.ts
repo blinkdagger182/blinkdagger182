@@ -1,0 +1,617 @@
+import { ComponentFactoryResolver, Component, OnInit, AfterViewInit, ViewEncapsulation, ElementRef, ViewChild } from '@angular/core';
+import { GET_Service } from '../../../api/get.service';
+import { POST_Service } from '../../../api/post.service';
+import { Router } from '@angular/router';
+import { Http, Response } from '@angular/http';
+import { Observable } from 'rxjs';
+import { pluck, map } from 'rxjs/operators';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { ScriptLoaderService } from '../../../../_services/script-loader.service';
+import { En, My } from './lang-vars';
+import { VspVars } from './vsp-vars';
+import { DatePipe } from '@angular/common'
+import * as pdfMake from 'pdfmake/build/pdfmake.js';
+import * as pdfFonts from 'pdfmake/build/vfs_fonts.js';
+import { GlobalVariable } from "../../../../../environments/environment";
+import { NgModule }      from '@angular/core';
+
+
+@Component({
+    selector: 'vsp',
+    templateUrl: './vsp.component.html',
+    encapsulation: ViewEncapsulation.None,
+    styleUrls: ['./vsp.component.css']
+})
+
+
+export class VspComponent implements OnInit, AfterViewInit {
+
+    constructor(
+        private http: Http,
+        private _GET_api_Service: GET_Service,
+        private _POST_api_Service: POST_Service,
+        private router: Router,
+        private _script: ScriptLoaderService,
+        private datepipe: DatePipe
+    ) {}
+
+    applyForm: FormGroup;
+    notApplyForm: FormGroup;
+    enChecked: boolean = true;
+    word: any;
+    loading = false;
+    currUserId: any;    
+    currDate = this.datepipe.transform(new Date(), 'dd-MM-yyyy h:mm a');
+    
+    currentDate = new Date();
+    staff_name: string;
+    staff_nic: any;
+    staff_no: string; //S50375
+    name: any; //Rasid Bin Karim
+    age: any; //58.9
+    gender: any; //Male
+
+    exit_date_1: any;
+    exit_date_1_select: any;
+    bonus_1: any; //160000
+    loan_1: any; //30000
+    
+    exit_date_2: any;
+    exit_date_2_select: any;
+    bonus_2: any; //150000
+    loan_2: any; //20000
+
+    exit_date_3: any;
+    exit_date_3_select: any;
+    bonus_3: any; //140000
+    loan_3: any; //10000
+    selectedExitDate: any;
+    date_apply: Date;
+    date_apply_button = 0;
+
+    batchId = 1;   
+    checkStatus: any;
+    checkStatusText: any;
+    err_ic: string;
+    formatDateExit = "d MMMM yyyy";
+    formatDateExitSelect = "yyyy-MM-dd";
+
+    tncMesraPdfURL: any;
+    faqMesraPdfURL: any;
+    tncHashes: any;
+    faqHashes: any;
+    checkForm = 0;
+    tncCheck: boolean = false;
+
+    offerList=[];
+    showVrp: boolean = false;
+    showVsp = this.showVrp;
+    showOfferList: boolean =false;
+    reason1: boolean = false;
+    reason2: boolean = false;
+    reason3: boolean = false;
+    reason4: boolean = false;
+    
+    @ViewChild('reasonLainFocus') txtAreaFocus: ElementRef;
+    
+    ngOnInit() {
+
+        this.checkSelectedLang();
+        this.checkVrpRole();
+        this.checkVrpSession();
+        this.showVrp = true;
+        this.showVsp = this.showVrp;
+        this.checkApplicationStatus();
+        this.getBasicInfo();    
+        //this.getDateList();    
+        this.getOfferList();    
+        //this.getTnc();
+        //this.getFaq();
+        
+        this.applyForm = new FormGroup({
+            tnc: new FormControl('', Validators.required),
+            ic: new FormControl('', Validators.required),
+            selectedPlan: new FormControl('', Validators.required)
+        })       
+
+        this.notApplyForm = new FormGroup({
+            reason1: new FormControl('', Validators.required),
+            reason2: new FormControl('', Validators.required),
+            reason3: new FormControl('', Validators.required),
+            reason4: new FormControl('', Validators.required),
+            reasonLain: new FormControl('', Validators.required),
+        })               
+    } //ngOnInit
+    
+    ngAfterViewInit() {
+    }
+
+    setPlan(planDate){
+        this.selectedExitDate = planDate;
+        //console.log(planDate);
+    }
+
+    resetErrIc(){
+        this.err_ic = null;
+        //console.log(planDate);
+    }
+
+    resetApplyForm(){
+        this.applyForm.reset();
+        //console.log(planDate);
+    }
+
+    resetNotApplyForm(){
+        this.notApplyForm.reset();
+        this.err_reason = '';
+        this.remainingText = 100;
+        //console.log(planDate);
+    }
+    
+    showLain2=false;
+    showReasonText(val){     
+        //alert(val);   
+        if(val=='4'){
+            this.reason4 != this.reason4;
+            this.showLain2 = this.reason4;
+            if(!this.reason4){                
+                this.err_reason = '';
+            }
+            setTimeout(() => {
+            this.txtAreaFocus.nativeElement.focus();
+            }, 0);
+        } else {                
+            this.err_reason = '';
+        }
+    }
+
+    remainingText=100;
+    reasonLainChar(textReason) {
+        if(textReason){
+            this.remainingText = 100 - textReason.length;
+        }
+    }
+
+    convertMonthBM(dateToConvert){         
+        let monthBm = ['Januari','Februari','Mac','April','Mei','Jun','Julai','Ogos','September','Oktober','November','Disember']; 
+        let dateString = dateToConvert; 
+        let newDate = new Date(dateString);
+        let convertedMonthBM = monthBm[newDate.getMonth()];
+        return convertedMonthBM;
+    }
+    
+    
+    submitForm() {
+        
+        let tnc = this.applyForm.get('tnc').value;
+        let ic = this.applyForm.get('ic').value;
+        let plan = this.selectedExitDate;
+        let checkIc = this.staff_nic;
+        this.checkForm = 0;
+        
+        //validate form
+        //check tnc box
+        if (tnc === '' || tnc === null) {
+            //console.log('tnc: ' +tnc)
+            this.checkForm++
+        }
+        //check ic same with db
+        if (ic === '' || ic === null || ic != checkIc) {
+            this.err_ic = 'Sila masukkan No Kad Pengenalan yang sah';
+            //console.log('ic: ' +ic)
+            this.checkForm++
+        }
+
+        if (plan === '' || plan === null) {
+            //console.log('selectedPlan: '+plan)
+            this.checkForm++
+        }        
+        
+        //console.log('Checking form..'+this.checkForm);
+        if(this.checkForm === 0){
+            //console.log('Checking form..Success');
+            this.checkForm=0;
+            //console.log('tnc:'+tnc);
+            //console.log('ic:'+ic);
+            //console.log('plan:'+plan);
+            //console.log('checkformerror:'+this.checkForm);
+
+                //set data to post
+                let postData = {
+                    icNo: this.staff_nic, 
+                    dateChoice: this.selectedExitDate      
+                }
+
+                //send data to api for insertion
+                this._POST_api_Service.POST_VRP_data(VspVars.postUserApply,postData).subscribe(data => {   
+        
+                    //console.log('Successfully submitted');
+                    //navigate to result page
+                    this.router.navigateByUrl('/vsp/result');
+                     //console.log(data);
+                     this.loading = false;
+                },
+                error => {
+                    console.log('[ERROR] postUserApply' + error);
+                });
+
+                //console.log("navigate to /vrp/result");
+        }        
+    }      
+
+    err_reason: string;    
+    reasonLain;
+    submitFormNotInterest() {
+        this.err_reason = '';
+        this.checkForm = 0;
+        this.loading = true;
+        let reason1 = this.notApplyForm.get('reason1').value;
+        let reason2 = this.notApplyForm.get('reason2').value;
+        let reason3 = this.notApplyForm.get('reason3').value;
+        let reason4 = this.notApplyForm.get('reason4').value;
+        let reasonLain = this.notApplyForm.get('reasonLain').value;
+
+        if(!reason1){
+            reason1=false;
+        }
+        if(!reason2){
+            reason2=false;
+        }
+        if(!reason3){
+            reason3=false;
+        }
+        if(!reason4){
+            reason4=false;
+        }
+        if(!reasonLain){
+            reasonLain='';
+        }
+
+        //check condition form
+        if(reason4){
+            if(!reasonLain){
+                this.err_reason = 'Sila masukkan sebab "Lain-lain" yang sah.';
+                setTimeout(() => {
+                this.txtAreaFocus.nativeElement.focus();
+                }, 0);
+                this.checkForm++
+            }
+            if (reasonLain === '' || reasonLain === null) {
+                this.err_reason = 'Sila masukkan sebab "Lain-lain" yang sah.';
+                setTimeout(() => {
+                this.txtAreaFocus.nativeElement.focus();
+                }, 0);
+                this.checkForm++
+            }
+            if(reasonLain){
+                if(reasonLain.length < 5){
+                    this.err_reason = 'Sila masukkan sebab "Lain-lain" yang sah.';
+                    setTimeout(() => {
+                    this.txtAreaFocus.nativeElement.focus();
+                    }, 0);
+                    this.checkForm++
+                } 
+            }
+        }
+        if(!reason1&&!reason2&&!reason3&&!reason4){
+            this.err_reason = 'Sila pilih sekurang-kurangnya satu pilihan.';
+            this.checkForm++
+        }
+
+        if(this.checkForm){
+            setTimeout(() => {
+                this.err_reason = '';
+                }, 3000);
+        }
+
+        // alert('r1: '+reason1+'\n'+'r2: '+reason2+
+        // '\n'+'r3: '+reason3+'\n'+'r4: '+reason4+
+        // '\n'+'r4txt: '+reasonLain+'\n'+this.checkForm+
+        // '\n'+this.err_reason);
+        //console.log('reason1',reason1,'\nreason2',reason2,'\nreason3',reason3,'\nreason4',reason4,'\nreasonLain',reasonLain);
+
+        //if checking all pass then send the data
+        if(this.checkForm === 0){
+            this.checkForm=0;
+            reason4 = reasonLain
+            //set data to post
+            let postData = {
+                opt1: reason1, //boolean
+                opt2: reason2, //boolean
+                opt3: reason3, //boolean
+                opt4: reason4, //string     
+            }
+
+            //send data to api for insertion
+            this._POST_api_Service.POST_VRP_data(VspVars.postUserNotInterest,postData).subscribe(data => {   
+                //navigate to main page
+                //this.router.navigateByUrl('/index');
+                alert('Terima kasih atas maklum balas anda');
+                this.router.navigate(['/index'])
+                .then(() => {
+                  window.location.reload();
+                });
+            },
+            error => {
+                //alert('[ERROR] postUserApply' + error);
+                console.log('[ERROR] postUserApply' + error);
+            });
+        }    
+        this.loading = false;
+
+    }
+
+    checkEligibleVrpUsr() {               
+        //check role user for VRP
+        this._GET_api_Service.GET_VRP_data(VspVars.getRoleVrp).subscribe(data => {
+        if ((data.role_lvl > 0) && (data.role_lvl < 5)) 
+        {                
+                //check session user for VRP
+                // console.log('getRoleVrp: ',data.role_lvl);
+                this._GET_api_Service.GET_VRP_data(VspVars.getVrpSession).subscribe(data => {
+                    // console.log('getVrpSession: ',data.length);
+                    if (data.length==0) 
+                    {
+                        this.router.navigateByUrl('/index');
+                    }
+                }, error => {
+                    console.log('[ERROR] cannot check role ' + error);
+                });              
+            } else {
+                //this.showVrp = false;
+            }   
+        }, error => {
+            console.log('[ERROR] cannot check role ' + error);
+        })
+    }
+
+    checkVrpRole(){
+        this._GET_api_Service.GET_VRP_data(VspVars.getRoleVrp).subscribe(data => {
+            //console.log('getRoleVrp: ', data.role_lvl);
+            if (data.role_lvl==0) 
+            {  
+                this.router.navigateByUrl('/index');
+            }   
+        }, error => {
+                console.log('[ERROR] cannot check role ' + error);
+        })   
+    }
+
+    checkVrpSession(){
+        this._GET_api_Service.GET_VRP_data(VspVars.getVrpSession).subscribe(data => {
+            //console.log('getVrpSession: DataLen ',data.length);
+            if (data.length==0) 
+            {
+                this.router.navigateByUrl('/index');
+            } else {                
+                this.showVrp = true;
+            }
+        }, error => {
+            console.log('[ERROR] cannot check role ' + error);
+        });     
+    }
+
+    checkStatusConv;
+    //check status to navigate to result
+    checkApplicationStatus() {      
+        this.loading = true;
+        //console.log('Checking user status..');
+        this._GET_api_Service.GET_VRP_data(VspVars.getStatusAppl).subscribe(data => {  
+            //console.log('getStatusAppl: ',data);
+            if(data.length > 0) {
+                this.staff_no = data[0].staff_no,
+                this.checkStatus = data[0].status,
+                this.checkStatusText = data[0].text,
+                this.checkStatusConv = this.convertWordStatus(data[0].status),                
+                this.date_apply = data[0].choice_of_date    
+                if(this.date_apply==this.exit_date_1)
+                {
+                    this.date_apply_button = 1;
+                }
+                if(this.date_apply==this.exit_date_2)
+                {
+                    this.date_apply_button = 2;
+                }
+                if(this.date_apply==this.exit_date_3)
+                {
+                    this.date_apply_button = 3;
+                }
+                // console.log(this.checkStatus);
+                // console.log(this.checkStatusText);
+                // console.log(this.date_apply);
+                // console.log(this.date_apply_button);
+                // console.log(data);
+                if(data[0].status >= 6 && data[0].status <= 9){                    
+                    this.router.navigateByUrl('/vsp/tracking');
+                }
+            } else {
+                console.log('No Data API get_userStatus');
+            }        
+            this.loading = false;
+        },
+        error => {
+            console.log('[ERROR Get getStatusAppl] ' + error);
+        });
+        //do check the api. if status bla bla bla then navigate to result
+        // if(this.checkStatus){
+        //     this.router.navigateByUrl('/vrp/result');
+        // }
+    }   
+
+    convertWordStatus(toConvert){
+        //Accept
+        //Reject
+        //Offer Expired
+        if(toConvert=='1'){
+            return 'Baru'
+        }
+        if(toConvert=='2'){
+            return 'Sudah Dipohon'
+        }
+        if(toConvert=='5'){
+            return 'Tidak Berjaya'
+        }
+        if(toConvert=='6'){
+            return 'Berjaya'
+        }
+        if(toConvert=='7'){
+            return 'Terima'
+        }
+        if(toConvert=='8'){
+            return 'Tolak'
+        }
+        if(toConvert=='9'){
+            return 'Tawaran tamat'
+        }   
+        if(toConvert=='11'){
+            return 'Tidak Berminat'
+        }       
+        //reject - tolak
+        //accept - terima
+    }
+    
+    checkSelectedLang() {
+        let lang = localStorage.getItem('idpLang');
+        if (lang) {
+            if (lang === 'en') {
+                this.enChecked = true;
+                this.word = En;
+            }
+            if (lang === 'my') {
+                this.enChecked = false;
+                this.word = My;
+            }
+        }
+        else {
+            this.enChecked = true;
+            this.word = En;
+            localStorage.setItem('idpLang', 'en');
+        }
+    }
+
+    langChange(id) {
+        let selectedLang = id.value;
+        if (selectedLang === 'en') {
+            this.word = En;
+            localStorage.setItem('idpLang', 'en');
+            this.enChecked = true;
+        }
+        if (selectedLang === 'my') {
+            this.word = My;
+            localStorage.setItem('idpLang', 'my');
+            this.enChecked = false;
+        }
+        document.getElementById('lang_close').click();
+    }
+
+    getBasicInfo() {
+        this.loading = true;
+        //console.log('Checking basicinfo..');
+        this._GET_api_Service.GET_VRP_data(VspVars.getBasicInfo).subscribe(data => {   
+            //console.log('getBasicInfo: ',data);
+            if(data.length > 0) {
+                this.staff_name = data[0].name;
+                this.staff_no = data[0].staff_no;
+                this.staff_nic = data[0].new_ic_no;
+                //console.log(data);
+            }
+            else {
+                console.log('No Data API get_basicInfo');
+            }
+            this.loading = false;
+        },
+        error => {
+            console.log('[ERROR Get Profile] ' + error);
+            this.loading = false;
+        });
+    } 
+
+    //NEW API
+    getOfferList() {
+        this.loading = true;
+        //console.log('Checking offer list..');
+        this._GET_api_Service.GET_VRP_data(VspVars.getOfferList).subscribe(data => {   
+            //console.log('Data length: ',data.length);
+            //console.log('getOfferList',data);
+            if(data.length > 0){
+                this.offerList=data;
+                //console.log('Data Offer list: ',data);
+                if(data[0].exit_date){
+                    this.showOfferList=true;
+                    //console.log('Fetching offer list..');
+                    //console.log(data);
+                } else {
+                    //console.log('No data offer list..');                    
+                }
+            } 
+            this.loading = false;
+        },
+        error => {
+            console.log('[ERROR Get DateList] ' + error);
+        });
+    } 
+
+    getTnc() {
+        // pdfMake.createPdf(this.docCPDefinition).download(this.titleCPPdf);
+        // this.imgDataUrl = '';       
+
+        this.loading = true;
+        this._GET_api_Service.GET_VRP_data(VspVars.getTnc).subscribe(data => {   
+            this.tncHashes = data[0].tnchash;
+            this.tncMesraPdfURL = GlobalVariable.BASE_API_URL + "/get/image/" + this.tncHashes+ "?api_key=" + GlobalVariable.API_KEY;
+            console.log(this.tncMesraPdfURL); 
+            this.loading = false;
+            },
+            error => {
+                console.log('[ERROR Get api tnc] ' + error);
+        });
+        
+        
+        // try {
+        //     this.currUserId = JSON.parse(localStorage.getItem('currentUser')).userid; //staff id
+        //   } catch (e) {
+        //     console.error("Failed to get localStorage for currentUser");
+        // }
+
+        // let docDefinition = {  
+        //     pageSize: 'A4',
+        //     pageMargins: [20, 90],
+        //     watermark: { text: `By: ${this.currUserId}@${this.currDate}`, color: '#e0e0d1', opacity: 0.3, bold: true },
+        //     header: 'C#Corner PDF Header',  
+        //     content: 'Sample PDF generated with Angular and PDFMake for C#Corner Blog'  
+        // };  
+        
+        // pdfMake.createPdf(docDefinition).open();  
+    }
+
+    getFaq() {
+        // pdfMake.createPdf(this.docCPDefinition).download(this.titleCPPdf);
+        // this.imgDataUrl = '';          
+
+        this.loading = true;
+        this._GET_api_Service.GET_VRP_data(VspVars.getFaq).subscribe(data => {  
+            if(data)
+            {
+                this.faqHashes = data[0].faqhash;
+                this.faqMesraPdfURL = GlobalVariable.BASE_API_URL + "/get/image/" + this.faqHashes+ "?api_key=" + GlobalVariable.API_KEY;
+                console.log(this.faqMesraPdfURL); 
+                this.loading = false;
+            } else {
+                console.log('Error API fetch FAQ: No Data'); 
+                //console.log(data); 
+                this.loading = false;
+            }
+            },
+            error => {
+                console.log('[ERROR Get api tnc] ' + error);
+        });
+
+        // let docDefinition = {  
+        //     watermark: 'test watermark',
+        //     header: 'C#Corner PDF Header',  
+        //     content: 'Sample PDF generated with Angular and PDFMake for C#Corner Blog'  
+        // };  
+        
+        // pdfMake.createPdf(docDefinition).open();  
+    }
+}

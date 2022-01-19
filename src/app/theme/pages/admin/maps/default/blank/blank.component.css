@@ -1,0 +1,133 @@
+
+.form_lbl{
+    font-size: 12px;
+    margin-bottom: 0;
+  }
+  
+  .font_13px{
+    font-size: 13px !important;
+  }
+  
+  .alignCenter {
+    text-align: center;
+    border-radius: 5px !important;
+    transition: all .2s ease-in-out;
+  }
+  
+  .alignCenter:hover {
+    transform: scale(1.2);
+  }
+  
+  .pad_top8px{
+    padding-top: 8px !important;
+  }
+  
+  .pad_bot6px{
+    padding-bottom: 6px !important;
+  }
+  .normalUser{
+      background-image: url('../../../../../../../assets/img/user/under-construction.png');
+      width:594px;
+      height:289px;
+      background-repeat:no-repeat;
+      background-position: center center;
+  }
+  
+  .pleaseDw{
+      background-color:#f05a22;
+      border-radius: 28px;
+      text-transform:uppercase;
+      color:#FFFFFF;
+      padding:15px;
+      margin:20px;
+      font-size: 1.2em;
+      width:400; 
+      text-align: center;
+  }
+  
+  .dllink{
+      background-color:#ffffff00;
+      border-radius: 28px;
+      color:#FFFFFF;
+      font-size: 1.2em;
+      width: 50%;
+      text-align: center;
+      position: center;
+  } 
+  
+  .btn-download {
+      color: #fff;
+      background-color: #f05a22;
+      border-color: #f05a22; }
+      .btn-download:hover {
+        color: #fff;
+        background-color: #f05a22;
+        border-color: #f05a22; }
+      .btn-download:focus, .btn-download.focus {
+        box-shadow: 0 0 0 0.2rem rgba(54, 52, 55, 0.5); }
+      .btn-download.disabled, .btn-download:disabled {
+        color: #fff;
+        background-color: #f05a22;
+        border-color: #f05a22; }
+      .btn-download:not(:disabled):not(.disabled):active, .btn-download:not(:disabled):not(.disabled).active,
+      .show > .btn-download.dropdown-toggle {
+        color: #fff;
+        background-color: #f05a22;
+        border-color: #f05a22; }
+        .btn-download:not(:disabled):not(.disabled):active:focus, .btn-download:not(:disabled):not(.disabled).active:focus,
+        .show > .btn-download.dropdown-toggle:focus {
+          box-shadow: 0 0 0 0.2rem rgba(54, 52, 55, 0.5); }
+  
+  
+  
+  .dwAndroid, .dwIos{
+      
+      width:440px;
+      height:276px;
+      background-repeat:no-repeat;
+      background-position: center center;
+  }
+  
+  .dwAndroid{ 
+      background-image: url('../../../../../../../assets/img/user/QR_Code_icon.png');
+  } 
+  
+  .dwIos{
+      background-image: url('../../../../../../../assets/img/user/QR_iOS_icon.png');
+  }
+  
+  .p2 {
+    line-height: 1.8em;
+    font-size: 15px;
+    color: #777777;
+    letter-spacing: 0.03em;
+  }
+  
+  .copyright-section2 p {
+    text-align: center;
+    width: 100%;
+    padding: 15px;
+    margin-bottom: 0; 
+    background: #FFFFFF;
+  }
+  
+  @media (min-width: 768px){
+    .sumBox{
+      max-width: 14.2% !important;
+      padding-left: 10px;
+      padding-right: 10px;
+    }
+  }
+  
+  @media (max-width: 768px){
+    .sumBox{
+      padding-top: 10px !important;
+    }
+  }
+  
+  @media (max-width: 576px){
+    .sumBox{
+      width: 50% !important;
+      padding-top: 10px !important;
+    }
+  }

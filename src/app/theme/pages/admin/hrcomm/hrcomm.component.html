@@ -1,0 +1,1893 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.13/semantic.min.css">
+<link rel="stylesheet" href="https://cdn.quilljs.com/1.3.6/quill.core.css">
+<notifier-container></notifier-container>
+<!-- <script src="html2pdf.bundle.min.js"></script> -->
+
+<div class="m-content">
+    <div class="row">
+
+        <div class="col-lg-12 centred my-auto" *ngIf="loading">
+            <div class="m-section__content">
+                <div class="m-demo" data-code-preview="true" data-code-html="true" data-code-js="false">
+                    <div class="m-demo__preview">
+                        <div class="m-stack m-stack--ver m-stack--general m-stack--demo">
+                            <div class="m-stack__item m-stack__item--center m-stack__item--middle">
+                                <span>
+                                    Loading data. Please wait...
+                                </span>
+                                <span>
+                                    <div class="m-loader m-loader--lg m-loader--success" style="width: 30px; display: inline-block;"></div>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- HR Comn Report-->
+        <div class="col-lg-12" *ngIf="!loading">
+            <div class="m-portlet m-portlet--rounded">
+                <div class="m-portlet__head m--bg-focus" style="background: #FF5A00!important">
+                    <div class="m-portlet__head-caption">
+                        <div class="m-portlet__head-title">
+                            <h3 class="m-portlet__head-text  m--font-inverse-primary">
+                                HR Comm
+                            </h3>
+                        </div>
+                    </div>
+                </div>
+                <br>
+                <div class="m-portlet m-portlet--tabs">
+                    <div class="m-portlet__head-tools">
+                        <ul class="nav nav-tabs nav-fill" role="tablist" style="background-color:#f4f5f8"> 
+                             <li class="nav-item text-nowrap tablink" 
+                                style="width: 150px;max-width: 25%;">
+                                <a class="nav-link active" data-toggle="tab" href="#m_tabs_list_1" role="tab">
+                                    Lists
+                                </a>
+                            </li>
+                           
+                            <li class="nav-item text-nowrap tablink" aria-readonly="true" 
+                                style="width: 150px;max-width: 25%;">
+                                <a class="nav-link" data-toggle="tab" href="#m_tabs_report_2" role="tab">
+                                     Report
+                                </a>
+                            </li>
+                        </ul>    
+                    </div>
+
+                                
+                <div class="m-portlet__body" style="max-width: 100% !important;">
+                    <div class="tab-content">
+                                 
+                    <div class="tab-pane active" id="m_tabs_list_1" role="tabpanel">
+                                                                                     
+                        <div *ngIf="showFltr" class="m-section container" style="max-width: 100% !important;" >
+
+                            <!-- start: filter -->
+                            <form [formGroup]="filterForm" autocomplete="off">
+                                <div class="col-md-12 text-right mb-2">
+                                    <button class="btn m-btn--pill simple-save-btn" id="create-new-cycle" type="button" (click)="openAddModal();">
+                                        <i class="flaticon-file-1"></i> Create New
+                                    </button>
+                                </div>
+                                <div class="m-accordion m-accordion--default" id="m_accordion_1" role="tablist">
+                                    <div class="m-accordion__item">
+                                        <div class="m-accordion__item-head collapsed" role="tab" id="m_accordion_1_item_1_head" data-toggle="collapse" href="#m_accordion_1_item_1_body" aria-expanded="false">
+                                            <span class="m-accordion__item-icon">
+                                                <i class="fa fa-filter" style="font-size:25px;"></i>
+                                            </span>
+                                            <span class="m-accordion__item-title" style="font-size:1rem;">
+                                                Filter By
+                                            </span>
+                                            <span class="m-accordion__item-mode"></span>
+                                        </div>
+                                        <div class="m-accordion__item-body collapse show" id="m_accordion_1_item_1_body">
+                                            <div class="m-accordion__item-content">
+                                                <div class="row">
+                                                    <div class="col-md-4">
+                                                        <div class="row">
+                                                            <div class="col-md-4">
+                                                                <label style="margin-top:9px;">Group </label>
+                                                            </div>
+                                                            <div class="col-md-8">
+                                                                <select name="fltrGroup" id="fltrGroup" class="form-control m-input" formControlName="fltrGroup">
+                                                                    <option value="" [disabled]="true">Select Group</option>
+                                                                    <option value="{{grp.id}}" *ngFor="let grp of groupList">{{grp.group_name}}</option>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-4">
+                                                        <div class="row">
+                                                            <div class="col-md-4">
+                                                                <label style="margin-top:9px;">Category </label>
+                                                            </div>
+                                                            <div class="col-md-8"> 
+                                                                <select name="fltrCategory" id="fltrCategory" class="form-control m-input" formControlName="fltrCategory">
+                                                                    <option value="" [disabled]="true">Select category</option>
+                                                                    <option value="{{cat.id}}" *ngFor="let cat of catList">{{cat.category_name}}</option>                                                              
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-4">
+                                                        <div class="row">
+                                                            <div class="col-md-4">
+                                                                <label style="margin-top:9px;">Location </label>
+                                                            </div>
+                                                            <div class="col-md-8">
+                                                                <select name="fltrLocation" id="fltrLocation" class="form-control m-input" formControlName="fltrLocation">
+                                                                    <option value="" [disabled]="true">Select location</option>
+                                                                    <option value="{{loc.location}}" *ngFor="let loc of locationList">{{loc.location}}</option>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            <div class="row" style="padding-top: 5px;">
+                                                <div class="col-md-4">
+                                                    <div class="row">
+                                                        <div class="col-md-4">
+                                                            <label style="margin-top:9px;">Year </label>
+                                                        </div>
+                                                        <div class="col-md-8">
+                                                            <select name="fltrYear" id="fltrYear" class="form-control m-input" formControlName="fltrYear">
+                                                                <option value="{{yearItem}}" *ngFor="let yearItem of yearList">{{yearItem}}</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div class="row">
+                                                        <div class="col-md-4">
+                                                            <label style="margin-top:9px;">Month </label>
+                                                        </div>
+                                                        <div class="col-md-8">
+                                                            <select name="fltrMonth" id="fltrMonth" class="form-control m-input" formControlName="fltrMonth">
+                                                                <option value="{{mm.Value}}" *ngFor="let mm of monthList">{{mm.Text}}</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row" style="padding-top: 5px;">
+                                                <div class="col-md-12 text-right">
+                                                    <button class="btn m-btn m-btn--gradient-from-primary m-btn--gradient-to-info" type="button" [disabled]="loading" style="background: #FF5A00; background-color: #FF5A00; border-color: #FF5A00;" (click)="submitFilter(1)">Submit</button>
+                                                    <button class="btn m-btn m-btn--gradient-from-danger m-btn--gradient-to-warning ml-3" type="button" style="background: darkgrey; background-color: darkgrey; border-color: darkgrey;" (click)="resetFilterForm()">Reset</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            </form>
+                        <!-- end: filter -->
+                        <br>
+
+                        <div *ngIf="showFltr && !showAdd && pagedItems">
+
+                                <!-- :start no data -->
+                                <div class="col-lg-12 centred my-auto" *ngIf="!loading&&pagedItems.length<1">
+                                    <div class="m-demo__preview" style="padding-top:20px">
+                                        <div class="m-stack m-stack--ver m-stack--general m-stack--demo">
+                                            <div class="m-stack__item m-stack__item--center m-stack__item--middle">
+                                                <span>
+                                                    <br><br>
+                                                    {{descEmptyData}}
+                                                    <br><br><br>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                    <!-- :end no data -->
+                          
+                            <!-- start: display data -->
+                            <div class="table-responsive" *ngIf="!loading&&pagedItems.length>0">
+
+                                <div class="col-lg-12 centred my-auto" *ngIf="!loading&&pagedItems.length<1">
+                                    <div class="m-demo__preview" style="padding-top:20px">
+                                        <div class="m-stack m-stack--ver m-stack--general m-stack--demo">
+                                            <div class="m-stack__item m-stack__item--center m-stack__item--middle">
+                                                <span>
+                                                    List is empty
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- <form [formGroup]="submitForm2">-->
+                                    <table class="table table-striped table-hover" style="width: 100%;">
+                                        <thead class="thead-inverse">
+                                            <tr>
+                                                <th>No</th>
+                                                <th>Subject</th>
+                                                <th>Group</th>
+                                                <th>Category</th>
+                                                <th>Location</th>
+                                                <th>Publish Date</th>
+                                                <th colspan="3" style="width:auto">Action</th>
+                                                <th>Total likes</th>
+                                            </tr>
+                                        </thead>
+
+                                        <tbody>
+                                            <!-- if all, data2 -->
+                                            <tr *ngFor="let item of pagedItems; let i = index">
+                                                <!-- <td>{{i+1}}</td> -->
+                                                <td>{{item.noItem}}</td>
+                                                <td>
+                                                    <a href (click)="openAdminVModal(item.id)" data-toggle="modal" data-placement="bottom" title="Admin View" data-target="#view_Admin"> 
+                                                    {{item.subject}}
+                                                    </a>
+                                                </td>
+                                                <td>{{item.from_group}}</td>
+                                                <td>{{item.category}}</td>
+                                                <td>{{item.location}}</td>
+                                                <td>{{item.publish_date | date:'dd MMM yyyy h:mma'}}</td>
+                                                <td style="vertical-align: middle;">
+                                                    <button class="btn simple-save-btn  m-btn m-btn--icon btn-sm m-btn--icon-only m-btn--pill m-btn--air" id="edit-cycle" type="button" 
+                                                        title="Edit" (click)="openEditModal(item.id)">
+                                                        <i class="fa fa-edit"></i>
+                                                    </button>
+                                                </td>
+                                                <td style="vertical-align: middle;">
+                                                    <button class="btn simple-save-btn  m-btn m-btn--icon btn-sm m-btn--icon-only m-btn--pill m-btn--air" id="delete-cycle" type="button" 
+                                                        title="Delete" (click)="selItemDel(item.id)">
+                                                        <i class="fa fa-trash-o"></i>
+                                                    </button>
+                                                </td>
+                                                <td style="vertical-align: middle;">
+                                                    <!-- <mat-slide-toggle 
+                                                    title ="Are you sure you want to publish/unpublish this Comm?"
+                                                    class = "tp-margin center"  
+                                                    [color]="colorSlide"
+                                                    [checked] = "getStat(item.status)"
+                                                    (change)="toggle(item.id,item.status)">
+                                                 </mat-slide-toggle> -->
+
+                                                 <label class="switch" title ="Publish/unPublish">
+                                                    <input type="checkbox" 
+                                                    [checked] = "getStat(item.status)"
+                                                    (change)="toggle(item.id,item.status)">
+                                                    <span class="slider round"></span>
+                                                  </label>
+                                                </td>
+                                                <td style="vertical-align: middle;">
+                                                    {{item.totalLike}}
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                <!--</form>-->
+                            </div>
+                            <!-- end: display data -->
+
+                            <!-- start: paging - critical -->
+                            <div class="row">
+                                <div class="col-12">
+                                    <br>
+                                    <nav aria-label="Page navigation example">
+                                        <ul *ngIf="pager.pages && pager.pages.length"
+                                            class="pagination justify-content-end">
+                                            <li class="page-item" [ngClass]="{disabled:pager.currentPage === 1}">
+                                                <button (click)="setPage(1)" class="page-link" aria-label="Previous">
+                                                    <span aria-hidden="true">&laquo;</span>
+                                                    <span class="sr-only">First</span>
+                                                </button>
+                                            </li>
+                                            <li class="page-item" [ngClass]="{disabled:pager.currentPage === 1}">
+                                                <button (click)="setPage(pager.currentPage - 1)" class="page-link"
+                                                    aria-label="Previous">
+                                                    <span aria-hidden="true">&lt;</span>
+                                                    <span class="sr-only">Previous</span>
+                                                </button>
+                                            </li>
+                                            <li class="page-item" *ngFor="let page of pager.pages"
+                                                [ngClass]="{active:pager.currentPage === page}">
+                                                <button (click)="setPage(page)" class="page-link">{{page}}</button>
+                                            </li>
+                                            <li class="page-item"
+                                                [ngClass]="{disabled:pager.currentPage === pager.totalPages}">
+                                                <button (click)="setPage(pager.currentPage + 1)" class="page-link"
+                                                    aria-label="Previous">
+                                                    <span aria-hidden="true">&gt;</span>
+                                                    <span class="sr-only">Next</span>
+                                                </button>
+                                            </li>
+                                            <li class="page-item"
+                                                [ngClass]="{disabled:pager.currentPage === pager.totalPages}">
+                                                <button (click)="setPage(pager.totalPages)" class="page-link"
+                                                    aria-label="Next">
+                                                    <span aria-hidden="true">&raquo;</span>
+                                                    <span class="sr-only">Last</span>
+                                                </button>
+                                            </li>
+                                        </ul>
+                                    </nav>
+                                </div>
+                            </div>
+                            <!-- end: paging - critical -->
+                            <!-- start: download csv -->
+                            <div class="row" *ngIf="!loading&&pagedItems.length>0">
+                                <div class="col-12" style="text-align: right; margin-top:10px">
+                                    <div class="m-demo__preview m-demo__preview--btn">
+                                     <label class=" col-form-label label-data"
+                                        style="font-size: 1.0rem;color: #FF7F24; border-color:#FF7F24; text-align: center;">
+                                        <button type="button" class="btn btn-outline-warning" (click)="downloadReport()" [disabled]="downloadAll">                                           
+                                            <span class="fa fa-download"> Download Report</span>
+                                        </button>				
+                                    </label>
+                                    </div>
+                                </div>
+                            </div>
+                           <!-- end: download csv -->
+                       </div>
+                    </div>
+
+                    <div *ngIf="!showFltr && showAdd && !loading" class="m-section container" style="max-width: 100% !important;" >
+                        
+                        <div style="text-align: center; padding: 5rem" *ngIf="loading">
+                            <img src="../assets/img/user/ERA.gif" style="width:auto;height:100px;">
+                        </div>
+                        
+                        <form [formGroup]="commAddForm" autocomplete="off">
+                            <div class="row" style="padding-top: 5px;">
+                                <div class="col-md-3">Subject</div>
+                                <div class="col-md-9"><input type="text" name="addSubjectInput" id="addSubjectInput" formControlName="addSubjectInput" autocomplete="off" 
+                                     class="form-control search-input" placeholder="Enter subject"></div>
+                            </div>
+                            <div class="row" style="padding-top: 5px;">
+                                <div class="col-md-12">
+                                    <ul class="nav nav-tabs" role="tablist" style="background-color:#f4f5f8">
+                                        <li class="nav-item m-tabs__item" >
+                                            <a class="nav-link m-tabs__link" style="font-size: 14px;" data-toggle="tab" href="#m_tabs_BM" 
+                                                [class.active]="showMalayTab" [class.show]="showMalayTab" role="tab">
+                                                Malay Version
+                                            </a>
+                                        </li>
+                                            <li class="nav-item m-tabs__item">
+                                            <a class="nav-link m-tabs__link" style="font-size: 14px;" data-toggle="tab" href="#m_tabs_BI" 
+                                                [class.active]="showEnglishTab" [class.show]="showEnglishTab" role="tab">
+                                                English Version
+                                            </a>
+                                        </li>
+                                    </ul>
+                                <div class="tab-content">
+								<!-- MALAY LANG TAB START -->
+								<div class="tab-pane active" [class.active]="showMalayTab" [class.show]="showMalayTab"
+								id="m_tabs_BM" role="tabpanel" >
+								<div class="modal-body" style="padding: 0;">
+
+									<div formGroupName="fgAddDivMal" *ngIf="!loading">
+
+                                        <div class="row" style="padding-top: 5px;">
+                                            <div class="col-md-3">Body Image</div>
+                                            <div class="col-md-9">
+                                                <div class="btn era-btn m-btn m-btn--outline-2x" style="padding: 0.2rem 2rem!important; align-content: center;align-items: center" (click)="fileAddBodyImgMal.click()">
+                                                    <i class="la la-plus"></i> 
+                                                </div>  <strong>*Ideal size:- (1024px X 768px / 4:3) or (1080px X 1080px / 1:1)</strong>
+                                                 <span style="color:red;" *ngIf="messageImg">{{messageImg}}</span>
+                                                <input #fileAddBodyImgMal name="fileAddBodyImgMal" type="file" accept='image/*' (change)="previewMalay($event)"
+                                                style="display: none;" />
+                                            </div>
+                                        </div>
+                                        <div class="row center" style="padding-top: 5px;">
+                                            <div class="col-md-12">
+                                                <img [src]="imgMalURL" *ngIf="imgMalURL" style="max-width: 100%;height: auto;">
+                                            </div>
+                                        </div>
+                                        <div class="row" style="padding-top: 5px;">
+                                            <div class="col-md-3">Body Text</div>
+                                            <div class="col-md-9">
+                                                <quill-editor [(ngModel)]="htmlString_mal" #addBodyTextInputMal name="addBodyTextInputMal" formControlName="addBodyTextInputMal" 
+                                                    (onContentChanged)="onContentChangedMal($event)" 
+                                                    placeholder="Masukkan Teks" 
+                                                    [modules]="quillConfig" > 
+                                                </quill-editor>
+                                            </div>
+                                        </div>
+
+									</div>
+                                    
+								</div>
+								</div>
+								<!-- MALAY LANG TAB END -->
+								<!-- ENGLISH LANG START -->
+								<div class="tab-pane" [class.active]="showEnglishTab" [class.show]="showEnglishTab"
+								id="m_tabs_BI" role="tabpanel" >
+                                <div class="modal-body" style="padding: 0;">
+
+									<div formGroupName="fgAddDivEng" *ngIf="!loading">
+
+                                        <div class="row" style="padding-top: 5px;">
+                                            <div class="col-md-3">Body Image</div>
+                                            <div class="col-md-9">
+                                                <div class="btn era-btn m-btn m-btn--outline-2x" style="padding: 0.2rem 2rem!important; align-content: center;align-items: center" (click)="fileAddBodyImgEng.click()">
+                                                    <i class="la la-plus"></i> 
+                                                </div>  <strong>*Ideal size:- (1024px X 768px / 4:3) or (1080px X 1080px / 1:1)</strong>
+                                                    <span style="color:red;" *ngIf="messageImg">{{messageImg}}</span>
+                                                <input #fileAddBodyImgEng name="fileAddBodyImgEng" type="file" accept='image/*' (change)="previewEnglish($event)"
+                                                style="display: none;" />
+                                            </div>
+                                        </div>
+                                        <div class="row center" style="padding-top: 5px;">
+                                            <div class="col-md-12">
+                                                <img [src]="imgEngURL" *ngIf="imgEngURL" style="max-width: 100%;height: auto;">
+                                            </div>
+                                        </div>
+                                        <div class="row" style="padding-top: 5px;">
+                                            <div class="col-md-3">Body Text</div>
+                                            <div class="col-md-9">
+                                                <quill-editor [(ngModel)]="htmlString_eng" #addBodyTextInputEng name="addBodyTextInputEng" formControlName="addBodyTextInputEng" 
+                                                    (onContentChanged)="onContentChangedEng($event)"
+                                                    placeholder="Enter Text"
+                                                    [modules]="quillConfig">
+                                                </quill-editor>
+                                            </div>
+                                        </div>
+
+									</div>
+								</div>
+								</div>
+								<!-- ENGLISH LANG TAB END -->
+                                </div>
+                                </div>
+                            </div>
+                            <div class="row" style="padding-top: 5px;">
+                                <div class="col-md-3">Image Link (if any)</div>
+                                <div class="col-md-9"><input name="addHyperLinkInput" id="addHyperLinkInput" formControlName="addHyperLinkInput" type="text" class="form-control" required placeholder="hyperlink"></div>
+                            </div>
+                            <div class="row" style="padding-top: 5px;">
+                                <div class="col-md-3">Group (From)</div>
+                                <div class="col-md-3">
+                                    <select name="addGroupInput" id="addGroupInput" formControlName="addGroupInput" class="form-control m-input">
+                                        <option value="" [disabled]="true">Select Group</option>
+                                        <option value="{{grp.id}}" *ngFor="let grp of groupList">{{grp.group_name}}</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-3">Category
+                                </div>
+                                <div class="col-md-3">  
+                                    <span class="btn era-btn m-btn m-btn--outline-2x"  data-toggle="modal" data-placement="bottom" title=" Add Category" data-target="#addNewCategory"
+                                        style="padding: 0.2rem 2rem!important; align-content: center;align-items: center">
+                                        <i class="la la-plus"></i> 
+                                    </span>
+                                    <select name="addCategoryInput" id="addCategoryInput" formControlName="addCategoryInput" class="form-control m-input"> 
+                                        <option value="" [disabled]="true">Select category</option>
+                                        <option value="{{cat.id}}" *ngFor="let cat of catList">{{cat.category_name}}</option>                                                              
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="row" style="padding-top: 5px;">
+                                <div class="col-md-3">Subcategory</div>
+                                <div class="col-md-3"><input name="addSubcategoryInput" formControlName="addSubcategoryInput" id="addSubcategoryInput" type="text" class="form-control" required placeholder=""></div>
+                                <div class="col-md-3">Comm.Type</div>
+                                <div class="col-md-3">
+                                    <span class="btn era-btn m-btn m-btn--outline-2x" data-toggle="modal" data-placement="bottom" title="Add Comm-Type" data-target="#addNewCommType"
+                                        style="padding: 0.2rem 2rem!important; align-content: center;align-items: center">
+                                        <i class="la la-plus"></i> 
+                                    </span>
+                                    <select name="addCommTypeInput" id="addCommTypeInput" formControlName="addCommTypeInput" class="form-control m-input" >
+                                        <option value="" [disabled]="true">Select comm. type</option>
+                                        <option value="{{ct.id}}" *ngFor="let ct of commTypeList">{{ct.type_name}}</option>                                                              
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="row" style="padding-top: 5px;">
+                                <div class="col-md-3">Publish Date</div>
+                                <div class="col-md-3"><input name="addPublishDateInput" id="addPublishDateInput" formControlName="addPublishDateInput" type="datetime-local" size="16" class="form-control" required placeholder="dd/MM/yyyy"></div>
+                                <div class="col-md-3">Tag</div>
+                                <div class="col-md-3"><input name="addTagInput" formControlName="addTagInput" id="addTagInput" type="text" class="form-control" required placeholder=""></div>
+                            </div>
+                            <div class="row" style="padding-top: 5px;">
+                                <div class="col-md-3"><br/>Location</div>
+                                <div class="col-md-9">
+                                <!--<select name="addLocationInput" id="addLocationInput" formControlName="addLocationInput" class="form-control m-input" >
+                                        <option value="" [disabled]="true">Select target Location</option>
+                                        <option value="{{loc.location}}" *ngFor="let loc of locationList">{{loc.location}}</option>
+                                    </select> -->
+                                    <br/>
+                                 <ng-multiselect-dropdown
+                                        id="addLocationInput" 
+                                        formControlName="addLocationInput"
+                                        name="addLocationInput"
+                                        [data]="locationList"
+                                        [settings]="dropdownLocSettings"
+                                        [disabled]="disabled">
+                                    </ng-multiselect-dropdown>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-3"><br/>Target (To)</div>
+                                    <div class="col-md-9">
+                                    <!-- <select name="addTrgtGroupInput" id="addTrgtGroupInput" formControlName="addTrgtGroupInput" class="form-control m-input" >
+                                        <option value="" [disabled]="true">Select target Employee</option>
+                                        <option value="{{egl.empl_group}}" *ngFor="let egl of empgrpList">{{egl.empl_group}}</option>
+                                    </select>-->
+                                    <br/>
+                                    <ng-multiselect-dropdown
+                                        id="addTrgtGroupInput" 
+                                        formControlName="addTrgtGroupInput"
+                                        name="addTrgtGroupInput"
+                                        [data]="empgrpList"
+                                        [settings]="dropdownBndSettings"
+                                        [disabled]="disabled">
+                                    </ng-multiselect-dropdown>
+                                    </div>
+                            </div>
+                            <div class="row" style="padding-top: 5px;">
+                                <div class="col-md-3">Thumbnail</div>
+                                <div class="col-md-9">
+                                    <div class="btn era-btn m-btn m-btn--outline-2x" style="padding: 0.2rem 2rem!important; align-content: center;align-items: center" (click)="thumbnailAddInput.click()">
+                                        <i class="la la-plus"></i>
+                                    </div> <strong>*Ideal size:- (200px X 150px)</strong>
+                                        <span style="color:red;" *ngIf="messageImgThumb">{{messageImgThumb}}</span>
+                                  
+                                </div>
+                                <div class="col-md-6">
+                                    <img [src]="imgThumbURL" *ngIf="imgThumbURL" style="max-width: 100%;height: auto;">
+                                    <br/>
+                                </div>
+                            </div>
+                            <div class="row" style="padding-top: 5px;">
+                                <input #thumbnailAddInput name="thumbnailAddInput" type="file" accept='image/*' (change)="previewThumb(thumbnailAddInput.files)"
+                                    style="display: none;" />   
+                            </div>
+                            <!-- comment duplicate -->
+                                <!-- <div class="col-md-6">
+                                    <img [src]="imgThumbURL" *ngIf="imgThumbURL" style="max-width: 100%;height: auto;">
+                                    <br/>
+                                </div> -->
+                        
+                            <div class="row">
+                                <div style="min-height: 2em;"></div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12 text-left">
+                                <span style="color:red; font: 1em sans-serif;" *ngIf="ErrorMsg"><strong>{{ErrorMsg}}</strong></span>
+                                </div>
+                                <div class="col-md-12 text-right">
+                                    <button type="button" class="btn m-btn m-btn--gradient-from-primary m-btn--gradient-to-info" 
+                                    style="background: #FF5A00; background-color: #FF5A00; border-color: #FF5A00"  id="addNewSubmitBtn" (click)="addNewSubmit()"><b>Save Draft</b></button>
+                                    <button type="button" class="btn m-btn m-btn--gradient-from-danger m-btn--gradient-to-warning ml-3" 
+                                    style="background:darkgray; background-color: darkgray; border-color: darkgray" (click)="backToSearchTableAdd()" 
+                                    data-toggle="tooltip" data-placement="bottom" title="Back to filter lists">Back</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+
+                    <div *ngIf="!showFltr && showEdit && !loading" class="m-section container" style="max-width: 100% !important;" >
+                        
+                        <div style="text-align: center; padding: 5rem" *ngIf="loading">
+                            <img src="../assets/img/user/ERA.gif" style="width:auto;height:100px;">
+                        </div>
+                        
+                        <form [formGroup]="commEditForm" autocomplete="off">
+                            <div class="row" style="padding-top: 5px;">
+                                <div class="col-md-12"><input type="hidden" name="editIdInput" id="editIdInput" 
+								formControlName="editIdInput"></div>
+                            </div>
+
+                            <div class="row" style="padding-top: 5px;">
+                                <div class="col-md-3">Subject</div>
+                                <div class="col-md-9"><input type="text" name="editSubjectInput" id="editSubjectInput" 
+								formControlName="editSubjectInput" autocomplete="off"
+                                     class="form-control search-input" placeholder="Enter subject"></div>
+                            </div>
+
+                            <div class="row" style="padding-top: 5px;">
+                                <div class="col-md-12">
+                                    <ul class="nav nav-tabs" role="tablist" style="background-color:#f4f5f8">
+                                        <li class="nav-item m-tabs__item" >
+                                            <a class="nav-link m-tabs__link" style="font-size: 14px;" data-toggle="tab" href="#m_tabs_Edit_Mal" 
+                                                [class.active]="showMalayTab" [class.show]="showMalayTab" role="tab">
+                                                Malay Version
+                                            </a>
+                                        </li>
+                                            <li class="nav-item m-tabs__item">
+                                            <a class="nav-link m-tabs__link" style="font-size: 14px;" data-toggle="tab" href="#m_tabs_Edit_Eng" 
+                                                [class.active]="showEnglishTab" [class.show]="showEnglishTab" role="tab">
+                                                English Version
+                                            </a>
+                                        </li>
+                                    </ul>
+                                <div class="tab-content">
+								<!-- MALAY LANG TAB START -->
+								<div class="tab-pane active" [class.active]="showMalayTab" [class.show]="showMalayTab"
+								id="m_tabs_Edit_Mal" role="tabpanel" >
+								<div class="modal-body" style="padding: 0;">
+
+									<div *ngIf="!loading">
+
+                                        <div class="row" style="padding-top: 5px;">
+                                            <div class="col-md-3">Body Image</div>
+                                            <div class="col-md-9">
+                                                <div class="btn era-btn m-btn m-btn--outline-2x" style="padding: 0.2rem 2rem!important; align-content: center;align-items: center" (click)="fileEditBodyImgMal.click()">
+                                                    <i class="la la-plus"></i> 
+                                                </div>  <strong>*Ideal size:- (1024px X 768px / 4:3) or (1080px X 1080px / 1:1)</strong>
+                                                    <span style="color:red;" *ngIf="messageImg">{{messageImg}}</span>
+                                                   <input #fileEditBodyImgMal name="fileEditBodyImgMal" type="file" accept='image/*' (change)="previewEditMalay($event,editId)" style="display: none;" />
+                                            </div>
+                                        </div>
+                                        <div class="row center" style="padding-top: 5px;">
+                                            <div class="col-md-12">
+                                                <img [src]="imgMalURL" *ngIf="imgMalURL" style="max-width: 100%;height: auto;">
+                                            </div>
+                                        </div>
+                                        <div class="row" style="padding-top: 5px;">
+                                            <div class="col-md-3">Body Text</div>
+                                            <div class="col-md-9">
+                                                <quill-editor #editBodyTextInputMal name="editBodyTextInputMal" formControlName="editBodyTextInputMal" 
+                                                    (onContentChanged)="onContentChangedMal($event)"
+                                                    placeholder="Masukkan Teks"
+                                                    [modules]="quillConfig"
+													[(ngModel)]="htmlString_mal">
+                                                </quill-editor>
+                                            </div>
+                                        </div>
+
+									</div>
+                                    
+								</div>
+								</div>
+								<!-- MALAY LANG TAB END -->
+								<!-- ENGLISH LANG START -->
+								<div class="tab-pane" [class.active]="showEnglishTab" [class.show]="showEnglishTab"
+								id="m_tabs_Edit_Eng" role="tabpanel" >
+								<div class="modal-body" style="padding: 0;">
+
+									<div *ngIf="!loading">
+
+                                        <div class="row" style="padding-top: 5px;">
+                                            <div class="col-md-3">Body Image</div>
+                                            <div class="col-md-9">
+                                                <div class="btn era-btn m-btn m-btn--outline-2x" style="padding: 0.2rem 2rem!important; align-content: center;align-items: center" (click)="fileEditBodyImgEng.click()">
+                                                    <i class="la la-plus"></i> 
+                                                </div>  <strong>*Ideal size:- (1024px X 768px / 4:3) or (1080px X 1080px / 1:1)</strong>
+                                                    <span style="color:red;" *ngIf="messageImg">{{messageImg}}</span>
+                                                <input #fileEditBodyImgEng name="fileEditBodyImgEng" type="file" accept='image/*' (change)="previewEditEnglish($event,editId)" style="display: none;" />
+                                            </div>
+                                        </div>
+                                        <div class="row center" style="padding-top: 5px;">
+                                            <div class="col-md-12">
+                                                <img [src]="imgEngURL" *ngIf="imgEngURL" style="max-width: 100%;height: auto;">
+                                            </div>
+                                        </div>
+                                        <div class="row" style="padding-top: 5px;">
+                                            <div class="col-md-3">Body Text</div>
+                                            <div class="col-md-9">
+                                                <quill-editor #editBodyTextInputEng name="editBodyTextInputEng" formControlName="editBodyTextInputEng" 
+                                                    (onContentChanged)="onContentChangedEng($event)"
+                                                    placeholder="Enter Text"
+                                                    [modules]="quillConfig"
+													[(ngModel)]="htmlString_eng">
+                                                </quill-editor>
+                                            </div>
+                                        </div>
+
+									</div>
+								</div>
+								</div>
+								<!-- ENGLISH LANG TAB END -->
+                                </div>
+                                </div>
+                            </div>
+                            <div class="row" style="padding-top: 5px;">
+                                <div class="col-md-3">Image Link (if any)</div>
+                                <div class="col-md-9"><input name="editHyperLinkInput" id="editHyperLinkInput" 
+                                    formControlName="editHyperLinkInput" type="text" class="form-control" [ngModel]="hyperlinkComm"
+                                    required placeholder="hyperlink / pautan luar">
+                                </div>
+                            </div>
+                            <div class="row" style="padding-top: 5px;">
+                                <div class="col-md-3">Group (From)</div>
+                                <div class="col-md-3">
+                                    <select name="editGroupInput" id="editGroupInput" formControlName="editGroupInput" class="form-control m-input">
+                                        <option value="" [disabled]="true">Select Group</option>
+                                        <option value="{{grp.id}}" *ngFor="let grp of groupList">{{grp.group_name}}</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-3">Category</div>
+                                <div class="col-md-3">
+                                    <select name="editCategoryInput" id="editCategoryInput" formControlName="editCategoryInput" class="form-control m-input">
+                                        <option value="" [disabled]="true">Select category</option>
+                                        <option value="{{cat.id}}" *ngFor="let cat of catList">{{cat.category_name}}</option>                                                              
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="row" style="padding-top: 5px;">
+                                <div class="col-md-3">Subcategory</div>
+                                <div class="col-md-3"><input name="editSubcategoryInput" formControlName="editSubcategoryInput" id="editSubcategoryInput" type="text" class="form-control" required placeholder=""></div>
+                                <div class="col-md-3">Comm.Type</div>
+                                <div class="col-md-3">
+                                    <select name="editCommTypeInput" id="editCommTypeInput" formControlName="editCommTypeInput" class="form-control m-input" >
+                                        <option value="" [disabled]="true">Select comm. type</option>
+                                        <option value="{{ct.id}}" *ngFor="let ct of commTypeList">{{ct.type_name}}</option>                                                              
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="row" style="padding-top: 5px;">
+                                <div class="col-md-3">Published Date/Time</div>
+                                <div class="col-md-3">
+                                    <input type= "text" class="form-control"
+                                    style="background-color: rgba(0, 0, 0, 0.075);"
+                                    value={{view_publish_date}} disabled>
+                                </div>  
+                                <div class="col-md-3">Tag</div>
+                                <div class="col-md-3"><input name="editTagInput" formControlName="editTagInput" id="editTagInput" type="text" class="form-control" required placeholder=""></div>
+                            </div> 
+                               
+                            <div class="row" style="padding-top: 5px;">
+                                <div class="col-md-3"></div>
+                                <div class="col-md-3" *ngIf="!dataResDet">
+                                    <input name="editPublishDateInput" 
+                                    id="editPublishDateInput" 
+                                    [ngModel]="publishDate"
+                                    required formControlName="editPublishDateInput"
+                                    type="datetime-local" size="10" class="form-control"> 
+                                </div>
+                            </div>
+                                <!-- <div class="col-md-3">Tag</div>
+                                <div class="col-md-3"><input name="editTagInput" formControlName="editTagInput" id="editTagInput" type="text" class="form-control" required placeholder=""></div>
+                            </div> -->
+                            <div class="row" style="padding-top: 5px;">
+                                <div class="col-md-3"><br/>Location</div>
+                                <div class="col-md-9">
+                                <br/>
+                                <ng-multiselect-dropdown
+                                    id="editLocationInput" 
+                                    formControlName="editLocationInput"
+                                    name="editLocationInput"
+                                    [data]="locationList"
+                                    [settings]="dropdownLocSettings"
+                                    [(ngModel)]="target_location"
+                                    [disabled]="disabled">
+                                </ng-multiselect-dropdown>
+                                </div>
+                            </div>
+                            <div class="row" style="padding-top: 5px;">
+                                <div class="col-md-3"><br/>Target (To)</div>
+                                <div class="col-md-9"><br/>
+                                <ng-multiselect-dropdown
+                                id="editTrgtGroupInput" 
+                                formControlName="editTrgtGroupInput"
+                                name="editTrgtGroupInput"
+                                [data]="empgrpList"
+                                [settings]="dropdownBndSettings"
+                                [(ngModel)]="target_band"
+                                [disabled]="disabled">
+                            </ng-multiselect-dropdown>
+                            </div>
+                            </div>
+                            <!-- edit thumbnail -->
+                            <div class="row" style="padding-top: 5px;">
+                                <div class="col-md-3">Thumbnail</div>
+                                <!-- <div class="col-md-3"> -->
+                                    <div class="col-md-9">
+                                        <div class="btn era-btn m-btn m-btn--outline-2x" style="padding: 0.2rem 2rem!important; align-content: center;align-items: center" (click)="thumbnailEditInput.click()">
+                                            <i class="la la-plus"></i>
+                                        </div> 
+                                            <span style="color:red;" *ngIf="messageImgThumb">{{messageImgThumb}}</span>
+                                        <input #thumbnailEditInput name="thumbnailEditInput" formControlName="thumbnailEditInput" type="file" accept='image/*' (change)="previewEditThumb($event,editId)"
+                                        style="display: none;" />
+                                    </div>
+                                <div class="col-md-6"> <strong>*Ideal size:- (200px X 150px)</strong>
+                                    <img [src]="imgThumbURL" *ngIf="imgThumbURL" style="max-width: 100%;height: auto;">
+                                </div>
+                            </div>
+                            <div class="row" style="padding-top: 5px;">
+                                <div class="col-md-3">Attachment</div>
+                                <div class="col-md-9">
+                                    <ngx-dropzone #attachAddInput name="attachAddInput" (change)="onSelectAttach($event)" [multiple]='true' accept=".pdf" class="fileDropZone"
+                                    [maxFileSize]='2000000'>
+                                        <ngx-dropzone-label>
+                                            <i class="flaticon-upload" style="font-size: 2rem;"></i>
+                                            <br>
+                                            Drop file here or click to upload.
+                                        </ngx-dropzone-label>
+                                        <ngx-dropzone-preview  class="fileDropPreview" *ngFor="let f of attachFile"  [removable]="true" (removed)="onRemoveAttach(f)">
+                                            <ngx-dropzone-label class="fileDropLabel" >{{ f.name }}</ngx-dropzone-label> <!-- ({{ f.type }})-->
+                                        </ngx-dropzone-preview>
+                                    </ngx-dropzone>
+                                    <span class="form-text text-muted">Please upload your attachment here.<i>(Max: 3 files, size: 2 MB per file / Format: PDF only)</i></span>
+                                    <mat-error *ngIf="!isOkSize">
+                                        File size should not be more than 2 MB.
+                                    </mat-error>
+                                </div>
+                            </div>
+                            <div class="row" style="padding-top: 5px;">
+                            <div class="col-md-3">
+
+                            </div>
+                            <div class="col-md-3">
+                                <button type="button" class="btn" (click)="clearAttach()" >Cancel</button>
+
+                                <button type="button" class="btn kt-spinner--right kt-spinner--sm kt-spinner--light" style="float: right;"
+                                    (click)="uploadAttach(editId)">
+                                    Submit
+                                </button>
+                            </div>
+                            <div class="col-md-6">
+
+                            </div>
+                            </div>
+                                <div class="row" *ngIf="attachList?.length > 0" style="padding-top: 5px;">
+                                    <div class="col-md-12">
+                                        <table class="table table-striped table-hover" style="width: 100%;">
+                                            <thead class="thead-inverse">
+                                                <tr>
+                                                    <th>No</th>
+                                                    <th>filename</th>
+                                                    <th style="width:auto">Action</th>
+                                                </tr>
+                                            </thead>
+
+                                            <tbody>
+                                                <!-- if all, attachment -->
+                                                <tr *ngFor="let att of attachList; let j = index">
+                                                    <td>{{j+1}}</td>
+                                                    <td>{{getFilename(att.image_url)}}</td>
+                                                    <td style="vertical-align: middle;">
+                                                        <button class="btn simple-save-btn  m-btn m-btn--icon btn-sm m-btn--icon-only m-btn--pill m-btn--air" title ="Open file" type="button" (click)="openPDF(att.image_hash)">
+                                                            <i class="fa fa-file"></i>
+                                                        </button>
+                                                        <button class="btn simple-save-btn  m-btn m-btn--icon btn-sm m-btn--icon-only m-btn--pill m-btn--air" 
+                                                             title ="Delete file" type="button" (click)="selectedAttachment(att.id, att.news_id)">
+                                                            <i class="fa fa-trash-o"></i>
+                                                        </button>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div style="min-height: 2em;"></div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12 text-left">
+                                    <span style="color:red; font: 1em sans-serif;" *ngIf="ErrorMsg"><strong>{{ErrorMsg}}</strong></span>
+                                    </div>
+                                    <div class="col-md-12 text-right">
+                                        <button type="button" class="btn m-btn m-btn--gradient-from-primary m-btn--gradient-to-info" 
+                                        style="background: #FF5A00; background-color: #FF5A00; border-color: #FF5A00"  id="editSubmitBtn" (click)="editSubmit(editId)"><b>Update</b></button>
+                                        <button class="btn m-btn m-btn--gradient-from-danger m-btn--gradient-to-warning ml-3" type="button" (click)="openPrevModal()" style="background: #FF5A00; background-color: #FF5A00; border-color: #FF5A00;" data-toggle="modal" data-placement="bottom" title="Preview" data-target="#view_comm">Preview</button>
+                                        <button class="btn m-btn m-btn--gradient-from-danger m-btn--gradient-to-warning ml-3" type="button" (click)="backToSearchTableEdit()" style="background: darkgrey; background-color: darkgrey; border-color: darkgrey;" data-toggle="tooltip" data-placement="bottom" title="Back to filter lists">Back</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                   
+                   <!-- start tab Report 2 -->
+                    
+                    <div class="tab-pane" id="m_tabs_report_2" role="tabpanel">
+                        <form [formGroup]="filterYear" autocomplete="off">
+                                                     
+                            <div class = "row pull-right">
+                                <div class="col-md-12">
+                                    <div class="row">
+                                        <div class="col-md-2">
+                                            <label style="margin-top:9px; font-weight: bold;">Year: </label>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <select name="txtboxYear" id="txtboxYear" class="form-control m-input" formControlName="txtboxYear">
+                                                <option value="{{yrItem}}" *ngFor="let yrItem of yearList">{{yrItem}}</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <button class="btn m-btn m-btn--gradient-from-primary m-btn--gradient-to-info" type="button" 
+                                                style="background: #FF5A00; background-color: #FF5A00; border-color: #FF5A00;"  
+                                                (click) = "submitYear(1)">Submit
+                                            </button>
+                                        </div>
+                                   
+                                    </div>
+                                </div>
+                            </div>
+                            <br><br><br>
+                            <div class="card" *ngIf = "showRepCurrYear">
+                                <div class="title-Cate">
+                                    CATEGORY
+                                </div>
+                                <div class="row">
+                                    <div class="center-box" *ngFor = "let itmGetC of reportTotalCat">
+                                        <div class="m-portlet m-portlet--rounded mb-0 grid-enlarge" 
+                                            style="border-radius: 15px;">
+                                            <div class="m-portlet__body text-center responsive-grid">
+                                                <div class="m--font-bolder text-adapt" 
+                                                    style="color:#ED7D31">{{itmGetC.category_name}}
+                                                </div>
+                                                    <br>
+                                                <div class="col-md-12 value-adapt" 
+                                                    style="margin-top: 2px;vertical-align: bottom;
+                                                    font-size: x-large; font-weight: bold;">
+                                                    {{itmGetC.count_category}}
+                                                </div>   
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>           
+                               
+                                <!--sub-category-->
+                                <div style="padding-top: 30px;">
+                                    <div class="title-Cate">
+                                        COMM-TYPE
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="center-box" *ngFor = "let itmGetT of reportTotalType">
+                                        <div class="m-portlet m-portlet--rounded mb-0 grid-enlarge" 
+                                                style="border-radius: 15px;">
+                                                <div class="m-portlet__body text-center responsive-grid">
+                                                    <div class="m--font-bolder text-adapt" 
+                                                        style="color:#70AD47">{{itmGetT.type_name}}
+                                                    </div>
+                                                    <br>
+                                                    <div class="col-md-12 value-adapt" 
+                                                        style="margin-top: 2px;vertical-align: bottom;
+                                                            font-size: x-large; font-weight: bold;">
+                                                        {{itmGetT.count_type}}
+                                                    </div>    
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                <br><br>                           
+                                <!--bar chart-->  
+                                    <div class= "row">
+                                        <div class ="container" style="align-items: center;">
+                                            <div class="col-md-10">
+                                                <div class="m-portlet__body" *ngIf="totAnnounce">
+                                                    <h4 style="text-align:left; font-size: large;"> Total No. of Announcement 
+                                                    </h4>
+                                                    <br>
+                                                    <div style="text-align:left; font-size:xx-large; font-weight: bold;">
+                                                        &nbsp;{{totAnnounce[0].count}}  
+                                                    </div>
+                                                    <br><br>
+                                                    <ngx-charts-bar-vertical
+                                                    [view]="viewCate"
+                                                    [scheme]="colorScheme1"
+                                                    [results]="monthCat"
+                                                    [gradient]="gradient"
+                                                    [xAxis]="showXAxis"
+                                                    [yAxis]="showYAxis"
+                                                    [legend]="showLegendCate"
+                                                    [showXAxisLabel]="showXAxisLabel"
+                                                    [showYAxisLabel]="showYAxisLabel"
+                                                    [xAxisLabel]="xAxisLabel"
+                                                    [yAxisLabel]="yAxisLabel"
+                                                    (select)="onSelect($event)">
+                                                </ngx-charts-bar-vertical>  
+                                                 <!-- <br><br>                         -->
+                                                </div>     
+                                            </div>
+                                       </div>
+                                    </div>
+                                  <br><br><br>
+                                </div>
+                                <br>                      
+                                 <!-- Viewer Response -->
+                                 <div class="card" *ngIf = "showRepCurrYear">
+                                    <div style="padding-top: 30px;">
+                                        <div class="title-Cate">
+                                            TOTAL VIEWER RESPONSE
+                                        </div>
+                                    </div>
+                                    <div class="row" *ngIf = "viewer">
+                                        <div class="center-box-viewer">
+                                       
+                                            <div class="m-portlet m-portlet--rounded mb-0 grid-enlarge" 
+                                                style="border-radius: 15px;">
+                                                <div class="m-portlet__body text-center responsive-grid">
+                                                    <div class="m--font-bolder text-adapt" 
+                                                        style="color:#2E5497">ACCESS</div>
+                                                        <br>
+                                                        <div class="col-md-12 value-adapt" 
+                                                            style="margin-top: 2px;vertical-align: bottom;
+                                                            font-size: x-large; font-weight: bold;">
+                                                            {{viewer.count_access}}
+                                                        </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="center-box-viewer">
+                                            <div class="m-portlet m-portlet--rounded mb-0 grid-enlarge" 
+                                                style="border-radius: 15px;">
+                                                <div class="m-portlet__body text-center responsive-grid">
+                                                    <div class="m--font-bolder text-adapt" 
+                                                        style="color:#00B0F0">VIEW
+                                                    </div>
+                                                        <br>
+                                                        <div class="col-md-12 value-adapt" 
+                                                            style="margin-top: 2px;vertical-align: bottom;
+                                                            font-size:x-large; font-weight: bold;">
+                                                        {{viewer.count_view}}
+                                                        </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="center-box-viewer">
+                                            <div class="m-portlet m-portlet--rounded mb-0 grid-enlarge" 
+                                                style="border-radius: 15px;">
+                                                <div class="m-portlet__body text-center responsive-grid">
+                                                    <div class="m--font-bolder text-adapt" 
+                                                        style="color: #70AD47;">LIKE</div>
+                                                        <br>
+                                                        <div  class="col-md-12 value-adapt" 
+                                                            style="margin-top: 2px;vertical-align: bottom; 
+                                                                font-size: x-large; font-weight: bold;">
+                                                            {{viewer.count_like}}
+                                                        </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="center-box-viewer">
+                                            <div class="m-portlet m-portlet--rounded mb-0 grid-enlarge" 
+                                                style="border-radius: 15px;">
+                                                <div class="m-portlet__body text-center responsive-grid">
+                                                    <div class="m--font-bolder text-adapt" 
+                                                        style="color:#ED7D31">SHARE
+                                                    </div>
+                                                        <br>
+                                                    <div *ngIf = "viewer.count_share != null" class="col-md-12 value-adapt" 
+                                                        style="margin-top: 2px;vertical-align: bottom;
+                                                        font-size: x-large; font-weight: bold;">
+                                                        {{viewer.count_share}}
+                                                    </div>  
+                                                    <div *ngIf = "viewer.count_share == null" class="col-md-12 value-adapt" 
+                                                    style="margin-top: 2px;vertical-align: bottom;
+                                                    font-size: x-large; font-weight: bold;">
+                                                    0
+                                                </div>  
+                                                </div>
+                                            </div>
+                                        </div> 
+                                        <div class="center-box-viewer">
+                                            <div class="m-portlet m-portlet--rounded mb-0 grid-enlarge" 
+                                                style="border-radius: 15px;">
+                                                <div class="m-portlet__body text-center responsive-grid">
+                                                    <div class="m--font-bolder text-adapt" 
+                                                        style="color:orange">COMMENT
+                                                    </div>
+                                                        <br>
+                                                    <div class="col-md-12 value-adapt" 
+                                                        style="margin-top: 2px;vertical-align: bottom;
+                                                        font-size: x-large; font-weight: bold;">
+                                                        {{viewer.count_comment}}
+                                                    </div>  
+                                                </div>
+                                            </div>
+                                        </div> 
+                                    </div>
+                                    <br><br>
+
+                                    <br><br>
+                                    <!--bar chart-->
+                                    <div class= "row">
+                                        <div class ="container" style="align-items: center;">
+                                            <div class="col-md-10">
+                                                <div class="m-portlet__body text-center">
+                                                    <h4 style="text-align:left; font-size: large;"> Total No. of Announcement 
+                                                    </h4><br/>
+                                                        <div style="text-align:left; font-size:xx-large; font-weight: bold;">
+                                                            &nbsp; {{totViewer}}      
+                                                        </div>
+                                                        <br><br>
+                                                    <div>
+                                                        <div>
+                                                            <ngx-charts-bar-vertical-2d
+                                                            [view]="view"
+                                                            [scheme]="colorScheme"
+                                                            [results]="graphSubMulti"
+                                                            [gradient]="gradient"
+                                                            [xAxis]="showXAxis"
+                                                            [yAxis]="showYAxis"
+                                                            [legend]="showLegend"
+                                                            [showXAxisLabel]="showXAxisLabel"
+                                                            [showYAxisLabel]="showYAxisLabel"
+                                                            [yAxisLabel]="yAxisLabel"
+                                                            [legendTitle]="legendTitleEvent"
+                                                            [xAxisLabel]="xAxisLabel"
+                                                            (select)="onSelect($event)">
+                                                            </ngx-charts-bar-vertical-2d>
+                                                            <br><br>
+                                                        </div>    
+                                                    </div>
+                                                </div> 
+                                                <br><br>
+                                            </div>
+                                         </div>
+                                     </div>
+                                </div> 
+                            </form>
+                            <!-- End Report Detail for Current Year -->
+
+                            <!-- Show Report detail by Year -->
+                            <div class="card" *ngIf = "showRepByYear">
+                                <div class="title-Cate">
+                                    CATEGORY
+                                </div>
+                                    <div class="row">
+                                        <div class="center-box" *ngFor = "let itmPostCat of dtCategory">
+                                            <div class="m-portlet m-portlet--rounded mb-0 grid-enlarge" 
+                                                style="border-radius: 15px;">
+                                                <div class="m-portlet__body text-center responsive-grid">
+                                                    <div class="m--font-bolder text-adapt" 
+                                                        style="color:#ED7D31">{{itmPostCat.category_name}}
+                                                    </div>
+                                                        <br>
+                                                    <div class="col-md-12 value-adapt" 
+                                                        style="margin-top: 2px;vertical-align: bottom;
+                                                        font-size: x-large; font-weight: bold;">
+                                                        {{itmPostCat.count_category}}
+                                                    </div>   
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>           
+
+                                    <!--sub-category-->
+                                    <div style="padding-top: 30px;">
+                                        <div class="title-Cate">
+                                            COMM-TYPE
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="center-box" *ngFor = "let itmPType of dtType">
+                                            <div class="m-portlet m-portlet--rounded mb-0 grid-enlarge" 
+                                                    style="border-radius: 15px;">
+                                                    <div class="m-portlet__body text-center responsive-grid">
+                                                        <div class="m--font-bolder text-adapt" 
+                                                            style="color:#70AD47">{{itmPType.type_name}}
+                                                        </div>
+                                                        <br>
+                                                        <div class="col-md-12 value-adapt" 
+                                                            style="margin-top: 2px;vertical-align: bottom;
+                                                                font-size: x-large; font-weight: bold;">
+                                                            {{itmPType.count_type}}
+                                                        </div>    
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    <br><br>                           
+                                    <!--bar chart-->  
+                                    <div class= "row">
+                                        <div class ="container" style="align-items: center;">
+                                            <div class="col-md-10">
+                                                <div class="m-portlet__body" *ngIf="dttotAnnounce">
+                                                    <h4 style="text-align:left; font-size: large;"> Total No. of Announcement 
+                                                    </h4>
+                                                    <br>
+                                                    <div style="text-align:left; font-size:xx-large; font-weight: bold;">
+                                                        &nbsp;{{dttotAnnounce[0].count}}  
+                                                    </div>
+                                                    <br><br>
+                                                    <ngx-charts-bar-vertical
+                                                    [view]="viewCate"
+                                                    [scheme]="colorScheme1"
+                                                    [results]="monthCatYr"
+                                                    [gradient]="gradient"
+                                                    [xAxis]="showXAxis"
+                                                    [yAxis]="showYAxis"
+                                                    [legend]="showLegendCate"
+                                                    [showXAxisLabel]="showXAxisLabel"
+                                                    [showYAxisLabel]="showYAxisLabel"
+                                                    [xAxisLabel]="xAxisLabel"
+                                                    [yAxisLabel]="yAxisLabel"
+                                                    (select)="onSelect($event)">
+                                                </ngx-charts-bar-vertical>                          
+                                                </div>     
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <br><br><br>
+                                </div>
+                                 <!-- Viewer Response -->
+                                 <div class="card" *ngIf = "showRepByYear">
+                                    <div style="padding-top: 30px;">
+                                        <div class="title-Cate">
+                                            TOTAL VIEWER RESPONSE
+                                        </div>
+                                    </div>
+                                    <div class="row" *ngIf = "dtViewer">
+                                        <div class="center-box-viewer">
+                                        <!-- <div class="col-sm-1.5 pb-1"> -->
+                                        <div class="m-portlet m-portlet--rounded mb-0 grid-enlarge" 
+                                                style="border-radius: 15px;">
+                                                <div class="m-portlet__body text-center responsive-grid">
+                                                    <div class="m--font-bolder text-adapt" 
+                                                        style="color:#2E5497">ACCESS</div>
+                                                        <br>
+                                                        <div class="col-md-12 value-adapt" 
+                                                            style="margin-top: 2px;vertical-align: bottom;
+                                                            font-size: x-large; font-weight: bold;">
+                                                            {{dtViewer.count_access}}
+                                                        </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="center-box-viewer">
+                                            <div class="m-portlet m-portlet--rounded mb-0 grid-enlarge" 
+                                                style="border-radius: 15px;">
+                                                <div class="m-portlet__body text-center responsive-grid">
+                                                    <div class="m--font-bolder text-adapt" 
+                                                        style="color:#00B0F0">VIEW
+                                                    </div>
+                                                        <br>
+                                                        <div class="col-md-12 value-adapt" 
+                                                            style="margin-top: 2px;vertical-align: bottom;
+                                                            font-size:x-large; font-weight: bold;">
+                                                        {{dtViewer.count_view}}
+                                                        </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="center-box-viewer">
+                                            <div class="m-portlet m-portlet--rounded mb-0 grid-enlarge" 
+                                                style="border-radius: 15px;">
+                                                <div class="m-portlet__body text-center responsive-grid">
+                                                    <div class="m--font-bolder text-adapt" 
+                                                        style="color: #70AD47;">LIKE</div>
+                                                        <br>
+                                                        <div  class="col-md-12 value-adapt" 
+                                                            style="margin-top: 2px;vertical-align: bottom; 
+                                                                font-size: x-large; font-weight: bold;">
+                                                            {{dtViewer.count_like}}
+                                                        </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="center-box-viewer">
+                                            <div class="m-portlet m-portlet--rounded mb-0 grid-enlarge" 
+                                                style="border-radius: 15px;">
+                                                <div class="m-portlet__body text-center responsive-grid">
+                                                    <div class="m--font-bolder text-adapt" 
+                                                        style="color:#ED7D31">SHARE
+                                                    </div>
+                                                        <br>
+                                                    <div class="col-md-12 value-adapt" 
+                                                        style="margin-top: 2px;vertical-align: bottom;
+                                                        font-size: x-large; font-weight: bold;">
+                                                        {{dtViewer?.count_share}}
+                                                    </div>   
+                                                </div>
+                                            </div>
+                                        </div> 
+                                        <div class="center-box-viewer">
+                                            <div class="m-portlet m-portlet--rounded mb-0 grid-enlarge" 
+                                                style="border-radius: 15px;">
+                                                <div class="m-portlet__body text-center responsive-grid">
+                                                    <div class="m--font-bolder text-adapt" 
+                                                        style="color:orange">COMMENT
+                                                    </div>
+                                                        <br>
+                                                    <div class="col-md-12 value-adapt" 
+                                                        style="margin-top: 2px;vertical-align: bottom;
+                                                        font-size: x-large; font-weight: bold;">
+                                                        {{dtViewer.count_comment}}
+                                                    </div>  
+                                                </div>
+                                            </div>
+                                        </div> 
+                                    </div>
+                                    <br><br>
+
+                                    <br><br>
+                                    <!--bar chart-->
+                                    <div class= "row">
+                                        <div class ="container" style="align-items: center;">
+                                            <div class="col-md-10">
+                                                <div class="m-portlet__body text-center">
+                                                    <h4 style="text-align:left; font-size: large;"> Total No. of Announcement 
+                                                    </h4><br/>
+                                                        <div style="text-align:left; font-size:xx-large; font-weight: bold;">
+                                                            &nbsp; {{dttotViewer}}      
+                                                        </div>
+                                                        <br><br>
+                                                    <div>
+                                                        <div *ngIf = "dttotViewer != 0">
+                                                            <ngx-charts-bar-vertical-2d
+                                                            [view]="view"
+                                                            [scheme]="colorScheme"
+                                                            [results]="graphShowCate"
+                                                            [gradient]="gradient"
+                                                            [xAxis]="showXAxis"
+                                                            [yAxis]="showYAxis"
+                                                            [legend]="showLegend"
+                                                            [showXAxisLabel]="showXAxisLabel"
+                                                            [showYAxisLabel]="showYAxisLabel"
+                                                            [yAxisLabel]="yAxisLabel"
+                                                            [legendTitle]="legendTitleEvent"
+                                                            [xAxisLabel]="xAxisLabel"
+                                                            (select)="onSelect($event)">
+                                                            </ngx-charts-bar-vertical-2d>
+                                                            <br><br>
+                                                        </div>    
+                                                    </div>
+                                                </div> 
+                                                <br><br>
+                                            </div>
+                                         </div>
+                                     </div>
+                                </div> 
+                                <!-- end show Report detail by year -->
+                            </div>
+                           
+                    <!-- End HR Comm Report-->   
+                    <!-- end tab content     -->       
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--end::Modal APPLICANT INFO -->
+
+ 
+<!-- START: Modal detail annoucement-->
+<div class="modal fade" id="view_comm">
+    <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+        <!-- Modal Header -->
+        <div class="modal-header form-header-bg text-center">
+        <h4 class="modal-title">{{view_subject}}</h4>
+        <button type="button" class="close" data-dismiss="modal">
+            &times;
+        </button>
+        </div>
+        <!-- Start: Modal body -->
+        <div class="modal-body">   
+            <div class="row mb-2">
+                <div class="col-lg-4 col-sm-12">
+                    <div *ngIf="MalVer">
+                        <div>
+                            <b>EDM (Malay Version):</b>
+                            <a [attr.href]="imgMalURL" target="_blank" class="pull-right">
+                                <i class="fa fa-search-plus"></i> View Orginal
+                                </a>
+                        </div>	
+                    <a [attr.href]="malRealURL" target="_blank"> 
+                        <img [src]="imgMalURL" *ngIf="MalVer" 
+                        class="img-fluid mx-auto d-block rounded mb-3" 
+                        alt="{{htmlString_mal}}" />
+                    </a>
+                    </div>
+
+                    <div *ngIf="EngVer">
+                    <div>
+                        <b>EDM (English Version):</b>
+                        <a [attr.href]="imgEngURL" target="_blank" class="pull-right">
+                            <i class="fa fa-search-plus"></i> View Orginal
+                            </a>
+                    </div>	
+                    <a [attr.href]="engRealURL" target="_blank">
+                    <img [src]="imgEngURL" *ngIf="EngVer" 
+                    class="img-fluid mx-auto d-block rounded mb-3" 
+                    alt="{{htmlString_eng}}" />
+                    </a>
+                    </div>
+
+                </div>
+                <div class="col-lg-8 col-sm-12">
+                    <div class="row">
+                        <div class="col-3"><b>Title:</b></div>
+                        <div class="col-9">{{view_subject}}</div>
+                    </div>
+                    <div class="row mb-1">
+                        <div class="col-3"><b>Category:</b></div>
+                        <div class="col-9">{{view_category}}</div>
+                    </div>
+                    <div class="row mb-1">
+                        <div class="col-3"><b>Comm Type:</b></div>
+                        <div class="col-9">{{view_sub_category}}</div>
+                    </div>
+                    <div class="row mb-1">
+                        <div class="col-3"><b>To:</b></div>
+                        <div class="col-9">{{target_band}}</div>
+                    </div>
+                    <div class="row mb-1">
+                        <div class="col-3"><b>Location:</b></div>
+                        <div class="col-9">{{view_location}}</div>
+                    </div>
+                    <div class="row mb-1">
+                        <div class="col-3"><b>Publish Date:</b></div>
+                        <div class="col-9">{{ view_publish_date }}</div>
+                    </div>
+                    <div class="row mb-1" *ngIf="htmlString_mal">
+                        <div class="col-12">
+                            <b>Content (Malay Version):</b><br />
+                            <div class="ql-container ql-snow">
+                                <div class="ql-editor" [innerHTML]="htmlString_mal">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mb-1" *ngIf="htmlString_eng">
+                        <div class="col-12">
+                            <b>Content (English Version):</b><br />
+                            <div class="ql-container ql-snow">
+                                <div class="ql-editor" [innerHTML]="htmlString_eng">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                <!-- This area is for sosmed function -->                    
+
+                </div>
+            </div>                
+        </div><!-- End: Modal body -->
+    </div>
+    </div>
+</div>
+<!-- End: Modal Detail Announcement -->
+
+<!-- Start: Modal Add New Category-->
+<div class="modal fade" id="addNewCategory">
+    <div class="modal-dialog modal-lg">
+        <form class="m-form"[formGroup]="newCategoryForm" autocomplete="off">
+            <div class="modal-content">
+                <!-- Modal Header -->
+                <div class="modal-header form-header-bg text-center">
+                <h4 class="modal-title">Add New Category</h4>
+                <button type="button" class="close" data-dismiss="modal">
+                    &times;
+                </button>
+                </div>
+                <!-- Start: Modal body -->
+                <div class="modal-body">   
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <div class="col-md-12">
+                                <div class="row">
+                                    <div class="col-md-5" style="text-align: right;">
+                                        <label class="control-label col-md-7"><strong>Category Name:</strong></label>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="input-group">
+                                            <input size="16" class="form-control m-input" formControlName="addNewCate" 
+                                            #addNewCate id="addNewCate"required>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-12">
+                                <div class="row">
+                                    <div class="col-md-5" style="text-align: right;">
+                                        <label class="control-label col-md-7"><strong>Description:</strong></label>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <span>
+                                            <textarea class="form-control" formControlName="addDescCate" rows="5" required 
+                                            style="overflow-y: scroll;"
+                                            placeholder="Please add description">
+                                            </textarea>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer form-footer-bg text-center" style="text-align: right;">
+                            <button data-dismiss="modal" class="btn m-btn m-btn--gradient-from-danger m-btn--gradient-to-warning" 
+                                style="background: darkgrey; background-color: darkgrey; border-color: darkgrey; cursor: pointer;"
+                                (click) = "resetCategory()">
+                                Cancel
+                            </button>
+                            <button class="btn m-btn m-btn--gradient-from-primary m-btn--gradient-to-info" style="background: #FF5A00; background-color: #FF5A00; border-color: #FF5A00; cursor: pointer;" 
+                                *ngIf="!loading" onclick="$('.modal').modal('hide')" (click)="postNewCategory()" >
+                                Add
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<!-- END: Modal Add New Category-->
+
+<!-- Start: Modal Add New Comm Type-->
+<div class="modal fade" id="addNewCommType">
+    <div class="modal-dialog modal-lg">
+        <form class="m-form"[formGroup]="newCommTypeForm" autocomplete="off">
+            <div class="modal-content">
+                <!-- Modal Header -->
+                <div class="modal-header form-header-bg text-center">
+                <h4 class="modal-title">Add New Comm Type</h4>
+                <button type="button" class="close" data-dismiss="modal">
+                    &times;
+                </button>
+                </div>
+                <!-- Start: Modal body -->
+                <div class="modal-body">   
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <div class="col-md-12">
+                                <div class="row">
+                                    <div class="col-md-5" style="text-align: right;">
+                                        <label class="control-label col-md-7"><strong>Comm Type:</strong></label>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="input-group">
+                                            <input size="16" class="form-control m-input" formControlName= "addNewCommType" required>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-12">
+                                <div class="row">
+                                    <div class="col-md-5" style="text-align: right;">
+                                        <label class="control-label col-md-7"><strong>Description:</strong></label>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <span>
+                                            <textarea class="form-control" rows="5" formControlName= "addDescCommType" required 
+                                            style="overflow-y: scroll;"
+                                            placeholder="Please add description">
+                                            </textarea>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer form-footer-bg text-center" style="text-align: right;">
+                            <button data-dismiss="modal" class="btn m-btn m-btn--gradient-from-danger m-btn--gradient-to-warning" 
+                                style="background: darkgrey; background-color: darkgrey; border-color: darkgrey; cursor: pointer;"
+                                (click) = "resetCommType()">
+                                Cancel
+                            </button>
+                            <button class="btn m-btn m-btn--gradient-from-primary m-btn--gradient-to-info" style="background: #FF5A00; background-color: #FF5A00; border-color: #FF5A00; cursor: pointer;" onclick="$('.modal').modal('hide')"
+                            *ngIf="!loading" (click) = "postNewCommType()" >
+                                Add
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<!-- END: Modal Add New Comm Type-->
+
+<!-- Button for target modal-->
+<button [hidden]="true" id="delComm" data-toggle="modal" data-target="#deleteComm">x</button>
+<button [hidden]="true" id="delAttachment" data-toggle="modal" data-target="#delPdfModal">x</button>
+
+<!-- Start: Modal Delete Confirmation-->
+<div class="modal fade" id="deleteComm">
+    <div class="modal-dialog modal-lg">
+        <form class="m-form"[formGroup]="deleteComForm" autocomplete="off">
+            <div class="modal-content">
+                <!-- Modal Header -->
+                <div class="modal-header form-header-bg text-center">
+                <h4 class="modal-title">Delete Comm</h4>
+                <button type="button" class="close" data-dismiss="modal">
+                    &times;
+                </button>
+                </div>
+                <!-- Start: Modal body -->
+                <div class="modal-body">   
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <div class="col-md-12">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <label class="control-label col-md-7" style="text-align: center;">
+                                            <strong>Are you sure you want to DELETE this Comm?</strong>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer form-footer-bg text-center" style="text-align: right;">
+                            <button data-dismiss="modal" class="btn m-btn m-btn--gradient-from-danger m-btn--gradient-to-warning" 
+                                style="background: darkgrey; background-color: darkgrey; border-color: darkgrey; cursor: pointer;">
+                                Cancel
+                            </button>
+                            <button class="btn m-btn m-btn--gradient-from-primary m-btn--gradient-to-info" data-dismiss="modal"
+                                style="background: #FF5A00; background-color: #FF5A00; border-color: #FF5A00; cursor: pointer;" 
+                                onclick="$('.modal').modal('hide')" (click)="delCommModal()">
+                                Delete
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<!-- END: Modal Delete Confirmation-->
+
+<!-- Start: Modal Delete Confirmation for PDF File-->
+<div class="modal fade" id="delPdfModal">
+    <div class="modal-dialog modal-lg">
+        <form class="m-form"[formGroup]="deleteAttachForm" autocomplete="off">
+            <div class="modal-content">
+                <!-- Modal Header -->
+                <div class="modal-header form-header-bg text-center">
+                <h4 class="modal-title">Delete Attachment</h4>
+                <button type="button" class="close" data-dismiss="modal">
+                    &times;
+                </button>
+                </div>
+                <!-- Start: Modal body -->
+                <div class="modal-body">   
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <div class="col-md-12">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <label class="control-label col-md-7" style="text-align: center;">
+                                            <strong>Are you sure you want to DELETE this attachment?</strong>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer form-footer-bg text-center" style="text-align: right;">
+                            <button data-dismiss="modal" class="btn m-btn m-btn--gradient-from-danger m-btn--gradient-to-warning" 
+                                style="background: darkgrey; background-color: darkgrey; border-color: darkgrey; cursor: pointer;">
+                                Cancel
+                            </button>
+                            <button class="btn m-btn m-btn--gradient-from-primary m-btn--gradient-to-info" data-dismiss="modal"
+                                style="background: #FF5A00; background-color: #FF5A00; border-color: #FF5A00; cursor: pointer;" 
+                                onclick="$('.modal').modal('hide')" (click)="openDelAttachModal()">
+                                Delete
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<!-- END: Modal Delete Confirmation for PDF File-->
+
+
+<!-- START: Modal Admin View -->
+<div class="modal fade" id="view_Admin">
+    <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+        <!-- Modal Header -->
+        <div class="modal-header form-header-bg text-center">
+        <h4 class="modal-title">{{view_subject}}</h4>
+        <button type="button" class="close" data-dismiss="modal">
+            &times;
+        </button>
+        </div>
+         <div class="col-lg-12 centred my-auto" *ngIf="prevLoading">
+            <div class="m-section__content">
+                <div class="m-card-user m-card-user--skin-dark" align="center" style="height: 400px;" class="m-portlet__body">
+                    <span>
+                        <img src="../assets/img/user/ERA-loading.gif" alt="" style="width:auto;height:100px;position: initial; margin:10%">
+                    </span>
+                </div>    
+            </div>
+         </div>
+        <!-- Start: Modal body -->
+        <div class="modal-body" *ngIf="!prevLoading">   
+            <div class="row mb-2">
+                <div class="col-lg-4 col-sm-12">
+                    <div *ngIf="MalVer">
+                        <div>
+                            <b>EDM (Malay Version):</b>
+                            <a [attr.href]="imgMalURL" target="_blank" class="pull-right">
+                                <i class="fa fa-search-plus"></i> View Orginal
+                                </a>
+                        </div>	
+                            <a [attr.href]="malRealURL" target="_blank"> 
+                                <img [src]="imgMalURL" *ngIf="MalVer" 
+                                class="img-fluid mx-auto d-block rounded mb-3" 
+                                alt="{{htmlString_mal}}" />
+                            </a>
+                    </div>
+
+                    <div *ngIf="EngVer">
+                    <div>
+                        <b>EDM (English Version):</b>
+                        <a [attr.href]="imgEngURL" target="_blank" class="pull-right">
+                            <i class="fa fa-search-plus"></i> View Orginal
+                            </a>
+                    </div>	
+                        <a [attr.href]="engRealURL" target="_blank">
+                        <img [src]="imgEngURL" *ngIf="EngVer" 
+                        class="img-fluid mx-auto d-block rounded mb-3" 
+                        alt="{{htmlString_eng}}" />
+                        </a>
+                    </div>
+                </div>
+                <div class="col-lg-8 col-sm-12">
+                    <!-- Download pdf without comment -->
+                    <div id="content" #content>
+                        <div class="row">
+                            <div class="col-3"><b>Title:</b></div>
+                            <div class="col-9">{{view_subject}}</div>
+                        </div>
+                        <div class="row mb-1">
+                            <div class="col-3"><b>Category:</b></div>
+                            <div class="col-9">{{view_category}}</div>
+                        </div>
+                        <div class="row mb-1">
+                            <div class="col-3"><b>Comm-Type:</b></div>
+                            <div class="col-9">{{view_sub_category}}</div>
+                        </div>
+                        <div class="row mb-1">
+                            <div class="col-3"><b>To:</b></div>
+                            <div class="col-9">{{target_band}}</div>
+                        </div>
+                        <div class="row mb-1">
+                            <div class="col-3"><b>Location:</b></div>
+                            <div class="col-9">{{view_location}}</div>
+                        </div>
+                        <div class="row mb-1">
+                            <div class="col-3"><b>Publish Date:</b></div>
+                           <div class="col-9">{{ view_publish_date }}</div>
+                        </div>
+                        <div class="row mb-1" *ngIf="htmlString_mal">
+                            <div class="col-12">
+                                <b>Content (Malay Version):</b><br />
+                                <div class="ql-container ql-snow">
+                                    <div class="ql-editor" [innerHTML]="htmlString_mal">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mb-1" *ngIf="htmlString_eng">
+                            <div class="col-12">
+                                <b>Content (English Version):</b><br />
+                                <div class="ql-container ql-snow">
+                                    <div class="ql-editor" [innerHTML]="htmlString_eng">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <br>
+                        <hr *ngIf="view_list_attachment&&view_list_attachment.length>0">
+                        <div class="row" *ngIf="view_list_attachment&&view_list_attachment.length>0">
+                            <div class="col-12">
+                                <div class="pull-left">
+                                    <span>
+                                    Attachment : 
+                                        <span *ngFor="let itmView of view_list_attachment; let i = index">
+                                            [<a [attr.href]="itmView.url_attachment" target="_blank">{{itmView.filename}}</a>] 
+                                        </span>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <hr *ngIf="view_list_attachment&&view_list_attachment.length>0">
+                        <!-- social media -->
+                        <div class = "row">
+                            <div class="col-12">
+                                <div class="pull-right" *ngIf="detailsInfo">
+                                    {{detailsInfo[0]?.count_like}} Likes | {{detailsInfo[0]?.count_comment}} Comments | {{detailsInfo[0].count_view}} Views | {{detailsInfo[0].count_access}} Access
+                                </div>
+                                <br><br>
+                                <button class="btn btn-sm pull-right" style="background: rgb(236, 232, 232);" (click)="showMyComment=!showMyComment">Show/Hide Comment</button>
+                            </div>
+                        </div>
+                    </div>
+                    <br>
+                    <div *ngIf = "showMyComment">
+                      <div class="container mt-3" id="comment" *ngFor = "let itm of overallArr">
+                        <div class="media border p-3" *ngIf = "itm.deletecomment == null">
+                            <img src="{{itm.image_url}}" class="mr-3 mt-3 rounded-circle" style="width:43px; height:43px;">
+                                <div class="media-body">
+                                    <h4>{{itm.Name}} <small><i> Posted on {{itm.update_on | date:'dd MMM yyyy'}}</i></small></h4>
+                                    <p>{{itm.comment}}</p>
+                                 <!-- Second layer comment-->
+                                <div class="media p-3" *ngFor = "let itmSec of itm.second_layer">
+                                    <div class= "row">
+                                    <div *ngIf = "itmSec.comm_second_id != null">
+                                        <span class="pull-right">
+                                             <span class="buttonTT" data-tooltip="Are you sure to delete this comment? If YES, click this button">
+                                                <button class="btn simple-save-btn  m-btn m-btn--icon btn-sm m-btn--icon-only m-btn--pill m-btn--air" type="button" 
+                                                    (click)= "postDelSec(itmSec.comm_second_id, itmSec.news_id)">
+                                                    <i class="fa fa-trash-o"></i>    
+                                                </button>
+                                             </span>
+                                        </span> 
+                                        <div class = "containerComment">
+                                            <span *ngIf = "itmSec.image_url_secondlayerlogic == 1">
+                                                <img class="mr-3 mt-3 rounded-circle" style="width: 43px; height:43px; text-align: center;"
+                                                onError="this.src='./assets/app/media/img/users/ghcm-user-default.jpg'"
+                                                src="{{globalburl}}/get/image/{{itmSec.image_url_secondlayer}}?api_key={{apikey}}"
+                                                alt="" />        
+                                            </span>
+                                            <span *ngIf = "itmSec.image_url_secondlayerlogic == 0">
+                                                <img class="mr-3 mt-3 rounded-circle" style="width: 43px;height:43px;text-align: center;"
+                                                src="./assets/app/media/img/users/ghcm-user-default.jpg"
+                                                alt="" />        
+                                            </span>
+                                            <div class="media-body">
+                                                <h4>{{itmSec.namesecondlayer}}<small><i> Posted on {{itmSec.commentsecondlayer | date:'dd MMM yyyy'}}</i></small></h4>
+                                                <p>{{itmSec.second_layer}}</p>
+                                            </div>  
+                                        </div>   
+                                      </div>	
+                                    </div>									
+                                </div>
+                            </div>	
+                            <span class="pull-right">
+                                <span class="buttonTT" data-tooltip="Are you sure to delete this comment? If YES, click this button">
+                                    <button class="btn simple-save-btn  m-btn m-btn--icon btn-sm m-btn--icon-only m-btn--pill m-btn--air" type="button" 
+                                        (click)= "postDelFirst(itm.comm_id, itm.news_id)">
+                                        <i class="fa fa-trash-o"></i>
+                                    </button>
+                                </span>
+                            </span>
+                        </div>
+                        <!-- First layer comment removed-->
+                        <div class="media border p-3" *ngIf = "itm.deletecomment == 0">
+                            <p style="width:43px; height:43px;"></p>
+                            <div class="media-body" >
+                                <span style="font-style: italic;">Removed</span>
+                                 <div class="media p-3" *ngFor = "let itmSec of itm.second_layer">
+                                    <div class= "row">
+                                        <div *ngIf = "itmSec.comm_second_id != null">
+                                            <span class="pull-right">
+                                                <span class="buttonTT" data-tooltip="Are you sure to delete this comment? If YES, click this button">
+                                                    <button class="btn simple-save-btn  m-btn m-btn--icon btn-sm m-btn--icon-only m-btn--pill m-btn--air" type="button" 
+                                                        (click)= "postDelSec(itmSec.comm_second_id, itmSec.news_id)">
+                                                        <i class="fa fa-trash-o"></i>    
+                                                    </button>
+                                                </span>
+                                            </span> 
+                                            <div class = "containerComment">
+                                                <span *ngIf = "itmSec.image_url_secondlayerlogic == 1">
+                                                    <img class="mr-3 mt-3 rounded-circle" style="width: 43px; height:43px; text-align: center;"
+                                                    onError="this.src='./assets/app/media/img/users/ghcm-user-default.jpg'"
+                                                    src="{{globalburl}}/get/image/{{itmSec.image_url_secondlayer}}?api_key={{apikey}}"
+                                                    alt="" />        
+                                                </span>
+                                                <span *ngIf = "itmSec.image_url_secondlayerlogic == 0">
+                                                    <img class="mr-3 mt-3 rounded-circle" style="width: 43px;height:43px;text-align: center;"
+                                                    src="./assets/app/media/img/users/ghcm-user-default.jpg"
+                                                    alt="" />        
+                                                </span>
+                                                <div class="media-body">
+                                                    <h4>{{itmSec.namesecondlayer}}<small><i> Posted on {{itmSec.commentsecondlayer | date:'dd MMM yyyy'}}</i></small></h4>
+                                                    <p>{{itmSec.second_layer}}</p>
+                                                </div>  
+                                            </div>
+                                        </div>	    
+                                    </div>									
+                                </div>
+                            </div>	
+                        </div>
+                    </div>
+                  </div>       
+                </div>
+            </div>
+            <!-- End: Modal body -->
+            <div class="modal-footer form-footer-bg" style="color: grey; text-align: center;">
+                <div class= "col-md-12" *ngIf="detailsInfo">
+                    <label class=" col-form-label label-data"
+                        style="font-size: 1.0rem;" style="color: blue;">
+                        <button type="button" class="btn m-btn--gradient btn-outline-primary" (click)="downloadAdminReport(detailsInfo[0].id)">                                           
+                            <span class="fa fa-download"> Download PDF</span>
+                        </button>	
+                    </label>
+                    <!-- <button type="button" class="btn m-btn--gradient btn-outline-secondary" (click)="downloadPDFtext()">                                           
+                        <span class="fa fa-download"> Download PDF (Comm only)</span>
+                    </button>  -->
+                </div>
+            </div>
+         </div>
+    </div>
+<!-- end modal Admin view -->
+    </div>
+</div>
+

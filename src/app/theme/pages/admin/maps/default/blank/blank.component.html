@@ -1,0 +1,569 @@
+<div class="m-content">
+    <div class="row">
+
+        <!-- <div class="col-lg-12 centred my-auto">
+            <ng-template #alertError></ng-template>
+        </div> -->
+
+        <div class="col-lg-12 centred my-auto" *ngIf="loading">
+            <div class="m-section__content">
+                <div class="m-demo" data-code-preview="true" data-code-html="true" data-code-js="false">
+                    <div class="m-demo__preview">
+                        <div class="m-stack m-stack--ver m-stack--general m-stack--demo">
+
+                            <div class="m-stack__item m-stack__item--center m-stack__item--middle">
+                                <span>
+                                    Loading data. Please wait...
+                                </span>
+                                <span>
+                                    <div class="m-loader m-loader--lg m-loader--success"
+                                        style="width: 30px; display: inline-block;"></div>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-12" *ngIf="!loading">
+
+            <!--- MAPS NE Dashboard --->
+            <div class="m-portlet m-portlet--rounded">
+            <div class="m-portlet__head">
+                <div class="m-portlet__head-caption">
+                    <div class="m-portlet__head-title">
+                        <h3 class="m-portlet__head-text">
+                            Dashboard
+                        </h3>
+                    </div>
+                </div>
+            </div>
+
+
+
+            <div class="m-portlet__body" *ngIf="!loading">
+                
+                <div class="m-section container" style="max-width: 100% !important;">
+                        <form [formGroup]="filterForm" autocomplete="off">
+                            <div class="m-accordion__item-content">
+
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="row">
+                                            <div class="col-md-3">
+                                            </div>
+                                            <div class="col-md-4">
+                                                <select name="fltrFormName" id="fltrFormName"
+                                                    class="form-control m-input"
+                                                    formControlName="fltrFormName">
+                                                    <option value="{{itm.m_year}}" *ngFor="let itm of sessionList">{{itm.m_name}}
+                                                    </option>
+                                                </select>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <button
+                                                class="btn m-btn m-btn--gradient-from-primary m-btn--gradient-to-info"
+                                                type="button"
+                                                (click)="submitFilter()"
+                                                style="background: #FF5A00; background-color: #FF5A00; border-color: #FF5A00;">Submit</button>
+                                            </div>
+                                            <div class="col-md-3">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                </div>
+
+                <div class="m-section container" style="max-width: 100% !important;" *ngIf="countList.length >= 3">
+
+
+                        <div class="m-accordion m-accordion--default" id="m_accordion_1" role="tablist">
+                            <div class="m-accordion__item">
+                                <div class="m-accordion__item-head collapsed" role="tab"
+                                    id="m_accordion_1_item_1_head" data-toggle="collapse"
+                                    href="#m_accordion_1_item_1_body" aria-expanded="false">
+                                    <span class="m-accordion__item-icon">
+                                        
+                                    </span>
+                                    <span class="m-accordion__item-title" style="font-size:1rem;font-weight: bold;">
+                                        Goal Setting
+                                    </span>
+                                    <span class="m-accordion__item-mode"></span>
+                                </div>
+                                <div class="m-accordion__item-body collapse show" id="m_accordion_1_item_1_body">
+                                    <div class="m-accordion__item-content">
+
+                                        <div class="row">
+                                            <ng-container *ngFor="let x of [].constructor(num), let i = index">
+                                                <div class="sumBox col-md-2 col-xs-4 col-sm-4" *ngIf="!loading" style="padding:15px !important; display: flex !important;">
+                                                    <div class="alignCenter" [ngStyle]="{'background-color': countList[i].divColor}" style="flex: 1 !important;">  
+                                                        <h6 class="m-portlet__head-text m--font-light font_13px pad_top8px">
+                                                            {{countList[i].LOB}}
+                                                        </h6>
+                                                        <div class="pad_bot6px" style="padding-bottom: 0.8rem; color: white">
+                                                            
+                                                            <span style="font-size: 1.5rem">{{countList[i].GoalSetting}}</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </ng-container>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <div class="m-accordion m-accordion--default" id="m_accordion_2" role="tablist">
+                            <div class="m-accordion__item">
+                                <div class="m-accordion__item-head collapsed" role="tab"
+                                    id="m_accordion_2_item_1_head" data-toggle="collapse"
+                                    href="#m_accordion_2_item_1_body" aria-expanded="false">
+                                    <span class="m-accordion__item-icon">
+                                        
+                                    </span>
+                                    <span class="m-accordion__item-title" style="font-size:1rem;font-weight: bold;">
+                                        Goal Approval
+                                    </span>
+                                    <span class="m-accordion__item-mode"></span>
+                                </div>
+                                <div class="m-accordion__item-body collapse show" id="m_accordion_2_item_1_body">
+                                    <div class="m-accordion__item-content">
+
+                                        <div class="row">
+                                            <ng-container *ngFor="let x of [].constructor(num), let i = index">
+                                                <div class="sumBox col-md-2 col-xs-4 col-sm-4" *ngIf="!loading" style="padding:15px !important; display: flex !important;">
+                                                    <div class="alignCenter" [ngStyle]="{'background-color': countList[i].divColor}" style="flex: 1 !important;">  
+                                                        <h6 class="m-portlet__head-text m--font-light font_13px pad_top8px">
+                                                            {{countList[i].LOB}}
+                                                        </h6>
+                                                        <div class="pad_bot6px" style="padding-bottom: 0.8rem; color: white">
+                                                            
+                                                            <span style="font-size: 1.5rem">{{countList[i].GoalApproval}}</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </ng-container>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <div class="m-accordion m-accordion--default" id="m_accordion_3" role="tablist">
+                            <div class="m-accordion__item">
+                                <div class="m-accordion__item-head collapsed" role="tab"
+                                    id="m_accordion_3_item_1_head" data-toggle="collapse"
+                                    href="#m_accordion_3_item_1_body" aria-expanded="false">
+                                    <span class="m-accordion__item-icon">
+                                        
+                                    </span>
+                                    <span class="m-accordion__item-title" style="font-size:1rem;font-weight: bold;">
+                                        Mid Year Appraisee
+                                    </span>
+                                    <span class="m-accordion__item-mode"></span>
+                                </div>
+                                <div class="m-accordion__item-body collapse show" id="m_accordion_3_item_1_body">
+                                    <div class="m-accordion__item-content">
+
+                                        <div class="row">
+                                            <ng-container *ngFor="let x of [].constructor(num), let i = index">
+                                                <div class="sumBox col-md-2 col-xs-4 col-sm-4" *ngIf="!loading" style="padding:15px !important; display: flex !important;">
+                                                    <div class="alignCenter" [ngStyle]="{'background-color': countList[i].divColor}" style="flex: 1 !important;">  
+                                                        <h6 class="m-portlet__head-text m--font-light font_13px pad_top8px">
+                                                            {{countList[i].LOB}}
+                                                        </h6>
+                                                        <div class="pad_bot6px" style="padding-bottom: 0.8rem; color: white">
+                                                            
+                                                            <span style="font-size: 1.5rem">{{countList[i].MidAppraisee}}</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </ng-container>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <div class="m-accordion m-accordion--default" id="m_accordion_4" role="tablist">
+                            <div class="m-accordion__item">
+                                <div class="m-accordion__item-head collapsed" role="tab"
+                                    id="m_accordion_4_item_1_head" data-toggle="collapse"
+                                    href="#m_accordion_4_item_1_body" aria-expanded="false">
+                                    <span class="m-accordion__item-icon">
+                                        
+                                    </span>
+                                    <span class="m-accordion__item-title" style="font-size:1rem;font-weight: bold;">
+                                        Mid Year Appraiser
+                                    </span>
+                                    <span class="m-accordion__item-mode"></span>
+                                </div>
+                                <div class="m-accordion__item-body collapse show" id="m_accordion_4_item_1_body">
+                                    <div class="m-accordion__item-content">
+
+                                        <div class="row">
+                                            <ng-container *ngFor="let x of [].constructor(num), let i = index">
+                                                <div class="sumBox col-md-2 col-xs-4 col-sm-4" *ngIf="!loading" style="padding:15px !important; display: flex !important;">
+                                                    <div class="alignCenter" [ngStyle]="{'background-color': countList[i].divColor}" style="flex: 1 !important;">  
+                                                        <h6 class="m-portlet__head-text m--font-light font_13px pad_top8px">
+                                                            {{countList[i].LOB}}
+                                                        </h6>
+                                                        <div class="pad_bot6px" style="padding-bottom: 0.8rem; color: white">
+                                                            
+                                                            <span style="font-size: 1.5rem">{{countList[i].MidAppraiser}}</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </ng-container>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                        
+                        <div class="m-accordion m-accordion--default" id="m_accordion_5" role="tablist">
+                            <div class="m-accordion__item">
+                                <div class="m-accordion__item-head collapsed" role="tab"
+                                    id="m_accordion_5_item_1_head" data-toggle="collapse"
+                                    href="#m_accordion_5_item_1_body" aria-expanded="false">
+                                    <span class="m-accordion__item-icon">
+                                        
+                                    </span>
+                                    <span class="m-accordion__item-title" style="font-size:1rem;font-weight: bold;">
+                                        Year End Appraisee
+                                    </span>
+                                    <span class="m-accordion__item-mode"></span>
+                                </div>
+                                <div class="m-accordion__item-body collapse show" id="m_accordion_5_item_1_body">
+                                    <div class="m-accordion__item-content">
+
+                                        <div class="row">
+                                            <ng-container *ngFor="let x of [].constructor(num), let i = index">
+                                                <div class="sumBox col-md-2 col-xs-4 col-sm-4" *ngIf="!loading" style="padding:15px !important; display: flex !important;">
+                                                    <div class="alignCenter" [ngStyle]="{'background-color': countList[i].divColor}" style="flex: 1 !important;">  
+                                                        <h6 class="m-portlet__head-text m--font-light font_13px pad_top8px">
+                                                            {{countList[i].LOB}}
+                                                        </h6>
+                                                        <div class="pad_bot6px" style="padding-bottom: 0.8rem; color: white">
+                                                            
+                                                            <span style="font-size: 1.5rem">{{countList[i].EndAppraisee}}</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </ng-container>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <div class="m-accordion m-accordion--default" id="m_accordion_6" role="tablist">
+                            <div class="m-accordion__item">
+                                <div class="m-accordion__item-head collapsed" role="tab"
+                                    id="m_accordion_6_item_1_head" data-toggle="collapse"
+                                    href="#m_accordion_6_item_1_body" aria-expanded="false">
+                                    <span class="m-accordion__item-icon">
+                                        
+                                    </span>
+                                    <span class="m-accordion__item-title" style="font-size:1rem;font-weight: bold;">
+                                        Year End Appraiser
+                                    </span>
+                                    <span class="m-accordion__item-mode"></span>
+                                </div>
+                                <div class="m-accordion__item-body collapse show" id="m_accordion_6_item_1_body">
+                                    <div class="m-accordion__item-content">
+
+                                        <div class="row">
+                                            <ng-container *ngFor="let x of [].constructor(num), let i = index">
+                                                <div class="sumBox col-md-2 col-xs-4 col-sm-4" *ngIf="!loading" style="padding:15px !important; display: flex !important;">
+                                                    <div class="alignCenter" [ngStyle]="{'background-color': countList[i].divColor}" style="flex: 1 !important;">  
+                                                        <h6 class="m-portlet__head-text m--font-light font_13px pad_top8px">
+                                                            {{countList[i].LOB}}
+                                                        </h6>
+                                                        <div class="pad_bot6px" style="padding-bottom: 0.8rem; color: white">
+                                                            
+                                                            <span style="font-size: 1.5rem">{{countList[i].EndAppraiser}}</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </ng-container>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <div class="m-accordion m-accordion--default" id="m_accordion_6" role="tablist">
+                            <div class="m-accordion__item">
+                                <div class="m-accordion__item-head collapsed" role="tab"
+                                    id="m_accordion_6_item_1_head" data-toggle="collapse"
+                                    href="#m_accordion_6_item_1_body" aria-expanded="false">
+                                    <span class="m-accordion__item-icon">
+                                        
+                                    </span>
+                                    <span class="m-accordion__item-title" style="font-size:1rem;font-weight: bold;">
+                                        Year End Reviewer
+                                    </span>
+                                    <span class="m-accordion__item-mode"></span>
+                                </div>
+                                <div class="m-accordion__item-body collapse show" id="m_accordion_6_item_1_body">
+                                    <div class="m-accordion__item-content">
+
+                                        <div class="row">
+                                            <ng-container *ngFor="let x of [].constructor(num), let i = index">
+                                                <div class="sumBox col-md-2 col-xs-4 col-sm-4" *ngIf="!loading" style="padding:15px !important; display: flex !important;">
+                                                    <div class="alignCenter" [ngStyle]="{'background-color': countList[i].divColor}" style="flex: 1 !important;">  
+                                                        <h6 class="m-portlet__head-text m--font-light font_13px pad_top8px">
+                                                            {{countList[i].LOB}}
+                                                        </h6>
+                                                        <div class="pad_bot6px" style="padding-bottom: 0.8rem; color: white">
+                                                            
+                                                            <span style="font-size: 1.5rem">{{countList[i].EndReviewer}}</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </ng-container>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <div class="m-accordion m-accordion--default" id="m_accordion_6" role="tablist">
+                            <div class="m-accordion__item">
+                                <div class="m-accordion__item-head collapsed" role="tab"
+                                    id="m_accordion_6_item_1_head" data-toggle="collapse"
+                                    href="#m_accordion_6_item_1_body" aria-expanded="false">
+                                    <span class="m-accordion__item-icon">
+                                        
+                                    </span>
+                                    <span class="m-accordion__item-title" style="font-size:1rem;font-weight: bold;">
+                                        Employee Acknowledgement
+                                    </span>
+                                    <span class="m-accordion__item-mode"></span>
+                                </div>
+                                <div class="m-accordion__item-body collapse show" id="m_accordion_6_item_1_body">
+                                    <div class="m-accordion__item-content">
+
+                                        <div class="row">
+                                            <ng-container *ngFor="let x of [].constructor(num), let i = index">
+                                                <div class="sumBox col-md-2 col-xs-4 col-sm-4" *ngIf="!loading" style="padding:15px !important; display: flex !important;">
+                                                    <div class="alignCenter" [ngStyle]="{'background-color': countList[i].divColor}" style="flex: 1 !important;">  
+                                                        <h6 class="m-portlet__head-text m--font-light font_13px pad_top8px">
+                                                            {{countList[i].LOB}}
+                                                        </h6>
+                                                        <div class="pad_bot6px" style="padding-bottom: 0.8rem; color: white">
+                                                            
+                                                            <span style="font-size: 1.5rem">{{countList[i].EmplAck}}</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </ng-container>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <div class="m-accordion m-accordion--default" id="m_accordion_6" role="tablist">
+                            <div class="m-accordion__item">
+                                <div class="m-accordion__item-head collapsed" role="tab"
+                                    id="m_accordion_6_item_1_head" data-toggle="collapse"
+                                    href="#m_accordion_6_item_1_body" aria-expanded="false">
+                                    <span class="m-accordion__item-icon">
+                                        
+                                    </span>
+                                    <span class="m-accordion__item-title" style="font-size:1rem;font-weight: bold;">
+                                        Completed
+                                    </span>
+                                    <span class="m-accordion__item-mode"></span>
+                                </div>
+                                <div class="m-accordion__item-body collapse show" id="m_accordion_6_item_1_body">
+                                    <div class="m-accordion__item-content">
+
+                                        <div class="row">
+                                            <ng-container *ngFor="let x of [].constructor(num), let i = index">
+                                                <div class="sumBox col-md-2 col-xs-4 col-sm-4" *ngIf="!loading" style="padding:15px !important; display: flex !important;">
+                                                    <div class="alignCenter" [ngStyle]="{'background-color': countList[i].divColor}" style="flex: 1 !important;">  
+                                                        <h6 class="m-portlet__head-text m--font-light font_13px pad_top8px">
+                                                            {{countList[i].LOB}}
+                                                        </h6>
+                                                        <div class="pad_bot6px" style="padding-bottom: 0.8rem; color: white">
+                                                            
+                                                            <span style="font-size: 1.5rem">{{countList[i].Completed}}</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </ng-container>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                        
+                </div>
+
+                <div class="m-section container" style="max-width: 100% !important;" *ngIf="countList.length > 0 && countList.length < 3">
+                    <div class="row">
+                        <ng-container *ngFor="let x of [].constructor(num), let i = index">
+                            <div class="sumBox col-md-2 col-xs-4 col-sm-4" *ngIf="!loading" style="padding:15px !important; display: flex !important;">
+                                <div class="alignCenter" [ngStyle]="{'background-color': countList[i].divColor}" style="flex: 1 !important;">  
+                                    <h6 class="m-portlet__head-text m--font-light font_13px pad_top8px">
+                                        Goal Setting
+                                        <br/><br/>
+                                        {{countList[i].LOB}}
+                                    </h6>
+                                    <div class="pad_bot6px" style="padding-bottom: 0.8rem; color: white">
+                                        <span style="font-size: 1.5rem">{{countList[i].GoalSetting}}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </ng-container>
+
+                        <ng-container *ngFor="let x of [].constructor(num), let i = index">
+                            <div class="sumBox col-md-2 col-xs-4 col-sm-4" *ngIf="!loading" style="padding:15px !important; display: flex !important;">
+                                <div class="alignCenter" [ngStyle]="{'background-color': countList[i].divColor}" style="flex: 1 !important;">  
+                                    <h6 class="m-portlet__head-text m--font-light font_13px pad_top8px">
+                                        Goal Approval
+                                        <br/><br/>
+                                        {{countList[i].LOB}}
+                                    </h6>
+                                    <div class="pad_bot6px" style="padding-bottom: 0.8rem; color: white">
+                                        <span style="font-size: 1.5rem">{{countList[i].GoalApproval}}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </ng-container>
+
+                        <ng-container *ngFor="let x of [].constructor(num), let i = index">
+                            <div class="sumBox col-md-2 col-xs-4 col-sm-4" *ngIf="!loading" style="padding:15px !important; display: flex !important;">
+                                <div class="alignCenter" [ngStyle]="{'background-color': countList[i].divColor}" style="flex: 1 !important;">  
+                                    <h6 class="m-portlet__head-text m--font-light font_13px pad_top8px">
+                                        Mid Year <br/>
+                                        Review Appraisee
+                                        <br/><br/>
+                                        {{countList[i].LOB}}
+                                    </h6>
+                                    <div class="pad_bot6px" style="padding-bottom: 0.8rem; color: white">
+                                        <span style="font-size: 1.5rem">{{countList[i].MidAppraisee}}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </ng-container>
+
+                        <ng-container *ngFor="let x of [].constructor(num), let i = index">
+                            <div class="sumBox col-md-2 col-xs-4 col-sm-4" *ngIf="!loading" style="padding:15px !important; display: flex !important;">
+                                <div class="alignCenter" [ngStyle]="{'background-color': countList[i].divColor}" style="flex: 1 !important;">  
+                                    <h6 class="m-portlet__head-text m--font-light font_13px pad_top8px">
+                                        Mid Year<br/> 
+                                        Review Appraiser
+                                        <br/><br/>
+                                        {{countList[i].LOB}}
+                                    </h6>
+                                    <div class="pad_bot6px" style="padding-bottom: 0.8rem; color: white">
+                                        <span style="font-size: 1.5rem">{{countList[i].MidAppraiser}}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </ng-container>
+
+                        <ng-container *ngFor="let x of [].constructor(num), let i = index">
+                            <div class="sumBox col-md-2 col-xs-4 col-sm-4" *ngIf="!loading" style="padding:15px !important; display: flex !important;">
+                                <div class="alignCenter" [ngStyle]="{'background-color': countList[i].divColor}" style="flex: 1 !important;">  
+                                    <h6 class="m-portlet__head-text m--font-light font_13px pad_top8px">
+                                        Year End<br/> 
+                                        Review Appraisee
+                                        <br/><br/>
+                                        {{countList[i].LOB}}
+                                    </h6>
+                                    <div class="pad_bot6px" style="padding-bottom: 0.8rem; color: white">
+                                        <span style="font-size: 1.5rem">{{countList[i].EndAppraisee}}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </ng-container>
+
+                        <ng-container *ngFor="let x of [].constructor(num), let i = index">
+                            <div class="sumBox col-md-2 col-xs-4 col-sm-4" *ngIf="!loading" style="padding:15px !important; display: flex !important;">
+                                <div class="alignCenter" [ngStyle]="{'background-color': countList[i].divColor}" style="flex: 1 !important;">  
+                                    <h6 class="m-portlet__head-text m--font-light font_13px pad_top8px">
+                                        Year End<br/> 
+                                        Review Appraiser
+                                        <br/><br/>
+                                        {{countList[i].LOB}}
+                                    </h6>
+                                    <div class="pad_bot6px" style="padding-bottom: 0.8rem; color: white">
+                                        <span style="font-size: 1.5rem">{{countList[i].EndAppraiser}}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </ng-container>
+
+                        <ng-container *ngFor="let x of [].constructor(num), let i = index">
+                            <div class="sumBox col-md-2 col-xs-4 col-sm-4" *ngIf="!loading" style="padding:15px !important; display: flex !important;">
+                                <div class="alignCenter" [ngStyle]="{'background-color': countList[i].divColor}" style="flex: 1 !important;">  
+                                    <h6 class="m-portlet__head-text m--font-light font_13px pad_top8px">
+                                        Year End Reviewer
+                                        <br/><br/>
+                                        {{countList[i].LOB}}
+                                    </h6>
+                                    <div class="pad_bot6px" style="padding-bottom: 0.8rem; color: white">
+                                        <span style="font-size: 1.5rem">{{countList[i].EndReviewer}}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </ng-container>
+
+                        <ng-container *ngFor="let x of [].constructor(num), let i = index">
+                            <div class="sumBox col-md-2 col-xs-4 col-sm-4" *ngIf="!loading" style="padding:15px !important; display: flex !important;">
+                                <div class="alignCenter" [ngStyle]="{'background-color': countList[i].divColor}" style="flex: 1 !important;">  
+                                    <h6 class="m-portlet__head-text m--font-light font_13px pad_top8px">
+                                        Employee Acknowledgement
+                                        <br/><br/>
+                                        {{countList[i].LOB}}
+                                    </h6>
+                                    <div class="pad_bot6px" style="padding-bottom: 0.8rem; color: white">
+                                        <span style="font-size: 1.5rem">{{countList[i].EmplAck}}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </ng-container>
+
+                        <ng-container *ngFor="let x of [].constructor(num), let i = index">
+                            <div class="sumBox col-md-2 col-xs-4 col-sm-4" *ngIf="!loading" style="padding:15px !important; display: flex !important;">
+                                <div class="alignCenter" [ngStyle]="{'background-color': countList[i].divColor}" style="flex: 1 !important;">  
+                                    <h6 class="m-portlet__head-text m--font-light font_13px pad_top8px">
+                                        Completed
+                                        <br/><br/>
+                                        {{countList[i].LOB}}
+                                    </h6>
+                                    <div class="pad_bot6px" style="padding-bottom: 0.8rem; color: white">
+                                        <span style="font-size: 1.5rem">{{countList[i].Completed}}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </ng-container>
+
+                    </div>        
+                </div>
+
+            </div>
+
+        </div>
+
+        </div>
+
+    </div>
+</div>

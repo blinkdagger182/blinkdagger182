@@ -1,0 +1,766 @@
+<div>
+    <div class="page-bg talent-bg">
+        <h2 class="head-sub-title">Talent</h2>
+    </div>
+    <div class="pg-title-div">
+        <h3 class="pg-title">TALENT CLASSIFICATION</h3>
+    </div>
+</div>
+
+<div class="m-subheader" style="background-color:#FFFFFF;">
+    <div class="d-flex align-items-center">
+        <div class="mr-auto">
+            <h3 class="m-subheader__title m-subheader__title--separator">
+                Talent Classification
+            </h3>
+            <ul class="m-subheader__breadcrumbs m-nav m-nav--inline" *ngIf="!pageLoading1 && !pageLoading2">
+                <li class="m-nav__item m-nav__item--home">
+                    <a routerLink="/index" class="m-nav__link m-nav__link--icon">
+                        <i class="m-nav__link-icon la la-home"></i>
+                    </a>
+                </li>
+            </ul>
+		</div>
+	</div>
+</div>
+
+<div class="m-content" style="background-color:#FFFFFF; height:100%">
+    <div class="row justify-content-md-center">
+
+        <div class="col-lg-12 centred my-auto" *ngIf="pageLoading1 || pageLoading2">
+            <talent-loading></talent-loading>
+		</div>
+		
+		<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" *ngIf="!pageLoading1 && !pageLoading2">
+
+			<div style="margin: 2rem 0rem;text-align: justify;">
+				<h3>Welcome to the Talent Classification Page.</h3>
+				<p style="font-size: 1.2rem;">
+					This page serves as a tool to assess all TM Executives and to determine the Talent Classification of the employees based on the 9 Box Grid. 
+					Here are some files which you can refer to before or during this activity. 
+					Click on the <a class="m-link m-link--state m-link--success m--font-bolder" href="{{userLinkData[0].value}}" target="_blank">Talent Classification Handbook</a> for better understanding of this process or alternatively you can also download the <a class="m-link m-link--state m-link--success m--font-bolder" href="{{userLinkData[1].value}}" target="_blank">Talent Classification User Guide</a> to provide you with a step by step guide to perform this activity. 
+					You may also click on <a class="m-link m-link--state m-link--success m--font-bolder" href="{{userLinkData[2].value}}" target="_blank">Talent Classification FAQ</a> to see if any of your queries are answered in this FAQ.
+				</p>
+			</div>
+		</div>
+	</div>
+
+	<div class="m-content" style="padding: 30px 0;" [hidden]="pageLoading1 || pageLoading2">
+		<div class="row">
+			<div class="col-md-4" style="height: 895px">
+				<div class="m-portlet m-portlet__body" data-height="895" style="height: 895px;">
+					<div class="d-flex p-2 col-example" style="background-color: #F2F0F0;">Supervisor</div>
+					<div class="modal-body">
+						<table class="table table-hover" >
+							<tr class="onfocus" [ngClass]="{'selectedUser': isSuper}" >
+								<td>
+									<div class="m-card-profile__pic" (click)="managerClick(profile)" style="cursor: pointer;">
+										<div class="m-card-profile__pic-wrapper">
+											<img style="max-width: 160px !important;" src="{{imgOptArrList}}" alt="" class="m--img-rounded m--marginless m--img-centered" style="width:45px; height:45px"/>
+										</div>
+									</div>
+								</td>
+								<td>
+									<div class="m-widget4__info">
+										<div  style="cursor: pointer;" (click)="managerClick(profile)">
+											<span class="font-weight-bold">
+												{{profile?.selfName}}
+											</span><br>
+											<span class="m-widget4__pos">
+												{{profile?.position}}
+											</span><br>
+										</div><br>
+										<span class="m-widget4__pos">
+											<button (click)="openHistoryModal()" class="btn btn-primary" href="#m_tabs_6_5" style="color:#fff; background-color: #ff8000!important; border-color: #ff8000!important;">View Team</button>
+										</span>
+									</div>
+								</td>
+							</tr>
+						</table>
+					</div>
+
+					<div class="d-flex p-2 col-example" style="background-color: #F2F0F0;">Subordinate</div>
+					<div class="modal-body" data-height="660" style="height:660px;" data-scrollable="true">
+
+						<div class="input-group" style="margin-bottom: 1rem;">
+							<div class="input-group-prepend">
+								<span class="input-group-text" id="basic-addon2" style="background: #ff8000;">
+									<i class="flaticon-search" aria-hidden="true" style="color: #fff;"></i>
+								</span>
+							</div>
+							<input type="text" class="form-control search-input" name="search" [(ngModel)]="search" placeholder="Search Subordinate">
+						</div>
+
+						<table class="table">
+							<tr *ngFor="let itemSub of subordinateList | subFilter : search" class="onfocus" [ngClass]="{'selectedUser': itemSub.id === subordinateID}">
+								<td>
+									<div class="m-card-profile__pic" (click)="staffDetail(itemSub)" style="cursor: pointer;">
+										<span class="m-card-profile__pic-wrapper">
+											<img style="max-width: 160px !important;" src="{{itemSub.image_url}}" class="m--img-rounded m--marginless m--img-centered" style="width:45px; height:45px" alt="" />
+										</span>
+									</div>
+								</td>
+								<td style="text-align: justify;">
+									<div class="m-widget4__info" style="text-align: justify;">
+										<div (click)="staffDetail(itemSub)" style="cursor: pointer;">
+											<span class="font-weight-bold">
+												{{itemSub.name}}
+											</span><br>
+											<span class="m-widget4__pos">
+												{{itemSub.post_desc}}
+											</span><br>
+											<span class="m-widget4__pos" *ngIf="itemSub?.talent_class">
+												Talent Class: {{itemSub.talent_class}}
+											</span><br>
+										</div>
+										<span class="m-widget4__pos">
+											<span *ngIf="itemSub.state_id < 4" style="color: red; font-weight: 500; padding-left: 10px;">{{itemSub.state_name}}</span>
+											<button (click)="openCalibratedModal(itemSub)" class="btn blue-status" *ngIf="itemSub.state_id === 4">{{itemSub.state_name}}</button>
+											<button (click)="openCalibratedModal(itemSub)" class="btn green-status" *ngIf="itemSub.state_id > 4" >{{itemSub.state_name}}</button>
+										</span>
+										
+										<br>
+									</div>						
+								</td>
+							</tr>
+						</table>
+					</div>							
+				</div>
+			</div>
+			<div class="col-md-8">
+				<div class="m-portlet m-portlet--tabs">
+					<div class="m-portlet__head">
+						<div class="m-portlet__head-tools">
+							<ul class="nav nav-tabs m-tabs-line m-tabs-line--primary m-tabs-line--2x" role="tablist">
+								<li class="nav-item m-tabs__item" [hidden]="isSuper">
+									<a class="nav-link m-tabs__link active" data-toggle="tab" href="#m_tabs_6_1" 
+										[class.active]="showAssessmentTab" [class.show]="showAssessmentTab" role="tab">
+										Talent Potential Assessment
+									</a>
+								</li>
+								<li class="nav-item m-tabs__item">
+									<a class="nav-link m-tabs__link" data-toggle="tab" href="#m_tabs_6_2" 
+										[class.active]="showPersonalTab" [class.show]="showPersonalTab" role="tab">
+										Personal Info
+									</a>
+								</li>
+								<li class="nav-item m-tabs__item" [hidden]="isSuper">
+									<a class="nav-link m-tabs__link" data-toggle="tab" href="#m_tabs_6_3" role="tab"
+										[class.active]="showPerformTab" [class.show]="showPerformTab">
+										Performance Details
+									</a>
+								</li>
+								<li class="nav-item m-tabs__item" [hidden]="isSuper || this.assessmentStatus < 3">
+									<a class="nav-link m-tabs__link" data-toggle="tab" href="#m_tabs_6_4" role="tab" 
+										[class.active]="showTalentClassTab" [class.show]="showTalentClassTab">
+										Talent Classification
+									</a>
+								</li>
+								<li class="nav-item m-tabs__item" [hidden]="!isSuper">
+									<a class="nav-link m-tabs__link" data-toggle="tab" href="#m_tabs_6_5" role="tab" 
+										[class.active]="showTalentSummaryTab" [class.show]="showTalentSummaryTab">
+										Talent Summary
+									</a>
+								</li>
+							</ul>
+						</div>
+					</div>
+					<div class="m-portlet__body">
+						<div class="tab-content" data-height="auto" style="height: auto;">
+							
+							<!-- ASSESSMENT TAB START -->
+							<div class="tab-pane active" [hidden]="isSuper" 
+								id="m_tabs_6_1" role="tabpanel" [class.active]="showAssessmentTab" [class.show]="showAssessmentTab"  >
+								<div class="modal-body" style="padding: 0;">
+									<div style="text-align: center; padding: 5rem" *ngIf="queLoading">
+										<img src="../assets/img/user/ERA.gif" style="width:auto;height:100px;">
+									</div>
+									<div *ngIf="!queLoading">
+										<div class="text-right">
+											<button type="button" (click)="saveAssessmentDraft()" *ngIf="assessmentStatus < 2" class="btn btn-primary" style="color:#fff; background-color: #ff8000!important; border-color: #ff8000!important;">
+												Save
+											</button>
+											<button type="button" (click)="clickEdit()" class="btn btn-primary" *ngIf="assessmentStatus === 2 && !isEditable" style="color:#fff; background-color: #ff8000!important; border-color: #ff8000!important;">
+												Edit
+											</button>
+											<button type="button" (click)="updateAssessmentDraft()" class="btn btn-primary" *ngIf="assessmentStatus === 2 && isEditable" style="color:#fff; background-color: #ff8000!important; border-color: #ff8000!important;">
+												Update
+											</button>
+											<button type="button" class="btn btn-primary" [disabled]='isDisabled' [ngStyle]="{'cursor': isDisabled ? 'no-drop' : 'pointer'}" *ngIf="assessmentStatus < 3 && showSubmitBtnAsses" data-toggle="modal" data-target="#comfirmation-assessment-modal" style="color:#fff; background-color: #ff8000!important; border-color: #ff8000!important;">
+												Submit Assessment
+											</button>
+										</div>
+										<div class="m-card-user m-card-user--skin-dark" class="m-portlet__body" style="padding: 0;">
+											<div class="container card-assessment" *ngFor="let ques of questionList; let i=index">
+												<form>
+													<div class="row">
+														<div class="col-lg-1 col-md-1 col-sm-1 col-xs-1">{{ques.ques_no}}.</div>
+														<div class="col-lg-11 col-md-11 col-sm-11 col-xs-11">{{ques.question}}.</div>
+													</div>
+													<div class="row">
+														<div class="col-lg-1 col-md-1 col-sm-1 col-xs-1"></div>
+														<div class="col-lg-11 col-md-11 col-sm-11 col-xs-11" style="font-size: 10px; font-style: italic;">{{ques.star_desc}}.</div>
+													</div>
+													<div class="row">
+														<div class="col-lg-1 col-md-1 col-sm-1 col-xs-1"></div>
+														<div class="col-lg-11 col-md-11 col-sm-11 col-xs-11">
+															<ngb-rating [(rate)]="ques.results" (leave)="starChanged(i, ques.id, ques.results)" [readonly]="assessmentStatus > 2 || !isEditable">
+																<ng-template let-fill="fill" let-index="index">
+																	<span class="star" [class.filled]="fill === 100">&#9733;</span>
+																</ng-template>
+															</ngb-rating>
+														</div>
+													</div>
+												</form>	
+											</div>											
+										</div>
+									</div>
+								</div>
+							</div>
+							<!-- ASSESSMENT TAB END -->
+
+							<!-- PERSONAL INFO TAB START -->
+							<div class="tab-pane" [class.active]="showPersonalTab" [class.show]="showPersonalTab"
+								id="m_tabs_6_2" role="tabpanel">
+								<div class="modal-body">
+
+									<div style="text-align: center; padding: 5rem" *ngIf="infoLoading">
+										<img src="../assets/img/user/ERA.gif" style="width:auto;height:100px;">
+									</div>
+
+									<div *ngIf="!infoLoading">
+										<div class="m-card-user m-card-user--skin-dark" align="center"
+											class="m-portlet__body" *ngFor="let item of personalList">
+											<span class="m-card-user__pic" >
+												<img src="{{profileImg}}"
+													class="m--img-rounded m--marginless" alt="" height="100"
+													width="100" />
+											</span>
+											
+											<br>
+											<div>
+												<span class="font-weight-bold">
+													{{item.name}}
+												</span>
+											</div>
+											<div>
+												<span style="color: #fd5806">
+													{{item.email}}
+												</span>
+											</div>
+											<div>
+												<span>
+													{{item.post_desc}}
+												</span>
+											</div>
+											<div>
+												<span>
+													{{item.company_desc}}
+												</span>
+											</div>
+											<div>
+												<span style="color: #fd5806">
+													{{item.cell_no}}
+												</span>
+											</div>
+											<br>
+											<table class="table table-bordered" style="font-weight: 400;">
+												<thead>
+												</thead>
+												<tbody>
+													<tr>
+														<th scope="row">Name</th>
+														<td>{{item.name}}</td>
+													</tr>
+													<tr>
+														<th scope="row">Employee Number</th>
+														<td>{{item.staff_no}}</td>
+													</tr>
+													<tr>
+														<th scope="row">Employee Group</th>
+														<td colspan="2">{{item.empgroup}}</td>
+													</tr>
+													<tr>
+														<th scope="row">Employee Sub Group</th>
+														<td colspan="2">{{item.empsgroup}}</td>
+													</tr>
+													<tr>
+														<th scope="row">Position</th>
+														<td colspan="2">{{item.post_desc}}</td>
+													</tr>
+													<tr>
+														<th scope="row">Position ID</th>
+														<td colspan="2">{{item.position}}</td>
+													</tr>
+													<tr>
+														<th scope="row">Unit</th>
+														<td colspan="2">{{item.sub_org_unit_desc}}</td>
+													</tr>
+													<tr>
+														<th scope="row">Division</th>
+														<td colspan="2">{{item.org_unit_desc}}</td>
+													</tr>
+													<tr>
+														<th scope="row">Company</th>
+														<td colspan="2">{{item.company_desc}}</td>
+													</tr>
+												</tbody>
+											</table>
+										</div>
+									</div>
+								</div>
+							</div>
+							<!-- PERSONAL INFO TAB END -->
+
+							<!-- PERFORMANCE DETAILS TAB START -->
+							<div class="tab-pane" [hidden]="isSuper" id="m_tabs_6_3" role="tabpanel"
+								[class.active]="showPerformTab" [class.show]="showPerformTab">
+								<div class="modal-body">
+
+									<div style="text-align: center; padding: 5rem" *ngIf="infoLoading">
+										<img src="../assets/img/user/ERA.gif" style="width:auto;height:100px;">
+									</div>
+
+									<div *ngIf="!infoLoading">
+										<div class="m-card-user m-card-user--skin-dark" align="center" class="m-portlet__body" *ngFor="let itemPD of personalList">
+											<table class="table table-bordered" style="font-weight: 400;" overflow="auto" *ngFor="let itemPfD of performanceList">
+												<tbody>
+													<tr>
+														<th scope="row">Performance Rating Year 2019</th>
+														<td>{{itemPfD.perf_2018}}</td>
+													</tr>
+													<tr>
+														<th scope="row">Performance Rating Year 2018</th>
+														<td>{{itemPfD.perf_2017}}</td>
+													</tr>
+													<tr>
+														<th scope="row">Performance Rating Year 2017</th>
+														<td colspan="2">{{itemPfD.perf_2016}}</td>
+													</tr>
+													<tr>
+														<th scope="row">360 Feedback Score Year 2019</th>
+														<td colspan="2">{{itemPfD.ci_2018}}</td>
+													</tr>
+													<tr>
+														<th scope="row">360 Feedback Score Year 2018</th>
+														<td colspan="2">{{itemPfD.ci_2017}}</td>
+													</tr>
+													<tr>
+														<th scope="row">360 Feedback Score Year 2017</th>
+														<td colspan="2">{{itemPfD.ci_2016}}</td>
+													</tr>
+												</tbody>
+											</table>
+											<div>
+												<label class=" col-form-label label-data"
+													style="font-size: 1.0rem;;background-color: white; color: #FF7F24; border-color:#FF7F24;">
+													<button type="button" class="btn m-btn--pill btn-outline-warning"
+														(click)="getUserIDPForm(itemPD.idp_user_id)">
+														<span class="fa fa-download"> IDP Form</span>
+													</button>
+												</label>
+												<!-- <label class="col-form-label label-data" style="font-size: 1.0rem;;background-color: white; color: #04B3C1; border-color:#04B3C1;">
+													<button type="button" class="btn m-btn--pill btn-outline-success" (click)="getUserCareerProfile(itemPD.staff_no)">
+														<span class="fa fa-download"> Career Profile</span>
+													</button>
+												</label> -->
+											</div>	
+										</div>
+									</div>
+								</div>
+							</div>
+							<!-- PERFORMANCE DETAILS TAB END -->
+
+							<!-- TALENT CLASSIFICATION TAB START -->
+							<div class="tab-pane" [hidden]="isSuper || this.assessmentStatus < 3" 
+								id="m_tabs_6_4" role="tabpanel" [class.active]="showTalentClassTab" [class.show]="showTalentClassTab">
+								<div class="modal-body">
+									<div style="text-align: center; padding: 5rem" *ngIf="infoLoading">
+										<img src="../assets/img/user/ERA.gif" style="width:auto;height:100px;">
+									</div>
+									<div *ngIf="!infoLoading">
+										<div class="m-card-user m-card-user--skin-dark" align="center" class="m-portlet__body" style="padding: 0;">
+											<div class="container">
+												<div class="row" style="max-width: 800px;">
+													<div class="col-lg-2 col-md-2 col-xl-2 col-sm-2 col-xs-2" style="padding: 0;">
+														<img src="assets/blank/images/talent_sustained_performance.jpg" style="max-width: 100%; flex: 0 0 100%; height: 30vw; min-height: 150px; max-height: 450px;">
+													</div>
+													<div class="col-lg-10 col-md-10 col-xl-10 col-sm-10 col-xs-10" style="padding: 0;">
+														<div class="container" style="box-sizing: border-box;">
+															<div class="row" style="height: 10vw; min-height: 50px; min-width: 185px; max-width: 695px; max-height: 150px;">
+																<div class="col-lg-4 col-md-4 col-sm-4 col-xl-4 col-xs-4" style="box-sizing: border-box; background-color:#33CCFF; border: solid white 3px; border-radius: 1vw;">
+																	<h3 style="position: absolute; right: 8px; font-size: 1.5vw; margin-top: 0.5vw; color: black; background-color: white; border-radius: 100%; width: 2vw">4</h3>
+																	<div class="grid-img-div" *ngIf="selectedSub?.cell === '4'">
+																		<img class="m--img-rounded m--marginless m--img-centered user-grid-img" style="width: 4vw; height: 4vw" [src]="selectedSub.image_url">
+																	</div>
+																	<h5 style="position: absolute; bottom: 0px; font-size: 1vw; text-align: initial; color: white;">SOLID PERFORMER</h5>
+																</div>
+																<div class="col-lg-4 col-md-4 col-sm-4 col-xl-4 col-xs-4" style="box-sizing: border-box; background-color:#376B8A; border: solid white 3px; border-radius: 1vw;">
+																	<h3 style="position: absolute; right: 8px; font-size: 1.5vw; margin-top: 0.5vw; color: black; background-color: white; border-radius: 100%; width: 2vw">2</h3>
+																	<div class="grid-img-div" *ngIf="selectedSub?.cell === '2'">
+																		<img class="m--img-rounded m--marginless m--img-centered user-grid-img" style="width: 4vw; height: 4vw" [src]="selectedSub.image_url">
+																	</div>
+																	<h5 style="position: absolute; bottom: 0px; font-size: 1vw; text-align: initial; color: white;">STRONG CONTRIBUTOR</h5>
+																</div>
+																<div class="col-lg-4 col-md-4 col-sm-4 col-xl-4 col-xs-4" style="box-sizing: border-box; background-color:#376B8A; border: solid white 3px; border-radius: 1vw;">
+																	<h3 style="position: absolute; right: 8px; font-size: 1.5vw; margin-top: 0.5vw; color: black; background-color: white; border-radius: 100%; width: 2vw">1</h3>
+																	<div class="grid-img-div" *ngIf="selectedSub?.cell === '1'">
+																		<img class="m--img-rounded m--marginless m--img-centered user-grid-img" style="width: 4vw; height: 4vw" [src]="selectedSub.image_url">
+																	</div>
+																	<h5 style="position: absolute; bottom: 0px; font-size: 1vw; text-align: initial; color: white;">STAR TALENT</h5>
+																</div>
+															</div>
+															<div class="row" style="height: 10vw; min-height: 50px; min-width: 185px; max-width: 695px; max-height: 150px;">
+																<div class="col-lg-4 col-md-4 col-sm-4 col-xl-4 col-xs-4" style="box-sizing: border-box; background-color:#F1D9BA; border: solid white 3px; border-radius: 1vw;">
+																	<h3 style="position: absolute; right: 8px; font-size: 1.5vw; margin-top: 0.5vw; color: black; background-color: white; border-radius: 100%; width: 2vw">7</h3>
+																	<div class="grid-img-div" *ngIf="selectedSub?.cell === '7'">
+																		<img class="m--img-rounded m--marginless m--img-centered user-grid-img" style="width: 4vw; height: 4vw" [src]="selectedSub.image_url">
+																	</div>
+																	<h5 style="position: absolute; bottom: 0px; font-size: 1vw; text-align: initial; color: black;">SATISFACTORY CONTRIBUTOR</h5>
+																</div>
+																<div class="col-lg-4 col-md-4 col-sm-4 col-xl-4 col-xs-4" style="box-sizing: border-box; background-color:#F1D9BA; border: solid white 3px; border-radius: 1vw;">
+																	<h3 style="position: absolute; right: 8px; font-size: 1.5vw; margin-top: 0.5vw; color: black; background-color: white; border-radius: 100%; width: 2vw">5</h3>
+																	<div class="grid-img-div" *ngIf="selectedSub?.cell === '5'">
+																		<img class="m--img-rounded m--marginless m--img-centered user-grid-img" style="width: 4vw; height: 4vw" [src]="selectedSub.image_url">
+																	</div>
+																	<h5 style="position: absolute; bottom: 0px; font-size: 1vw; text-align: initial; color: black;">GOOD CONTRIBUTOR</h5>
+																</div>
+																<div class="col-lg-4 col-md-4 col-sm-4 col-xl-4 col-xs-4" style="box-sizing: border-box; background-color:#376B8A; border: solid white 3px; border-radius: 1vw;">
+																	<h3 style="position: absolute; right: 8px; font-size: 1.5vw; margin-top: 0.5vw; color: black; background-color: white; border-radius: 100%; width: 2vw">3</h3>
+																	<div class="grid-img-div" *ngIf="selectedSub?.cell === '3'">
+																		<img class="m--img-rounded m--marginless m--img-centered user-grid-img" style="width: 4vw; height: 4vw" [src]="selectedSub.image_url">
+																	</div>
+																	<h5 style="position: absolute; bottom: 0px; font-size: 1vw; text-align: initial; color: white;">HIGH FLYER</h5>
+																</div>
+															</div>
+															<div class="row" style="height: 10vw; min-height: 50px; min-width: 185px; max-width: 695px; max-height: 150px;">
+																<div class="col-lg-4 col-md-4 col-sm-4 col-xl-4 col-xs-4" style="box-sizing: border-box; background-color:#FF3757; border: solid white 3px; border-radius: 1vw;">
+																	<h3 style="position: absolute; right: 8px; font-size: 1.5vw; margin-top: 0.5vw; color: black; background-color: white; border-radius: 100%; width: 2vw">9</h3>
+																	<div class="grid-img-div" *ngIf="selectedSub?.cell === '9'">
+																		<img class="m--img-rounded m--marginless m--img-centered user-grid-img" style="width: 4vw; height: 4vw" [src]="selectedSub.image_url">
+																	</div>
+																	<h5 style="position: absolute; bottom: 0px; font-size: 1vw; text-align: initial; color: white;">TALENT RISK</h5>
+																</div>
+																<div class="col-lg-4 col-md-4 col-sm-4 col-xl-4 col-xs-4" style="box-sizing: border-box; background-color:#F1D9BA; border: solid white 3px; border-radius: 1vw;">
+																	<h3 style="position: absolute; right: 8px; font-size: 1.5vw; margin-top: 0.5vw; color: black; background-color: white; border-radius: 100%; width: 2vw">8</h3>
+																	<div class="grid-img-div" *ngIf="selectedSub?.cell === '8'">
+																		<img class="m--img-rounded m--marginless m--img-centered user-grid-img" style="width: 4vw; height: 4vw" [src]="selectedSub.image_url">
+																	</div>
+																	<h5 style="position: absolute; bottom: 0px; font-size: 1vw; text-align: initial; color: black;">PROMISING CONTRIBUTOR</h5>
+																</div>
+																<div class="col-lg-4 col-md-4 col-sm-4 col-xl-4 col-xs-4" style="box-sizing: border-box; background-color:#33CCFF; border: solid white 3px; border-radius: 1vw;">
+																	<h3 style="position: absolute; right: 8px; font-size: 1.5vw; margin-top: 0.5vw; color: black; background-color: white; border-radius: 100%; width: 2vw">6</h3>
+																	<div class="grid-img-div" *ngIf="selectedSub?.cell === '6'">
+																		<img class="m--img-rounded m--marginless m--img-centered user-grid-img" style="width: 4vw; height: 4vw" [src]="selectedSub.image_url">
+																	</div>
+																	<h5 style="position: absolute; bottom: 0px; font-size: 1vw; text-align: initial; color: white;">MISMATCHED TALENT</h5>
+																</div>
+															</div>
+															<div class="row" style="min-width: 185px; max-width: 695px;">
+																<img style="width: 100%; height: 100%; padding-top: 1vw;" src="assets/blank/images/talent_potential.jpg">
+															</div>
+															<div class="row" style="min-width: 185px; max-width: 695px; margin: 2vw 0">
+																<div style=" position: absolute; right: 1px;">
+																	<button type="button" *ngIf="personalList.length && assessmentStatus < 5" class="alert-btn btn" style="background-color: #fd5806; color: white; border: solid 2px white; border-radius: 50px; margin-bottom: 20px;" data-toggle="modal" data-target="#beforeCalibrateModal">
+																		Review
+																	</button>
+																	<button class="alert-btn btn" *ngIf="assessmentStatus < 5" data-toggle="modal" data-target="#comfirmation-submitHR-modal" style="background-color: #fd5806; color: white; border: solid 2px white; border-radius: 50px; margin-bottom: 20px;">
+																		Complete
+																	</button>
+																</div>						
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<!-- TALENT CLASSIFICATION TAB END -->
+
+							<!-- TALENT CLASSIFICATION FOR MANAGER TAB START -->
+							<div class="tab-pane" [hidden]="!isSuper" id="m_tabs_6_5" role="tabpanel" 
+								[class.active]="showTalentSummaryTab" [class.show]="showTalentSummaryTab">
+								<div class="modal-body">
+									<div style="text-align: center; padding: 5rem" *ngIf="calHistoryLoading">
+										<img src="../assets/img/user/ERA.gif" style="width:auto;height:100px;">
+									</div>
+									<div *ngIf="!calHistoryLoading">
+										<div class="m-card-user m-card-user--skin-dark" align="center" class="m-portlet__body" style="padding: 0;">
+											<div>
+												<div class="row" style="max-width: 800px">
+													<div class="col-lg-2 col-md-2 col-xl-2 col-sm-2 col-xs-2" style="padding: 0;">
+														<img src="assets/blank/images/talent_sustained_performance.jpg" style="max-width: 100%; flex: 0 0 100%; height: 30vw; min-height: 150px; max-height: 450px;">
+													</div>
+													<div class="col-lg-10 col-md-10 col-xl-10 col-sm-10 col-xs-10" style="padding: 0;">
+														<div class="container" style="box-sizing: border-box;">
+															<div class="row" style="height: 10vw; min-height: 50px; min-width: 185px; max-width: 695px; max-height: 150px;">
+																<div class="col-lg-4 col-md-4 col-sm-4 col-xl-4 col-xs-4" style="box-sizing: border-box; background-color:#33CCFF; border: solid white 3px; border-radius: 1vw;">
+																	<h3 style="position: absolute; right: 8px; font-size: 1.5vw; margin-top: 0.5vw; color: black; background-color: white; border-radius: 100%; width: 2vw">4</h3>
+																	<span *ngIf="getCellNum(4) > 0" (click)="showEmployeeByCell(4, 'SOLID PERFORMER - BOX 4')" class="employee-cell-link" data-toggle="modal" data-target="#empCellModal">{{getCellNum(4)}}</span>
+																	<h5 style="position: absolute; bottom: 0px; font-size: 1vw; text-align: initial; color: white;">SOLID PERFORMER</h5>
+																</div>
+																<div class="col-lg-4 col-md-4 col-sm-4 col-xl-4 col-xs-4" style="box-sizing: border-box; background-color:#376B8A; border: solid white 3px; border-radius: 1vw;">
+																	<h3 style="position: absolute; right: 8px; font-size: 1.5vw; margin-top: 0.5vw; color: black; background-color: white; border-radius: 100%; width: 2vw">2</h3>
+																	<span *ngIf="getCellNum(2) > 0" (click)="showEmployeeByCell(2, 'STRONG CONTRIBUTOR - BOX 2')"class="employee-cell-link" data-toggle="modal" data-target="#empCellModal">{{getCellNum(2)}}</span>
+																	<h5 style="position: absolute; bottom: 0px; font-size: 1vw; text-align: initial; color: white;">STRONG CONTRIBUTOR</h5>
+																</div>
+																<div class="col-lg-4 col-md-4 col-sm-4 col-xl-4 col-xs-4" style="box-sizing: border-box; background-color:#376B8A; border: solid white 3px; border-radius: 1vw;">
+																	<h3 style="position: absolute; right: 8px; font-size: 1.5vw; margin-top: 0.5vw; color: black; background-color: white; border-radius: 100%; width: 2vw">1</h3>
+																	<span *ngIf="getCellNum(1) > 0" (click)="showEmployeeByCell(1, 'STAR TALENT - 	BOX 1')" class="employee-cell-link" data-toggle="modal" data-target="#empCellModal">{{getCellNum(1)}}</span>
+																	<h5 style="position: absolute; bottom: 0px; font-size: 1vw; text-align: initial; color: white;">STAR TALENT</h5>
+																</div>
+															</div>
+															<div class="row" style="height: 10vw; min-height: 50px; min-width: 185px; max-width: 695px; max-height: 150px;">
+																<div class="col-lg-4 col-md-4 col-sm-4 col-xl-4 col-xs-4" style="box-sizing: border-box; background-color:#F1D9BA; border: solid white 3px; border-radius: 1vw;">
+																	<h3 style="position: absolute; right: 8px; font-size: 1.5vw; margin-top: 0.5vw; color: black; background-color: white; border-radius: 100%; width: 2vw">7</h3>
+																	<span *ngIf="getCellNum(7) > 0" (click)="showEmployeeByCell(7, 'SATISFACTORY CONTRIBUTOR - BOX 7')"class="employee-cell-link" data-toggle="modal" data-target="#empCellModal">{{getCellNum(7)}}</span>
+																	<h5 style="position: absolute; bottom: 0px; font-size: 1vw; text-align: initial; color: black;">SATISFACTORY CONTRIBUTOR</h5>
+																</div>
+																<div class="col-lg-4 col-md-4 col-sm-4 col-xl-4 col-xs-4" style="box-sizing: border-box; background-color:#F1D9BA; border: solid white 3px; border-radius: 1vw;">
+																	<h3 style="position: absolute; right: 8px; font-size: 1.5vw; margin-top: 0.5vw; color: black; background-color: white; border-radius: 100%; width: 2vw">5</h3>
+																	<span *ngIf="getCellNum(5) > 0" (click)="showEmployeeByCell(5, 'GOOD CONTRIBUTOR - BOX 5')" class="employee-cell-link" data-toggle="modal" data-target="#empCellModal">{{getCellNum(5)}}</span>
+																	<h5 style="position: absolute; bottom: 0px; font-size: 1vw; text-align: initial; color: black;">GOOD CONTRIBUTOR</h5>
+																</div>
+																<div class="col-lg-4 col-md-4 col-sm-4 col-xl-4 col-xs-4" style="box-sizing: border-box; background-color:#376B8A; border: solid white 3px; border-radius: 1vw;">
+																	<h3 style="position: absolute; right: 8px; font-size: 1.5vw; margin-top: 0.5vw; color: black; background-color: white; border-radius: 100%; width: 2vw">3</h3>
+																	<span *ngIf="getCellNum(3) > 0" (click)="showEmployeeByCell(3, 'HIGH FLYER - BOX 3')"class="employee-cell-link" data-toggle="modal" data-target="#empCellModal">{{getCellNum(3)}}</span>
+																	<h5 style="position: absolute; bottom: 0px; font-size: 1vw; text-align: initial; color: white;">HIGH FLYER</h5>
+																</div>
+															</div>
+															<div class="row" style="height: 10vw; min-height: 50px; min-width: 185px; max-width: 695px; max-height: 150px;">
+																<div class="col-lg-4 col-md-4 col-sm-4 col-xl-4 col-xs-4" style="box-sizing: border-box; background-color:#FF3757; border: solid white 3px; border-radius: 1vw;">
+																	<h3 style="position: absolute; right: 8px; font-size: 1.5vw; margin-top: 0.5vw; color: black; background-color: white; border-radius: 100%; width: 2vw">9</h3>
+																	<span *ngIf="getCellNum(9) > 0" (click)="showEmployeeByCell(9, 'TALENT RISK - BOX 9')" class="employee-cell-link" data-toggle="modal" data-target="#empCellModal">{{getCellNum(9)}}</span>
+																	<h5 style="position: absolute; bottom: 0px; font-size: 1vw; text-align: initial; color: white;">TALENT RISK</h5>
+																</div>
+																<div class="col-lg-4 col-md-4 col-sm-4 col-xl-4 col-xs-4" style="box-sizing: border-box; background-color:#F1D9BA; border: solid white 3px; border-radius: 1vw;">
+																	<h3 style="position: absolute; right: 8px; font-size: 1.5vw; margin-top: 0.5vw; color: black; background-color: white; border-radius: 100%; width: 2vw">8</h3>
+																	<span *ngIf="getCellNum(8) > 0" (click)="showEmployeeByCell(8, 'PROMISING CONTRIBUTOR - BOX 8')" class="employee-cell-link" data-toggle="modal" data-target="#empCellModal">{{getCellNum(8)}}</span>
+																	<h5 style="position: absolute; bottom: 0px; font-size: 1vw; text-align: initial; color: black;">PROMISING CONTRIBUTOR</h5>
+																</div>
+																<div class="col-lg-4 col-md-4 col-sm-4 col-xl-4 col-xs-4" style="box-sizing: border-box; background-color:#33CCFF; border: solid white 3px; border-radius: 1vw;">
+																	<h3 style="position: absolute; right: 8px; font-size: 1.5vw; margin-top: 0.5vw; color: black; background-color: white; border-radius: 100%; width: 2vw">6</h3>
+																	<span *ngIf="getCellNum(6) > 0" (click)="showEmployeeByCell(6, 'MISMATCHED TALENT - BOX 6')" class="employee-cell-link" data-toggle="modal" data-target="#empCellModal">{{getCellNum(6)}}</span>
+																	<h5 style="position: absolute; bottom: 0px; font-size: 1vw; text-align: initial; color: white;">MISMATCHED TALENT</h5>
+																</div>
+															</div>
+															<div class="row" style="min-width: 185px; max-width: 695px;">
+																<img style="width: 100%; height: 100%; padding-top: 1vw;" src="assets/blank/images/talent_potential.jpg">
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<!-- TALENT CLASSIFICATION FOR MANAGER TAB END -->
+						</div>
+					</div>
+				</div>
+
+			</div>
+		</div>
+	</div>
+</div>
+
+<button [hidden]="true" id="saveReminderModal" data-toggle="modal" data-target="#save-reminder-modal">x</button>
+<button [hidden]="true" id="cal-btn" data-toggle="modal" data-target="#calibrateModal">x</button>
+<button [hidden]="true" id="afterCalibrateModalMsg" data-toggle="modal" data-target="#after-calibrate-modal-msg">x</button>
+
+<!-- Modal reminder after save or update  -->
+<div class="modal fade" id="save-reminder-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+	<div class="modal-dialog modal-dialog-centered" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="exampleModalLongTitle">Reminder!</h5>
+			</div>
+			<div class="modal-body">
+				Your Assessment has been saved as draft. Don't forget to complete it later.
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- Modal confirmation before submition of assessment -->
+<div class="modal fade" id="comfirmation-assessment-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+	<div class="modal-dialog modal-dialog-centered" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="exampleModalLongTitle">Confirm?</h5>
+			</div>
+			<div class="modal-body" *ngFor="let item of personalList">				
+				Awesome! Your assessment is complete for <b>{{item.name}}</b>! Are you sure of your ratings as there is no turning back once you click on Yes.
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+				<button type="button" class="btn btn-primary" (click)="completeAssessment()" data-dismiss="modal" style="color:#fff; background-color: #ff8000!important; border-color: #ff8000!important;">Yes</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- modal msg after submit assessment -->
+<div class="modal fade" id="after-calibrate-modal-msg" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+	<div class="modal-dialog modal-dialog-centered" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="exampleModalLongTitle">Message.</h5>
+			</div>
+			<div class="modal-body">
+				You may now review your employee's Talent Classification before you submit the result for review.
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- modal before calibrate  -->
+<div class="modal fade xs-tc-font" id="beforeCalibrateModal" tabindex="-1" *ngIf="personalList.length" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+	<div class="modal-dialog modal-dialog-centered" role="document" style="max-inline-size: fit-content;">
+		<div class="modal-content" style="width: 800px;">
+			<form [formGroup]="calibrateForm">
+				<div class="modal-header"> 
+					<h5 class="modal-title" id="exampleModalLabel" style="text-align: left;">
+						TALENT LIST - REVIEW 	
+					</h5>
+				</div>
+				<div class="modal-body">
+					<p style="text-align: left;">
+						In this screen you may review and make changes to the assessment result by selecting a different box in the 9 Box Grid. Nevertheless, you're required to provide a strong justification to support the changes.
+					</p>
+					<div class="container">
+						<div class="row" style="background-color: #ff8000; color: white;">
+							<div class="col-lg-1 col-md-1 col-sm-1 col-xs-1">Staff ID</div>
+							<div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">Staff Name</div>
+							<div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">LOB</div>
+							<div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">Position</div>
+							<div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">9 Box Grid</div>
+						</div>
+						<div class="row">
+							<div class="col-lg-1 col-md-1 col-sm-1 col-xs-1">{{personalList[0].staff_no}}</div>
+							<div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">{{personalList[0].name}}</div>
+							<div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">{{personalList[0].company_desc}}</div>
+							<div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">{{personalList[0].post_desc}}</div>
+							<div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+								<select formControlName="tcIdNew" class="form-control" id="exampleFormControlSelect1">
+									<option [value]="item.id" *ngFor="let item of nineBoxList">{{item.cell}}</option>
+								</select>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-12">
+						<label><b>Justification:<span style="color: red;">*</span></b></label>
+						<textarea class="form-control" id="comments" formControlName="justification" name="comments" placeholder="Please provide a strong justification to support the changes." rows="4"></textarea>
+						<span class="error-msg" *ngIf="calibrateSubmitClicked && calibrateForm.invalid">Justification is required</span>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" id='calModalClose' class="btn btn-secondary" data-dismiss="modal">Close</button>
+					<button type="button" class="btn btn-primary" (click)="calibrateFormSubmit()" style="color:#fff; background-color: #ff8000!important; border-color: #ff8000!important;">Save</button>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+
+<!-- Modal calibrate-->
+<div class="modal fade" id="calibrateModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+	<div class="modal-dialog modal-dialog-centered" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="exampleModalLongTitle">Supervisor Review Result</h5>
+			</div>
+			<div class="modal-body" *ngIf="calibrateHistory">
+				<div><b>Name:</b> {{calibrateHistory[0].name}}</div>
+				<div><b>Assessment Result:</b> {{calibrateHistory[0].cal_bf}}</div>
+				<div *ngIf="calibrateHistory[0].cal_af"><b>Review Result:</b> {{calibrateHistory[0].cal_af}}</div>
+				<div *ngIf="calibrateHistory[0].justification"><b>Justification:</b> {{calibrateHistory[0].justification}}</div>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-secondary" *ngIf="assessmentStatus === 4" data-dismiss="modal" data-toggle="modal" data-target="#modal-final-review">Close</button>
+				<button type="button" class="btn btn-secondary" *ngIf="assessmentStatus === 5" data-dismiss="modal">Close</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- Modal final review  -->
+<div class="modal fade" id="modal-final-review" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+	<div class="modal-dialog modal-dialog-centered" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="exampleModalLongTitle">Message.</h5>
+			</div>
+			<div class="modal-body">
+				If you have finalized your review you may click on the "Complete" button below.
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- modal confirmation before submit to HR -->
+<div class="modal fade" id="comfirmation-submitHR-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+	<div class="modal-dialog modal-dialog-centered" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="exampleModalLongTitle">Confirm?</h5>
+			</div>
+			<div class="modal-body">
+				Is this your final decision on the reviewed result? If so, you may then proceed to Complete.
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+				<button type="button" class="btn btn-primary" (click)="submitHr()" data-dismiss="modal" style="color:#fff; background-color: #ff8000!important; border-color: #ff8000!important;">Yes</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- Modal employee Cell-->
+<div class="modal fade" id="empCellModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalTitle" aria-hidden="true">
+	<div class="modal-dialog modal-dialog-centered" role="document" style="max-inline-size: fit-content;">
+		<div class="modal-content" style="width: 820px;">
+			<div class="modal-header">
+				<h5 class="modal-title" style="margin: auto;" id="exampleModalLongTitle">{{nameOfCell}}</h5>
+			</div>
+				<table>
+					<tr style="background-color: #ff8000; color: white;">
+						<td style="padding-left: 10px;">No.</td>
+						<td>Staff ID</td>
+						<td>Staff Name</td>
+						<td>LOB</td>
+						<td>Position</td>
+						<td>Potential</td>
+						<td style="padding-right: 10px;">Performance</td>
+							
+					</tr>
+					<tr *ngFor="let item of empCellData">
+						<td style="padding-left: 20px;">{{item.num}}</td>
+						<td>{{item.staff_no}}</td>
+						<td>{{item.name}}</td>
+						<td>{{item.lob_desc}}</td>
+						<td>{{item.empsgroup}}</td>
+						<td>{{item.potential}}</td>
+						<td style="padding-right: 20px;">{{item.performance}}</td>	
+					</tr>								
+				</table>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+

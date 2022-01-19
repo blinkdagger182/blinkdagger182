@@ -1,0 +1,126 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.13/semantic.min.css">
+<div class="m-subheader">
+    <div class="d-flex align-items-center">
+        <div class="mr-auto">
+            <h3 class="m-subheader__title m-subheader__title--separator">
+                {{title1}}
+            </h3>
+            <ul class="m-subheader__breadcrumbs m-nav m-nav--inline">
+                <li class="m-nav__item m-nav__item--home">
+                    <a routerLink="/admin/index" class="m-nav__link m-nav__link--icon">
+                        <i class="m-nav__link-icon la la-home"></i>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+<!-- END: Subheader -->
+
+<div class="m-content">
+    <div class="row">
+        <!-- begin::Page loader -->
+        <div class="col-lg-12 centred my-auto">
+            <ng-template #alertError></ng-template>
+        </div>
+        <notifier-container></notifier-container>
+        <div class="col-lg-12 centred my-auto" *ngIf="loading">
+            <div class="m-section__content">
+                <div class="m-demo" data-code-preview="true" data-code-html="true" data-code-js="false">
+                    <div class="m-demo__preview">
+                        <div class="m-stack m-stack--ver m-stack--general m-stack--demo">
+
+                            <div class="m-stack__item m-stack__item--center m-stack__item--middle">
+                                <span>
+                                    Loading data. Please wait...
+                                </span>
+                                <span>
+                                    <div class="m-loader m-loader--lg m-loader--success" style="width: 30px; display: inline-block;"></div>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- end::Page loader -->
+
+        <div class="col-lg-12" *ngIf="!loading">
+            <div class="m-portlet m-portlet--rounded">
+                <div class="m-portlet__head m--bg-focus" style="background: #FF5A00!important">
+                    <div class="m-portlet__head-caption">
+                        <div class="m-portlet__head-title">
+                            <h3 class="m-portlet__head-text  m--font-inverse-primary">
+                                {{title2}}
+                                <small>
+                                    <!--portlet sub title-->
+                                </small>
+                            </h3>
+                        </div>
+                    </div>
+                </div>
+                <div class="m-portlet__body">
+                    <div class="m-section">
+                        <div class="row">
+                            <div class="col-12">
+                                <ng-template #alertError></ng-template>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div align="center" class="m-portlet__body">
+                    <div class="col-md-8">
+                        <table class="table table-bordered" style="font-weight: 400;" overflow="auto">
+                            <tbody>
+                                 <tr>
+                                    <th scope="row">Talent Potential Assessment Result:</th>
+                                    <td><label class=" col-form-label label-data"
+                                        style="font-size: 1.0rem;;background-color: white; color: #FF7F24; border-color:#FF7F24;">
+                                        <button type="button" class="btn m-btn--pill btn-outline-warning" (click)="downloadTPAR()" [disabled]="downloadAsess">                                           
+                                            <span class="fa fa-download"> Download</span>
+                                        </button>				
+                                        </label>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">Talent Potential Assessment Tracking: </th>
+                                    <td><label class=" col-form-label label-data"
+                                        style="font-size: 1.0rem;;background-color: white; color: #FF7F24; border-color:#FF7F24;">
+                                        <button type="button" class="btn m-btn--pill btn-outline-warning" (click)="downloadTPATrack()" [disabled]="downloadTrack">
+                                           
+                                            <span class="fa fa-download"> Download</span>
+                                        </button>				
+                                        </label>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">Talent Calibration Tracking:</th>
+                                    <td><label class=" col-form-label label-data"
+                                        style="font-size: 1.0rem;;background-color: white; color: #FF7F24; border-color:#FF7F24;">
+                                        <button type="button" class="btn m-btn--pill btn-outline-warning"
+                                            (click)="downloadTCalTrack()" [disabled]="downloadCal">
+                                            <span class="fa fa-download"> Download</span>
+                                        </button>				
+                                        </label>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">Employees not eliglible for Talent Classification:</th>
+                                    <td><label class=" col-form-label label-data"
+                                        style="font-size: 1.0rem;;background-color: white; color: #FF7F24; border-color:#FF7F24;">
+                                        <button type="button" class="btn m-btn--pill btn-outline-warning"
+                                            (click)="downloadEmpNotEligible()" [disabled]="downloadEmpData">
+                                            <span class="fa fa-download"> Download</span>
+                                        </button>				
+                                        </label>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>     
+                    </div>
+                </div>
+            </div>
+        </div>
+   </div>
+</div>
+

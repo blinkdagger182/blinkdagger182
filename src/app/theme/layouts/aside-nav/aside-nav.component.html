@@ -1,0 +1,685 @@
+<link href='https://fonts.googleapis.com/css?family=Lato:400,700' rel='stylesheet' type='text/css'>
+<!-- BEGIN: Left Aside -->
+<button class="m-aside-left-close  m-aside-left-close--skin-dark" id="m_aside_left_close_btn" appunwraptag="">
+    <i class="la la-close"></i>
+</button>
+<div id="m_aside_left" class="m-grid__item	m-aside-left  m-aside-left--skin-dark ghcm-left-panel" data-menu-scrollable="true" style="height:100%; overflow-y: scroll"> <!-- *ngIf="(isAdmin || isRPM)" -->
+    <!-- BEGIN: Aside Menu -->
+    <div id="m_ver_menu" class="m-aside-menu m-aside-menu--skin-dark m-aside-menu--submenu-skin-dark" m-menu-vertical="1"
+        m-menu-scrollable="0" m-menu-dropdown-timeout="500">
+        <ul class="m-menu__nav  m-menu__nav--dropdown-submenu-arrow" [hidden]="!(isAdmin || isEngage || isRPM)">
+
+            <li class="m-menu__item" routerLinkActive="m-menu__item--active" *ngIf="!hideMainDash"
+                routerLinkActiveOptions="{ exact: true }" aria-haspopup="true">
+                <a routerLink="{{rIndex}}" class="m-menu__link">
+                    <!-- <i class="m-menu__link-icon flaticon-line-graph"></i>
+                    <span class="m-menu__link-title">
+                        <span class="m-menu__link-wrap"> -->
+                            <img height=30 width=30 src="../../../../../../assets/blank/images/icon/SBar5.png" >
+                            <span class="m-menu__link-text" style="padding-left:40px">
+                                {{jDashTtl}} 
+                            </span>
+                        <!-- </span>
+                    </span> -->
+                </a>
+            </li>
+            <li class="m-menu__item" *ngIf="isEngage&&enAdmin && !env_prod" routerLinkActive="m-menu__item--active"
+                routerLinkActiveOptions="{ exact: true }" aria-haspopup="true">
+                <a routerLink="{{rIndexHappy}}" class="m-menu__link">
+                    <img height=30 width=30 src="../../../../../../assets/blank/images/icon/SBar20.png" >
+                    <span class="m-menu__link-text" style="padding-left:40px">
+                        {{jDashHappTtl}} 
+                    </span>
+                </a>
+            </li>
+            <!--Start - Only for Engagement-->
+            <!--Start - Happy meter - Engagement-->
+            <li class="m-menu__section" *ngIf="isEngage">
+                <h4 class="m-menu__section-text">
+                    Happy Meter 
+                </h4>
+            </li>
+            <li class="m-menu__item" *ngIf="isEngage" routerLinkActive="m-menu__item--active"
+                routerLinkActiveOptions="{ exact: true }" aria-haspopup="true">
+                <a routerLink="{{track}}" class="m-menu__link"> 
+                    <!-- <i class="m-menu__link-icon flaticon-statistics"></i> -->
+                    <img height=30 width=30 src="../../../../../../assets/blank/images/icon/SBar21.png" >
+                    <span class="m-menu__link-text" style="padding-left:40px">
+                        Tracking 
+                    </span>
+                </a>
+            </li>
+
+            <li class="m-menu__item" *ngIf="isEngage" routerLinkActive="m-menu__item--active"
+                routerLinkActiveOptions="{ exact: true }" aria-haspopup="true">
+                <a routerLink="{{enBroadcast}}" class="m-menu__link">
+                    <!-- <i class="m-menu__link-icon la la-bullhorn" style="font-size: 1.6rem !important"></i> -->
+                    <img height=30 width=30 src="../../../../../../assets/blank/images/icon/SBar22.png" >
+                    <span class="m-menu__link-text" style="padding-left:40px">
+                        Broadcast 
+                    </span>
+                </a>
+            </li>
+            <!--End - Happy Meter-->
+
+            <!--Start - Settings-->
+            <li class="m-menu__section" *ngIf="isEngage&&enAdmin">
+                <h4 class="m-menu__section-text">
+                    Settings
+                </h4>
+            </li>
+            <li class="m-menu__item" *ngIf="isEngage&&enAdmin" routerLinkActive="m-menu__item--active"
+                routerLinkActiveOptions="{ exact: true }" aria-haspopup="true">
+                <a routerLink="{{user_mngt}}" class="m-menu__link">
+                    <img height=30 width=30 src="../../../../../../assets/blank/images/icon/SBar3.png" >
+                    <span class="m-menu__link-text" style="padding-left:40px">
+                        User Management
+                    </span>
+                </a>
+            </li>
+
+            <!--End - Settings-->
+            <!--End - Only for Engagement-->
+
+            <!-- Begin Framework -->
+            <li class="m-menu__section" *ngIf="jobProfShow && !isEngage">
+                <h4 class="m-menu__section-text" style="border-top: 1px solid darkgrey;">{{jProfHeader}}
+                </h4>
+            </li>
+            <li class="m-menu__item" *ngIf="jobProfShow && !isEngage" routerLinkActive="m-menu__item--active"
+                routerLinkActiveOptions="{ exact: true }" aria-haspopup="true">
+                <a routerLink="{{rProf}}" class="m-menu__link">
+                    <!-- <i class="m-menu__link-icon flaticon-file"></i> -->
+                    <img height=30 width=30 src="../../../../../../assets/blank/images/icon/SBar8.png" >
+                    <span class="m-menu__link-text" style="padding-left:40px">
+                        {{jProfTtl}}
+                    </span>
+                </a>
+            </li>
+
+            <li class="m-menu__item" *ngIf="searchShow && !isEngage" routerLinkActive="m-menu__item--active"
+            routerLinkActiveOptions="{ exact: true }" aria-haspopup="true">
+            <a routerLink="{{rTalentSearch}}" class="m-menu__link">
+                <!-- <i class="m-menu__link-icon flaticon-search-1"></i> -->
+                <img height=30 width=30 src="../../../../../../assets/blank/images/icon/SBar7.png" >
+                <span class="m-menu__link-text" style="padding-left:40px">
+                        {{searchTalentNew}}
+                </span>
+            </a>
+            </li>
+            <!-- End Framework -->
+
+			<!-- Begin MAPSNE -->
+            <li class="m-menu__section" *ngIf="!hideMainDash && showMapsNE">
+                <h4 class="m-menu__section-text" style="border-top: 1px solid darkgrey;">{{mapsneHeader}}
+                </h4>
+            </li>
+
+            <li class="m-menu__item" routerLinkActive="m-menu__item--active" *ngIf="showMapsNE"
+                routerLinkActiveOptions="{ exact: true }" aria-haspopup="true">
+                <a routerLink="{{rIndexMapsAdmLnk}}" class="m-menu__link">
+                    <!-- <i class="m-menu__link-icon flaticon-line-graph"></i>
+                    <span class="m-menu__link-title">
+                        <span class="m-menu__link-wrap"> -->
+                            <img height=30 width=30 src="../../../../../../assets/blank/images/icon/SBar5.png" >
+                            <span class="m-menu__link-text" style="padding-left:40px">
+                                {{jDashTtl}} 
+                            </span>
+                        <!-- </span>
+                    </span> -->
+                </a>
+            </li>
+
+            <li class="m-menu__item" *ngIf="showMapsNE && isRPM" routerLinkActive="m-menu__item--active"
+            routerLinkActiveOptions="{ exact: true }" aria-haspopup="true">
+            <a routerLink="{{rMapsNESessionAdmLnk}}" class="m-menu__link">
+                <!-- <i class="m-menu__link-icon flaticon-search-1"></i> -->
+                <img height=30 width=30 src="../../../../../../assets/blank/images/icon/SBar7.png" >
+                <span class="m-menu__link-text" style="padding-left:40px">
+                        {{mapsNESession}}
+                </span>
+            </a>
+            </li>
+            
+            <li class="m-menu__item" *ngIf="showMapsNE" routerLinkActive="m-menu__item--active"
+            routerLinkActiveOptions="{ exact: true }" aria-haspopup="true">
+            <a routerLink="{{rMapsNETrackingAdmLnk}}" class="m-menu__link">
+                <!-- <i class="m-menu__link-icon flaticon-search-1"></i> -->
+                <img height=30 width=30 src="../../../../../../assets/blank/images/icon/SBar7.png" >
+                <span class="m-menu__link-text" style="padding-left:40px">
+                        {{mapsNETracking}}
+                </span>
+            </a>
+            </li>
+            <!-- End MAPSNE -->
+
+
+			<!-- Begin MAPSNE -->
+            <li class="m-menu__section" *ngIf="showEVL || showDocEVL">
+                <h4 class="m-menu__section-text" style="border-top: 1px solid darkgrey;">{{eVLHeader}}
+                </h4>
+            </li>
+            
+            <li class="m-menu__item" *ngIf="showEVL" routerLinkActive="m-menu__item--active"
+            routerLinkActiveOptions="{ exact: true }" aria-haspopup="true">
+            <a routerLink="{{rEVLTrackingAdmLnk}}" class="m-menu__link">
+                <!-- <i class="m-menu__link-icon flaticon-search-1"></i> -->
+                <img height=30 width=30 src="../../../../../../assets/blank/images/icon/SBar7.png" >
+                <span class="m-menu__link-text" style="padding-left:40px">
+                        {{eVLTracking}}
+                </span>
+            </a>
+            </li>
+
+            <li class="m-menu__item" *ngIf="showDocEVL" routerLinkActive="m-menu__item--active"
+            routerLinkActiveOptions="{ exact: true }" aria-haspopup="true">
+            <a routerLink="{{rEVLDocEndAdmLnk}}" class="m-menu__link">
+                <!-- <i class="m-menu__link-icon flaticon-search-1"></i> -->
+                <img height=30 width=30 src="../../../../../../assets/blank/images/icon/SBar7.png" >
+                <span class="m-menu__link-text" style="padding-left:40px">
+                        {{eVLDocEnd}}
+                </span>
+            </a>
+            </li>
+
+            <!-- End MAPSNE -->
+
+
+            <!-- Begin Advertisement -->
+            <li class="m-menu__section" *ngIf="jobAdvShow && !isEngage">
+                <h4 class="m-menu__section-text" style="border-top: 1px solid darkgrey;">
+                    {{jAdvTtl}}
+                </h4>
+            </li>
+            <li class="m-menu__item" *ngIf="jAdvNewShow && !isEngage" routerLinkActive="m-menu__item--active"
+                routerLinkActiveOptions="{ exact: true }" aria-haspopup="true">
+                <a routerLink="{{rAdvProd}}" class="m-menu__link">
+                    <img height=30 width=30 src="../../../../../../assets/blank/images/icon/SBar11.png" >
+                    <span class="m-menu__link-text" style="padding-left:40px">
+                        {{jAdvNew}}
+                    </span>
+                </a>
+            </li>
+            <li class="m-menu__item" *ngIf="jAdvNewShow && !isEngage" routerLinkActive="m-menu__item--active"
+                routerLinkActiveOptions="{ exact: true }" aria-haspopup="true">
+                <a routerLink="{{rAdvCareerProd}}" class="m-menu__link">
+                    <!-- <i class="m-menu__link-icon flaticon-file-1"></i> -->
+                    <img height=30 width=30 src="../../../../../../assets/blank/images/icon/SBar4.png" >
+                    <span class="m-menu__link-text" style="padding-left:40px">
+                        {{jCareerAdvNew}}
+                    </span>
+                </a>
+            </li>
+
+            <li class="m-menu__item" *ngIf="nePromoShow && !isEngage" routerLinkActive="m-menu__item--active"
+                routerLinkActiveOptions="{ exact: true }" aria-haspopup="true">
+                <a routerLink="{{rNePromo}}" class="m-menu__link">
+                    <!-- <i class="m-menu__link-icon fa fa-bolt"></i> -->
+                    <img height=30 width=30 src="../../../../../../assets/blank/images/icon/SBar2.png" >
+                    <span class="m-menu__link-text" style="padding-left:40px">
+                        {{nePromo}}
+                    </span>
+                </a>
+            </li>
+
+            <li class="m-menu__item" *ngIf="jAdvPendShow && !isEngage" routerLinkActive="m-menu__item--active"
+                routerLinkActiveOptions="{ exact: true }" aria-haspopup="true">
+                <a routerLink="{{rAdvPend}}" class="m-menu__link">
+                    <img height=30 width=30 src="../../../../../../assets/blank/images/icon/SBar12.png" >
+                    <span class="m-menu__link-text" style="padding-left:40px">
+                        {{jAdvPend}}
+                    </span>
+                    <!-- <span class="m-menu__link-badge">
+                            <span class="m-badge m-badge--danger">
+                                {{ttlAppReq}}
+                            </span>
+                        </span> -->
+                </a>
+            </li>
+    
+            <!-- End Advertisement -->
+
+            <!--IDP-->
+            <li class="m-menu__section" *ngIf="showIDPTrack && !isEngage">
+                <h4 class="m-menu__section-text" style="border-top: 1px solid darkgrey;">
+                    IDP
+                </h4>
+            </li>
+            <li class="m-menu__item" *ngIf="showIDPBatch && !isEngage" routerLinkActive="m-menu__item--active"
+                routerLinkActiveOptions="{ exact: true }" aria-haspopup="true">
+                <a routerLink="{{rIDP}}" class="m-menu__link">
+                    <!-- <i class="m-menu__link-icon flaticon-search-1"></i> -->
+                    <img height=30 width=30 src="../../../../../../assets/blank/images/icon/SBar7.png" >
+                    <span class="m-menu__link-text" style="padding-left:40px">
+                        {{idpBatches}}
+                    </span>
+                </a>
+            </li>
+            <li class="m-menu__item" *ngIf="showIDPTrack && !isEngage" routerLinkActive="m-menu__item--active"
+                routerLinkActiveOptions="{ exact: true }" aria-haspopup="true">
+                <a routerLink="{{rsearchIDP}}" class="m-menu__link">
+                    <img height=30 width=30 src="../../../../../../assets/blank/images/icon/SBar8.png" >
+                    <span class="m-menu__link-text" style="padding-left:40px">
+                        {{IDP}}<!--IDP-->
+                    </span>
+                </a>
+            </li>
+
+             <!--TC-->
+            <li class="m-menu__section" *ngIf="showTC && !isEngage">
+                <h4 class="m-menu__section-text" style="border-top: 1px solid darkgrey;">
+                    {{tc}}
+                </h4>
+            </li>
+            <li class="m-menu__item" *ngIf="showTC && !isEngage && showTCMGMT" routerLinkActive="m-menu__item--active"
+            routerLinkActiveOptions="{ exact: true }" aria-haspopup="true">
+            <a routerLink="{{rTCSession}}" class="m-menu__link">
+                <!-- <i class="m-menu__link-icon flaticon-search-1"></i> -->
+                <img height=30 width=30 src="../../../../../../assets/blank/images/icon/SBar7.png" >
+                <span class="m-menu__link-text" style="padding-left:40px">
+                    {{tcsession}}
+                </span>
+            </a>
+            </li>
+            <li class="m-menu__item" *ngIf="showTC && !isEngage " routerLinkActive="m-menu__item--active"
+                    routerLinkActiveOptions="{ exact: true }" aria-haspopup="true">
+                <a routerLink="{{rcalibration}}" class="m-menu__link">
+                    <img height=30 width=30 src="../../../../../../assets/blank/images/icon/SBar7.png" >
+                    <span class="m-menu__link-text" style="padding-left:40px">
+                        {{calibration}}
+                    </span>
+                </a>
+            </li>
+           
+            <li class="m-menu__item" *ngIf="showTC && !isEngage && showTCMGMT" routerLinkActive="m-menu__item--active" routerLinkActiveOptions="{ exact: true }"  aria-haspopup="true" >
+                <a  routerLink="{{rTCques}}" class="m-menu__link">
+                    <!-- <i class="m-menu__link-icon fa fa-question"></i>
+                    <span class="m-menu__link-text"> -->
+                    <img height=28 width=28 src="../../../../../../assets/blank/images/icon/SBar8.png" >
+                    <span class="m-menu__link-text" style="padding-left:40px">
+                        {{tcques}}
+                    </span>
+                </a>
+            </li>
+            <!-- <li class="m-menu__item" *ngIf="showTC && !isEngage && !env_prod" routerLinkActive="m-menu__item--active"
+            routerLinkActiveOptions="{ exact: true }" aria-haspopup="true">
+            <a routerLink="{{rtcm}}" class="m-menu__link">
+                <img height=30 width=30 src="../../../../../../assets/blank/images/icon/SBar7.png" >
+                <span class="m-menu__link-text" style="padding-left:40px">
+                    {{tcm}}
+                </span>
+            </a>
+            </li> -->
+            <li class="m-menu__item" *ngIf="showTC && !isEngage && showTCMGMT" routerLinkActive="m-menu__item--active"
+            routerLinkActiveOptions="{ exact: true }" aria-haspopup="true">
+            <a routerLink="{{reportTc}}" class="m-menu__link">
+                <img height=30 width=30 src="../../../../../../assets/blank/images/icon/SBar7.png" >
+                <span class="m-menu__link-text" style="padding-left:40px">
+                    {{report}}
+                </span>
+            </a>
+            </li>
+
+            <!--SP-->
+            <li class="m-menu__section" *ngIf="showSP && !isEngage">
+                <h4 class="m-menu__section-text" style="border-top: 1px solid darkgrey;">
+                    {{sp}}
+                </h4>
+            </li>
+            <li class="m-menu__item" *ngIf="showSPS && !isEngage" routerLinkActive="m-menu__item--active"
+                    routerLinkActiveOptions="{ exact: true }" aria-haspopup="true">
+                <a routerLink="{{rSPSession}}" class="m-menu__link">
+                    <!-- <i class="m-menu__link-icon flaticon-search-1"></i> -->
+                    <img height=30 width=30 src="../../../../../../assets/blank/images/icon/SBar7.png" >
+                        <span class="m-menu__link-text" style="padding-left:40px">
+                            {{spsession}}
+                        </span>
+                </a>
+            </li>
+            <li class="m-menu__item" *ngIf="showSP && !isEngage" routerLinkActive="m-menu__item--active"
+                    routerLinkActiveOptions="{ exact: true }" aria-haspopup="true">
+                <a routerLink="{{rSPdashboard}}" class="m-menu__link">
+                    <!-- <i class="m-menu__link-icon flaticon-search-1"></i> -->
+                    <img height=30 width=30 src="../../../../../../assets/blank/images/icon/SBar7.png" >
+                        <span class="m-menu__link-text" style="padding-left:40px">
+                            {{spdashboard}}
+                        </span>
+                </a>
+            </li>
+            <li class="m-menu__item" *ngIf="showSP && !isEngage" routerLinkActive="m-menu__item--active"
+                    routerLinkActiveOptions="{ exact: true }" aria-haspopup="true">
+                <a routerLink="{{rSPtracking}}" class="m-menu__link">
+                    <!-- <i class="m-menu__link-icon flaticon-search-1"></i> -->
+                    <img height=30 width=30 src="../../../../../../assets/blank/images/icon/SBar8.png" >
+                        <span class="m-menu__link-text" style="padding-left:40px">
+                            {{sptracking}}
+                        </span>
+                </a>
+            </li>
+            <li class="m-menu__item" *ngIf="showSP && !isEngage" routerLinkActive="m-menu__item--active"
+                    routerLinkActiveOptions="{ exact: true }" aria-haspopup="true">
+                <a routerLink="{{rSPreport}}" class="m-menu__link">
+                    <!-- <i class="m-menu__link-icon flaticon-search-1"></i> -->
+                    <img height=30 width=30 src="../../../../../../assets/blank/images/icon/SBar6.png" >
+                        <span class="m-menu__link-text" style="padding-left:40px">
+                            {{spreport}}
+                        </span>
+                </a>
+            </li>
+
+            <!--Recruitment-->
+            <li class="m-menu__section" *ngIf="showRecrtmt">
+                <h4 class="m-menu__section-text" style="border-top: 1px solid darkgrey;">
+                    {{recruitmt}}
+                </h4>
+            </li>
+            <li class="m-menu__item" *ngIf="showRecrtmt" routerLinkActive="m-menu__item--active"
+                routerLinkActiveOptions="{ exact: true }" aria-haspopup="true">
+                <a routerLink="{{rsprecruitmt}}" class="m-menu__link">
+                    <!-- <i class="m-menu__link-icon flaticon-search-1"></i> -->
+                    <img height=30 width=30 src="../../../../../../assets/blank/images/icon/SBar7.png" >
+                    <span class="m-menu__link-text" style="padding-left:40px">
+                        {{sprecruitmt}}
+                    </span>
+                </a>
+            </li>
+
+            <li class="m-menu__section" *ngIf="ivSesShow && !isEngage">
+                <h4 class="m-menu__section-text" style="border-top: 1px solid darkgrey;">
+                    {{ivTtl}}
+                </h4>
+            </li>            
+            
+            <li class="m-menu__item" *ngIf="ivSessionShow && !isEngage" routerLinkActive="m-menu__item--active"
+            routerLinkActiveOptions="{ exact: true }" aria-haspopup="true">
+            <a routerLink="{{rIvS}}" class="m-menu__link">
+                <img height=35 width=35 src="../../../../../../assets/blank/images/icon/SBar9.png" >
+                <span class="m-menu__link-text ghcmtest" style="padding-left:40px">
+                    {{ivSession}}
+                </span>
+            </a>
+            </li>
+            <li class="m-menu__item" *ngIf="ivSessionMgmtShow && !isEngage" routerLinkActive="m-menu__item--active"
+            routerLinkActiveOptions="{ exact: true }" aria-haspopup="true">
+            <a routerLink="{{rIvSM}}" class="m-menu__link">
+                <img height=35 width=35 src="../../../../../../assets/blank/images/icon/SBar8.png" >
+                <span class="m-menu__link-text ghcmtest" style="padding-left:40px">
+                    {{ivSessionMgmt}}
+                </span>
+            </a>
+            </li>
+            <li class="m-menu__item" *ngIf="ivPanelShow && !isEngage" routerLinkActive="m-menu__item--active" routerLinkActiveOptions="{ exact: true }"
+            aria-haspopup="true">
+                <a routerLink="{{rIvPanel}}" class="m-menu__link">
+                    <img height=35 width=35 src="../../../../../../assets/blank/images/icon/SBar10.png" >
+                        <span class="m-menu__link-text ghcmtest" style="padding-left:40px">
+                            {{ivPanel}}
+                        </span>
+                </a>
+            </li> 
+            <li class="m-menu__item" *ngIf="ivRepShow && !isEngage" routerLinkActive="m-menu__item--active"
+            routerLinkActiveOptions="{ exact: true }" aria-haspopup="true">
+            <a routerLink="{{rIvReport}}" class="m-menu__link">
+                <img height=35 width=35 src="../../../../../../assets/blank/images/icon/SBar9.png" >
+                <span class="m-menu__link-text ghcmtest" style="padding-left:40px">
+                    {{ivReport}}
+                </span>
+            </a>
+            </li>
+            <li class="m-menu__item" *ngIf="ivDsShow && !isEngage" routerLinkActive="m-menu__item--active"
+                routerLinkActiveOptions="{ exact: true }" aria-haspopup="true">
+                <a routerLink="{{rIvDash}}" class="m-menu__link">
+                    <img height=35 width=35 src="../../../../../../assets/blank/images/icon/SBar6.png">
+                    <span class="m-menu__link-text ghcmtest" style="padding-left:40px">
+                        {{ivDash}}
+                    </span>
+                </a>
+            </li>
+            <li class="m-menu__section" *ngIf="jAdvTrackShow && !isEngage">
+                <h4 class="m-menu__section-text" style="border-top: 1px solid darkgrey;">
+                    {{trackTtl}}
+                </h4>
+            </li>
+            <li class="m-menu__item" *ngIf="jAdvTrackShow && !isEngage" routerLinkActive="m-menu__item--active"
+                routerLinkActiveOptions="{ exact: true }" aria-haspopup="true">
+                <a routerLink="{{rAdvTrack}}" class="m-menu__link">
+                  <img height=30 width=30 src="../../../../../../assets/blank/images/icon/SBar6.png" >
+                    <span class="m-menu__link-text" style="padding-left:40px">
+                        {{jAdvTrack}}
+                    </span>
+                </a>
+            </li>
+            <li class="m-menu__item" *ngIf="jCareerTMShow && !isEngage" routerLinkActive="m-menu__item--active"
+                routerLinkActiveOptions="{ exact: true }" aria-haspopup="true">
+                <a routerLink="{{rCareer}}" class="m-menu__link">
+                    <img height=30 width=30 src="../../../../../../assets/blank/images/icon/SBar9.png" >
+                    <span class="m-menu__link-text" style="padding-left:40px">
+                        {{careerTM}}
+                    </span>
+                </a>
+            </li>
+            <li class="m-menu__item" *ngIf="jCareerTMShow && !isEngage" routerLinkActive="m-menu__item--active"
+                routerLinkActiveOptions="{ exact: true }" aria-haspopup="true">
+                <a routerLink="{{rInternship}}" class="m-menu__link">
+                    <img height=30 width=30 src="../../../../../../assets/blank/images/icon/SBarIntern.png" >
+                    <span class="m-menu__link-text" style="padding-left:40px">
+                        {{internship}}
+                    </span>
+                </a>
+            </li>
+
+            <li class="m-menu__item" *ngIf="exorShow && !isEngage" routerLinkActive="m-menu__item--active" routerLinkActiveOptions="{ exact: true }"
+                aria-haspopup="true">
+                <a routerLink="{{rExor}}" class="m-menu__link">
+                    <!-- <i class="m-menu__link-icon flaticon-rocket"></i> -->
+                    <img height=30 width=30 src="../../../../../../assets/blank/images/icon/SBar10.png" >
+                    <span class="m-menu__link-text" style="padding-left:40px">
+                        {{exorTitle}}
+                    </span>
+                </a>
+            </li>
+
+            
+
+            <!--VRP-->
+            <li class="m-menu__section" *ngIf="vrpTitleShow && !isEngage">
+                <h4 class="m-menu__section-text" style="border-top: 1px solid darkgrey;">
+                    {{vrpTitle}}
+                </h4>
+            </li>
+
+            <li class="m-menu__item" *ngIf="vrpBatchesShow && !isEngage" routerLinkActive="m-menu__item--active"
+            routerLinkActiveOptions="{ exact: true }" aria-haspopup="true">
+            <a routerLink="{{rVrpBatch}}" class="m-menu__link"> 
+                <img height=30 width=30 src="../../../../../../assets/blank/images/icon/SBar9.png" >
+                <span class="m-menu__link-text" style="padding-left:40px">
+                    {{vrpBatch}}
+                </span>
+            </a>
+            </li>
+
+            <li class="m-menu__item" *ngIf="vrpTrackingShow && !isEngage" routerLinkActive="m-menu__item--active"
+            routerLinkActiveOptions="{ exact: true }" aria-haspopup="true">
+            <a routerLink="{{rVrpTracking}}" class="m-menu__link">
+                <img height=30 width=30 src="../../../../../../assets/blank/images/icon/SBar10.png" >
+                <span class="m-menu__link-text" style="padding-left:40px">
+                    {{vrpTracking}}
+                </span>
+            </a>
+            </li>
+
+            <!--NEWS-->
+            <li class="m-menu__section" *ngIf="newsTitleShow && !isEngage">
+                <h4 class="m-menu__section-text" style="border-top: 1px solid darkgrey;">
+                    {{newsTitle}}
+                </h4>
+            </li>
+
+            <li class="m-menu__item" *ngIf="newsMainShow && !isEngage" routerLinkActive="m-menu__item--active"
+            routerLinkActiveOptions="{ exact: true }" aria-haspopup="true">
+            <a routerLink="{{rNewsMain}}" class="m-menu__link"> 
+                <img height=30 width=30 src="../../../../../../assets/blank/images/icon/SBar9.png" >
+                <span class="m-menu__link-text" style="padding-left:40px">
+                    {{newsMain}}
+                </span>
+            </a>
+            </li>
+                              
+            <li class="m-menu__item " routerLinkActive="m-menu__item--open" routerLinkActiveOptions="{ exact: true }"  aria-haspopup="true" *ngIf="showSetting&&isAdmin && !isEngage" style="margin-top: 20px;">
+				<a  href="javascript:;" class="m-menu__link m-menu__toggle">
+                
+                <span class="m-menu__link-text" style="border-top: 1px solid darkgrey;">
+						SETTING
+                </span> 
+                <i class="m-menu__link-icon la la-caret-down" style="border-top: 1px solid darkgrey;"></i>
+				</a>
+				<div class="m-menu__submenu">
+					<span class="m-menu__arrow"></span>
+					<ul class="m-menu__subnav">
+						<li class="m-menu__item" routerLinkActive="m-menu__item--active" routerLinkActiveOptions="{ exact: true }"  aria-haspopup="true" >
+							<a  routerLink="/admin/settings/job-user" class="m-menu__link">
+                                <img height=28 width=28 src="../../../../../../assets/blank/images/icon/SBar13.png" >
+                                <span class="m-menu__link-text" style="padding-left:40px">
+									Job User
+								</span>
+							</a>
+						</li>
+						<li class="m-menu__item" routerLinkActive="m-menu__item--active" routerLinkActiveOptions="{ exact: true }"  aria-haspopup="true" >
+							<a  routerLink="/admin/settings/closed-ads" class="m-menu__link">
+                                <img height=28 width=28 src="../../../../../../assets/blank/images/icon/SBar14.png" >
+                                <span class="m-menu__link-text" style="padding-left:40px">
+									Unpublish Ads on ERA App
+								</span>
+							</a>
+                        </li>
+                        <li class="m-menu__item" routerLinkActive="m-menu__item--active" routerLinkActiveOptions="{ exact: true }"  aria-haspopup="true" >
+							<a  routerLink="/admin/settings/closed-ads-career" class="m-menu__link">
+                                <img height=28 width=28 src="../../../../../../assets/blank/images/icon/SBar14.png" >
+                                <span class="m-menu__link-text" style="padding-left:40px">
+									Unpublish Ads on TM@Career 
+								</span>
+							</a>
+						</li>
+						<li class="m-menu__item" routerLinkActive="m-menu__item--active" routerLinkActiveOptions="{ exact: true }"  aria-haspopup="true" >
+							<a  routerLink="/admin/settings/broadcast-message" class="m-menu__link">
+								<!-- <i class="m-menu__link-icon la la-bullhorn"></i>
+								<span class="m-menu__link-text"> -->
+                                        <img height=28 width=28 src="../../../../../../assets/blank/images/icon/SBar15.png" >
+                                        <span class="m-menu__link-text" style="padding-left:40px">
+									Broadcast Message on ERA App
+								</span>
+							</a>
+                        </li>
+                        <li class="m-menu__item" routerLinkActive="m-menu__item--active" routerLinkActiveOptions="{ exact: true }"  aria-haspopup="true" >
+							<a  routerLink="/admin/settings/broadcast-message-career" class="m-menu__link">
+                                        <img height=28 width=28 src="../../../../../../assets/blank/images/icon/SBar15.png" >
+                                        <span class="m-menu__link-text" style="padding-left:40px">
+									Broadcast Message on TM@Career 
+								</span>
+							</a>
+						</li>
+						<li class="m-menu__item" routerLinkActive="m-menu__item--active" routerLinkActiveOptions="{ exact: true }"  aria-haspopup="true" >
+							<a  routerLink="{{adminFeedbacks}}" class="m-menu__link">
+								<!-- <i class="m-menu__link-icon la la-angellist"></i>
+								<span class="m-menu__link-text"> -->
+                                <img height=28 width=28 src="../../../../../../assets/blank/images/icon/SBar16.png" >
+                                <span class="m-menu__link-text" style="padding-left:40px">
+									Ask Us
+								</span>
+							</a>
+                        </li>
+                        <li class="m-menu__item" routerLinkActive="m-menu__item--active" routerLinkActiveOptions="{ exact: true }"  aria-haspopup="true" >
+							<a  routerLink="/admin/settings/verify-skillsets" class="m-menu__link">
+								<!-- <i class="m-menu__link-icon la la-cubes"></i>
+								<span class="m-menu__link-text"> -->
+                                <img height=28 width=28 src="../../../../../../assets/blank/images/icon/SBar18.png" >
+                                <span class="m-menu__link-text" style="padding-left:40px">
+									Verify Skillsets
+								</span>
+							</a>
+                        </li>
+                        <li class="m-menu__item" *ngIf="!env_prod" routerLinkActive="m-menu__item--active" routerLinkActiveOptions="{ exact: true }"  aria-haspopup="true" >
+							<a  routerLink="/admin/settings/simulate-user-account" class="m-menu__link">
+								<!-- <i class="m-menu__link-icon la la-cubes"></i>
+								<span class="m-menu__link-text"> -->
+                                <img height=28 width=28 src="../../../../../../assets/blank/images/icon/SBar_SimulateUA.png" >
+                                <span class="m-menu__link-text" style="padding-left:40px">
+									Simulate User Account
+								</span>
+							</a>
+                        </li>
+                        <li class="m-menu__item" routerLinkActive="m-menu__item--active" routerLinkActiveOptions="{ exact: true }"  aria-haspopup="true" >
+							<a  routerLink="/admin/settings/era-app-versioning" class="m-menu__link">
+								<!-- <i class="m-menu__link-icon la la-umbrella"></i>
+								<span class="m-menu__link-text"> -->
+                                <img height=28 width=28 src="../../../../../../assets/blank/images/icon/SBar17.png" >
+                                <span class="m-menu__link-text" style="padding-left:40px">
+									ERA App Versioning
+								</span>
+							</a>
+                        </li>
+                        <li class="m-menu__item" routerLinkActive="m-menu__item--active" routerLinkActiveOptions="{ exact: true }"  aria-haspopup="true" >
+							<a  routerLink="/admin/settings/faq-management" class="m-menu__link">
+								<!-- <i class="m-menu__link-icon fa fa-question"></i>
+								<span class="m-menu__link-text"> -->
+                                <img height=28 width=28 src="../../../../../../assets/blank/images/icon/SBar19.png" >
+                                <span class="m-menu__link-text" style="padding-left:40px">
+									FAQ Management
+								</span>
+							</a>
+                        </li>
+					</ul>
+				</div>
+            </li>
+
+        </ul>
+
+        <!-- <ul class="m-menu__nav  m-menu__nav--dropdown-submenu-arrow" [hidden]="isAdmin">
+            
+            <li class="m-menu__item  " routerLinkActive="m-menu__item--active" routerLinkActiveOptions="{ exact: true }"
+                aria-haspopup="true">
+                <a routerLink="{{rProfile}}" class="m-menu__link">
+                    <i class="m-menu__link-icon flaticon-profile-1"></i>
+                    <span class="m-menu__link-title">
+                        <span class="m-menu__link-wrap">
+                            <span class="m-menu__link-text">
+                                {{jMyProfile}}
+                            </span>
+                        </span>
+                    </span>
+                </a>
+            </li>  
+            
+            <li class="m-menu__item  " routerLinkActive="m-menu__item--active" routerLinkActiveOptions="{ exact: true }"
+                aria-haspopup="true">
+                <a routerLink="{{rExor}}" class="m-menu__link">
+                    <i class="m-menu__link-icon flaticon-rocket"></i>
+                    <span class="m-menu__link-title">
+                        <span class="m-menu__link-wrap">
+                            <span class="m-menu__link-text">
+                                {{exorTitle}}
+                            </span>
+                        </span>
+                    </span>
+                </a>
+            </li> 
+            
+            <li class="m-menu__item  " routerLinkActive="m-menu__item--active" routerLinkActiveOptions="{ exact: true }"
+                aria-haspopup="true">
+                <a routerLink="{{rJobs}}" class="m-menu__link">
+                    <i class="m-menu__link-icon flaticon-suitcase"></i>
+                    <span class="m-menu__link-title">
+                        <span class="m-menu__link-wrap">
+                            <span class="m-menu__link-text">
+                                {{jobsTitle}}
+                            </span>
+                        </span>
+                    </span>
+                </a>
+            </li> 
+
+        </ul> -->
+    </div>
+    <!-- END: Aside Menu -->
+</div>
+<!-- END: Left Aside -->

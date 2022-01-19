@@ -1,0 +1,941 @@
+<div>
+    <div class="page-bg job-bg">
+        <h2 class="head-sub-title">Jobs</h2>
+    </div>
+    <div class="pg-title-div">
+        <h3 class="pg-title">{{word.review}}</h3>
+    </div>
+</div>
+
+<div class="m-content">
+
+    <div class="d-flex justify-content-center">
+
+        <div class="col-xl-12">
+
+            <div class="col-lg-12" style="padding-bottom: 1rem; padding-left: 0px !important">
+                <button title="Back to User Job" class="btn m-btn--pill btn-outline-info pt-1 pb-1 pr-3 pl-3"
+                    (click)="btnBackClick()">
+                    <div class="m-demo-icon__preview" style="display: flex; align-items: center;">
+                        <img style="width:2rem !important" src="../../../../../../assets/img/user/back_icon.svg">
+                        <span>{{word.back}}</span>
+                    </div>               
+                </button>
+
+                <!--Begin:Language-->
+                <ul class="btn m-topbar__nav m-nav m-nav--inline" style="float: right !important">
+                    <li class="m-nav__item m-topbar__user-profile m-topbar__user-profile--img" data-toggle="modal"
+                        data-target="#langSelect">
+                        <span >	
+                            <span class="m-topbar__username " style="padding-left:10px; padding-right:10px;">
+                                {{word.lang}} :
+                            </span>
+                            <span class="m-topbar__userpic">
+                                <button *ngIf="enChecked" type="button" title="English" data-toggle="m-tooltip" data-placement="top"
+                                    class="btn m-btn--pill m-btn--air btn-outline-info active btn-sm">
+                                    EN
+                                </button>
+                                <button *ngIf="!enChecked" type="button" title="Malay" data-toggle="m-tooltip" data-placement="top"
+                                    class="btn m-btn--pill m-btn--air btn-outline-info active btn-sm">
+                                    MY
+                                </button>
+                                <!-- <img *ngIf="enChecked" src="./assets/img/us.png" title="English" data-toggle="m-tooltip" data-placement="top"
+                                    style="width:28px; height:28px" class="m--img-rounded m--marginless m--img-centered" />
+                                <img *ngIf="!enChecked" src="./assets/img/my.png" title="Malay" data-toggle="m-tooltip" data-placement="top" 
+                                    style="width:28px; height:28px" class="m--img-rounded m--marginless m--img-centered" /> -->
+                            </span>
+                        </span>
+                    </li>
+                </ul>
+                <div class="modal fade" id="langSelect" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" style="display: none;" aria-hidden="true">
+                    <div class="modal-dialog msg-dialog modal-dialog-centered" role="document" style="max-width: 235px !important; margin: auto !important">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 style="text-align: center">{{word.lang}}</h5>
+                                <button type="button" id="lang_close" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">×</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="m-dropdown__content" >
+                                    <label class="lang-radio m-radio m-radio--solid m-radio--success" style="font-size: 16px; width: 100%">
+                                        <input type="radio" #en name="lang" value="en" [checked]="enChecked" (change)="langChange(en)"> 
+                                        &nbsp;&nbsp; English
+                                        <span style="width:23px; height:23px"></span>
+                                    </label>
+                                    <br>
+                                    <label class="lang-radio m-radio m-radio--solid m-radio--success" style="font-size: 16px; width: 100%">
+                                        <input type="radio" #my name="lang" value="my" [checked]="!enChecked" (change)="langChange(my)"> 
+                                        &nbsp;&nbsp; Malay 
+                                        <span style="width:23px; height:23px"></span>
+                                    </label>
+                                </div>
+                            </div>    
+                        </div>
+                    </div>
+                </div>
+                <!--End:Language-->
+
+            </div>
+
+            <div class="centred my-auto" *ngIf="loading">
+                <job-loading></job-loading>
+            </div>
+
+            <div class="m-portlet" *ngIf="!loading" > 
+                <div class="m-portlet__head">
+                    <div class="m-portlet__head-caption">
+                        <div class="m-portlet__head-title">
+                            <h2 class="m-portlet__head-text" style="font-size: 24px">
+                                {{word.review}}
+                            </h2>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="m-portlet__body">
+                    <div class="tab-content">
+                        <div class="tab-pane active" >
+
+                            <div  class="m-portlet m-portlet--full-height" *ngFor="let rev of pendingReview; let i=index">
+                                <div class="job-portlet m-portlet__body">
+                                    <div class="m-widget4">
+                                        <div class="m-widget4__item" style="width: 100% !important">
+                                            <div class="job-details rev_img_widget m-widget4__img m-widget4__img--pic">
+                                                <img class="rev_img" src="{{rev.lob_img}}">
+                                            </div>
+                                            <div class="rev_info m-widget4__info">
+                                                <div class="job-details">
+                                                    <span class="rev_title m-widget4__title">
+                                                            {{rev.job_title}}
+                                                    </span> <br>
+                                                    <span class="rev_title_sub m-widget4__sub">
+                                                            {{rev.lob}}
+                                                    </span><br>
+                                                    <span class="rev_title_sub m-widget4__sub">
+                                                        {{rev.location}}
+                                                    </span><br><br>
+                                                    <span class="rev_close_date m-widget4__sub">
+                                                            {{word.closeDt}} : {{rev.close | date:'dd / MM / yyyy'}}
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+                                        <div class="m-accordion m-accordion--bordered" id="m_accordion_1" role="tablist">
+                                            <!-- :start advertisement info -->
+                                            <div class="m-accordion__item" style="border-radius: 15px!important">
+                                                <div class="row">
+                                                    <div class="m-accordion__item-head collapsed" role="tab" id="m_accordion_posi_head" data-toggle="collapse" href="#m_accordion_posi_body" aria-expanded="false" (click)="PosInfoClicked(rev.adv_id)">
+                                                        <span class="m-accordion__item-mode"></span>
+                                                        <span class="m-accordion__item-title m-accordian__item-mode-title" style="vertical-align: baseline!important">
+                                                            <div class="job-details">
+                                                                <span class="rev_title_2 m-widget4__sub">
+                                                                    {{word.posInfo}}
+                                                                </span>
+                                                                <span class="rev_title_3 m-widget4__sub">
+                                                                    {{word.view}}
+                                                                </span>
+                                                            </div>
+                                                        </span>
+                                                    </div>
+                                                </div>
+
+                                                <div class="m-accordion__item-body collapsing" id="m_accordion_posi_body" role="tabpanel" aria-labelledby="m_accordion_posi_head">
+                                                    <div class="m-accordion__item-content">
+                                                        <!-- CONTENT -->
+                                                        <div class="jobInfo_content m-portlet" *ngIf="jDescription?.length > 0">
+                                                            <div class="m-portlet__head">
+                                                                <div class="m-portlet__head-caption">
+                                                                    <div class="m-portlet__head-title">
+                                                                        <h3 class="era-color m-portlet__head-text">
+                                                                            {{word.jDesc}}   
+                                                                        </h3>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="m-portlet__body">
+                                                                <div class="m-section m-section--last" *ngFor = "let desc of jDescription">
+                                                                    <span class="m-section__sub" [innerHTML] = "desc.job_purpose | stringBreak">
+
+                                                                    </span><br>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="jobInfo_content m-portlet" *ngIf="jAoR?.length > 0">
+                                                            <div class="m-portlet__head">
+                                                                <div class="m-portlet__head-caption">
+                                                                    <div class="m-portlet__head-title">
+                                                                        <h3 class="era-color m-portlet__head-text">
+                                                                            {{word.aoR}}   
+                                                                        </h3>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="m-portlet__body">
+                                                                <div class="m-section m-section--last" *ngFor = "let aor of jAoR" >
+                                                                    <span class="m-section__sub">
+                                                                        <i style="font-weight: bold; padding-right:12px;" class="era-color fa fa-angle-double-right"></i>
+                                                                        <span [innerHTML] = "aor.AOR"></span><br>
+                                                                        <span [innerHTML] = "aor.KEY_ACT | stringBreak"></span>
+                                                                    </span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="jobInfo_content m-portlet" *ngIf="jRequire?.length > 0">
+                                                            <div class="m-portlet__head">
+                                                                <div class="m-portlet__head-caption">
+                                                                    <div class="m-portlet__head-title">
+                                                                        <h3 class="era-color m-portlet__head-text">
+                                                                            {{word.jReq}}   
+                                                                        </h3>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="m-portlet__body">
+                                                                <div class="m-section m-section--last" *ngFor = "let req of jRequire" >
+                                                                    <span class="m-section__sub">
+                                                                        <i style="font-weight: bold; padding-right:12px; " class="era-color fa fa-angle-double-right"></i> 
+                                                                            Minimum {{req.YEARS}} years in {{req.AREA}}
+                                                                        <br>
+                                                                    </span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="jobInfo_content m-portlet" *ngIf="jSuccess?.length > 0">
+                                                            <div class="m-portlet__head">
+                                                                <div class="m-portlet__head-caption">
+                                                                    <div class="m-portlet__head-title">
+                                                                        <h3 class="era-color m-portlet__head-text">
+                                                                            {{word.succComp}}   
+                                                                        </h3>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="m-portlet__body">
+                                                                <div class="m-section m-section--last" *ngFor = "let suc of jSuccess" >
+                                                                    <span class="m-section__sub">
+                                                                        <i style="font-weight: bold; padding-right:12px; " class="era-color fa fa-angle-double-right"></i> 
+                                                                            {{suc.SUC_DESC}}<br>
+                                                                            <span style="padding-left:8%">{{suc.SUC_NAME}}</span>
+                                                                        <br>
+                                                                    </span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="jobInfo_content m-portlet" *ngIf="jDigital?.length > 0">
+                                                            <div class="m-portlet__head">
+                                                                <div class="m-portlet__head-caption">
+                                                                    <div class="m-portlet__head-title">
+                                                                        <h3 class="era-color m-portlet__head-text">
+                                                                            {{word.digiComp}}   
+                                                                        </h3>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="m-portlet__body">
+                                                                <span>
+                                                                    <b><span *ngIf="leadLevel; else support">{{word.lead}}</span>
+                                                                        <ng-template #support>{{word.support}}</ng-template>
+                                                                        <span> {{word.following}} :</span>
+                                                                    </b>
+                                                                </span>
+                                                                <br><br>
+                                                                <div style="padding-left:3%; "class="m-section m-section--last" *ngFor = "let digi of jDigital" >
+                                                                    <span class="m-section__sub">
+                                                                        <i style="font-weight: bold; padding-right:12px; " class="era-color fa fa-angle-double-right"></i> 
+                                                                            <b>{{digi.name}}</b><br>
+                                                                            <span [innerHTML]="digi.details | stringBreak"></span>
+                                                                        <br>
+                                                                    </span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="jobInfo_content m-portlet" *ngIf="jFunctional?.length > 0">
+                                                            <div class="m-portlet__head">
+                                                                <div class="m-portlet__head-caption">
+                                                                    <div class="m-portlet__head-title">
+                                                                        <h3 class="era-color m-portlet__head-text">
+                                                                            {{word.funcComp}}   
+                                                                        </h3>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="m-portlet__body">
+                                                                <div class="m-section m-section--last" *ngFor = "let func of jFunctional" >
+                                                                    <span class="m-section__sub">
+                                                                        <i style="font-weight: bold; padding-right:12px; " class="era-color fa fa-angle-double-right"></i> 
+                                                                            {{func.FC_NAME}}<br>
+                                                                            <span style="padding-left:8%">{{func.FC_DEF}}</span>
+                                                                        <br>
+                                                                    </span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="jobInfo_content m-portlet" *ngIf="jTechnical?.length > 0">
+                                                            <div class="m-portlet__head">
+                                                                <div class="m-portlet__head-caption">
+                                                                    <div class="m-portlet__head-title">
+                                                                        <h3 class="era-color m-portlet__head-text">
+                                                                            {{word.techComp}}   
+                                                                        </h3>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="m-portlet__body">
+                                                                <div class="m-section m-section--last" *ngFor = "let tech of jTechnical" >
+                                                                    <span class="m-section__sub">
+                                                                        <i style="font-weight: bold; padding-right:12px; " class="era-color fa fa-angle-double-right"></i> 
+                                                                            {{tech.LEVEL}} level in {{tech.COMP_DEF}} 
+                                                                        <br>
+                                                                    </span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="jobInfo_content m-portlet" *ngIf="jQualification?.length > 0">
+                                                            <div class="m-portlet__head">
+                                                                <div class="m-portlet__head-caption">
+                                                                    <div class="m-portlet__head-title">
+                                                                        <h3 class="era-color m-portlet__head-text">
+                                                                            {{word.qReq}}   
+                                                                        </h3>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="m-portlet__body">
+                                                                <div class="m-section m-section--last" *ngFor = "let qual of jQualification" >
+                                                                    <span class="m-section__sub">
+                                                                        <i style="font-weight: bold; padding-right:12px; " class="era-color fa fa-angle-double-right"></i> 
+                                                                            {{qual.text}} in {{qual.AREA}} ({{qual.SUB_AREA}})
+                                                                        <br>
+                                                                    </span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="jobInfo_content m-portlet" *ngIf = "jProfile?.length > 0">
+                                                            <div class="m-portlet__head">
+                                                                <div class="m-portlet__head-caption">
+                                                                    <div class="m-portlet__head-title">
+                                                                        <h3 class="era-color m-portlet__head-text">
+                                                                            {{word.jDetails}}   
+                                                                        </h3>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="m-portlet__body">
+                                                                <div class="m-section m-section--last" >
+                                                                    <span class="m-section__sub">
+                                                                        <i style="font-weight: bold; padding-right:12px; " 
+                                                                            class="era-color fa fa-angle-double-right"></i> 
+                                                                            <b>{{word.company}} :</b> {{jProfile[0].Company_Desc}}
+                                                                        <br><br>
+                                                                        <i style="font-weight: bold; padding-right:12px; " 
+                                                                            class="era-color fa fa-angle-double-right"></i> 
+                                                                            <b>{{word.division}} :</b> {{jProfile[0].division}}
+                                                                        <br><br>
+                                                                        <i style="font-weight: bold; padding-right:12px; " 
+                                                                            class="era-color fa fa-angle-double-right"></i> 
+                                                                            <b>{{word.region}} :</b> {{jProfile[0].region}}
+                                                                        <br><br>
+                                                                        <i style="font-weight: bold; padding-right:12px; " 
+                                                                            class="era-color fa fa-angle-double-right"></i> 
+                                                                            <b>{{word.band}} :</b> {{jProfile[0].band}}
+                                                                        <br><br>
+                                                                        <i style="font-weight: bold; padding-right:12px; " 
+                                                                            class="era-color fa fa-angle-double-right"></i> 
+                                                                            <b>{{word.employ}} :</b> {{jProfile[0].Employee_group}}
+                                                                        <br><br>
+                                                                        <i style="font-weight: bold; padding-right:12px; " 
+                                                                            class="era-color fa fa-angle-double-right"></i> 
+                                                                            <b>{{word.jobType}} :</b> {{jProfile[0].type_desc}}
+                                                                        <br><br>
+                                                                        <i style="font-weight: bold; padding-right:12px; " 
+                                                                            class="era-color fa fa-angle-double-right"></i> 
+                                                                            <b>{{word.advID}}:</b> {{jProfile[0].id}}
+                                                                        <br><br>
+                                                                    </span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <br>
+                                                        <div style="text-align: center" *ngIf="!isReview">
+                                                            <!-- <button [disabled]="failed" (click)="jobApplyClicked(jProfile[0].id)" class="job_apply_btn btn  m-btn m-btn--custom m-btn--icon m-btn--pill m-btn--air"> -->
+                                                            <button *ngIf="!applied" [disabled]="failed" (click)="openModal()" data-toggle="modal"
+                                                                data-target="#jobApply" data-backdrop="static" data-keyboard="false"
+                                                                class="job_apply_btn btn  m-btn m-btn--custom m-btn--icon m-btn--pill m-btn--air">
+                                                                <span>
+                                                                    <i class="flaticon-paper-plane"></i>
+                                                                    <span>{{word.apply}}</span>
+                                                                </span>
+                                                            </button>
+                                                            <span *ngIf="applied" style="font-size: 1.2rem !important; font-weight: bold; padding: 1rem" 
+                                                                class="m-badge m-badge--metal m-badge--wide">
+                                                                <span *ngIf="appliedStatusID == 9">{{word.status_9}}</span>
+                                                                <span *ngIf="appliedStatusID == 10">{{word.status_10}}</span>
+                                                                <span *ngIf="appliedStatusID == 11">{{word.status_11}}</span>
+                                                                <span *ngIf="appliedStatusID == 12">{{word.status_12}}</span>
+                                                                <span *ngIf="appliedStatusID == 13">{{word.status_13}}</span>
+                                                                <span *ngIf="appliedStatusID == 14">{{word.status_14}}</span>
+                                                            </span>
+                                                        </div>
+                                                        <div class="row mb-5" *ngIf="jobInfoLoading">
+                                                            <div class="col-md-12">
+                                                                <div class="m-widget_content-items">
+                                                                    <div class="m-stack__item m-stack__item--center m-stack__item--middle" style="margin: 2rem;text-align: center;">
+                                                                        <div class="m-loader m-loader--lg m-loader--success" style="width: 30px; display: inline-block;"></div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!-- :end advertisement info -->
+                                        </div>
+
+                                        <div class="m-accordion m-accordion--bordered" id="m_accordion_1" role="tablist">
+                                            <!-- :start advertisement info -->
+                                            <div class="m-accordion__item" style="border-radius: 15px!important">
+                                                <div class="row">
+                                                    <div class="m-accordion__item-head collapsed" role="tab" id="m_accordion_candi_head" data-toggle="collapse" href="#m_accordion_candi_body" aria-expanded="false" (click)="candidInfoClicked(rev.Staff_No)">
+                                                        <span class="m-accordion__item-mode"></span>
+                                                        <span class="m-accordion__item-title m-accordian__item-mode-title" style="vertical-align: baseline!important">
+                                                            <div class="job-details">
+                                                                <span class="rev_title_2 m-widget4__sub">
+                                                                    {{word.candidInfo}}
+                                                                </span>
+                                                                <span class="rev_title_3 m-widget4__sub">
+                                                                    {{word.view}}
+                                                                </span>
+                                                            </div>
+                                                        </span>
+                                                    </div>
+                                                </div>
+
+                                                <div class="m-accordion__item-body collapsing" id="m_accordion_candi_body" role="tabpanel" aria-labelledby="m_accordion_candi_head">
+                                                    <div class="m-accordion__item-content">
+                                                        <!-- CONTENT -->
+                                                        <div class="m-card-user m-card-user--skin-dark" align="center" class="m-portlet__body" *ngIf="userData" >
+                                                            <div class="m-card-user__pic">
+                                                                <img [src]="userImg" onError="this.src='./assets/app/media/img/users/ghcm-user-default.jpg'"
+                                                                    class="m--img-rounded m--marginless" alt="" height="100" width="100"/>
+                                                            </div>
+                                                            <br >
+                                                            <div>                            
+                                                                <span class="font-weight-bold">
+                                                                    {{userData.friendName}}
+                                                                </span>
+                                                            </div>
+                                                            <div>
+                                                                <span style = "color: #0FC2D0">
+                                                                    {{userData.email}}  
+                                                                </span>
+                                                            </div>
+                                                            <div>
+                                                                <span>
+                                                                    {{userData.position}}  
+                                                                </span>
+                                                            </div>
+                                                            <div>
+                                                                <span>
+                                                                    {{userData.RawDetails.company}}  
+                                                                </span>
+                                                            </div>
+                                                            <div>
+                                                                <span style = "color: #0FC2D0">
+                                                                    {{userData.updatedPhone}}  
+                                                                </span>
+                                                            </div>
+                                                            <div>
+                                                                <span>Status: </span>
+                                                                <span *ngIf="userData.isMutualFriend === false && userData.pendingFriendRequest === false && userData.hasSentRequest === false" class="font-weight-bold">Not Following</span>
+                                                                <span *ngIf="userData.isMutualFriend === true && userData.pendingFriendRequest === false" class="font-weight-bold">Following</span>
+                                                                <span *ngIf="userData.isMutualFriend === false && userData.pendingFriendRequest === true" class="font-weight-bold">Pending Approval</span>
+                                                                <span *ngIf="userData.isMutualFriend === false && userData.pendingFriendRequest === false && userData.hasSentRequest === true" class="font-weight-bold">Request Sent</span>
+                                                            </div>
+                                                            <div>
+                                                                <span style="color: blue" (click)="postCircleFriend(userData.friendID)">
+                                                                    {{userData.totalFriendsNum}} in circle
+                                                                </span>
+                                                                <span>
+                                                                    ( {{userData.mutualFriendsNum}} mutuals)
+                                                                </span>
+                                                            </div>
+                                                            <br >
+                                                            <div class="m-widget7__button"> 
+                                                                <div>
+                                                                    <!--Follow-->
+                                                                    <button type="button" *ngIf="userData.isMutualFriend === false && userData.pendingFriendRequest === false && userData.hasSentRequest === false" 
+                                                                        class="btn m-btn--pill m-btn m-btn--custom m-btn--label-brand m-btn--bolder"
+                                                                        style="background-color: #0FC2D0; color: white" (click)="sendRequestProfile(userData.friendID)">
+                                                                        Follow
+                                                                    </button>
+
+                                                                    <!--UnFollow-->
+                                                                    <button type="button" *ngIf="userData.isMutualFriend === true && userData.pendingFriendRequest === false"
+                                                                        class="btn m-btn--pill btn-secondary m-btn m-btn--custom m-btn--label-brand m-btn--bolder" 
+                                                                        style="color:#0FC2D0" data-toggle="modal" data-target="#unFollowModal" >
+                                                                        UnFollow
+                                                                    </button>
+                                                                    <!--UnFollow Modal-->
+                                                                    <div class="modal fade" id="unFollowModal">
+                                                                        <div class="modal-dialog modal-dialog-centered">
+                                                                            <div class="modal-content">
+                                                                                <div class="modal-header">
+                                                                                    <h4 class="modal-title">Unfollow?</h4>
+                                                                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                                                                </div>
+                                                                                <div class="modal-body">
+                                                                                    <p>Are you sure you want to unfollow {{userData.friendName}}?</p>
+                                                                                </div>
+                                                                                <div class="modal-footer">
+                                                                                    <button type="button" id="rejectNo" class="btn btn-default" data-dismiss="modal">NO</button>
+                                                                                    <button type="button" class="btn btn-default" (click)="selectReject(userData.friendID)">YES</button>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <!--Reject-->
+                                                                    <button type="button" *ngIf="userData.isMutualFriend === false && userData.pendingFriendRequest === true" 
+                                                                        class="btn m-btn--pill btn-secondary m-btn m-btn--custom m-btn--label-brand m-btn--bolder" 
+                                                                        style="color:#0FC2D0" data-toggle="modal" data-target="#rejectModalProfile">
+                                                                        Reject
+                                                                    </button>
+                                                                    <!--Reject Modal-->
+                                                                    <div class="modal fade" id="rejectModalProfile" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                                        <div class="modal-dialog modal-dialog-centered" role="document">
+                                                                            <div class="modal-content">
+                                                                                <div class="modal-header">
+                                                                                    <h5 class="modal-title" id="rejectModalProfileLabel">Remove Follow Request?</h5>
+                                                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                                        <span aria-hidden="true">&times;</span>
+                                                                                    </button>
+                                                                                </div>
+                                                                                <div class="modal-body">
+                                                                                    Are you sure you want to cancel your follow request?
+                                                                                </div>
+                                                                                <div class="modal-footer">
+                                                                                    <button type="button" class="btn btn-secondary" id="rejectPendNo" data-dismiss="modal">No</button>
+                                                                                    <button type="button" class="btn btn-primary" (click)="RejectPending(userData.friendID)">Yes</button>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <!--Accept-->
+                                                                    <button type="button" *ngIf="userData.isMutualFriend === false && userData.pendingFriendRequest === true" 
+                                                                        class="btn m-btn--pill m-btn m-btn--custom m-btn--label-brand m-btn--bolder" 
+                                                                        style="background-color: #0FC2D0; color: white" (click)="selectAccept(userData.friendID)">
+                                                                        Accept
+                                                                    </button>
+
+                                                                    <!--Cancel Request-->
+                                                                    <button type="button" *ngIf="userData.isMutualFriend === false && userData.pendingFriendRequest === false && userData.hasSentRequest === true" 
+                                                                        class="btn m-btn--pill btn-secondary m-btn m-btn--custom m-btn--label-brand m-btn--bolder" 
+                                                                        style="color:#0FC2D0" data-toggle="modal" data-target="#cancelReqModal" >
+                                                                        Cancel Request
+                                                                    </button>
+                                                                    <!--Cancel Modal-->
+                                                                    <div class="modal fade" id="cancelReqModal">
+                                                                        <div class="modal-dialog modal-dialog-centered">
+                                                                            <div class="modal-content">
+                                                                                
+                                                                                <div class="modal-header">
+                                                                                    <h4 class="modal-title">Remove Follow Request?</h4>
+                                                                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                                                                </div>
+                                                                                            
+                                                                                <div class="modal-body">
+                                                                                    <p>Are you sure you want to cancel your follow request?</p>
+                                                                                </div>
+                                                                                            
+                                                                                <div class="modal-footer">
+                                                                                    <button type="button" class="btn btn-default" id="cancelReqNo" data-dismiss="modal">NO</button>
+                                                                                    <button type="button" class="btn btn-default" (click)="cancelReqProfile(userData.friendID)">YES </button>
+                                                                                </div>
+                                                                
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="m-portlet__body" *ngIf="careerData">
+                                                                
+                                                                <div class="m-portlet m-portlet--bordered m-portlet--rounded">
+                                                                    <div class="m-portlet__head">
+                                                                        <div class="m-portlet__head-caption">
+                                                                            <div class="m-portlet__head-title">
+                                                                                <h3 class="m-portlet__head-text">
+                                                                                    ABOUT
+                                                                                </h3>
+                                                                            </div>          
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="m-portlet__body">
+                                                                        <table class="table">
+                                                                            <span *ngIf="userData.about_me?.length">{{userData.about_me}}</span>
+                                                                            <span *ngIf="!userData.about_me?.length">Hey there! I am using ERA</span>
+                                                                        </table>    
+                                                                    </div>
+                                                                </div>  
+
+                                                                <div *ngIf="careerData.experience?.length" class="m-portlet m-portlet--bordered m-portlet--rounded">
+                                                                    <div class="m-portlet__head">
+                                                                        <div class="m-portlet__head-caption">
+                                                                            <div class="m-portlet__head-title">
+                                                                                <h3 class="m-portlet__head-text">
+                                                                                    JOB EXPERIENCE
+                                                                                </h3>
+                                                                            </div>          
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="m-portlet__body">
+                                                                        <table class="table">      
+                                                                            <div *ngFor="let jobItem of careerData.experience">
+                                                                                <tr>
+                                                                                    <th><i class="fa fa-circle" style= "color:#0FC2D0"></i></th>
+                                                                                    <th><div class="font-weight-bold">{{jobItem.Post_Desc}}</div>
+                                                                                            <div>{{jobItem.Org_Unit_Desc}}</div>
+                                                                                            <div>   {{jobItem.Start_Date}} - {{jobItem.End_Date}}</div>
+                                                                                        <br>
+                                                                                        <div *ngIf="jobItem.Achievements?.length" style= "color:#0FC2D0">ACHIEVEMENTS:</div>
+                                                                                        <div> {{jobItem.Achievements}} </div>
+                                                                                    </th>
+                                                                                </tr>
+                                                                            </div>
+                                                                        </table>    
+                                                                    </div>
+                                                                </div>
+
+                                                                <div *ngIf="careerData.previous?.length" class="m-portlet m-portlet--bordered m-portlet--rounded">
+                                                                    <div class="m-portlet__head">
+                                                                        <div class="m-portlet__head-caption">
+                                                                            <div class="m-portlet__head-title">
+                                                                                <h3 class="m-portlet__head-text">
+                                                                                    PREVIOUS EMPLOYMENT
+                                                                                </h3>
+                                                                            </div>          
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="m-portlet__body">
+                                                                        <table class="table">
+                                                                            <div *ngFor="let jobPrevItem of careerData.previous">
+                                                                                <tr>
+                                                                                    <th><i class="fa fa-circle" style= "color:#0FC2D0"></i></th>
+                                                                                    <th>
+                                                                                        <div class="font-weight-bold">{{jobPrevItem.Employer}}</div>
+                                                                                        <div>{{jobPrevItem.Position}}</div>
+                                                                                        <div>{{jobPrevItem.Start_Date}}</div>
+                                                                                    </th>
+                                                                                </tr>
+                                                                            </div>
+                                                                        </table>    
+                                                                    </div>
+                                                                </div>
+
+                                                                <div *ngIf="careerData.education?.length" class="m-portlet m-portlet--bordered m-portlet--rounded">
+                                                                    <div class="m-portlet__head">
+                                                                        <div class="m-portlet__head-caption">
+                                                                            <div class="m-portlet__head-title">
+                                                                                <h3 class="m-portlet__head-text">
+                                                                                    EDUCATIONAL BACKGROUND
+                                                                                </h3>
+                                                                            </div>          
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="m-portlet__body">
+                                                                        <table class="table">
+                                                                            <div *ngFor="let eduItem of careerData.education">
+                                                                                <tr>
+                                                                                    <th><i class="fa fa-graduation-cap" style= "color:#0FC2D0"></i></th>
+                                                                                    <th>
+                                                                                        <div class="font-weight-bold">{{eduItem.Qualification_Desc}}</div>
+                                                                                        <div>{{eduItem.Start_Date}}</div>
+                                                                                        <div>{{eduItem.Branch_of_Study}}</div>
+                                                                                        <div>{{eduItem.University}}</div>
+                                                                                    </th>
+                                                                                </tr>
+                                                                            </div>
+                                                                        </table>    
+                                                                    </div>
+                                                                </div>
+
+
+                                                                <div *ngIf="careerData.progCert?.length || careerData.award?.length" 
+                                                                    class="m-portlet m-portlet--bordered m-portlet--rounded">
+                                                                    <div class="m-portlet__head">
+                                                                        <div class="m-portlet__head-caption">
+                                                                            <div class="m-portlet__head-title">
+                                                                                <h3 class="m-portlet__head-text">
+                                                                                    ACCOMPLISHMENTS
+                                                                                </h3>
+                                                                            </div>          
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="m-portlet__body">
+                                                                        <table class="table" *ngIf="careerData.progCert?.length">
+                                                                            <div style= "color:#0FC2D0; font-weight: bold">CERTIFICATIONS</div>
+                                                                            <div *ngFor="let profcerItem of careerData.progCert">
+                                                                                <tr>
+                                                                                    <th><i class="fa fa-certificate" style= "color:#0FC2D0"></i></th>
+                                                                                    <th>
+                                                                                        <div class="font-weight-bold">{{profcerItem.Qualification}}</div>
+                                                                                        <div>{{profcerItem.Start_Date}} - {{profcerItem.End_Date}}</div>
+                                                                                    </th>
+                                                                                </tr>
+                                                                            </div>
+                                                                        </table>    
+
+                                                                        <table class="table"  *ngIf="careerData.award?.length">
+                                                                            <div style= "color:#0FC2D0; font-weight: bold">AWARDS/MERITS</div>
+                                                                            <div *ngFor="let accompItem of careerData.award">
+                                                                                <tr>
+                                                                                    <th><i class="la la-certificate" style= "color:#0FC2D0"></i></th>
+                                                                                    <th>
+                                                                                        
+                                                                                        <div class="font-weight-bold">{{accompItem.Award}}</div>
+                                                                                        <div>{{accompItem.Start_Date}}</div>
+                                                                                    </th>
+                                                                                </tr>
+                                                                            </div>
+                                                                        </table>    
+                                                                    </div>
+                                                                </div>
+
+
+                                                                <div class="m-portlet m-portlet--bordered m-portlet--rounded">
+                                                                    <div class="m-portlet__head">
+                                                                        <div class="m-portlet__head-caption">
+                                                                            <div class="m-portlet__head-title">
+                                                                                <h3 class="m-portlet__head-text">
+                                                                                    SKILLS & ENDORSEMENT
+                                                                                </h3>
+                                                                            </div>          
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="m-portlet__body">
+                                                                        <table class="table">
+                                                                            <tr *ngFor="let skillItem of userData.skills">
+                                                                                <td>
+                                                                                    <div>
+                                                                                        <span style="color: blue">{{skillItem.name}}
+                                                                                            <span style = "color: #0FC2D0">|</span>
+                                                                                            <span style = "color: #0FC2D0">{{skillItem.endorse_point}}</span> 
+                                                                                        </span>
+                                                                                    </div>
+                                                                                </td>
+                                                                            </tr>
+                                                                            <div *ngIf="userData.skills.length == 0">No skill is added yet</div>
+                                                                        </table>
+                                                                    </div>  
+                                                                </div>
+
+                                                                <div class="m-portlet m-portlet--bordered m-portlet--rounded">
+                                                                    <div class="m-portlet__head">
+                                                                        <div class="m-portlet__head-caption">
+                                                                            <div class="m-portlet__head-title">
+                                                                                <h3 class="m-portlet__head-text">
+                                                                                    INTERESTS
+                                                                                </h3>
+                                                                            </div>          
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="m-portlet__body">
+                                                                        <table class="table">
+                                                                            <tr *ngFor="let interestItem of userData.interest">
+                                                                                <td>
+                                                                                    <span>{{interestItem.name}}</span>
+                                                                                </td>
+                                                                            </tr>
+                                                                            <div *ngIf="userData.interest.length == 0">No interest is added yet</div>
+                                                                        </table>    
+                                                                    </div>
+                                                                </div>
+
+                                                                <div>
+                                                                    <div *ngIf= "userData.supervisor?.length" class="m-portlet m-portlet--bordered m-portlet--rounded">
+                                                                        <div class="m-portlet__head">
+                                                                            <div class="m-portlet__head-caption">
+                                                                                <div class="m-portlet__head-title">
+                                                                                    <h3 class="m-portlet__head-text">
+                                                                                        DIRECT SUPERVISOR
+                                                                                    </h3>
+                                                                                </div>          
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="m-portlet__body">
+                                                                            <table class="table">
+                                                                                <tr>
+                                                                                    <td style="width: 2rem">
+                                                                                        <div style="text-align: center">
+                                                                                            <img [src]="superiorImg" onError="this.src='./assets/app/media/img/users/ghcm-user-default.jpg'" 
+                                                                                                class="m--img-rounded m--marginless" alt="" height="70" width="70"/>
+                                                                                        </div>
+                                                                                    </td>
+                                                                                    <td style="padding-top:2rem">
+                                                                                        <div style="font-weight:bold">{{userData.supervisor}}</div>
+                                                                                        <div>{{userData.supervisorPosition}}</div>
+                                                                                    </td>
+                                                                                    <!-- <td>
+                                                                                        <div>
+                                                                                            <button type="button" class="btn btn-light btn-elevate-hover btn-icon">
+                                                                                                <i class="fa fa-chevron-right" style= "color:#0FC2D0" (click)="onSelect(profileSpItem.supervisorID, profileSpItem.supervisor)"></i>
+                                                                                            </button>
+                                                                                        </div>
+                                                                                    </td> -->
+                                                                                </tr>
+                                                                            </table>    
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+
+                                                            </div>
+
+                                                        </div>
+                                                        <div class="row mb-5" *ngIf="jobApplyLoading">
+                                                            <div class="col-md-12">
+                                                                <div class="m-widget_content-items">
+                                                                    <div class="m-stack__item m-stack__item--center m-stack__item--middle" style="margin: 2rem;text-align: center;">
+                                                                        <div class="m-loader m-loader--lg m-loader--success" style="width: 30px; display: inline-block;"></div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!-- :end advertisement info -->
+                                        </div>
+
+
+                                        <!-- <div class="view-info m-widget4__item" (click)="PosInfoClicked(rev.adv_id)" style="width: 100% !important">
+                                            <div class="m-widget4__info">
+                                                <div class="job-details">
+                                                    <span class="rev_title_2 m-widget4__sub">
+                                                        {{word.posInfo}}
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="view-info m-widget4__item" (click)="candidInfoClicked(rev.Staff_No)" style="width: 100% !important">
+                                            <div class="m-widget4__info">
+                                                <div class="job-details">
+                                                    <span class="rev_title_2 m-widget4__sub">
+                                                        {{word.candidInfo}}
+                                                    </span>
+                                                    <span class="rev_title_3 m-widget4__sub">
+                                                        {{word.view}}
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div> -->
+                                        <div *ngIf="rev.daysLeft >= 0" class="m-widget4__item" style="width: 100% !important">
+                                            <div class="m-widget4__info">
+                                                <div class="job-details">
+                                                    <span class="rev_title_2 m-widget4__sub">
+                                                        {{word.dueIn}}
+                                                    </span>
+                                                    <span class="rev_title_3 m-widget4__sub">
+                                                        <span *ngIf="rev.daysLeft > 0" >{{rev.daysLeft}} {{word.day}}<span *ngIf="rev.daysLeft > 1 && enChecked">s</span></span>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div style="text-align: center; padding-bottom: 2rem" *ngIf="!loading">
+                    <button data-toggle="modal" data-target="#actionModal" (click)="actionClicked(0)" data-backdrop="static" data-keyboard="false"
+                        class="decline_btn btn  m-btn m-btn--custom m-btn--icon m-btn--pill m-btn--air">
+                        {{word.decline}}
+                    </button>
+                    <button data-toggle="modal" data-target="#actionModal" (click)="actionClicked(1)" data-backdrop="static" data-keyboard="false"
+                        style="margin-left:10% !important"class="approve_btn btn  m-btn m-btn--custom m-btn--icon m-btn--pill m-btn--air">
+                        {{word.approve}}
+                    </button>
+                </div>
+
+                
+            </div>
+
+            
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="actionModal"  tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" style="display: none;" aria-hidden="true">
+    <div class="modal-dialog msg-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="exampleModalLongTitle">{{actionTitle}}</h4>
+            </div>
+            <div class="modal-body">
+                <p> {{actionMsg}}</p>
+                <br>
+                <div *ngIf="!isApprove" class="form-group m-form__group">
+                    <input type="text" class="form-control m-input m-input--air" id="remark" (keyup)="checkRemark($event)" placeholder="{{word.remarks}}" #remarks>
+                    {{ remarks.focus() }}
+                    <br>
+                    <span *ngIf="!gotRemark" class="m-form__help era-color">* {{word.plzFillRemark}}</span>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button  type="button" id="close_btn" data-dismiss="modal" class="job-btn btn m-btn--pill btn-secondary m-btn m-btn--custom">
+                    {{word.cancel}}
+                </button>
+                <button *ngIf="isApprove" type="button" (click)="approveClicked()"
+                    class="act-btn act-btn-primary btn m-btn--pill btn-primary m-btn m-btn--custom">
+                    {{word.approve}}
+                </button> 
+                <button *ngIf="!isApprove" type="button" (click)="rejectClicked()" [disabled]="!gotRemark"
+                    class="act-btn act-btn-primary btn m-btn--pill btn-primary m-btn m-btn--custom">
+                    {{word.reject}}
+                </button>                             
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="jobApply" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle2" style="display: none;" aria-hidden="true">
+    <div class="modal-dialog msg-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="exampleModalLongTitle">{{title}}</h4>
+                <!-- <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button> -->
+            </div>
+            <div class="modal-body">
+                <p> {{msg}}</p>
+            </div>
+            <div class="modal-footer">
+                <button *ngIf="!afterSubmit" type="button" id="close_btn" data-dismiss="modal" class="job-btn btn m-btn--pill btn-secondary m-btn m-btn--custom">{{word.cancel}}</button>
+                <button *ngIf="afterSubmit" data-dismiss="modal" type="button" (click)="afterSubmitClick()"
+                class="job-btn job-btn-primary btn m-btn--pill btn-primary m-btn m-btn--custom">
+                    {{word.okay}}
+                </button> 
+                <button *ngIf="!afterSubmit" type="button" [ngClass]="{'m-loader m-loader--right m-loader--light': loading}"
+                    class="job-btn job-btn-primary btn btn-focus-signin m-btn m-btn--pill m-btn--custom m-btn--air m-login__btn m-login__btn--primary"
+                    (click)="jobApplyClicked(jProfile[0].id)" >{{word.okay}}
+                </button>                             
+            </div>
+        </div>
+    </div>
+</div>
+
+<notifier-container></notifier-container>

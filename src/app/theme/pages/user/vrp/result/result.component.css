@@ -1,0 +1,18 @@
+.vrp-bg {
+    background-image: url(../../../../../../assets/img/user/sea-portal/hand_shake.png) !important; 
+    position: relative;
+    height: 20rem; 
+    background-repeat: no-repeat;
+    background-size: 100% 100% !important;
+}
+
+.form-group.required .control-label:after {
+    content:"*";
+    color:red;
+  }
+ .pad-top-5px {
+     padding-top: 5px;
+ }
+.form-header-bg {
+    background-color:#0EC7D4;
+}

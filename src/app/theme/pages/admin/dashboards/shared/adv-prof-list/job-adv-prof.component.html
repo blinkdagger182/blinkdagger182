@@ -1,0 +1,231 @@
+<div class="m-subheader">
+    <div class="d-flex align-items-center">
+        <div class="mr-auto">
+            <h3 class="m-subheader__title m-subheader__title--separator">
+                {{title1}}
+            </h3>
+            <ul class="m-subheader__breadcrumbs m-nav m-nav--inline">
+                <li class="m-nav__item m-nav__item--home">
+                    <a routerLink="/admin/index" class="m-nav__link m-nav__link--icon">
+                        <i class="m-nav__link-icon la la-home"></i>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+<!-- END: Subheader -->
+<div class="m-content">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="m-portlet m-portlet--rounded">
+                <div class="m-portlet__head m--bg-focus" style="background: #FF5A00!important">
+                    <div class="m-portlet__head-caption">
+                        <div class="m-portlet__head-title">
+                            <h3 class="m-portlet__head-text  m--font-inverse-primary">
+                                {{title2}}
+                                <small>
+                                    <!--portlet sub title-->
+                                </small>
+                            </h3>
+                        </div>
+                    </div>
+                </div>
+                <div class="m-portlet__body">
+                    <div class="m-section">
+                        <div class="row">
+                            <div class="col-12">
+                                <ng-template #alertError></ng-template>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12 col-md-6">
+
+                                <!-- <input type="text"  (keyup)="onNameKeyUp($event)">-->
+                                <input [value]="mySearch" #search class="form-control form-control-md" type="search"
+                                    (keyup)="onNameKeyUp($event)" placeholder="All/Vacant/Occupied/{{posId}}/Staff Id/Staff Name/Employee No">
+                            </div>
+                            <div class="col-9 col-md-4">
+                                <div class="m-stack__item m-stack__item--center m-stack__item--middle" *ngIf="loadingLob">
+                                    <span>
+                                        Loading data. Please wait...
+                                    </span>
+                                    <span>
+                                        <div class="m-loader m-loader--lg m-loader--success" style="width: 30px; display: inline-block;"></div>
+                                    </span>
+                                </div>
+                                <select #searchLOB class="form-control m-input" [hidden]="loadingLob">
+                                    <option value="ALL" *ngIf="optLobList.length>1">ALL</option>
+                                    <option *ngFor="let item of optLobList" value="{{item.lob}}" [selected]="item.lob.toLocaleLowerCase()===myLob.toLocaleLowerCase()">{{item.lob}}</option>
+                                </select>
+                                <!--<input [value]="myLob" type="text" ng-model="search" #searchLOB class="form-control m-input" list="lobListData" required placeholder="LOB">
+                                <datalist id="lobListData" [hidden]="true">
+                                    <option value="ALL">ALL</option>
+                                    <option *ngFor="let item of optLobList" value="{{item.lob}}"></option>
+                                </datalist> -->
+                            </div>
+                            <div class="col-3 col-md-2 m-login__form-action">
+                                <!-- <button (click)="getProfileData()" class="btn btn-focus "> -->
+                                <button [disabled]="loading||(search.value.trim().length<1||searchLOB.value.trim().length<1)"
+                                    (click)="getProfileData2(search.value.trim(),searchLOB.value.trim())" [ngClass]="{'m-loader m-loader--right m-loader--light': loading}"
+                                    id="m_login_signin_submit" class="btn btn-focus m-btn m-btn--pill m-btn--custom m-btn--air m-login__btn m-login__btn--primary" style="background-color: #FF5A00; border-color: #FF5A00;">
+                                    Search
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="row" [hidden]="search.value.trim().length>0&&searchLOB.value.trim().length>0">
+                            <div class="col-12 col-md-8">
+                                <!--<span class="m-form__help m--font-danger">Ooopsss... Search field is empty...</span>-->
+                                <span class="m-login__form-action m--font-primary">
+                                    Search <span [hidden]="search.value.trim().length>0">parameter</span>
+                                    <span [hidden]="(search.value.trim().length>0&&searchLOB.value.trim().length>0)||search.value.trim().length>0||searchLOB.value.trim().length>0">and</span>
+                                    <span [hidden]="searchLOB.value.trim().length>0">LOB</span>
+                                    <span [hidden]="(search.value.trim().length>0||searchLOB.value.trim().length>0)">are
+                                    </span>
+                                    <span [hidden]="(!(search.value.trim().length>0)&&!(searchLOB.value.trim().length>0))">is
+                                    </span>
+                                    required.
+                                </span>
+                            </div>
+                        </div>
+
+                        <div class="row" style="margin-top:5px" *ngIf="displayTbl">
+                            <div class="col-12">
+                                <div class="m-alert m-alert--icon alert alert-{{searchResultStyle}}" role="alert">
+                                    <div class="m-alert__icon">
+                                        <i class="la {{searchResultIcon}}"></i>
+                                    </div>
+                                    <div class="m-alert__text">
+                                        {{searchResult}}
+                                    </div>
+                                    <div class="m-alert__close">
+                                        <button type="button" class="close" data-dismiss="alert" aria-label="Close"></button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="table-responsive">
+                            <table class="table table-striped" *ngIf="displayTbl&&this.data.results.length>0">
+                                <thead class="thead-inverse">
+                                    <tr>
+                                        <!-- <th>#</th> -->
+                                        <th>{{posId}}</th>
+                                        <th>{{staffId}}</th>
+                                        <th>Staff Name</th>
+                                        <th>{{posName}}</th>
+                                        <th>LOB</th>
+                                        <th>Status</th>
+                                        <th></th>
+                                    </tr>
+                                    <tr>
+                                        <!-- <th></th> -->
+                                        <th>
+                                            <input class="form-control form-control-sm" name="termPosId" [(ngModel)]="termPosId">
+                                        </th>
+                                        <th>
+                                            <input class="form-control form-control-sm" name="termStaffId" [(ngModel)]="termStaffId">
+                                        </th>
+                                        <th>
+                                            <input class="form-control form-control-sm" name="termName" [(ngModel)]="termName">
+                                        </th>
+                                        <th>
+                                            <input class="form-control form-control-sm" name="termPos" [(ngModel)]="termPos">
+                                        </th>
+                                        <th>
+                                            <input class="form-control form-control-sm" name="termLob" [(ngModel)]="termLob">
+                                        </th>
+                                        <th>
+                                            <input class="form-control form-control-sm" name="termStt" [(ngModel)]="termStt">
+                                        </th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <!--display all use: data.results-->
+                                    <tr *ngFor="let item of pagedItems | filter : termPosId : termStaffId : termName : termPos :termLob :termStt ;let i = index">
+                                        <!-- style="cursor:pointer" (click)="getJobAdvDetails(item.positionId)"  -->
+                                        <!-- <td>{{i+1}}</td> -->
+                                        <td>{{item.positionId}}</td>
+                                        <td><span [hidden]="item.staffNo.trim().length>0">-</span>{{item.staffNo}}</td>
+                                        <td><span [hidden]="item.name.trim().length>0">-</span>{{item.name | uppercase
+                                            }}</td>
+                                        <td><span [hidden]="item.positionName.trim().length>0">-</span>{{item.positionName
+                                            | uppercase }} </td>
+                                        <td><span [hidden]="item.lob.trim().length>0">-</span>{{item.lob | uppercase }}
+                                        </td>
+                                        <td><span class="m-badge m-badge--{{getStatusColor(item.status)}} m-badge--wide">{{item.status
+                                                | uppercase }} </span></td>
+                                        <!-- <td>
+                                            <div class="btn-group">
+                                                <a href="javascript:;" [routerLink]="['../detail',item.positionId]" class="btn btn-xs">
+                                                    <i class="fa fa-info-circle"></i>
+                                                </a>
+                                            </div>
+                                        </td> -->
+                                        <!-- <td>
+                                            <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
+                                                <button type="button" class="m-btn btn btn-secondary" title="Position Info" [routerLink]="['../detail',item.positionId]">
+                                                    <i class="la la-info"></i>
+                                                </button>
+                                                <button *ngIf="!isAdv" type="button" class="m-btn btn btn-secondary" title="Go to Advertisement Page" [routerLink]="['/advertisement/profile/search/detail',item.positionId]">
+                                                    <i class="la la-send"></i>
+                                                </button>
+                                            </div>
+                                        </td>-->
+                                        <td>
+                                            <a href="#" [routerLink]="[myType,item.positionId]" title="Position Info"
+                                                class="btn btn-outline-primary  m-btn m-btn--icon btn-sm m-btn--icon-only m-btn--pill m-btn--air">
+                                                <i class="fa 	fa-info-circle"></i>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-12">
+                                <nav aria-label="Page navigation example">
+                                    <ul *ngIf="pager.pages && pager.pages.length" class="pagination justify-content-end">
+                                        <li class="page-item" [ngClass]="{disabled:pager.currentPage === 1}">
+                                            <button (click)="setPage(1)" class="page-link" href="#" aria-label="Previous">
+                                                <span aria-hidden="true">&laquo;</span>
+                                                <span class="sr-only">First</span>
+                                            </button>
+                                        </li>
+                                        <li class="page-item" [ngClass]="{disabled:pager.currentPage === 1}">
+                                            <button (click)="setPage(pager.currentPage - 1)" class="page-link" href="#"
+                                                aria-label="Previous">
+                                                <span aria-hidden="true">&lt;</span>
+                                                <span class="sr-only">Previous</span>
+                                            </button>
+                                        </li>
+                                        <li class="page-item" *ngFor="let page of pager.pages" [ngClass]="{active:pager.currentPage === page}">
+                                            <button (click)="setPage(page)" class="page-link" href="#">{{page}}</button>
+                                        </li>
+                                        <li class="page-item" [ngClass]="{disabled:pager.currentPage === pager.totalPages}">
+                                            <button (click)="setPage(pager.currentPage + 1)" class="page-link" href="#"
+                                                aria-label="Previous">
+                                                <span aria-hidden="true">&gt;</span>
+                                                <span class="sr-only">Next</span>
+                                            </button>
+                                        </li>
+                                        <li class="page-item" [ngClass]="{disabled:pager.currentPage === pager.totalPages}">
+                                            <button (click)="setPage(pager.totalPages)" class="page-link" href="#"
+                                                aria-label="Next">
+                                                <span aria-hidden="true">&raquo;</span>
+                                                <span class="sr-only">Last</span>
+                                            </button>
+                                        </li>
+                                    </ul>
+                                </nav>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

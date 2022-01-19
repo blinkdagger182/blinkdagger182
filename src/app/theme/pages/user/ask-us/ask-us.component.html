@@ -1,0 +1,78 @@
+<div>
+    <div class="page-bg ask-bg">
+        <h2 class="head-sub-title">Ask Us</h2>
+    </div>
+    <div class="pg-title-div">
+        <h3 class="pg-title">Ask Us</h3>
+    </div>
+</div>
+
+<!-- <div class="container"> -->
+    <div class="row">
+        <div class="container-pages text-center content_pages_1">
+            <div class="row text-center" style="padding:10px !important; max-width: 1200px; margin:auto">
+                <div class="col-lg-6 col-md-8 askUs-col">
+                    <div class="text-center contactus">
+                        <!-- <div class="text-left askUsForm pl-3">
+                            <span style="font-size: 34px;">Ask </span> <span style="font-size: 34px; color:#0FC2D0">Us!</span> 
+                        </div> -->
+                        <form [formGroup]="feedbackForm" class="askUsForm">
+                            <div class="col-sm-12 text-left">
+                                <h4 class="font">Category</h4>
+                            </div>
+                            <select formControlName="fbCat" class="form-control m-input" style="border: 1px solid #0FC2D0">
+                                <option [value]="cat" *ngFor="let cat of feedbackCat">{{cat}}</option>
+                            </select>
+                            <br>
+                            <div class="col-sm-12 text-left">
+                                <h4 class="font">Title</h4>
+                            </div>   
+                            <input type="text" class="form-control m-input" style="border: 1px solid #0FC2D0"  placeholder="Title" formControlName="fbTitle" required #fbTitle> <br>
+                            
+                            <div class="col-sm-12 text-left form-group">
+                                <h4 class="font">Description</h4>
+                            </div>
+                            <textarea class="form-control" id="comments" style="border: 1px solid #0FC2D0" formControlName="fbMsg" name="comments" placeholder="Description" rows="3"></textarea>
+                            <br>
+                            <div class="col-sm-12 text-left form-group">
+                                <h4 class="font">Screenshots (Optional)
+                                    &nbsp;
+                                    <div class="btn era-btn m-btn m-btn--outline-2x" style="padding: 0.2rem 2rem!important; align-content: center;align-items: center" (click)="addImageTrigger()">
+                                        <i class="la la-plus"></i>
+                                    </div>
+                                </h4>
+                            </div>
+                            <table>
+                                <tr>
+                                    <td>
+                                        <p class="sel-files files">Selected Files : </p>
+                                    </td>
+                                </tr>       
+                                <tr>
+                                    <span *ngIf="imgFiles?.length">    
+                                        <p class="files" *ngFor="let iName of imgFiles;">
+                                            {{iName.name}} 
+                                        </p>      
+                                    </span>
+                                </tr>
+                            </table>
+                            <input type="file" id="ssImg" [(ngModel)]="scShots" [ngModelOptions]="{standalone: true}" 
+                                accept="image/x-png,image/PNG,image/gif,image/jpeg" style="display: none !important"
+                                (change)="fileChange($event)" class="col-sm-12 form-control m-input" name="screenshot" multiple size="3" > 
+                            <br>
+                            <div class="col-sm-12 form-group" style="margin-top:4rem">
+                                <button (click)="feedbackFormSubmit()" 
+                                class="btn btn-askussubmit" type="submit" [disabled]="!feedbackForm.valid" style="width: 150px; float: left;">Submit</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="col-lg-6 col-md-4">
+                    <img src="../../../../../../assets/blank/images/questionmark.png" alt="" class="imgquestionmark">
+                </div>
+            </div>
+        </div>
+    </div>
+<!-- </div> -->
+
+<notifier-container></notifier-container>

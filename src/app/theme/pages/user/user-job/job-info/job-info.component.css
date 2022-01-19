@@ -1,0 +1,50 @@
+.job-bg {
+    background-image: url(../../../../../../assets/img/user/sea-portal/bg-jobs.png) !important; 
+    position: relative;
+    height: 20rem; 
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.jobInfo_content{
+    width: 90% !important;
+    margin: auto !important;
+    margin-top: 3rem !important;
+    margin-bottom: 2rem !important;
+}
+
+.job_apply_btn{
+    color: #0FC2D0 !important;
+    background-color: white !important;
+    border-color: #0FC2D0 !important;
+    -webkit-box-shadow: 0px 5px 10px 2px #0fc2d033 !important;
+    box-shadow: 0px 5px 10px 2px #0fc2d033 !important;
+}
+.job_apply_btn .btn-outline-info.m-btn--air {
+    box-shadow: 0px 5px 10px 2px #0fc2d033 !important;
+}
+
+.job_apply_btn:hover{
+    background:  #0FC2D0 !important;
+    color: white !important;
+}
+
+.job-btn {
+    width: 8rem !important;
+}
+
+.job-btn-primary{
+    color:white !important;
+    background:  #0FC2D0 !important;
+    border-color: #0FC2D0 !important; 
+}
+
+.job-btn-primary:hover{
+    background:  #1BA4BE !important;
+    border-color: #1BA4BE !important; 
+}
+@media (min-width: 576px){
+    .msg-dialog {
+        max-width: 400px !important;
+    }    
+}

@@ -1,0 +1,1545 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.13/semantic.min.css">
+<notifier-container></notifier-container>
+<div class="m-subheader">
+    <div class="d-flex align-items-center">
+        <div class="mr-auto">
+            <h3 class="m-subheader__title m-subheader__title--separator">
+                MAPS NE
+            </h3>
+            <ul class="m-subheader__breadcrumbs m-nav m-nav--inline">
+                <li class="m-nav__item m-nav__item--home">
+                    <a routerLink="/admin/maps" class="m-nav__link m-nav__link--icon">
+                        <i class="m-nav__link-icon la la-home"></i>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div class="m-content">
+    <div class="row">
+
+        <div class="col-lg-12 centred my-auto" *ngIf="loading">
+            <div class="m-section__content">
+                <div class="m-demo" data-code-preview="true" data-code-html="true" data-code-js="false">
+                    <div class="m-demo__preview">
+                        <div class="m-stack m-stack--ver m-stack--general m-stack--demo">
+                            <div class="m-stack__item m-stack__item--center m-stack__item--middle">
+                                <span>
+                                    Loading data. Please wait...
+                                </span>
+                                <span>
+                                    <div class="m-loader m-loader--lg m-loader--success" style="width: 30px; display: inline-block;"></div>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-12" *ngIf="!loading">
+            <div class="m-portlet m-portlet--rounded">
+                <div class="m-portlet__head m--bg-focus" style="background: #FF5A00!important">
+                    <div class="m-portlet__head-caption">
+                        <div class="m-portlet__head-title">
+                            <h3 class="m-portlet__head-text  m--font-inverse-primary">
+                                MAPS NE Tracking
+                            </h3>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="m-portlet__body">
+                    <div class="m-section container" style="max-width: 100% !important;">
+
+                        <!-- start: filter -->
+                        <form [formGroup]="filterForm" autocomplete="off">
+                            <div class="m-accordion m-accordion--default" id="m_accordion_1" role="tablist">
+                                <div class="m-accordion__item">
+                                    <div class="m-accordion__item-head collapsed" role="tab" id="m_accordion_1_item_1_head" data-toggle="collapse" href="#m_accordion_1_item_1_body" aria-expanded="false">
+                                        <span class="m-accordion__item-icon">
+                                            <i class="fa fa-filter" style="font-size:25px;"></i>
+                                        </span>
+                                        <span class="m-accordion__item-title" style="font-size:1rem;">
+                                            Filter By
+                                        </span>
+                                        <span class="m-accordion__item-mode"></span>
+                                    </div>
+                                    <div class="m-accordion__item-body collapse show" id="m_accordion_1_item_1_body">
+                                        <div class="m-accordion__item-content">
+                                            <div class="row">
+                                                <div class="col-md-4">
+                                                    <div class="row">
+                                                        <div class="col-md-4">
+                                                            <label style="margin-top:9px;">Form: </label>
+                                                        </div>
+                                                        <div class="col-md-8">
+                                                            <select name="fltrFormName" id="fltrFormName" class="form-control m-input" formControlName="fltrFormName">
+                                                                <option value="{{itm.m_year}}" *ngFor="let itm of sessionList">{{itm.m_name}}</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div class="row">
+                                                        <div class="col-md-4">
+                                                            <label style="margin-top:9px;">LOB: </label>
+                                                        </div>
+                                                        <div class="col-md-8">
+                                                            <select name="filterLOB" id="filterLOB" class="form-control m-input" formControlName="filterLOB">
+                                                                <option value="" *ngIf="mylob===''">All</option>
+                                                                <option *ngFor="let item of optLobList" value="{{item.lob}}">{{item.lob}}</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row" style="padding-top: 5px;">
+                                                <div class="col-md-4">
+                                                    <div class="row">
+                                                        <div class="col-md-4">
+                                                            <label style="margin-top:9px;">Persno: </label>
+                                                        </div>
+                                                        <div class="col-md-8">
+                                                            <input class="form-control m-input" formControlName="filterPernr" placeholder="Enter Persno">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div class="row">
+                                                        <div class="col-md-4">
+                                                            <label style="margin-top:9px;">Staff No: </label>
+                                                        </div>
+                                                        <div class="col-md-8">
+                                                            <input class="form-control m-input" formControlName="filterStaff" placeholder="Enter Staff No">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div class="row">
+                                                        <div class="col-md-3">
+                                                            <label style="margin-top:9px;">Status: </label>
+                                                        </div>
+                                                        <div class="col-md-9">
+                                                            <select name="fltrStatus" id="fltrStatus" class="form-control m-input" formControlName="fltrStatus">
+                                                                <option value="All">All</option>
+                                                                <option value="{{sts.value}}" *ngFor="let sts of stateInfo">{{sts.status}}</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row" style="padding-top: 5px;">
+                                                <div class="col-md-12 text-right">
+                                                    <button class="btn m-btn m-btn--gradient-from-primary m-btn--gradient-to-info" type="button" [disabled]="loadingLob" (click)="submitFilter(1)" style="background: #FF5A00; background-color: #FF5A00; border-color: #FF5A00;">Submit</button>
+                                                    <button class="btn m-btn m-btn--gradient-from-danger m-btn--gradient-to-warning ml-3" type="button" (click)="submitFilter(2)" style="background: darkgrey; background-color: darkgrey; border-color: darkgrey;">Reset</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                        <!-- end: filter -->
+
+                        <br>
+
+                        <div *ngIf="showTable && !showEmpDetail && !loading">
+
+                            <!-- start: no data -->
+                            <div class="col-lg-12 centred my-auto" *ngIf="!loading&&pagedItems.length<1">
+                                <div class="m-demo__preview" style="padding-top:20px">
+                                    <div class="m-stack m-stack--ver m-stack--general m-stack--demo">
+                                        <div class="m-stack__item m-stack__item--center m-stack__item--middle">
+                                            <span>
+                                                <br>
+                                                For better response, please customize your filter
+                                                <br><br>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- end: no data -->
+
+                            <!-- start: display data -->
+                            <div class="table-responsive" *ngIf="!loading&&pagedItems.length>0">
+                                <form [formGroup]="submitForm2">
+                                    <table class="table table-striped table-hover">
+                                        <thead class="thead-inverse">
+                                            <tr>
+                                                <th>No</th>
+                                                <th>MAPS ID</th>
+                                                <th>Persno</th>
+                                                <th>Staff Name</th>
+                                                <th>LOB</th>
+                                                <th>Department</th>
+                                                <th>Status</th>
+                                                <th></th>
+                                            </tr>
+                                            <tr>
+                                                <th></th>
+                                                <th>
+                                                    <input class="form-control form-control-sm" name="maps_id"
+                                                        [(ngModel)]="maps_id" [ngModelOptions]="{standalone: true}">
+                                                </th>
+                                                <th>
+                                                    <input class="form-control form-control-sm" name="pers_no"
+                                                        [(ngModel)]="pers_no" [ngModelOptions]="{standalone: true}">
+                                                </th>
+                                                <!-- <th>
+                                                    <input class="form-control form-control-sm" name="cStaff_ID"
+                                                        [(ngModel)]="cStaff_ID">
+                                                </th> -->
+                                                <th>
+                                                    <input class="form-control form-control-sm" name="pers_name"
+                                                        [(ngModel)]="pers_name" [ngModelOptions]="{standalone: true}">
+                                                </th>
+                                                <th>
+                                                    <input class="form-control form-control-sm" name="lob"
+                                                        [(ngModel)]="lob" [ngModelOptions]="{standalone: true}">
+                                                </th>
+                                                <th>
+                                                    <input class="form-control form-control-sm" name="department"
+                                                        [(ngModel)]="department"
+                                                        [ngModelOptions]="{standalone: true}">
+                                                </th>
+                                                <th>
+                                                    <input class="form-control form-control-sm" name="status"
+                                                        [(ngModel)]="status" [ngModelOptions]="{standalone: true}">
+                                                </th>
+                                                <th></th>
+                                            </tr>
+                                        </thead>
+
+                                        <tbody>
+                                            <!-- if all, data2 -->
+                                            <tr
+                                                *ngFor="let frm of pagedItems| filterC : maps_id : pers_no : pers_name : lob : department : status ; let i = index">
+
+                                                <td>{{(pageSize * (pager.currentPage - 1)) + i + 1 }}</td>
+                                                <td>
+                                                    <span>{{frm.maps_id}}</span>
+                                                </td>
+
+                                                <td>
+                                                    <span>{{frm.pers_no}}</span>
+                                                </td>
+                                                <!-- <td>
+                                                    <span>{{frm.cStaff_ID}}</span>
+                                                </td> -->
+                                                <td>
+                                                    <span>{{frm.pers_name}}</span>
+                                                </td>
+                                                <td>
+                                                    <span>{{frm.lob}}</span>
+                                                </td>
+                                                <td>
+                                                    <span>{{frm.department}}</span>
+                                                </td>
+                                                <td>
+                                                    <span>{{frm.status}}</span>
+                                                    <a href="javascript:;" class="btn btn-xs" (click)="changeStatus(frm.status, frm.maps_id)">
+                                                        <i class="fa fa-pencil"></i>
+                                                    </a>
+                                                </td>
+                                                <td>
+                                                    <a href="javascript:;" class="btn btn-xs" (click)="openStaffInfo(frm.staff_no)">
+                                                        <i class="fa fa-eye"></i>
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </form>
+                            </div>
+                            <!-- end: display data -->
+
+                            <!-- start: paging -->
+                            <div class="row">
+                                <div class="col-12">
+                                    <nav aria-label="Page navigation example">
+                                        <ul *ngIf="pager.pages && pager.pages.length"
+                                            class="pagination justify-content-end">
+                                            <li class="page-item" [ngClass]="{disabled:pager.currentPage === 1}">
+                                                <button (click)="setPage(1)" class="page-link" aria-label="Previous">
+                                                    <span aria-hidden="true">&laquo;</span>
+                                                    <span class="sr-only">First</span>
+                                                </button>
+                                            </li>
+                                            <li class="page-item" [ngClass]="{disabled:pager.currentPage === 1}">
+                                                <button (click)="setPage(pager.currentPage - 1)" class="page-link"
+                                                    aria-label="Previous">
+                                                    <span aria-hidden="true">&lt;</span>
+                                                    <span class="sr-only">Previous</span>
+                                                </button>
+                                            </li>
+                                            <li class="page-item" *ngFor="let page of pager.pages"
+                                                [ngClass]="{active:pager.currentPage === page}">
+                                                <button (click)="setPage(page)" class="page-link">{{page}}</button>
+                                            </li>
+                                            <li class="page-item"
+                                                [ngClass]="{disabled:pager.currentPage === pager.totalPages}">
+                                                <button (click)="setPage(pager.currentPage + 1)" class="page-link"
+                                                    aria-label="Previous">
+                                                    <span aria-hidden="true">&gt;</span>
+                                                    <span class="sr-only">Next</span>
+                                                </button>
+                                            </li>
+                                            <li class="page-item"
+                                                [ngClass]="{disabled:pager.currentPage === pager.totalPages}">
+                                                <button (click)="setPage(pager.totalPages)" class="page-link"
+                                                    aria-label="Next">
+                                                    <span aria-hidden="true">&raquo;</span>
+                                                    <span class="sr-only">Last</span>
+                                                </button>
+                                            </li>
+                                        </ul>
+                                    </nav>
+                                </div>
+                            </div>
+                            <!-- end: paging -->
+
+                            <!-- start: download csv -->
+                            <div class="row" *ngIf="!loading&&pagedItems.length>0">
+                                <div class="col-12" style="text-align: right; margin-top:20px">
+                                    <div class="m-demo__preview m-demo__preview--btn">
+                                        <button href="#" class="btn btn-primary m-btn m-btn--icon" (click)="download()"
+                                            [disabled]="downloading">
+                                            <span>
+                                                <i class="la la-download"></i>
+                                                <span>Download</span>
+                                            </span>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- end: download csv -->
+
+                        </div>
+
+                    </div>
+
+                    <div *ngIf="showEmpDetail && !showTable && !loading" >
+
+                        <div class="row" id="contentToConvert" #contentToConvert>
+
+                            <div class="profile-bg col-md-12">
+                                <div class="m-content">
+                                    <div class="row" style="max-width: 100%; margin: auto; padding: 0.1rem 0.1rem 0.1rem 0.1rem;">
+                                        <div class="col-xl-12 col-lg-12" *ngIf="!loading" style="border-radius:20px; background: rgb(96 120 143 / 50%); ">
+                                            
+                                            <div class="row" style="height: 100%;">
+                                                <div class="col-md-5 text-right" id="mr-auto">
+                                                    <input type="file" id="dpImg" accept="image/*" style="display: none !important"  class="col-sm-12 form-control m-input" name="screenshot" size="10" > 
+                                                    <div style="padding: 0 5px 0 0; text-align: center;" >
+                                                        <div class="profile-det-pic" >
+                                                            <img class="profile_img_main" src="{{imgOptArrList}}" alt="" />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                        
+                                                <div class="col-md-7 text-left mt-3 mb-3" style="color: white; font-size: 16px;" *ngFor="let profile of personalList">
+                                                    <div class="mrgn-6">
+                                                        <strong>Staff Details</strong>
+                                                    </div>
+                                                    <div class="mrgn-6">
+                                                        <span>
+                                                            <span class="dt-icon">
+                                                                <img class="img-icon-staffdet" src="./../../../../../assets/blank/images/pro-det-icon-name.png">
+                                                                <img class="img-line-staffdet" src="./../../../../../assets/blank/images/pro-det-line.png">
+                                                            </span>
+                                                            {{profile.name}}
+                                                        </span> 
+                                                    </div>
+                                                    <div class="mrgn-6" *ngIf="profile.staff_no">
+                                                        <span>
+                                                            <span class="dt-icon">
+                                                                <img class="img-icon-staffdet" src="./../../../../../assets/blank/images/pro-det-icon-staffid.png">
+                                                                <img class="img-line-staffdet" src="./../../../../../assets/blank/images/pro-det-line.png">
+                                                            </span>
+                                                            {{profile.staff_no}}
+                                                        </span> 
+                                                    </div>
+                                                    <div class="mrgn-6" *ngIf="profile.sub_org_unit_desc">
+                                                        <span>
+                                                            <span class="dt-icon">
+                                                                <img class="img-icon-staffdet" src="./../../../../../assets/blank/images/pro-det-icon-unit.png">
+                                                                <img class="img-line-staffdet" src="./../../../../../assets/blank/images/pro-det-line.png">
+                                                            </span>
+                                                            {{profile.sub_org_unit_desc}}
+                                                        </span> 
+                                                    </div>
+                                                    <div class="mrgn-6" *ngIf="profile.org_unit_desc">
+                                                        <span>
+                                                            <span class="dt-icon">
+                                                                <img class="img-icon-staffdet" src="./../../../../../assets/blank/images/pro-det-icon-company.png">
+                                                                <img class="img-line-staffdet" src="./../../../../../assets/blank/images/pro-det-line.png">
+                                                            </span>
+                                                            {{profile.org_unit_desc}}
+                                                        </span> 
+                                                    </div>
+                                                    <div class="mrgn-6" *ngIf="profile.post_desc">
+                                                        <span>
+                                                            <span class="dt-icon">
+                                                                <img class="img-icon-staffdet" src="./../../../../../assets/blank/images/pro-det-icon-position.png">
+                                                                <img class="img-line-staffdet" src="./../../../../../assets/blank/images/pro-det-line.png">
+                                                            </span>
+                                                            {{profile.post_desc}}
+                                                        </span> 
+                                                    </div>
+                                                    <div class="mrgn-6" *ngIf="profile.email">
+                                                        <span>
+                                                            <span class="dt-icon">
+                                                                <img class="img-icon-staffdet" src="./../../../../../assets/blank/images/pro-det-icon-email.png">
+                                                                <img class="img-line-staffdet" src="./../../../../../assets/blank/images/pro-det-line.png">
+                                                            </span>
+                                                            {{profile.email}}
+                                                        </span> 
+                                                    </div>
+                                                    <div class="mrgn-6" *ngIf="profile.cell_no">
+                                                        <span>
+                                                            <span class="dt-icon">
+                                                                <img class="img-icon-staffdet" src="./../../../../../assets/blank/images/pro-det-icon-phone.png">
+                                                                <img class="img-line-staffdet" src="./../../../../../assets/blank/images/pro-det-line.png">
+                                                            </span>
+                                                            {{profile.cell_no}}
+                                                        </span> 
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-12">
+                                <div class="row blue-strip">
+                                    <div style="flex: 0 0 5%; max-width: 5%; text-align: left; cursor: pointer;" (click)="scrolllLeft()">
+                                        <img style="width: 43px; padding-left: 12px;" src="../../../../../assets/blank/images/maps/left-prog.png">
+                                    </div>
+                                    <div style="flex: 0 0 90%; max-width: 90%;">
+                                        <div class="blueone" style="overflow: hidden;" id="containerBlue">
+                                            <div style="width: 2400px; display: flex; align-items: center; gap: 10px;" id="contentBlue">
+                                                <div style="display: inline-block;" >
+                                                    <img *ngIf="empProgBar === 1" src="../../../../../assets/blank/images/maps/progress-maps-1-now.png">
+                                                    <img *ngIf="empProgBar > 1" src="../../../../../assets/blank/images/maps/progress-maps-1-comp.png">
+                                                </div> 
+                                                <div style="display: inline-block;" >Goal Setting . . . .</div>
+                                                <div style="display: inline-block;" >
+                                                    <img *ngIf="empProgBar === 1" src="../../../../../assets/blank/images/maps/progress-maps-2-off.png">
+                                                    <img *ngIf="empProgBar === 2" src="../../../../../assets/blank/images/maps/progress-maps-2-now.png">
+                                                    <img *ngIf="empProgBar > 2" src="../../../../../assets/blank/images/maps/progress-maps-2-comp.png">
+                                                </div> 
+                                                <div style="display: inline-block;" >Goal Approval . . . .</div>
+                                                <div style="display: inline-block;" >
+                                                    <img *ngIf="empProgBar < 3" src="../../../../../assets/blank/images/maps/progress-maps-3-off.png">
+                                                    <img *ngIf="empProgBar === 3" src="../../../../../assets/blank/images/maps/progress-maps-3-now.png">
+                                                    <img *ngIf="empProgBar > 3" src="../../../../../assets/blank/images/maps/progress-maps-3-comp.png">
+                                                </div> 
+                                                <div style="display: inline-block;" >Mid Year Review Appraisee . . . .</div>
+                                                <div style="display: inline-block;" >
+                                                    <img *ngIf="empProgBar < 4" src="../../../../../assets/blank/images/maps/progress-maps-4-off.png">
+                                                    <img *ngIf="empProgBar === 4" src="../../../../../assets/blank/images/maps/progress-maps-4-now.png">
+                                                    <img *ngIf="empProgBar > 4" src="../../../../../assets/blank/images/maps/progress-maps-4-comp.png">
+                                                </div> 
+                                                <div style="display: inline-block;" >Mid Year Review Appraiser . . . .</div>
+                                                <div style="display: inline-block;" >
+                                                    <img *ngIf="empProgBar < 5" src="../../../../../assets/blank/images/maps/progress-maps-5-off.png">
+                                                    <img *ngIf="empProgBar === 5" src="../../../../../assets/blank/images/maps/progress-maps-5-now.png">
+                                                    <img *ngIf="empProgBar > 5" src="../../../../../assets/blank/images/maps/progress-maps-5-comp.png">
+                                                </div> 
+                                                <div style="display: inline-block;" >Year End Review Appraisee . . . .</div>
+                                                <div style="display: inline-block;" >
+                                                    <img *ngIf="empProgBar < 6" src="../../../../../assets/blank/images/maps/progress-maps-6-off.png">
+                                                    <img *ngIf="empProgBar === 6" src="../../../../../assets/blank/images/maps/progress-maps-6-now.png">
+                                                    <img *ngIf="empProgBar > 6" src="../../../../../assets/blank/images/maps/progress-maps-6-comp.png">
+                                                </div> 
+                                                <div style="display: inline-block;" >Year End Review Appraiser . . . .</div>
+                                                <div style="display: inline-block;" >
+                                                    <img *ngIf="empProgBar < 7" src="../../../../../assets/blank/images/maps/progress-maps-7-off.png">
+                                                    <img *ngIf="empProgBar === 7" src="../../../../../assets/blank/images/maps/progress-maps-7-now.png">
+                                                    <img *ngIf="empProgBar > 7" src="../../../../../assets/blank/images/maps/progress-maps-7-comp.png">
+                                                </div> 
+                                                <div style="display: inline-block;" >Year End Reviewer . . . .</div>
+                                                <div style="display: inline-block;" >
+                                                    <img *ngIf="empProgBar < 8" src="../../../../../assets/blank/images/maps/progress-maps-8-off.png">
+                                                    <img *ngIf="empProgBar === 8" src="../../../../../assets/blank/images/maps/progress-maps-8-now.png">
+                                                    <img *ngIf="empProgBar > 8" src="../../../../../assets/blank/images/maps/progress-maps-8-comp.png">
+                                                </div> 
+                                                <div style="display: inline-block;" >Employee Acknowledgement . . . .</div>
+                                                <div style="display: inline-block;" >
+                                                    <img *ngIf="empProgBar < 9" src="../../../../../assets/blank/images/maps/progress-maps-9-off.png">
+                                                    <img *ngIf="empProgBar === 9" src="../../../../../assets/blank/images/maps/progress-maps-9-on.png">
+                                                </div> 
+                                                <div style="display: inline-block;">Completed</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div style="flex: 0 0 5%; max-width: 5%; text-align: right; cursor: pointer;" (click)="scrollRight()">
+                                        <img style="width: 43px; padding-right: 12px;" src="../../../../../assets/blank/images/maps/right-prog.png">
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div style="margin-top: 12px; padding: 0 15px;">
+                                <h6>NAME: <span style="color: #005C8E;">{{evMapsFormName}}</span></h6>
+                                <h6>STATUS: 
+                                    <span style="color: #005C8E;">{{evMapsForm.status_id}} - {{evMapsForm.status}}
+                                    </span>
+                                </h6>
+                                <h6>FORM ID: <span style="color: #005C8E;">{{evMapsFormFormId}}</span></h6>
+                            </div>
+                            
+                            <div class="col-md-12" style="background-color: #D2E8EC; border-radius: 5px; padding-top: 10px;">
+                                
+                                <div class="row" style="margin: 0">
+                                    <div class="col-md-6">
+                                        <div class="row">
+                                            <div class="col-md-2 m-auto">
+                                                <div class="img-gs">
+                                                    <img src="{{profileImgEmp}}">
+                                                </div>
+                                                <div style="margin-top: 10px;">
+                                                    <button class="btn btn-danger" style="cursor: pointer" alt="" height="20" width="25" aria-hidden="true"
+                                                        data-toggle="tooltip" data-placement="bottom" title="Route to New Supervisor" data-toggle="modal" data-target="#routeNewSp" (click)="lvlIndicator(1)">Change</button>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-10">
+                                                <div class="gs-emp">
+                                                    <h5 class="form-title">APPRAISER</h5>
+                                                    <div class="pad-gs-emp">
+                                                        <table class="table" style="width: 100%;">
+                                                            <tr>
+                                                                <td class="tb-maps-2-left">NAME</td>
+                                                                <td class="tb-maps-2-right">{{evMapsForm.eval1[0].Name}}</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td class="tb-maps-2-left">STAFF NO</td>
+                                                                <td class="tb-maps-2-right">{{evMapsForm.eval1[0].Staff_No}}</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td class="tb-maps-2-left">UNIT</td>
+                                                                <td class="tb-maps-2-right">{{evMapsForm.eval1[0].Org_Unit_Desc}}</td>
+                                                            </tr>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="row">
+                                            <div class="col-md-2 m-auto">
+                                                <div class="img-gs">
+                                                    <img src="{{profileImgEva}}">
+                                                </div>
+                                                <div style="margin-top: 10px;">
+                                                    <button class="btn btn-danger" style="cursor: pointer" alt="" height="20" width="25" aria-hidden="true"
+                                                        data-toggle="tooltip" data-placement="bottom" title="Route to New Supervisor" data-toggle="modal" data-target="#routeNewSp" (click)="lvlIndicator(2)">Change</button>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-10">
+                                                <div class="gs-emp">
+                                                    <h5 class="form-title">REVIEWER</h5>
+                                                    <div class="pad-gs-emp">
+                                                        <table class="table" style="width: 100%;">
+                                                            <tr>
+                                                                <td class="tb-maps-2-left">NAME</td>
+                                                                <td class="tb-maps-2-right">{{evMapsForm.eval2[0].Name}}</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td class="tb-maps-2-left">STAFF NO.</td>
+                                                                <td class="tb-maps-2-right">{{evMapsForm.eval2[0].Staff_No}}</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td class="tb-maps-2-left">UNIT</td>
+                                                                <td class="tb-maps-2-right">{{evMapsForm.eval2[0].Org_Unit_Desc}}</td>
+                                                            </tr>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Job Responsibility Div -->
+                            <div class="col-md-12 title-gset" style="margin-top: 20px;">
+                                <h4>1.0 Job Responsibility</h4>
+                            </div>
+                            <div class="col-md-12" style="background-color: #D2E8EC; border-radius: 5px; padding-bottom: 50px;">
+                                
+                                <!-- web view -->
+                                <table class="table-kpi">
+                                    <colgroup>
+                                        <col span="1" style="width: 1%;">
+                                        <col span="1" style="width: 10%;">
+                                        <col span="1" style="width: 27%;">
+                                        <col span="1" style="width: 12%;">
+                                        <col span="1" style="width: 12%;">
+                                        <col span="1" style="width: 12%;">
+                                        <col *ngIf="empProgBar > 2" span="1" style="width: 12%;">
+                                        <col *ngIf="empProgBar > 4" span="1" style="width: 12%;">
+                                    </colgroup>
+                                    <thead>
+                                        <tr>
+                                            <th></th>
+                                            <th>PERSPECTIVE</th>
+                                            <th>KEY PERFORMANCE INDICATOR (KPI)</th>
+                                            <th>METRIC/MEASURE</th>
+                                            <th>TARGET</th>
+                                            <th>WEIGHTAGE %</th>
+                                            <th *ngIf="empProgBar > 2">MID-YEAR PERFORMANCE</th>
+                                            <th *ngIf="empProgBar > 4">YEAR END PERFORMANCE</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody *ngIf="jobResList.length === 0">
+                                        <tr *ngFor="let item of EmpEvFormZero">
+                                            <td>1.{{item}}</td>
+                                            <td><div class="white-box"></div></td>
+                                            <td><div class="white-box"></div></td>
+                                            <td><div class="white-box"></div></td>
+                                            <td><div class="white-box"></div></td>
+                                            <td><div class="white-box"></div></td>
+                                            <td *ngIf="empProgBar > 2"><div class="white-box"></div></td>
+                                            <td *ngIf="empProgBar > 4"><div class="white-box"></div></td>
+                                        </tr>
+                                    </tbody>
+                                    <tbody *ngIf="jobResList.length > 0">
+                                        <tr *ngFor="let jr of jobResList; let i = index">
+                                            <td>1.{{i + 1}}</td>
+                                            <td>
+                                                <div class="white-box">
+                                                    <div class="center-box-white align-y-center">{{jr.name}}</div>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="white-box-detail">
+                                                    <div class="center-box-white" style="justify-content: left !important; text-align: left !important">{{jr.kpi}}</div>
+                                                    <div class="view-details-deliv">
+                                                        <span class="vw-det-link" (click)="viewModalApprais(jr.id, 'JR')">View Detail</span>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="white-box">
+                                                    <div class="center-box-white align-y-center" style="justify-content: left !important; text-align: left !important">{{jr.metric}}</div>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="white-box">
+                                                    <div class="center-box-white align-y-center">{{jr.tgt}}</div>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="white-box">
+                                                    <div class="center-box-white align-y-center">{{jr.wt}}</div>
+                                                </div>
+                                            </td>
+                                            <td *ngIf="empProgBar > 2">
+                                                <div class="white-box box-scroll">
+                                                    <div>{{evMapsForm.name}}</div>
+                                                    <ngb-rating [(rate)]="jr.midyr_ee_rat" [readonly]="true" [max]="4">
+                                                        <ng-template let-fill="fill" let-index="index">
+                                                            <span class="star-ev" [class.filled]="fill === 100">&#9733;</span>
+                                                        </ng-template>
+                                                    </ngb-rating>
+                                                    <div *ngIf="empProgBar > 4">{{evMapsForm.eval1[0].Name}}</div>
+                                                    <ngb-rating *ngIf="empProgBar > 4" [(rate)]="jr.midyr_sv_rat" [readonly]="true" [max]="4">
+                                                        <ng-template let-fill="fill" let-index="index">
+                                                            <span class="star-ev" [class.filled]="fill === 100">&#9733;</span>
+                                                        </ng-template>
+                                                    </ngb-rating>
+                                                    <div *ngIf="empProgBar < 5">{{evMapsForm.eval1[0].Name}}</div>
+                                                    <ngb-rating *ngIf="empProgBar < 5" [(rate)]="rateZero" [readonly]="true" [max]="4">
+                                                        <ng-template let-fill="fill" let-index="index">
+                                                            <span class="star-ev" [class.filled]="fill === 100">&#9733;</span>
+                                                        </ng-template>
+                                                    </ngb-rating>
+                                                </div>
+                                            </td>
+                                            <td *ngIf="empProgBar > 4">
+                                                <div class="white-box box-scroll">
+                                                    <div>{{evMapsForm.name}}</div>
+                                                    <ngb-rating [(rate)]="jr.endyr_ee_rat" [readonly]="true" [max]="4">
+                                                        <ng-template let-fill="fill" let-index="index">
+                                                            <span class="star-ev" [class.filled]="fill === 100">&#9733;</span>
+                                                        </ng-template>
+                                                    </ngb-rating>
+                                                    <div *ngIf="empProgBar > 7">{{evMapsForm.eval1[0].Name}}</div>
+                                                    <ngb-rating *ngIf="empProgBar > 7" [(rate)]="jr.endyr_sv_rat" [readonly]="true" [max]="4">
+                                                        <ng-template let-fill="fill" let-index="index">
+                                                            <span class="star-ev" [class.filled]="fill === 100">&#9733;</span>
+                                                        </ng-template>
+                                                    </ngb-rating>
+                                                    <div *ngIf="empProgBar < 8">{{evMapsForm.eval1[0].Name}}</div>
+                                                    <ngb-rating *ngIf="empProgBar < 8" [(rate)]="rateZero" [readonly]="true" [max]="4">
+                                                        <ng-template let-fill="fill" let-index="index">
+                                                            <span class="star-ev" [class.filled]="fill === 100">&#9733;</span>
+                                                        </ng-template>
+                                                    </ngb-rating>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+
+                                <!-- mobile view -->
+                                <div class="table-kpi-sm">
+                                    <table>
+                                        <colgroup>
+                                            <col span="1" style="width: 1%;">
+                                            <col span="1" style="width: 97%;">
+                                        </colgroup>
+                                        <tbody *ngIf="jobResList.length === 0">
+                                            <tr *ngFor="let item of EmpEvFormZero">
+                                                <td>1.{{item}}</td>
+                                                <td><div class="white-box"></div></td>
+                                            </tr>
+                                        </tbody>
+                                        <tbody *ngIf="jobResList.length > 0">
+                                            <tr *ngFor="let jr of jobResList; let i = index">
+                                                <td>1.{{i + 1}}</td>
+                                                <td>
+                                                    <div class="white-box">
+                                                        <div style="padding: 5px;">
+                                                            <div>
+                                                                <b>PERSPECTIVE:</b> <span>{{jr.name}}</span>
+                                                            </div>
+                                                            <div style="height: 19px; overflow: hidden;">
+                                                                <b>KEY PERFORMANCE INDICATOR (KPI):</b> {{jr.kpi}}
+                                                            </div>
+                                                            <div style="height: 19px; overflow: hidden;">
+                                                                <b>METRIC/MEASURE:</b> {{jr.metric}}
+                                                            </div>
+                                                            <div style="height: 19px; overflow: hidden;">
+                                                                <b>TARGET:</b> {{jr.tgt}}
+                                                            </div>
+                                                            <div style="height: 19px; overflow: hidden;">
+                                                                <b>WEIGHTAGE:</b> {{jr.wt}}
+                                                            </div>
+                                                            <div style="text-align: right;">
+                                                                <span class="vw-det-link" (click)="viewModalApprais(jr.id, 'JR')">View Detail</span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+
+
+                            <!-- Significant Involvement Div -->
+                            <div class="col-md-12  title-gset" style="margin-top: 20px;">
+                                <h4>2.0 Significant Involvement (if any)</h4>
+                            </div>
+                            <div class="col-md-12" style="background-color: #D2E8EC; border-radius: 5px; padding-bottom: 50px;">
+
+                                <!-- web view -->
+                                <table class="table-kpi">
+                                    <colgroup>
+                                        <col span="1" style="width: 1%;">
+                                        <col span="1" style="width: 10%;">
+                                        <col span="1" style="width: 27%;">
+                                        <col span="1" style="width: 12%;">
+                                        <col span="1" style="width: 12%;">
+                                        <col span="1" style="width: 12%;">
+                                        <col *ngIf="empProgBar > 2" span="1" style="width: 12%;">
+                                        <col *ngIf="empProgBar > 4" span="1" style="width: 12%;">
+                                    </colgroup>
+                                    <thead>
+                                        <tr>
+                                            <th></th>
+                                            <th>PERSPECTIVE</th>
+                                            <th>KEY PERFORMANCE INDICATOR (KPI)</th>
+                                            <th>METRIC/MEASURE</th>
+                                            <th>TARGET</th>
+                                            <th>WEIGHTAGE %</th>
+                                            <th *ngIf="empProgBar > 2">MID-YEAR PERFORMANCE</th>
+                                            <th *ngIf="empProgBar > 4">YEAR END PERFORMANCE</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody *ngIf="sigInvList.length === 0">
+                                        <tr>
+                                            <td>2.1</td>
+                                            <td><div class="white-box"></div></td>
+                                            <td><div class="white-box"></div></td>
+                                            <td><div class="white-box"></div></td>
+                                            <td><div class="white-box"></div></td>
+                                            <td><div class="white-box"></div></td>
+                                            <td *ngIf="empProgBar > 2"><div class="white-box"></div></td>
+                                            <td *ngIf="empProgBar > 4"><div class="white-box"></div></td>
+                                        </tr>
+                                    </tbody>
+                                    <tbody *ngIf="sigInvList.length > 0">
+                                        <tr *ngFor="let si of sigInvList; let i = index">
+                                            <td>2.{{i + 1}}</td>
+                                            <td>
+                                                <div class="white-box">
+                                                    <div class="center-box-white align-y-center">{{si.name}}</div>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="white-box-detail">
+                                                    <div class="center-box-white" style="justify-content: left !important; text-align: left !important">{{si.kpi}}</div>
+                                                    <div class="view-details-deliv">
+                                                        <span class="vw-det-link" (click)="viewModalApprais(si.id, 'SI')">View Detail</span>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="white-box">
+                                                    <div class="center-box-white align-y-center" style="justify-content: left !important; text-align: left;">{{si.metric}}</div>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="white-box">
+                                                    <div class="center-box-white align-y-center">{{si.tgt}}</div>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="white-box">
+                                                    <div class="center-box-white align-y-center">{{si.wt}}</div>
+                                                </div>
+                                            </td>
+                                            <td *ngIf="empProgBar > 2">
+                                                <div class="white-box box-scroll">
+                                                    <div *ngIf="empProgBar === 3">
+                                                        {{evMapsForm.name}}    
+                                                    </div>
+                                                    <ngb-rating *ngIf="empProgBar === 3" [(rate)]="si.midyr_ee_rat" [readonly]="true" [max]="4">
+                                                        <ng-template let-fill="fill" let-index="index">
+                                                            <span class="star-ev" [class.filled]="fill === 100">&#9733;</span>
+                                                        </ng-template>
+                                                    </ngb-rating>
+                                                    <div *ngIf="empProgBar > 3">
+                                                        {{evMapsForm.name}}    
+                                                    </div>
+                                                    <ngb-rating *ngIf="empProgBar > 3" [(rate)]="si.midyr_ee_rat" [readonly]="true" [max]="4">
+                                                        <ng-template let-fill="fill" let-index="index">
+                                                            <span class="star-ev" [class.filled]="fill === 100">&#9733;</span>
+                                                        </ng-template>
+                                                    </ngb-rating>
+                                                    <div *ngIf="empProgBar > 4">{{evMapsForm.eval1[0].Name}}</div>
+                                                    <ngb-rating *ngIf="empProgBar > 4" [(rate)]="si.midyr_sv_rat" [readonly]="true" [max]="4">
+                                                        <ng-template let-fill="fill" let-index="index">
+                                                            <span class="star-ev" [class.filled]="fill === 100">&#9733;</span>
+                                                        </ng-template>
+                                                    </ngb-rating>
+                                                    <div *ngIf="empProgBar < 5">{{evMapsForm.eval1[0].Name}}</div>
+                                                    <ngb-rating *ngIf="empProgBar < 5" [(rate)]="rateZero" [readonly]="true" [max]="4">
+                                                        <ng-template let-fill="fill" let-index="index">
+                                                            <span class="star-ev" [class.filled]="fill === 100">&#9733;</span>
+                                                        </ng-template>
+                                                    </ngb-rating>
+                                                </div>
+                                            </td>
+                                            <td *ngIf="empProgBar > 4">
+                                                <div class="white-box box-scroll">
+                                                    <div>{{evMapsForm.name}}</div>
+                                                    <ngb-rating [(rate)]="si.endyr_ee_rat" [readonly]="true" [max]="4">
+                                                        <ng-template let-fill="fill" let-index="index">
+                                                            <span class="star-ev" [class.filled]="fill === 100">&#9733;</span>
+                                                        </ng-template>
+                                                    </ngb-rating>
+                                                    <div *ngIf="empProgBar > 7">{{evMapsForm.eval1[0].Name}}</div>
+                                                    <ngb-rating *ngIf="empProgBar > 7" [(rate)]="si.endyr_sv_rat" [readonly]="true" [max]="4">
+                                                        <ng-template let-fill="fill" let-index="index">
+                                                            <span class="star-ev" [class.filled]="fill === 100">&#9733;</span>
+                                                        </ng-template>
+                                                    </ngb-rating>
+                                                    <div *ngIf="empProgBar < 8">{{evMapsForm.eval1[0].Name}}</div>
+                                                    <ngb-rating *ngIf="empProgBar < 8" [(rate)]="rateZero" [readonly]="true" [max]="4">
+                                                        <ng-template let-fill="fill" let-index="index">
+                                                            <span class="star-ev" [class.filled]="fill === 100">&#9733;</span>
+                                                        </ng-template>
+                                                    </ngb-rating>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+
+                                <!-- mobile view -->
+                                <div class="table-kpi-sm">
+                                    <table>
+                                        <colgroup>
+                                            <col span="1" style="width: 1%;">
+                                            <col span="1" style="width: 97%;">
+                                        </colgroup>
+                                        <tbody *ngIf="sigInvList.length === 0">
+                                            <tr>
+                                                <td>2.1</td>
+                                                <td><div class="white-box"></div></td>
+                                            </tr>
+                                        </tbody>
+                                        <tbody *ngIf="sigInvList.length > 0">
+                                            <tr *ngFor="let si of sigInvList; let i = index">
+                                                <td>2.{{i + 1}}</td>
+                                                <td>
+                                                    <div class="white-box">
+                                                        <div style="padding: 5px;">
+                                                            <div>
+                                                                <b>PERSPECTIVE:</b> <span>{{si.name}}</span>
+                                                            </div>
+                                                            <div style="height: 19px; overflow: hidden;">
+                                                                <b>KEY PERFORMANCE INDICATOR (KPI):</b> {{si.kpi}}
+                                                            </div>
+                                                            <div style="height: 19px; overflow: hidden;">
+                                                                <b>METRIC/MEASURE:</b> {{si.metric}}
+                                                            </div>
+                                                            <div style="height: 19px; overflow: hidden;">
+                                                                <b>TARGET:</b> {{si.tgt}}
+                                                            </div>
+                                                            <div style="height: 19px; overflow: hidden;">
+                                                                <b>WEIGHTAGE:</b> {{si.wt}}
+                                                            </div>
+                                                            <div style="text-align: right;">
+                                                                <span class="vw-det-link" (click)="viewModalApprais(si.id, 'SI')">View Detail</span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+
+                            <!-- Competency Div -->
+                            <div *ngIf="empProgBar > 2" class="col-md-12 title-gset" style="margin-top: 20px;">
+                                <h4>3.0 Competency</h4>
+                            </div>
+
+                            <div *ngIf="empProgBar > 2" class="col-md-12" style="background-color: #D2E8EC; border-radius: 5px; padding-bottom: 50px;">
+                                
+                                <!-- web view -->
+                                <table class="table-kpi">
+                                    <colgroup>
+                                        <col span="1" style="width: 1%;">
+                                        <col span="1" style="width: 10%;">
+                                        <col span="1" style="width: 20%;">
+                                        <col span="1" style="width: 29%;">
+                                        <col span="1" style="width: 20%;">
+                                        <col *ngIf="empProgBar > 4" span="1" style="width: 20%;">
+                                    </colgroup>
+                                    <thead>
+                                        <tr>
+                                            <th></th>
+                                            <th>COMPETENCY</th>
+                                            <th>COMPETENCY LEVEL</th>
+                                            <th>DESCRIPTION</th>
+                                            <th>MID-YEAR PERFORMANCE</th>
+                                            <th *ngIf="empProgBar > 4">YEAR END PERFORMANCE</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr *ngFor="let cc of compeList; let i = index">
+                                            <td>3.{{i + 1}}</td>
+                                            <td>
+                                                <div class="white-box">
+                                                    <div class="center-box-white align-y-center">{{cc.competency}}</div>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="white-box">
+                                                    <div class="box-white-just">
+                                                        <div *ngFor="let ccc of cc.cc_just" style="justify-content: left !important; text-align: left;">
+                                                            <span>{{ccc.justification}}</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="white-box-detail">
+                                                    <div class="center-box-white" style="justify-content: left !important; text-align: left;">{{cc.desc}}</div>
+                                                    <div class="view-details-deliv">
+                                                        <span class="vw-det-link" (click)="viewModalApprais(cc.id, 'CC')">View Detail</span>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td *ngIf="empProgBar > 2" >
+                                                <div class="white-box box-scroll">
+                                                    <div>{{evMapsForm.name}}</div>
+                                                    <ngb-rating [(rate)]="cc.midyr_ee_rat" [readonly]="true" [max]="4">
+                                                        <ng-template let-fill="fill" let-index="index">
+                                                            <span class="star-ev" [class.filled]="fill === 100">&#9733;</span>
+                                                        </ng-template>
+                                                    </ngb-rating>
+                                                    <div *ngIf="empProgBar > 4">{{evMapsForm.eval1[0].Name}}</div>
+                                                    <ngb-rating *ngIf="empProgBar > 4" [(rate)]="cc.midyr_sv_rat" [readonly]="true" [max]="4">
+                                                        <ng-template let-fill="fill" let-index="index">
+                                                            <span class="star-ev" [class.filled]="fill === 100">&#9733;</span>
+                                                        </ng-template>
+                                                    </ngb-rating>
+                                                    <div *ngIf="empProgBar < 5">{{evMapsForm.eval1[0].Name}}</div>
+                                                    <ngb-rating *ngIf="empProgBar < 5" [(rate)]="rateZero" [readonly]="true" [max]="4">
+                                                        <ng-template let-fill="fill" let-index="index">
+                                                            <span class="star-ev" [class.filled]="fill === 100">&#9733;</span>
+                                                        </ng-template>
+                                                    </ngb-rating>
+                                                </div>
+                                            </td>
+                                            <td *ngIf="empProgBar > 4">
+                                                <div class="white-box box-scroll">
+                                                    <div>{{evMapsForm.name}}</div>
+                                                    <ngb-rating [(rate)]="cc.endyr_ee_rat" [readonly]="true" [max]="4">
+                                                        <ng-template let-fill="fill" let-index="index">
+                                                            <span class="star-ev" [class.filled]="fill === 100">&#9733;</span>
+                                                        </ng-template>
+                                                    </ngb-rating>
+                                                    <div *ngIf="empProgBar > 7">{{evMapsForm.eval1[0].Name}}</div>
+                                                    <ngb-rating *ngIf="empProgBar > 7" [(rate)]="cc.endyr_sv_rat" [readonly]="true" [max]="4">
+                                                        <ng-template let-fill="fill" let-index="index">
+                                                            <span class="star-ev" [class.filled]="fill === 100">&#9733;</span>
+                                                        </ng-template>
+                                                    </ngb-rating>
+                                                    <div *ngIf="empProgBar < 8">{{evMapsForm.eval1[0].Name}}</div>
+                                                    <ngb-rating *ngIf="empProgBar < 8" [(rate)]="rateZero" [readonly]="true" [max]="4">
+                                                        <ng-template let-fill="fill" let-index="index">
+                                                            <span class="star-ev" [class.filled]="fill === 100">&#9733;</span>
+                                                        </ng-template>
+                                                    </ngb-rating>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+
+                                <!-- mobile view -->
+                                <div class="table-kpi-sm">
+                                    <table>
+                                        <colgroup>
+                                            <col span="1" style="width: 1%;">
+                                            <col span="1" style="width: 97%;">
+                                        </colgroup>
+                                        <tbody>
+                                            <tr *ngFor="let cc of compeList; let i = index">
+                                                <td>3.{{i + 1}}</td>
+                                                <td>
+                                                    <div class="white-box">
+                                                        <div style="padding: 5px;">
+                                                            <div>
+                                                                <b>COMPETENCY:</b> 
+                                                                <span>{{cc.competency}}</span>
+                                                            </div>
+                                                            <div style="height: 19px; overflow: hidden;">
+                                                                <b>COMPETENCY LEVEL:</b>
+                                                                <span>{{cc.justification}}</span>
+                                                            </div>
+                                                            <div style="height: 19px; overflow: hidden;">
+                                                                <b>DESCRIPTION:</b>
+                                                                <span>{{cc.desc}}</span>
+                                                            </div>
+                                                            <div style="text-align: right;">
+                                                                <span class="vw-det-link" (click)="viewModalApprais(cc.id, 'CC')">View Detail</span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+
+
+                            <!-- Rating Div -->
+                            <div *ngIf="empProgBar > 1" class="col-md-12  title-gset" style="margin-top: 20px;">
+                                <h4>Overall</h4>
+                            </div>
+                            <div *ngIf="empProgBar > 1" class="col-md-12" style="padding: 15px; background-color: #EFEFEF;">
+                                <table *ngFor="let item of overalRatObj" style="width: 100%;">
+                                    <colgroup>
+                                        <col span="1" style="width: 20%;">
+                                        <col span="1" style="width: 80%;">
+                                    </colgroup>
+                                    <tr>
+                                        <td colspan="2" style="font-weight: 500; background-color: #D2E8EC;">
+                                            Overall Comments by Appraisee
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2"><hr></td>
+                                    </tr>
+                                    <tr>
+                                        <td style="font-weight: 500; position: absolute;">
+                                            Goal Setting
+                                        </td>
+                                        <td>
+                                            <div class="evMapsFormComment"></div>
+                                        </td>
+                                    </tr>
+                                    <tr *ngIf="empProgBar > 3">
+                                        <td colspan="2"><hr></td>
+                                    </tr>
+                                    <tr *ngIf="empProgBar > 3">
+                                        <td style="font-weight: 500; position: absolute;">
+                                            Mid Year
+                                        </td>
+                                        <td>
+                                            <div style="text-align: center; margin-bottom: 15px;">
+                                                <ngb-rating  [(rate)]="item.midyr_ee_rat" [readonly]="true" [max]="4">
+                                                    <ng-template let-fill="fill" let-index="index">
+                                                        <span class="star" [class.filled]="fill === 100">&#9733;</span>
+                                                    </ng-template>
+                                                </ngb-rating>
+                                                <div *ngIf="item.midyr_ee_rat === 1">LESS SATISFACTORY</div>
+                                                <div *ngIf="item.midyr_ee_rat === 2">SATISFACTORY</div>
+                                                <div *ngIf="item.midyr_ee_rat === 3">VERY SATISFACTORY</div>
+                                                <div *ngIf="item.midyr_ee_rat === 4">EXCELLENT</div>
+                                            </div>
+                                            <div class="evMapsFormMidYrComment"></div>
+                                        </td>
+                                    </tr>
+                                    <tr *ngIf="empProgBar > 5">
+                                        <td colspan="2"><hr></td>
+                                    </tr>
+                                    <tr *ngIf="empProgBar > 5">
+                                        <td style="font-weight: 500; position: absolute;">
+                                            Year End
+                                        </td>
+                                        <td>
+                                            <div style="text-align: center; margin-bottom: 15px;">
+                                                <ngb-rating  [(rate)]="item.endyr_ee_rat" [readonly]="true" [max]="4">
+                                                    <ng-template let-fill="fill" let-index="index">
+                                                        <span class="star" [class.filled]="fill === 100">&#9733;</span>
+                                                    </ng-template>
+                                                </ngb-rating>
+                                                <div *ngIf="item.endyr_ee_rat === 1">LESS SATISFACTORY</div>
+                                                <div *ngIf="item.endyr_ee_rat === 2">SATISFACTORY</div>
+                                                <div *ngIf="item.endyr_ee_rat === 3">VERY SATISFACTORY</div>
+                                                <div *ngIf="item.endyr_ee_rat === 4">EXCELLENT</div>
+                                            </div>
+                                            <div class="evMapsFormEndYrComment"></div>
+                                        </td>
+                                    </tr>
+                                    <tr *ngIf="empProgBar > 2">
+                                        <td colspan="2"><hr></td>
+                                    </tr>
+                                    <tr *ngIf="empProgBar > 2">
+                                        <td colspan="2" style="font-weight: 500; background-color: #D2E8EC;">
+                                            Overall Comments by Appraiser
+                                        </td>
+                                    </tr>
+                                    <tr *ngIf="empProgBar > 2">
+                                        <td colspan="2"><hr></td>
+                                    </tr>
+                                    <tr *ngIf="empProgBar > 2">
+                                        <td style="font-weight: 500; position: absolute;">
+                                            Goal Setting
+                                        </td>
+                                        <td>
+                                            <div class="evMapsFormSvComment"></div>
+                                        </td>
+                                    </tr>
+                                    <tr *ngIf="empProgBar > 4">
+                                        <td colspan="2"><hr></td>
+                                    </tr>
+                                    <tr *ngIf="empProgBar > 4">
+                                        <td style="font-weight: 500; position: absolute;">
+                                            Mid Year
+                                        </td>
+                                        <td>
+                                            <div style="text-align: center; margin-bottom: 15px;">
+                                                <ngb-rating  [(rate)]="item.midyr_sv_rat" [readonly]="true" [max]="4">
+                                                    <ng-template let-fill="fill" let-index="index">
+                                                        <span class="star" [class.filled]="fill === 100">&#9733;</span>
+                                                    </ng-template>
+                                                </ngb-rating>
+                                                <div *ngIf="item.midyr_sv_rat === 1">LESS SATISFACTORY</div>
+                                                <div *ngIf="item.midyr_sv_rat === 2">SATISFACTORY</div>
+                                                <div *ngIf="item.midyr_sv_rat === 3">VERY SATISFACTORY</div>
+                                                <div *ngIf="item.midyr_sv_rat === 4">EXCELLENT</div>
+                                            </div>
+                                            <div class="evMapsFormMidYrSvComment"></div>
+                                        </td>
+                                    </tr>
+                                    <tr *ngIf="empProgBar > 6">
+                                        <td colspan="2"><hr></td>
+                                    </tr>
+                                    <tr *ngIf="empProgBar > 6">
+                                        <td style="font-weight: 500; position: absolute;">
+                                            Year End
+                                        </td>
+                                        <td>
+                                            <div style="text-align: center; margin-bottom: 15px;">
+                                                <ngb-rating  [(rate)]="item.endyr_sv_rat" [readonly]="true" [max]="4">
+                                                    <ng-template let-fill="fill" let-index="index">
+                                                        <span class="star" [class.filled]="fill === 100">&#9733;</span>
+                                                    </ng-template>
+                                                </ngb-rating>
+                                                <div *ngIf="item.endyr_sv_rat === 1">LESS SATISFACTORY</div>
+                                                <div *ngIf="item.endyr_sv_rat === 2">SATISFACTORY</div>
+                                                <div *ngIf="item.endyr_sv_rat === 3">VERY SATISFACTORY</div>
+                                                <div *ngIf="item.endyr_sv_rat === 4">EXCELLENT</div>
+                                            </div>
+                                            <div class="evMapsFormEndYrSvComment"></div>
+                                        </td>
+                                    </tr>
+                                    <tr *ngIf="empProgBar > 7">
+                                        <td colspan="2"><hr></td>
+                                    </tr>
+                                    <tr *ngIf="empProgBar > 7">
+                                        <td colspan="2" style="font-weight: 500; background-color: #D2E8EC;">
+                                            Overall Comments by Reviewer
+                                        </td>
+                                    </tr>
+                                    <tr *ngIf="empProgBar > 7">
+                                        <td colspan="2"><hr></td>
+                                    </tr>
+                                    <tr *ngIf="empProgBar > 7">
+                                        <td style="font-weight: 500;">
+                                            Year End
+                                        </td>
+                                        <td>
+                                            <div style="text-align: center; margin-bottom: 15px;">
+                                                <ngb-rating  [(rate)]="item.f_revr_rat" [readonly]="true" [max]="4">
+                                                    <ng-template let-fill="fill" let-index="index">
+                                                        <span class="star" [class.filled]="fill === 100">&#9733;</span>
+                                                    </ng-template>
+                                                </ngb-rating>
+                                                <div *ngIf="item.f_revr_rat === 1">LESS SATISFACTORY</div>
+                                                <div *ngIf="item.f_revr_rat === 2">SATISFACTORY</div>
+                                                <div *ngIf="item.f_revr_rat === 3">VERY SATISFACTORY</div>
+                                                <div *ngIf="item.f_revr_rat === 4">EXCELLENT</div>
+                                            </div>
+                                            <div class="evMapsFormReviewerComment"></div>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-12 text-right" style="background-color: #D2E8EC; border-radius: 5px; margin-top: 60px; padding: 10px;">
+                                <button class="btn m-btn m-btn--gradient-from-danger m-btn--gradient-to-warning ml-3" id="downloadbtn" (click)="downloadPdfMaps()" [disabled]="downloading3"><b>Click to Download as PDF</b></button>
+                                <button class="btn m-btn m-btn--gradient-from-danger m-btn--gradient-to-warning ml-3" type="button" (click)="backToSearchTable()" style="background: darkgrey; background-color: darkgrey; border-color: darkgrey;" data-toggle="tooltip" data-placement="bottom" title="Back to filter lists">Back</button>
+                            </div>
+                        </div>
+                            
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--end::Modal APPLICANT INFO -->
+
+<!-- start::modal for change status -->
+<div class="modal fade" id="changeStatus" tabindex="-1" role="dialog" aria-labelledby="changeStatusTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Change status Evaluation Form</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form [formGroup]="changeStatusForm">
+                    <div class="row">
+                        <div class="col-md-3">
+                            <label style="margin-top:9px;">Status: </label>
+                        </div>
+                        <div class="col-md-9">
+                            <select class="form-control m-input" formControlName="routeStatus" (change)="changeNewStatus()">
+                                <option value="{{sts.value}}" *ngFor="let sts of stateInfo">{{sts.status}}</option>
+                            </select>
+                        </div>
+                        <div class="col-md-12"><hr></div>
+                        <div class="col-md-3">Remark:</div>
+                        <div class="col-md-9"><textarea style="width: 100%; border: 1px solid black;" rows="5" formControlName="remark" (keyup)="counterRevert()"></textarea></div>
+                        <div class="col-md-9">
+                            <p *ngIf="invalidLengthRevert" style="color: red; font-weight: 500">**Note: Please make sure revert message is maximum 100 characters</p>
+                            <p *ngIf="remarkCompulsary" style="color: red; font-weight: 500;">*Route Status and remark are compulsary.</p>
+                        </div>
+                        <div class="col-md-3" style="text-align: right; font-weight: 400;" [ngStyle]="{'color': countColorRevert}">{{countRevert}}</div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button id="closeChangestatusModal" type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" (click)="postChangeNewStatus()">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- end::modal for change status -->
+
+<!-- modal routing supervisor start-->
+<div class="modal" id="routeNewSp">
+    <div class="modal-dialog">
+        <div class="modal-content">
+        
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title">Route To New Supervisor</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            
+            <!-- Modal body -->
+            <div class="modal-body">
+                <div class="form-group">
+                    <label style="margin-top:9px;">
+                        Search Name:*
+                    </label>
+                    <input type="text" autocomplete="off" class="form-control search-input" placeholder="Enter name" (keyup)="getSupvforRoute(clrSupv.value)" #clrSupv>
+                    <div autocomplete="off" >
+                        <select name="supervisor" id="supervisor" class="form-control m-input" *ngIf="getSupvRouteDataResults.length > 0 && selectRoute " multiple>
+                            <option *ngFor="let item of getSupvRouteDataResults" (click)="getRoute(item)" (click)="clrSupv.value=searchSVRoute">
+                                {{item.search}}
+                            </option>
+                        </select> 
+                    </div> 
+                </div>
+                <div style="margin-top: 20px;">
+                    <p>NOTE: I hereby verify that  reporting changes have been made in SAP before making this changes. Failure to change reporting data in SAP will revert this change to system default.</p>
+                </div>
+            </div>
+            
+            <!-- Modal footer -->
+            <div class="modal-footer">
+                <button type="button" class="btn m-btn m-btn--gradient-from-primary m-btn--gradient-to-info btn-orange" data-dismiss="modal" 
+                    (click)="submitRoute()">Yes</button>
+                <button type="button" class="btn btn-danger" data-dismiss="modal" (click)="selectRoute=false" (click)="searchSVRoute=''"> No</button>
+            </div>
+            
+        </div>
+    </div>
+</div>
+<!-- modal routing supervisor end -->
+
+<!-- Modal VIEW DETAILS JOB RES & SIG INV -->
+<button [hidden]="true" id="viewDetailJrSiBtn" data-toggle="modal" data-target="#viewDetailJrSi">x</button>
+<div class="modal fade" id="viewDetailJrSi" tabindex="-1" role="dialog" aria-labelledby="viewDetailJrSiTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+            <h4 *ngIf="apprType === 'JR'" style="margin: auto; color: black; font-weight: 600;">1.0 Job Responsibility</h4>
+            <h4 *ngIf="apprType === 'SI'" style="margin: auto; color: black; font-weight: 600;">2.0 Significant Involvement</h4>
+            </div>
+            <div class="modal-body">
+                <div *ngIf="evMapsFormStatus" class="modal-apprais-title">{{evMapsFormStatus}}</div>
+                <div *ngFor="let item of viewDetailData">
+                    <div class="row margin-15-0">
+                        <div class="col-sm-2 fn-w-600">Main Perspective</div>
+                        <div class="col-sm-10">{{item.name}}</div>
+                    </div>
+                    <div class="row margin-15-0">
+                        <div class="col-sm-2 fn-w-600">Key Performance Indicator</div>
+                        <div class="col-sm-6">{{item.kpi}}</div>
+                        <div class="col-sm-2 detail-cen">
+                            <div class="fn-w-600">Target</div>
+                            <div>{{item.tgt}}</div>
+                        </div>
+                        <div class="col-sm-2 detail-cen">
+                            <div class="fn-w-600">Weightage %</div>
+                            <div>{{item.wt}}</div>
+                        </div>
+                    </div>
+                    <div *ngIf="viewDetailDeliverData.length > 0">
+                        <br>
+                        <hr>
+                        <div class="bold-title-modal" style="text-align: center;">
+                            <div>Deliverables</div>
+                        </div>
+                        <hr>
+                        <div class="v-detail-initiative">
+                            <div class="row margin-15-0 fn-w-600">
+                                <div class="col-sm-8">Initiative</div>
+                                <div class="col-sm-2" style="text-align: center;">Due Date</div>
+                                <div class="col-sm-2" style="text-align: center;">Completion %</div>
+                            </div>
+                            <div class="row margin-15-0" *ngFor="let item of viewDetailDeliverData; let i = index">
+                                <div class="col-sm-8">{{i + 1}}. {{item.task}}</div>
+                                <div class="col-sm-2" style="text-align: center;">{{item.due_date.split("T")[0].split('-').reverse().join('/')}}</div>
+                                <div class="col-sm-2" style="text-align: center;">{{item.completion}}</div>                    
+                            </div>
+                        </div>
+
+                        <div class="v-detail-initiative-sm" *ngFor="let item of viewDetailDeliverData; let i = index">
+                            <div><b>Initiative {{i+1}}:</b> {{item.task}}</div>
+                            <div><b>Due Date:</b> {{item.due_date.split("T")[0].split('-').reverse().join('/')}}</div>
+                            <div><b>Completion %:</b> {{item.completion}}</div>
+                            <br>
+                        </div>
+                        
+                    </div>
+                    
+                    <hr *ngIf="empProgBar > 3">
+                    <div *ngIf="empProgBar > 3" class="row margin-15-0">
+                        <div class="col-sm-3 fn-w-600">Employee Feedback (Mid Year)</div>
+                        <div class="col-sm-5">{{item.midyr_ee_fb}}</div>
+                        <div class="col-sm-4" style="text-align: center;">
+                            <ngb-rating [(rate)]="item.midyr_ee_rat" [max]="4" [readonly]="true">
+                                <ng-template let-fill="fill" let-index="index">
+                                    <span class="star-detail" [class.filled]="fill === 100">&#9733;</span>
+                                </ng-template>
+                            </ngb-rating>
+                            <div *ngIf="item.midyr_ee_rat === 1">BELOW EXPECTATION</div>
+                            <div *ngIf="item.midyr_ee_rat === 2">MEETING EXPECTATION</div>
+                            <div *ngIf="item.midyr_ee_rat === 3">ABOVE EXPECTATION</div>
+                            <div *ngIf="item.midyr_ee_rat === 4">FAR EXCEED EXPECTATION</div>
+                        </div>
+                    </div>
+                    <hr *ngIf="empProgBar > 4">
+                    <div *ngIf="empProgBar > 4" class="row margin-15-0">
+                        <div class="col-sm-3 fn-w-600">Appraiser Feedback (Mid Year)</div>
+                        <div class="col-sm-5">{{item.midyr_sv_fb}}</div>
+                        <div class="col-sm-4" style="text-align: center;">
+                            <ngb-rating [(rate)]="item.midyr_sv_rat" [max]="4" [readonly]="true">
+                                <ng-template let-fill="fill" let-index="index">
+                                    <span class="star-detail" [class.filled]="fill === 100">&#9733;</span>
+                                </ng-template>
+                            </ngb-rating>
+                            <div *ngIf="item.midyr_sv_rat === 1">BELOW EXPECTATION</div>
+                            <div *ngIf="item.midyr_sv_rat === 2">MEETING EXPECTATION</div>
+                            <div *ngIf="item.midyr_sv_rat === 3">ABOVE EXPECTATION</div>
+                            <div *ngIf="item.midyr_sv_rat === 4">FAR EXCEED EXPECTATION</div>
+                        </div>
+                    </div>
+                    <hr *ngIf="empProgBar > 5">
+                    <div *ngIf="empProgBar > 5" class="row margin-15-0">
+                        <div class="col-sm-3 fn-w-600">Employee Feedback (Year End)</div>
+                        <div class="col-sm-5">{{item.endyr_ee_fb}}</div>
+                        <div class="col-sm-4" style="text-align: center;">
+                            <ngb-rating [(rate)]="item.midyr_ee_rat" [max]="4" [readonly]="true">
+                                <ng-template let-fill="fill" let-index="index">
+                                    <span class="star-detail" [class.filled]="fill === 100">&#9733;</span>
+                                </ng-template>
+                            </ngb-rating>
+                            <div *ngIf="item.endyr_ee_rat === 1">BELOW EXPECTATION</div>
+                            <div *ngIf="item.endyr_ee_rat === 2">MEETING EXPECTATION</div>
+                            <div *ngIf="item.endyr_ee_rat === 3">ABOVE EXPECTATION</div>
+                            <div *ngIf="item.endyr_ee_rat === 4">FAR EXCEED EXPECTATION</div>
+                        </div>
+                    </div>
+                    <hr *ngIf="empProgBar > 6">
+                    <div *ngIf="empProgBar > 6" class="row margin-15-0">
+                        <div class="col-sm-3 fn-w-600">Appraiser Feedback (Year End)</div>
+                        <div class="col-sm-5">{{item.endyr_sv_fb}}</div>
+                        <div class="col-sm-4" style="text-align: center;">
+                            <ngb-rating [(rate)]="item.midyr_ee_rat" [max]="4" [readonly]="true">
+                                <ng-template let-fill="fill" let-index="index">
+                                    <span class="star-detail" [class.filled]="fill === 100">&#9733;</span>
+                                </ng-template>
+                            </ngb-rating>
+                            <div *ngIf="item.endyr_sv_rat === 1">BELOW EXPECTATION</div>
+                            <div *ngIf="item.endyr_sv_rat === 2">MEETING EXPECTATION</div>
+                            <div *ngIf="item.endyr_sv_rat === 3">ABOVE EXPECTATION</div>
+                            <div *ngIf="item.endyr_sv_rat === 4">FAR EXCEED EXPECTATION</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn maps-btn-cancel" data-dismiss="modal">Back</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal VIEW DETAILS JOB RES & SIG INV -->
+
+<!-- Modal VIEW DETAILS COMPETENCY -->
+<button [hidden]="true" id="viewDetailCcBtn" data-toggle="modal" data-target="#viewDetailCc">x</button>
+<div class="modal fade" id="viewDetailCc" tabindex="-1" role="dialog" aria-labelledby="viewDetailCcTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 style="margin: auto; color: black; font-weight: 600;">3.0 Competency</h4>
+            </div>
+            <div class="modal-body">
+                <div *ngIf="evMapsForm" class="modal-apprais-title">{{evMapsFormStatus}}</div>
+                <div *ngFor="let item of viewDetailData">
+                    <div class="row margin-15-0">
+                        <div class="col-sm-3 fn-w-600">Competency</div>
+                        <div class="col-sm-9">{{item.competency}}</div>
+                    </div>
+                    <div class="row margin-15-0">
+                        <div class="col-sm-3 fn-w-600">Competency Level</div>
+                        <div class="col-sm-9">
+                            <div *ngFor="let item of viewDetailJustData">{{item.justification}}</div>
+                        </div>
+                    </div>
+                    <div class="row margin-15-0">
+                        <div class="col-md-3 fn-w-600">Description</div>
+                        <div class="col-md-9">{{item.desc}}
+                        </div>
+                    </div>
+
+                    <hr *ngIf="empProgBar > 3">
+                    <div *ngIf="empProgBar > 3" class="row margin-15-0">
+                        <div class="col-sm-8 fn-w-600">Employee Feedback (Mid Year)</div>
+                        <div class="col-sm-4" style="text-align: center;">
+                            <ngb-rating [(rate)]="item.midyr_ee_rat" [max]="4" [readonly]="true">
+                                <ng-template let-fill="fill" let-index="index">
+                                    <span class="star-detail" [class.filled]="fill === 100">&#9733;</span>
+                                </ng-template>
+                            </ngb-rating>
+                            <div *ngIf="item.midyr_ee_rat === 1">LESS SATISFACTORY</div>
+                            <div *ngIf="item.midyr_ee_rat === 2">SATISFACTORY</div>
+                            <div *ngIf="item.midyr_ee_rat === 3">GOOD</div>
+                            <div *ngIf="item.midyr_ee_rat === 4">VERY GOOD</div>
+                        </div>
+                    </div>
+                    <hr *ngIf="empProgBar > 4">
+                    <div *ngIf="empProgBar > 4" class="row margin-15-0">
+                        <div class="col-sm-8 fn-w-600">Appraiser Feedback (Mid Year)</div>
+                        <div class="col-sm-4" style="text-align: center;">
+                            <ngb-rating [(rate)]="item.midyr_sv_rat" [max]="4" [readonly]="true">
+                                <ng-template let-fill="fill" let-index="index">
+                                    <span class="star-detail" [class.filled]="fill === 100">&#9733;</span>
+                                </ng-template>
+                            </ngb-rating>
+                            <div *ngIf="item.midyr_sv_rat === 1">LESS SATISFACTORY</div>
+                            <div *ngIf="item.midyr_sv_rat === 2">SATISFACTORY</div>
+                            <div *ngIf="item.midyr_sv_rat === 3">GOOD</div>
+                            <div *ngIf="item.midyr_sv_rat === 4">VERY GOOD</div>
+                        </div>
+                    </div>
+                    <hr *ngIf="empProgBar > 5">
+                    <div *ngIf="empProgBar > 5" class="row margin-15-0">
+                        <div class="col-sm-8 fn-w-600">Employee Feedback (Year End)</div>
+                        <div class="col-sm-4" style="text-align: center;">
+                            <ngb-rating [(rate)]="item.endyr_ee_rat" [max]="4" [readonly]="true">
+                                <ng-template let-fill="fill" let-index="index">
+                                    <span class="star-detail" [class.filled]="fill === 100">&#9733;</span>
+                                </ng-template>
+                            </ngb-rating>
+                            <div *ngIf="item.endyr_ee_rat === 1">LESS SATISFACTORY</div>
+                            <div *ngIf="item.endyr_ee_rat === 2">SATISFACTORY</div>
+                            <div *ngIf="item.endyr_ee_rat === 3">GOOD</div>
+                            <div *ngIf="item.endyr_ee_rat === 4">VERY GOOD</div>
+                        </div>
+                    </div>
+                    <hr *ngIf="empProgBar > 6">
+                    <div *ngIf="empProgBar > 6" class="row margin-15-0">
+                        <div class="col-sm-8 fn-w-600">Appraiser Feedback (Year End)</div>
+                        <div class="col-sm-4" style="text-align: center;">
+                            <ngb-rating [(rate)]="item.endyr_sv_rat" [max]="4" [readonly]="true">
+                                <ng-template let-fill="fill" let-index="index">
+                                    <span class="star-detail" [class.filled]="fill === 100">&#9733;</span>
+                                </ng-template>
+                            </ngb-rating>
+                            <div *ngIf="item.endyr_sv_rat === 1">LESS SATISFACTORY</div>
+                            <div *ngIf="item.endyr_sv_rat === 2">SATISFACTORY</div>
+                            <div *ngIf="item.endyr_sv_rat === 3">GOOD</div>
+                            <div *ngIf="item.endyr_sv_rat === 4">VERY GOOD</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn maps-btn-cancel" data-dismiss="modal">Back</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal VIEW DETAILS COMPETENCY -->

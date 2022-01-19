@@ -1,0 +1,569 @@
+<div>
+    <div class="page-bg job-bg">
+        <h2 class="head-sub-title">Jobs</h2>
+    </div>
+    <div class="pg-title-div">
+        <h3 class="pg-title">{{word.avaiVac}}</h3>
+    </div>
+</div>
+
+<div class="m-content">
+    <div class="d-flex justify-content-center">
+        <div class="col-xl-12" >
+            <div class="centred my-auto" *ngIf="commentLoading">
+                <job-loading></job-loading>
+            </div>
+
+            <div class="col-lg-12" *ngIf="!commentLoading" style="padding-bottom: 1rem; padding-left: 0px !important">
+                <button title="Back to Job Lob" class="btn m-btn--pill btn-outline-info pt-1 pb-1 pr-3 pl-3"
+                    (click)="btnBackClick()">
+                    <div class="m-demo-icon__preview" style="display: flex; align-items: center;">
+                        <img style="width:2rem !important" src="../../../../../../assets/img/user/back_icon.svg">
+                        <span>{{word.back}}</span>
+                    </div>
+                    
+                </button>
+
+                <!--Begin:Language-->
+                <ul class="btn m-topbar__nav m-nav m-nav--inline" style="float: right !important">
+                    <li class="m-nav__item m-topbar__user-profile m-topbar__user-profile--img" data-toggle="modal"
+                        data-target="#langSelect">
+                        <span >	
+                            <span class="m-topbar__username " style="padding-left:10px; padding-right:10px;">
+                                {{word.lang}} :
+                            </span>
+                            <span class="m-topbar__userpic">
+                                <button *ngIf="enChecked" type="button" title="English" data-toggle="m-tooltip" data-placement="top"
+                                    class="btn m-btn--pill m-btn--air btn-outline-info active btn-sm">
+                                    EN
+                                </button>
+                                <button *ngIf="!enChecked" type="button" title="Malay" data-toggle="m-tooltip" data-placement="top"
+                                    class="btn m-btn--pill m-btn--air btn-outline-info active btn-sm">
+                                    MY
+                                </button>
+                                <!-- <img *ngIf="enChecked" src="./assets/img/us.png" title="English" data-toggle="m-tooltip" data-placement="top"
+                                    style="width:28px; height:28px" class="m--img-rounded m--marginless m--img-centered" />
+                                <img *ngIf="!enChecked" src="./assets/img/my.png" title="Malay" data-toggle="m-tooltip" data-placement="top" 
+                                    style="width:28px; height:28px" class="m--img-rounded m--marginless m--img-centered" /> -->
+                            </span>
+                        </span>
+                    </li>
+                </ul>
+                <div class="modal fade" id="langSelect" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" style="display: none;" aria-hidden="true">
+                    <div class="modal-dialog msg-dialog modal-dialog-centered" role="document" style="max-width: 235px !important; margin: auto !important">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 style="text-align: center">{{word.lang}}</h5>
+                                <button id="lang_close" type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">×</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="m-dropdown__content" >
+                                    <label class="lang-radio m-radio m-radio--solid m-radio--success" style="font-size: 16px; width: 100%">
+                                        <input type="radio" #en name="lang" value="en" [checked]="enChecked" (change)="langChange(en)"> 
+                                        &nbsp;&nbsp; English
+                                        <span style="width:23px; height:23px"></span>
+                                    </label>
+                                    <br>
+                                    <label class="lang-radio m-radio m-radio--solid m-radio--success" style="font-size: 16px; width: 100%">
+                                        <input type="radio" #my name="lang" value="my" [checked]="!enChecked" (change)="langChange(my)"> 
+                                        &nbsp;&nbsp; Malay 
+                                        <span style="width:23px; height:23px"></span>
+                                    </label>
+                                </div>
+                            </div>    
+                        </div>
+                    </div>
+                </div>
+                <!--End:Language-->
+
+            </div>
+            
+            <!-- <div class="row d-flex justify-content-center" *ngIf="!commentLoading">
+                <div class="col-lg-12">
+                    <img src="../../../../../assets/img/faq/faq_banner.png" style="width:100%;">    
+                </div>
+            </div> -->
+            <div class="m-portlet m-portlet--full-height" *ngIf="!commentLoading">
+                <div class="m-portlet__head" style="padding: 0 3.8rem !important; ">
+                    <br>
+                    <div class="m--space-10"></div>
+                    <h3 class="era-color m-portlet__head-text" style="font-size: 24px">
+                        {{jProfile[0].job_title}}
+                    </h3>
+                    <h6 class="m-portlet__head-text">{{jProfile[0].division}}</h6>
+                    <h6 class="m-portlet__head-text">{{jProfile[0].location}}</h6>
+                    <h6 class="m-portlet__head-text">{{word.closeDt}} : <span style="color:red">{{jProfile[0].close | date:'dd / MM / yyyy' }}</span></h6>                    
+                    <br>
+                </div>
+
+                <div class="m-portlet__body">
+                    <div class="m-accordion m-accordion--default m-accordion--solid m-accordion--section  
+                                m-accordion--toggle-arrow" role="tablist"> 
+                        
+                        <div class="m-accordion__item">
+                            <div class="m-accordion__item-head collapsed" role="tab" id="m_accordion_7_item_1_head" data-toggle="collapse" href="#m_accordion_7_item_1_body" aria-expanded="false">
+                                <span class="m-accordion__item-icon">
+                                    <i class="era-color la la-info"></i>
+                                </span>
+                                <span class="info_title m-accordion__item-title">
+                                    {{word.job_info}}
+                                </span>
+                                <span class="m-accordion__item-mode"></span>
+                            </div>
+                            <div class="m-accordion__item-body collapse" id="m_accordion_7_item_1_body" role="tabpanel" aria-labelledby="m_accordion_7_item_1_head" data-parent="#m_accordion_7">
+                                <div class="acc_content m-accordion__item-content" >
+
+                                    <div class="jobInfo_content m-portlet" *ngIf="jDescription?.length > 0">
+                                        <div class="m-portlet__head">
+                                            <div class="m-portlet__head-caption">
+                                                <div class="m-portlet__head-title">
+                                                    <h3 class="era-color m-portlet__head-text">
+                                                        {{word.jDesc}}   
+                                                    </h3>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="m-portlet__body">
+                                            <div class="m-section m-section--last" *ngFor = "let desc of jDescription">
+                                                <span class="m-section__sub" [innerHTML] = "desc.job_purpose | stringBreak">
+                
+                                                </span><br>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="jobInfo_content m-portlet" *ngIf="jAoR?.length > 0">
+                                        <div class="m-portlet__head">
+                                            <div class="m-portlet__head-caption">
+                                                <div class="m-portlet__head-title">
+                                                    <h3 class="era-color m-portlet__head-text">
+                                                        {{word.aoR}}   
+                                                    </h3>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="m-portlet__body">
+                                            <div class="m-section m-section--last" *ngFor = "let aor of jAoR" >
+                                                <span class="m-section__sub">
+                                                    <i style="font-weight: bold; padding-right:12px;" class="era-color fa fa-angle-double-right"></i>
+                                                    <span [innerHTML] = "aor.AOR"></span><br>
+                                                    <span [innerHTML] = "aor.KEY_ACT | stringBreak"></span>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="jobInfo_content m-portlet" *ngIf="jRequire?.length > 0">
+                                        <div class="m-portlet__head">
+                                            <div class="m-portlet__head-caption">
+                                                <div class="m-portlet__head-title">
+                                                    <h3 class="era-color m-portlet__head-text">
+                                                        {{word.jReq}}   
+                                                    </h3>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="m-portlet__body">
+                                            <div class="m-section m-section--last" *ngFor = "let req of jRequire" >
+                                                <span class="m-section__sub">
+                                                    <i style="font-weight: bold; padding-right:12px; " class="era-color fa fa-angle-double-right"></i> 
+                                                        Minimum {{req.YEARS}} years in {{req.AREA}}
+                                                    <br>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="jobInfo_content m-portlet" *ngIf="jSuccess?.length > 0">
+                                        <div class="m-portlet__head">
+                                            <div class="m-portlet__head-caption">
+                                                <div class="m-portlet__head-title">
+                                                    <h3 class="era-color m-portlet__head-text">
+                                                        {{word.succComp}}   
+                                                    </h3>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="m-portlet__body">
+                                            <div class="m-section m-section--last" *ngFor = "let suc of jSuccess" >
+                                                <span class="m-section__sub">
+                                                    <i style="font-weight: bold; padding-right:12px; " class="era-color fa fa-angle-double-right"></i> 
+                                                        {{suc.SUC_DESC}}<br>
+                                                        <span style="padding-left:8%">{{suc.SUC_NAME}}</span>
+                                                    <br>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="jobInfo_content m-portlet" *ngIf="jDigital?.length > 0">
+                                        <div class="m-portlet__head">
+                                            <div class="m-portlet__head-caption">
+                                                <div class="m-portlet__head-title">
+                                                    <h3 class="era-color m-portlet__head-text">
+                                                        {{word.digiComp}}   
+                                                    </h3>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="m-portlet__body">
+                                            <span>
+                                                <b><span *ngIf="leadLevel; else support">{{word.lead}}</span>
+                                                    <ng-template #support>{{word.support}}</ng-template>
+                                                    <span> {{word.following}} :</span>
+                                                </b>
+                                            </span>
+                                            <br><br>
+                                            <div style="padding-left:3%; "class="m-section m-section--last" *ngFor = "let digi of jDigital" >
+                                                <span class="m-section__sub">
+                                                    <i style="font-weight: bold; padding-right:12px; " class="era-color fa fa-angle-double-right"></i> 
+                                                        <b>{{digi.name}}</b><br>
+                                                        <span [innerHTML]="digi.details | stringBreak"></span>
+                                                    <br>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="jobInfo_content m-portlet" *ngIf="jFunctional?.length > 0">
+                                        <div class="m-portlet__head">
+                                            <div class="m-portlet__head-caption">
+                                                <div class="m-portlet__head-title">
+                                                    <h3 class="era-color m-portlet__head-text">
+                                                        {{word.funcComp}}   
+                                                    </h3>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="m-portlet__body">
+                                            <div class="m-section m-section--last" *ngFor = "let func of jFunctional" >
+                                                <span class="m-section__sub">
+                                                    <i style="font-weight: bold; padding-right:12px; " class="era-color fa fa-angle-double-right"></i> 
+                                                        {{func.FC_NAME}}<br>
+                                                        <span style="padding-left:8%">{{func.FC_DEF}}</span>
+                                                    <br>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="jobInfo_content m-portlet" *ngIf="jTechnical?.length > 0">
+                                        <div class="m-portlet__head">
+                                            <div class="m-portlet__head-caption">
+                                                <div class="m-portlet__head-title">
+                                                    <h3 class="era-color m-portlet__head-text">
+                                                        {{word.techComp}}   
+                                                    </h3>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="m-portlet__body">
+                                            <div class="m-section m-section--last" *ngFor = "let tech of jTechnical" >
+                                                <span class="m-section__sub">
+                                                    <i style="font-weight: bold; padding-right:12px; " class="era-color fa fa-angle-double-right"></i> 
+                                                        {{tech.LEVEL}} level in {{tech.COMP_DEF}} 
+                                                    <br>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="jobInfo_content m-portlet" *ngIf="jQualification?.length > 0">
+                                        <div class="m-portlet__head">
+                                            <div class="m-portlet__head-caption">
+                                                <div class="m-portlet__head-title">
+                                                    <h3 class="era-color m-portlet__head-text">
+                                                        {{word.qReq}}   
+                                                    </h3>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="m-portlet__body">
+                                            <div class="m-section m-section--last" *ngFor = "let qual of jQualification" >
+                                                <span class="m-section__sub">
+                                                    <i style="font-weight: bold; padding-right:12px; " class="era-color fa fa-angle-double-right"></i> 
+                                                        {{qual.text}} in {{qual.AREA}} ({{qual.SUB_AREA}})
+                                                    <br>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="jobInfo_content m-portlet" *ngIf = "jProfile?.length > 0">
+                                        <div class="m-portlet__head">
+                                            <div class="m-portlet__head-caption">
+                                                <div class="m-portlet__head-title">
+                                                    <h3 class="era-color m-portlet__head-text">
+                                                        {{word.jDetails}}   
+                                                    </h3>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="m-portlet__body">
+                                            <div class="m-section m-section--last" >
+                                                <span class="m-section__sub">
+                                                    <i style="font-weight: bold; padding-right:12px; " 
+                                                        class="era-color fa fa-angle-double-right"></i> 
+                                                        <b>{{word.company}} :</b> {{jProfile[0].Company_Desc}}
+                                                    <br><br>
+                                                    <i style="font-weight: bold; padding-right:12px; " 
+                                                        class="era-color fa fa-angle-double-right"></i> 
+                                                        <b>{{word.band}} :</b> {{jProfile[0].band}}
+                                                    <br><br>
+                                                    <i style="font-weight: bold; padding-right:12px; " 
+                                                        class="era-color fa fa-angle-double-right"></i> 
+                                                        <b>{{word.employ}} :</b> {{jProfile[0].Employee_group}}
+                                                    <br><br>
+                                                    <i style="font-weight: bold; padding-right:12px; " 
+                                                        class="era-color fa fa-angle-double-right"></i> 
+                                                        <b>{{word.advID}}:</b> {{jProfile[0].id}}
+                                                    <br><br>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <br>
+                                    
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    
+                    <div class="m-portlet m-portlet--full-height" style="margin-top : 2rem !important">
+                        <div class="m-portlet__head">
+                            <div class="m-portlet__head-caption">
+                                <div class="m-portlet__head-title">
+                                    <h3 class="m-portlet__head-text">
+                                        <i style="font-size: 1.6rem" class="era-color la la-comment"></i>&nbsp;&nbsp;
+                                        {{word.comments}}
+                                    </h3>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="m-portlet__body">
+                            <div class="centred my-auto" *ngIf="commentLoading2">
+                                <job-loading></job-loading>
+                            </div>
+                            <div class="m-widget3" *ngIf="!commentLoading2">
+                                
+                                <div class="m-widget3__item" *ngFor="let com of sortCommentsData; let i=index">
+                                    <div class="m-widget3__header">
+                                        <div class="m-widget3__user-img" style="cursor: pointer !important;" (click)="viewUser(com.staff_no)">
+                                            <img class="user_img m-widget3__img" [src]="com.img" onError="this.src='./assets/app/media/img/users/ghcm-user-default.jpg'">
+                                        </div>
+                                        <div class="m-widget3__info">
+                                            <span class="m-widget3__username" style="cursor: pointer !important;" 
+                                                (click)="viewUser(com.staff_no)">
+                                                {{com.name}}
+                                            </span>
+                                            <br>
+                                            <span class="m-widget3__time">
+                                                <span *ngIf="older_24Hrs(com.date); else ago">{{com.date | date:'dd / MM / yyyy'}}</span><ng-template #ago>{{com.date | timeAgo}}</ng-template>
+                                            </span>
+                                            <span class="m-widget3__status m--font-info" *ngIf="checkSameUser(com.staff_no)">
+                                                <div class="edit-delete-btn m-dropdown m-dropdown--inline m-dropdown--arrow m-dropdown--align-right m-dropdown--align-push" aria-expanded="true" m-dropdown-toggle="click" aria-expanded="true">
+                                                    <span class="edit-delete-btn m-portlet__nav-link btn btn-lg btn-secondary  m-btn m-btn--outline-2x m-btn--air m-btn--icon m-btn--icon-only m-btn--pill  m-dropdown__toggle">
+                                                        <i class="la la-plus m--hide"></i>
+                                                        <i class="la la-ellipsis-h"></i>
+                                                    </span>
+                                                    <div class="m-dropdown__wrapper edit-delete-wrap">
+                                                        <span class="m-dropdown__arrow m-dropdown__arrow--right m-dropdown__arrow--adjust"></span>
+                                                        <div class="m-dropdown__inner">
+                                                            <div class="m-dropdown__body">
+                                                                <div class="m-dropdown__content">
+                                                                    <ul class="m-nav">
+                                                                        <li class="m-nav__item ed_delBtn" (click)="editModeClicked(i, com.comId)">
+                                                                            <span class="m-nav__link">
+                                                                                <i class="icon-size m-nav__link-icon 	fa flaticon-edit-1"></i>
+                                                                                <span class="m-nav__link-text">
+                                                                                    {{word.edit}}
+                                                                                </span>
+                                                                            </span>
+                                                                        </li>
+                                                                        <li class="m-nav__item ed_delBtn" (click)="deleteCommentModal(i, com.comId)" data-toggle="modal" data-target="#m_modal_6">
+                                                                            <span class="m-nav__link">
+                                                                                <i class="icon-size m-nav__link-icon 	fa flaticon-delete-1"></i>
+                                                                                <span class="m-nav__link-text">
+                                                                                    {{word.delete}}
+                                                                                </span>
+                                                                            </span>
+                                                                        </li>
+                                                                    </ul>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div class="m-widget3__body">
+                                        <p class="m-widget3__text" id="edit_{{com.comId}}" style="margin-left: 4.1rem !important;">
+                                            {{com.comment}}
+                                        </p>
+                                        <a class="btn m-btn m-btn--icon" (click)="likeClicked(i,com.comId)" style="margin-left: 3rem !important">
+                                            <span> 
+                                                <i *ngIf="com.isLiked" [class.liked]="com.isLiked" style="font-size: 1.6rem" class="la la-heart"></i>
+                                                <i *ngIf="!com.isLiked" style="font-size: 1.6rem" class="la la-heart-o"></i>
+                                                <span [class.liked]="com.isLiked" > {{word.like}} </span>
+                                            </span>
+                                        </a>
+                                        <a *ngIf="com.likeCount > 0" class="btn m-btn m-btn--icon" data-toggle="modal" data-target="#likes" 
+                                            (click)="totalLikeClicked(i,com.comId)" style="margin-left: 3rem !important">
+                                            <span> 
+                                                <b>{{com.likeCount}}</b>&nbsp; {{word.like}}<span style="padding-left: 0px !important;" *ngIf="com.likeCount > 1">s</span>
+                                            </span>
+                                        </a>
+                                
+                                        <div class="m-form m--hide" style="margin-left: 4rem" id="edit2_{{com.comId}}">
+                                            <textarea class="form-control" rows="5" id="updComnt_{{com.comId}}"
+                                                style="overflow-y: scroll;" [ngModel] = "com.comment"
+                                                placeholder="{{word.phAddComment}}">
+                                            </textarea>
+                                        
+                                            <br>
+                                            <button type="button" class="btn era-btn" (click)="updateComnt(i, com.comId)">
+                                                {{word.update}}
+                                            </button>
+                                            <button type="button" class="btn btn-secondary" (click)="cancelUpdComnt(com.comId)" >
+                                                {{word.cancel}}
+                                            </button>
+                                            
+                                        </div>
+                                            
+                                    </div>
+                                </div>
+                                <div class="m-widget3__item" style="border-bottom: none !important">
+                                    <div class="m-widget3__header">
+                                        <div class="m-widget3__user-img">
+                                            <img class="m-widget3__img" src="{{currUserImgSrc}}" alt="">
+                                        </div>
+                                        <div class="m-widget3__info">
+                                            <span class="m-widget3__username">
+                                                {{currUserName}}
+                                            </span>
+                                            <br>
+                                            <span class="m-widget3__time">
+                                                now
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div class="m-widget3__body">
+                                        <form class="m-form" #addComnt (ngSubmit)="addComment()" [formGroup]="addComntForm">
+                                
+                                            <div style="margin-left: 4rem">
+                                                <textarea formControlName="newComnt" class="form-control" rows="5" required 
+                                                    style="overflow-y: scroll;"
+                                                    placeholder="{{word.phAddComment}}">
+                                                </textarea>
+                                            
+                                                <br>
+                                                <button type="submit" class="btn era-btn" [disabled]="!addComntForm.valid">
+                                                    {{word.post}}
+                                                </button>
+                                                <button id="reset-btn" [hidden]="true" type="reset" class="btn btn-success">Cancel</button>
+                                                
+                                            </div>
+                                            
+                                        </form>
+                                    </div>
+                                </div>
+
+                                <div class="modal fade" id="likes" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" style="display: none;" aria-hidden="true">
+                                    <div class="modal-dialog modal-dialog-centered" role="document">
+                                        <div class="modal-content like-modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="exampleModalLabel">
+                                                    <i style="font-size: 1.6rem" class="liked la la-heart-o"></i> &nbsp; {{totalLikes}}
+                                                </h5>
+                                                <button type="button" class="close" id="close-btn" data-dismiss="modal" aria-label="Close">
+                                                    <span aria-hidden="true">
+                                                        ×
+                                                    </span>
+                                                </button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <div class="m-scrollable like-body" data-scrollbar-shown="true" data-scrollable="true" data-max-height="200" style="max-height: 200px; overflow: auto;">
+                                                    <div class="centred my-auto" *ngIf="likeLoading">
+                                                        <job-loading></job-loading>
+                                                    </div>
+                                                    <div class="m-widget3" *ngIf="!likeLoading"> 
+                                                        <div class="m-widget3__item" *ngFor="let lk of likedList;">
+                                                            <div class="m-widget3__header" style="cursor: pointer !important" (click)="viewUser2(lk.staffId)">
+                                                                <div class="m-widget3__user-img" style="padding-top: 6px !important;">
+                                                                    <img class="user-img m-widget3__img" [src]="lk.img" onError="this.src='./assets/app/media/img/users/ghcm-user-default.jpg'">
+                                                                </div>
+                                                                <div class="m-widget3__info">
+                                                                    <span class="m-widget3__username">
+                                                                        {{lk.name}}
+                                                                    </span>
+                                                                    <br>
+                                                                    <span class="m-widget3__time">
+                                                                        {{lk.pos}}
+                                                                    </span>
+                                                                    <br>
+                                                                    <span *ngIf="!lk.currUser" class="m-widget3__time">
+                                                                        Status : <span style="color: #fd5806"><i>{{getStatus(lk.isCircle)}}</i></span>
+                                                                    </span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!-- <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                                                    Close
+                                                </button>
+                                                <button type="button" class="btn btn-primary">
+                                                    Save changes
+                                                </button>
+                                            </div> -->
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="modal fade" id="m_modal_6" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" style="display: none;" aria-hidden="true">
+                                    <div class="modal-dialog modal-dialog-centered" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header" style="padding:20px !important">
+                                                <h5 class="modal-title" id="exampleModalLongTitle">
+                                                    {{modalTitle}}
+                                                </h5>
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                    <span aria-hidden="true">
+                                                        ×
+                                                    </span>
+                                                </button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <p style="margin-top:1rem !important"> {{modalBody}}</p>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button id="close_btn" type="button" class="btn btn-secondary" data-dismiss="modal">
+                                                    {{word.cancel}}
+                                                </button>
+                                                <button *ngIf="delBtn" type="button" class="btn btn-primary" (click)="deleteComment()">
+                                                    {{word.delete}}
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                    
+            </div>
+
+            
+
+        </div>
+    </div>
+</div>

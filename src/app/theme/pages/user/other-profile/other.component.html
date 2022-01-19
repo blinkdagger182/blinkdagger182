@@ -1,0 +1,423 @@
+
+<div class="m-content">
+
+    <div class="d-flex justify-content-center">
+
+        <div class="col-xl-12">
+            
+            <div class="col-lg-12" style="padding-bottom: 1rem; padding-left: 0px !important">
+                <button title="Back to User Job" class="btn m-btn--pill btn-outline-info pt-1 pb-1 pr-3 pl-3"
+                    (click)="btnBackClick()">
+                    <div class="m-demo-icon__preview" style="display: flex; align-items: center;">
+                        <img style="width:2rem !important" src="../../../../../../assets/img/user/back_icon.svg">
+                        <span>back</span>
+                    </div>
+                    
+                </button>
+            </div>
+
+            <div class="centred my-auto" *ngIf="loading">
+                <app-user-loading></app-user-loading>
+            </div>
+
+            <div class="m-portlet m-portlet--full-height" *ngIf="!loading">
+                <!-- <div class="m-portlet__head">
+                    <div class="m-portlet__head-caption">
+                        <div class="m-portlet__head-title">
+                            <h2 class="m-portlet__head-text" style="font-size: 24px">
+                                Profile
+                            </h2>
+                        </div>
+                    </div>
+                </div> -->
+
+                <div class="m-portlet__body">
+                    <div class="tab-content">
+                        <div class="tab-pane active">
+            				<div class="m-card-user m-card-user--skin-dark" align="center" class="m-portlet__body" >
+                                <div class="m-card-user__pic">
+                                    <img [src]="userImg" onError="this.src='./assets/app/media/img/users/ghcm-user-default.jpg'"
+                                        class="m--img-rounded m--marginless" alt="" height="100" width="100"/>
+                                </div>
+                                <br >
+                                <div>							 
+                                    <span class="font-weight-bold">
+                                        {{userData.friendName}}
+                                    </span>
+                                </div>
+                                <div>
+                                    <span style = "color: #fd5806">
+                                        {{userData.email}}  
+                                    </span>
+                                </div>
+                                <div>
+                                    <span>
+                                        {{userData.position}}  
+                                    </span>
+                                </div>
+                                <div>
+                                    <span>
+                                        {{userData.RawDetails.company}}  
+                                    </span>
+                                </div>
+                                <div>
+                                    <span style = "color: #fd5806">
+                                        {{userData.updatedPhone}}  
+                                    </span>
+                                </div>
+                                <div>
+                                    <span>Status: </span>
+                                    <span *ngIf="userData.isMutualFriend === false && userData.pendingFriendRequest === false && userData.hasSentRequest === false" class="font-weight-bold">Not Following</span>
+                                    <span *ngIf="userData.isMutualFriend === true && userData.pendingFriendRequest === false" class="font-weight-bold">Following</span>
+                                    <span *ngIf="userData.isMutualFriend === false && userData.pendingFriendRequest === true" class="font-weight-bold">Pending Approval</span>
+                                    <span *ngIf="userData.isMutualFriend === false && userData.pendingFriendRequest === false && userData.hasSentRequest === true" class="font-weight-bold">Request Sent</span>
+                                </div>
+                                <div>
+                                    <span style="color: blue" (click)="postCircleFriend(userData.friendID)">
+                                        {{userData.totalFriendsNum}} in circle
+                                    </span>
+                                    <span>
+                                        ( {{userData.mutualFriendsNum}} mutuals)
+                                    </span>
+                                </div>
+                                <br >
+                                <div class="m-widget7__button">	
+                                    <div>
+                                        <!--Follow-->
+                                        <button type="button" *ngIf="userData.isMutualFriend === false && userData.pendingFriendRequest === false && userData.hasSentRequest === false" 
+                                            class="btn m-btn--pill m-btn m-btn--custom m-btn--label-brand m-btn--bolder"
+                                            style="background-color: #fd5806; color: white" (click)="sendRequestProfile(userData.friendID)">
+                                            Follow
+                                        </button>
+
+                                        <!--UnFollow-->
+                                        <button type="button" *ngIf="userData.isMutualFriend === true && userData.pendingFriendRequest === false"
+                                            class="btn m-btn--pill btn-secondary m-btn m-btn--custom m-btn--label-brand m-btn--bolder" 
+                                            style="color:#fd5806" data-toggle="modal" data-target="#unFollowModal" >
+                                            UnFollow
+                                        </button>
+                                        <!--UnFollow Modal-->
+									    <div class="modal fade" id="unFollowModal">
+                                            <div class="modal-dialog modal-dialog-centered">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h4 class="modal-title">Unfollow?</h4>
+                                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <p>Are you sure you want to unfollow {{userData.friendName}}?</p>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" id="rejectNo" class="btn btn-default" data-dismiss="modal">NO</button>
+                                                        <button type="button" class="btn btn-default" (click)="selectReject(userData.friendID)">YES</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!--Reject-->
+                                        <button type="button" *ngIf="userData.isMutualFriend === false && userData.pendingFriendRequest === true" 
+                                            class="btn m-btn--pill btn-secondary m-btn m-btn--custom m-btn--label-brand m-btn--bolder" 
+                                            style="color:#fd5806" data-toggle="modal" data-target="#rejectModalProfile">
+                                            Reject
+                                        </button>
+                                        <!--Reject Modal-->
+									    <div class="modal fade" id="rejectModalProfile" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                            <div class="modal-dialog modal-dialog-centered" role="document">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title" id="rejectModalProfileLabel">Remove Follow Request?</h5>
+                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                            <span aria-hidden="true">&times;</span>
+                                                        </button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        Are you sure you want to cancel your follow request?
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-secondary" id="rejectPendNo" data-dismiss="modal">No</button>
+                                                        <button type="button" class="btn btn-primary" (click)="RejectPending(userData.friendID)">Yes</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!--Accept-->
+                                        <button type="button" *ngIf="userData.isMutualFriend === false && userData.pendingFriendRequest === true" 
+                                            class="btn m-btn--pill m-btn m-btn--custom m-btn--label-brand m-btn--bolder" 
+                                            style="background-color: #fd5806; color: white" (click)="selectAccept(userData.friendID)">
+                                            Accept
+                                        </button>
+
+                                        <!--Cancel Request-->
+                                        <button type="button" *ngIf="userData.isMutualFriend === false && userData.pendingFriendRequest === false && userData.hasSentRequest === true" 
+                                            class="btn m-btn--pill btn-secondary m-btn m-btn--custom m-btn--label-brand m-btn--bolder" 
+                                            style="color:#fd5806" data-toggle="modal" data-target="#cancelReqModal" >
+                                            Cancel Request
+                                        </button>
+                                        <!--Cancel Modal-->
+                                        <div class="modal fade" id="cancelReqModal">
+                                            <div class="modal-dialog modal-dialog-centered">
+                                                <div class="modal-content">
+                                                    
+                                                    <div class="modal-header">
+                                                        <h4 class="modal-title">Remove Follow Request?</h4>
+                                                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                                    </div>
+                                                                
+                                                    <div class="modal-body">
+                                                        <p>Are you sure you want to cancel your follow request?</p>
+                                                    </div>
+                                                                
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-default" id="cancelReqNo" data-dismiss="modal">NO</button>
+                                                        <button type="button" class="btn btn-default" (click)="cancelReqProfile(userData.friendID)">YES </button>
+                                                    </div>
+                                    
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="m-portlet__body">
+                                    
+                                    <div class="m-portlet m-portlet--bordered m-portlet--rounded">
+                                        <div class="m-portlet__head">
+                                            <div class="m-portlet__head-caption">
+                                                <div class="m-portlet__head-title">
+                                                    <h3 class="m-portlet__head-text">
+                                                        ABOUT
+                                                    </h3>
+                                                </div>			
+                                            </div>
+                                        </div>
+                                        <div class="m-portlet__body">
+                                            <table class="table">
+                                                <span *ngIf="userData.about_me?.length">{{userData.about_me}}</span>
+                                                <span *ngIf="!userData.about_me?.length">Hey there! I am using ERA</span>
+                                            </table>	
+                                        </div>
+                                    </div>	
+
+                                    <div *ngIf="careerData.exprience?.length" class="m-portlet m-portlet--bordered m-portlet--rounded">
+                                        <div class="m-portlet__head">
+                                            <div class="m-portlet__head-caption">
+                                                <div class="m-portlet__head-title">
+                                                    <h3 class="m-portlet__head-text">
+                                                        JOB EXPERIENCE
+                                                    </h3>
+                                                </div>			
+                                            </div>
+                                        </div>
+                                        <div class="m-portlet__body">
+                                            <table class="table">      
+                                                <div *ngFor="let jobItem of careerData.exprience">
+                                                    <tr>
+                                                        <th><i class="fa fa-circle" style= "color:#FF6600"></i></th>
+                                                        <th><div class="font-weight-bold">{{jobItem.Post_Desc}}</div>
+                                                                <div>{{jobItem.Org_Unit_Desc}}</div>
+                                                                <div>	{{jobItem.Start_Date}} - {{jobItem.End_Date}}</div>
+                                                            <br>
+                                                            <div *ngIf="jobItem.Achievements?.length" style= "color:#FF6600">ACHIEVEMENTS:</div>
+                                                            <div> {{jobItem.Achievements}} </div>
+                                                        </th>
+                                                    </tr>
+                                                </div>
+                                            </table>	
+                                        </div>
+                                    </div>
+
+                                    <div *ngIf="careerData.previous?.length" class="m-portlet m-portlet--bordered m-portlet--rounded">
+                                        <div class="m-portlet__head">
+                                            <div class="m-portlet__head-caption">
+                                                <div class="m-portlet__head-title">
+                                                    <h3 class="m-portlet__head-text">
+                                                        PREVIOUS EMPLOYMENT
+                                                    </h3>
+                                                </div>			
+                                            </div>
+                                        </div>
+                                        <div class="m-portlet__body">
+                                            <table class="table">
+                                                <div *ngFor="let jobPrevItem of careerData.previous">
+                                                    <tr>
+                                                        <th><i class="fa fa-circle" style= "color:#FF6600"></i></th>
+                                                        <th>
+                                                            <div class="font-weight-bold">{{jobPrevItem.Employer}}</div>
+                                                            <div>{{jobPrevItem.Position}}</div>
+                                                            <div>{{jobPrevItem.Start_Date}}</div>
+                                                        </th>
+                                                    </tr>
+                                                </div>
+                                            </table>	
+                                        </div>
+                                    </div>
+
+                                    <div *ngIf="careerData.education?.length" class="m-portlet m-portlet--bordered m-portlet--rounded">
+                                        <div class="m-portlet__head">
+                                            <div class="m-portlet__head-caption">
+                                                <div class="m-portlet__head-title">
+                                                    <h3 class="m-portlet__head-text">
+                                                        EDUCATIONAL BACKGROUND
+                                                    </h3>
+                                                </div>			
+                                            </div>
+                                        </div>
+                                        <div class="m-portlet__body">
+                                            <table class="table">
+                                                <div *ngFor="let eduItem of careerData.education">
+                                                    <tr>
+                                                        <th><i class="fa fa-graduation-cap" style= "color:#FF6600"></i></th>
+                                                        <th>
+                                                            <div class="font-weight-bold">{{eduItem.Qualification_Desc}}</div>
+                                                            <div>{{eduItem.Start_Date}}</div>
+                                                            <div>{{eduItem.Branch_of_Study}}</div>
+                                                            <div>{{eduItem.University}}</div>
+                                                        </th>
+                                                    </tr>
+                                                </div>
+                                            </table>	
+                                        </div>
+                                    </div>
+
+
+                                    <div *ngIf="careerData.progCert?.length || careerData.award?.length" 
+                                        class="m-portlet m-portlet--bordered m-portlet--rounded">
+                                        <div class="m-portlet__head">
+                                            <div class="m-portlet__head-caption">
+                                                <div class="m-portlet__head-title">
+                                                    <h3 class="m-portlet__head-text">
+                                                        ACCOMPLISHMENTS
+                                                    </h3>
+                                                </div>			
+                                            </div>
+                                        </div>
+                                        <div class="m-portlet__body">
+                                            <table class="table" *ngIf="careerData.progCert?.length">
+                                                <div style= "color:#FF6600; font-weight: bold">CERTIFICATIONS</div>
+                                                <div *ngFor="let profcerItem of careerData.progCert">
+                                                    <tr>
+                                                        <th><i class="fa fa-certificate" style= "color:#FF6600"></i></th>
+                                                        <th>
+                                                            <div class="font-weight-bold">{{profcerItem.Qualification}}</div>
+                                                            <div>{{profcerItem.Start_Date}} - {{profcerItem.End_Date}}</div>
+                                                        </th>
+                                                    </tr>
+                                                </div>
+                                            </table>	
+
+                                            <table class="table"  *ngIf="careerData.award?.length">
+                                                <div style= "color:#FF6600; font-weight: bold">AWARDS/MERITS</div>
+                                                <div *ngFor="let accompItem of careerData.award">
+                                                    <tr>
+                                                        <th><i class="la la-certificate" style= "color:#FF6600"></i></th>
+                                                        <th>
+                                                            
+                                                            <div class="font-weight-bold">{{accompItem.Award}}</div>
+                                                            <div>{{accompItem.Start_Date}}</div>
+                                                        </th>
+                                                    </tr>
+                                                </div>
+                                            </table>	
+                                        </div>
+                                    </div>
+
+
+                                    <div class="m-portlet m-portlet--bordered m-portlet--rounded">
+                                        <div class="m-portlet__head">
+                                            <div class="m-portlet__head-caption">
+                                                <div class="m-portlet__head-title">
+                                                    <h3 class="m-portlet__head-text">
+                                                        SKILLS & ENDORSEMENT
+                                                    </h3>
+                                                </div>			
+                                            </div>
+                                        </div>
+                                        <div class="m-portlet__body">
+                                            <table class="table">
+                                                <tr *ngFor="let skillItem of userData.skills">
+                                                    <td>
+                                                        <div>
+                                                            <span style="color: blue">{{skillItem.name}}
+                                                                <span style = "color: #fd5806">|</span>
+                                                                <span style = "color: #fd5806">{{skillItem.endorse_point}}</span> 
+                                                            </span>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <div *ngIf="userData.skills.length == 0">No skill is added yet</div>
+                                            </table>
+                                        </div>	
+                                    </div>
+
+                                    <div class="m-portlet m-portlet--bordered m-portlet--rounded">
+                                        <div class="m-portlet__head">
+                                            <div class="m-portlet__head-caption">
+                                                <div class="m-portlet__head-title">
+                                                    <h3 class="m-portlet__head-text">
+                                                        INTERESTS
+                                                    </h3>
+                                                </div>			
+                                            </div>
+                                        </div>
+                                        <div class="m-portlet__body">
+                                            <table class="table">
+                                                <tr *ngFor="let interestItem of userData.interest">
+                                                    <td>
+                                                        <span>{{interestItem.name}}</span>
+                                                    </td>
+                                                </tr>
+                                                <div *ngIf="userData.interest.length == 0">No interest is added yet</div>
+                                            </table>	
+                                        </div>
+                                    </div>
+
+                                    <div>
+                                        <div *ngIf= "userData.supervisor?.length" class="m-portlet m-portlet--bordered m-portlet--rounded">
+                                            <div class="m-portlet__head">
+                                                <div class="m-portlet__head-caption">
+                                                    <div class="m-portlet__head-title">
+                                                        <h3 class="m-portlet__head-text">
+                                                            DIRECT SUPERVISOR
+                                                        </h3>
+                                                    </div>			
+                                                </div>
+                                            </div>
+                                            <div class="m-portlet__body">
+                                                <table class="table">
+                                                    <tr>
+                                                        <td style="width: 2rem">
+                                                            <div style="text-align: center">
+                                                                <img [src]="superiorImg" onError="this.src='./assets/app/media/img/users/ghcm-user-default.jpg'" 
+                                                                    class="m--img-rounded m--marginless" alt="" height="70" width="70"/>
+                                                            </div>
+                                                        </td>
+                                                        <td style="padding-top:2rem">
+                                                            <div style="font-weight:bold">{{userData.supervisor}}</div>
+                                                            <div>{{userData.supervisorPosition}}</div>
+                                                        </td>
+                                                        <!-- <td>
+                                                            <div>
+                                                                <button type="button" class="btn btn-light btn-elevate-hover btn-icon">
+                                                                    <i class="fa fa-chevron-right" style= "color:#FF6600" (click)="onSelect(profileSpItem.supervisorID, profileSpItem.supervisor)"></i>
+                                                                </button>
+                                                            </div>
+                                                        </td> -->
+                                                    </tr>
+                                                </table>	
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>

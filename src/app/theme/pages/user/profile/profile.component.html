@@ -1,0 +1,2004 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.13/semantic.min.css">
+
+<div>
+    <div class="profile-bg">
+
+        <div class="m-content">
+            <div class="row" style="max-width: 1200px; margin: auto; padding: 4rem 2rem 0rem 2rem;">
+                <div class="col-xl-12 col-lg-12" *ngIf="!loading" style="border-radius:20px; background: rgb(96 120 143 / 50%); ">
+                    
+                    <div class="row" style="height: 100%;">
+                        <div class="col-md-5 text-right" id="mr-auto">
+                            <input type="file" id="dpImg" accept="image/*" style="display: none !important" (change)="dpChange($event)" class="col-sm-12 form-control m-input" name="screenshot" size="10" > 
+                            <div style="padding: 0 5px 0 0; text-align: center;" (click)="addDPTrigger()">
+                                <div class="profile-det-pic" *ngIf="imgOptArrList !== '0'">
+                                    <img class="profile_img_main" src="{{imgOptArrList}}" alt="" />
+                                </div>
+                                <div class="profile-det-pic" *ngIf="imgOptArrList === '0'">
+                                    <img class="profile_img_main" src="./assets/app/media/img/users/ghcm-user-default.jpg" alt="" />
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-7 text-left mt-3 mb-3" style="color: white; font-size: 16px;">
+                            <div class="mrgn-6">
+                                <strong>Staff Details</strong>
+                            </div>
+                            <div class="mrgn-6">
+                                <span>
+                                    <span class="dt-icon">
+                                        <img class="img-icon-staffdet" src="./../../../../../assets/blank/images/pro-det-icon-name.png">
+                                        <img class="img-line-staffdet" src="./../../../../../assets/blank/images/pro-det-line.png">
+                                    </span>
+                                    {{profile.selfName}}
+                                </span> 
+                            </div>
+                            <div class="mrgn-6" *ngIf="profile.selfID">
+                                <span>
+                                    <span class="dt-icon">
+                                        <img class="img-icon-staffdet" src="./../../../../../assets/blank/images/pro-det-icon-staffid.png">
+                                        <img class="img-line-staffdet" src="./../../../../../assets/blank/images/pro-det-line.png">
+                                    </span>
+                                    {{profile.selfID}}
+                                </span> 
+                            </div>
+                            <div class="mrgn-6" *ngIf="profile.rawDetails.properties.subOrgUnitName">
+                                <span>
+                                    <span class="dt-icon">
+                                        <img class="img-icon-staffdet" src="./../../../../../assets/blank/images/pro-det-icon-unit.png">
+                                        <img class="img-line-staffdet" src="./../../../../../assets/blank/images/pro-det-line.png">
+                                    </span>
+                                    {{profile.rawDetails.properties.subOrgUnitName}}
+                                </span> 
+                            </div>
+                            <div class="mrgn-6" *ngIf="profile.rawDetails.properties.orgUnitName">
+                                <span>
+                                    <span class="dt-icon">
+                                        <img class="img-icon-staffdet" src="./../../../../../assets/blank/images/pro-det-icon-company.png">
+                                        <img class="img-line-staffdet" src="./../../../../../assets/blank/images/pro-det-line.png">
+                                    </span>
+                                    {{profile.rawDetails.properties.orgUnitName}}
+                                </span> 
+                            </div>
+                            <div class="mrgn-6" *ngIf="profile.position">
+                                <span>
+                                    <span class="dt-icon">
+                                        <img class="img-icon-staffdet" src="./../../../../../assets/blank/images/pro-det-icon-position.png">
+                                        <img class="img-line-staffdet" src="./../../../../../assets/blank/images/pro-det-line.png">
+                                    </span>
+                                    {{profile.position}}
+                                </span> 
+                            </div>
+                            <div class="mrgn-6" *ngIf="profile.selfEmail">
+                                <span>
+                                    <span class="dt-icon">
+                                        <img class="img-icon-staffdet" src="./../../../../../assets/blank/images/pro-det-icon-email.png">
+                                        <img class="img-line-staffdet" src="./../../../../../assets/blank/images/pro-det-line.png">
+                                    </span>
+                                    {{profile.selfEmail}}
+                                </span> 
+                            </div>
+                            <div class="mrgn-6" *ngIf="profile.rawDetails.properties.mobileTel">
+                                <span>
+                                    <span class="dt-icon">
+                                        <img class="img-icon-staffdet" src="./../../../../../assets/blank/images/pro-det-icon-phone.png">
+                                        <img class="img-line-staffdet" src="./../../../../../assets/blank/images/pro-det-line.png">
+                                    </span>
+                                    {{profile.rawDetails.properties.mobileTel}}
+                                </span> 
+                            </div>
+                        </div>
+                    </div>
+                            
+                    <div style="text-align: center;">
+                            <div class="circle-button" (click)="menuClicked('/circle')"> 
+                                {{profile.friendNum}} in circle 
+                            </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    
+</div>
+
+<div class="m-content">
+    <div class="row" style="max-width: 1200px; margin: auto;">
+        <!-- :start page loader -->
+        <div class="col-lg-12 centred my-auto" *ngIf="loading">
+            <div class="m-section__content ">
+                <div class="m-demo marginLoader" data-code-preview="true" data-code-html="true" data-code-js="false">
+                    <div style="padding: 30px;">
+                        <div class="m-stack m-stack--ver m-stack--general m-stack--demo">
+
+                            <div class="m-stack__item m-stack__item--center m-stack__item--middle">
+                                <span>
+                                    Loading data. Please wait...
+                                </span>
+                                <span>
+                                    <div class="m-loader m-loader--lg m-loader--success" style="width: 30px; display: inline-block;"></div>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xl-12 col-lg-12 m-portlet__body pt-5">
+
+            <div #nickname class="pb-4">
+                <div class="col-lg-12" *ngIf="!loading">
+                    <div class="m-accordion m-accordion--bordered" id="m_accordion_1" role="tablist">
+                        <div class="m-accordion__item" style="border-radius: 15px!important">
+                            <div class="row">
+                                <div class="m-accordion__item-head col-md-12" role="tab" id="m_accordion_nickname" data-toggle="collapse" href="#m_accordion_nickname_body"
+                                    aria-expanded="true">
+                                    <span class="m-accordion__item-mode"></span>
+                                    <span class="m-accordion__item-title m-accordian__item-mode-title" style="vertical-align: baseline!important">
+                                        Nick Name
+                                    </span>
+                                </div>
+                            </div>
+
+                            <div class="m-accordion__item-body show" id="m_accordion_nickname_body" role="tabpanel" aria-labelledby="m_accordion_nickname">
+                                <div class="m-accordion__item-content">
+                                    
+                                    <div class="row" *ngIf="!loadingNickName">
+                                        <div class="col-md-6">
+                                                <input type="text" id="aboutMe" value="{{nickName}}" [(ngModel)]="nickName" 
+                                                placeholder="Nick Name" [disabled] = "!isNickEdit"
+                                                class="form-control m-input m-input--air m-input--pill">                
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div style="display: flex;justify-content: flex-end;align-content: flex-end !important;width: 100%" >
+                                                <button *ngIf="!isNickEdit" class="btn btn-outline-orange text-right" (click)="editNickName()">
+                                                    Edit
+                                                </button>
+                                                <button *ngIf="isNickEdit" class="btn btn-outline-orange text-right" 
+                                                [disabled]="nickName?.length < 3"
+                                                (click)="saveNickName()">
+                                                    Save
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div *ngIf="loadingNickName" class="text-center">
+                                        <span>
+                                            <div class="m-loader m-loader--lg m-loader--warning" style="width: 30px; display: inline-block;"></div>
+                                        </span>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div #about id="about" class="pb-4">
+                <form [formGroup]="aboutMeForm" autocomplete="off">
+                    <div class="col-lg-12" *ngIf="!loading">
+                        <div class="m-accordion m-accordion--bordered" id="m_accordion_1" role="tablist">
+                            <!-- :start advertisement info -->
+                            <div class="m-accordion__item" style="border-radius: 15px!important">
+                                <div class="row">
+                                    <div class="m-accordion__item-head col-md-12" role="tab" id="m_accordion_about_me_head" data-toggle="collapse" href="#m_accordion_about_me_body"
+                                        aria-expanded="true">
+                                        <span class="m-accordion__item-mode"></span>
+                                        <span class="m-accordion__item-title m-accordian__item-mode-title" style="vertical-align: baseline!important">
+                                            About Me
+                                        </span>
+                                    </div>
+                                </div>
+
+                                <div class="m-accordion__item-body show" id="m_accordion_about_me_body" role="tabpanel" aria-labelledby="m_accordion_about_me_head">
+                                    <div class="m-accordion__item-content">
+                                        <!-- CONTENT -->
+                                        <div *ngIf="loadingAbout" class="text-center">
+                                            <span>
+                                                <div class="m-loader m-loader--lg m-loader--warning" style="width: 30px; display: inline-block;"></div>
+                                            </span>
+                                        </div>
+                                        <div *ngIf="!toggleEditAbout && !loadingAbout">
+                                            <div class="row">
+                                                <div class="col-md-10">
+
+                                                        {{aboutMe}}
+                                                </div>
+                                                <div class="col-md-2">
+                                                    <div style="display: flex;justify-content: flex-end;align-content: flex-end !important;width: 100%" *ngIf="edit === true">
+                                                        <button class="btn btn-outline-orange text-right" (click)="clickEditAbout()">
+                                                            EDIT
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div *ngIf="toggleEditAbout && !loadingAbout">
+                                            <div class="row">
+                                                    <div class="col-md-10">
+                                                            <input type="text" id="aboutMe" value="{{aboutMe}}" formControlName="aboutMe" class="form-control m-input m-input--air m-input--pill">                
+                                                    </div>
+                                                    <div class="col-md-2">
+                                                        <div style="display: flex;justify-content: flex-end;align-content: flex-end !important;width: 100%" *ngIf="edit === false">
+                                                            <button class="btn btn-outline-orange text-right" (click)="submitAboutMe()">
+                                                                Save
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- :end advertisement info -->
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+            <div #job id="job" class="pb-4">
+                <div class="col-lg-12" *ngIf="!loading && data.length > 0">
+                    <div class="m-accordion m-accordion--bordered" id="m_accordion_1" role="tablist">
+                        <!-- :start advertisement info -->
+                        <div class="m-accordion__item" style="border-radius: 15px!important">
+                            <div class="row">
+                                <div class="m-accordion__item-head collapsed accordion-t-responsive" role="tab" id="m_accordion_job_experience_head" data-toggle="collapse" href="#m_accordion_job_experience_body"
+                                    aria-expanded="false" (click)="checkCollapse('m_accordion_job_experience_body')">
+                                    <span class="m-accordion__item-mode"></span>
+                                    <span class="m-accordion__item-title m-accordian__item-mode-title" style="vertical-align: baseline!important">
+                                        Job Experience
+                                    </span>
+                                </div>
+                                <div class="row pt-2 accordion-a-responsive">
+                                    <div class="pt-2" style="width: 50%;display: flex;justify-content: flex-end;align-content: flex-end !important;">
+                                        <i class="fa fa-eye" style="margin-right: 10%;font-size:25px; color:#01A8C6; cursor: pointer" *ngIf="expAccess === 1 || expAccess === true"></i>
+                                        <i class="fa fa-eye-slash" style="margin-right: 10%;font-size:25px; color:#dfe2ea; cursor: pointer" *ngIf="expAccess === 0 || expAccess === false"></i>
+                                        
+                                    </div>
+                                    <div style="height: 30px; width: 50%">
+                                        <span class="m-switch">
+                                            <label>
+                                                <input type="checkbox" [(ngModel)]="expAccess" (change)="accessToggle('exp')">
+                                                <span></span>
+                                            </label>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="m-accordion__item-body collapsing" id="m_accordion_job_experience_body" role="tabpanel" aria-labelledby="m_accordion_job_experience_head">
+                                <div class="m-accordion__item-content">
+                                    <!-- CONTENT -->
+                                    <div class="row pb-2" *ngFor="let item of data; let i=index">
+                                        <div class="col-sm-1 text-center pt-4">
+                                            <i class="fa fa-circle" style="color:#01A8C6;"></i> <br>
+                                            <!-- <hr class="mt-0 mb-0" style="transform: rotate(90deg);"> -->
+                                        </div>
+                                        <div class="col-sm-11">
+                                            <div class="row">
+                                                <div class="col-sm-12">
+                                                    <h3 class="h3">{{item.Post_Desc}}</h3>
+                                                </div>
+                                            </div>
+                                            <div class="row mt-1">
+                                                <div class="col-sm-8">
+                                                    <small class="h3Small pl-0">{{item.Org_Unit_Desc}}</small>
+                                                </div>
+                                                <div class="col-sm-4 text-right pr-4">
+                                                    <small class="h3Small">{{item.Start_Date}} <span class="pr-2 pl-2">-</span> {{item.End_Date}}</small>
+                                                </div>
+                                            </div>
+                                            <div class="row" style="padding: 15px 1.2rem">
+                                                <div class="col-sm-6 pl-0" *ngIf="item.Achievements">
+                                                    <span style="color:#01A8C6">MY ACHIEVEMENTS:</span>
+                                                </div>
+                                                <div  class="col-sm-6 pl-0" (click)="toggleEdit(i)" *ngIf="!item.Achievements">
+                                                    <span style="color:#01A8C6">ADD ACHIEVEMENTS</span>
+                                                </div>
+                                                <div class="col-sm-6 text-right pr-0" *ngIf="item.Achievements && item.edit === true">
+                                                    <button class="mt-0 pt-0 pr-1 btn btn-link" style="color:#01A8C6;" (click)="toggleEdit(i)">Edit</button>
+                                                </div>
+                                                <div class="col-sm-6 text-right pr-0" *ngIf="item.edit === false">
+                                                    <button class="mt-0 pt-0 pr-1 btn btn-link" style="color:#01A8C6;" (click)="addAchievement(i)">Save</button>
+                                                </div>
+    
+                                                <div *ngIf="item.Achievements && item.edit === true">
+                                                    {{item.Achievements}}
+                                                </div>
+    
+                                                <div class="col-sm-12 pr-0 pl-0" *ngIf="item.edit === false">
+                                                    <input type="text" id="achievement" value="{{item.Achievements}}" maxlength="400" class="form-control m-input m-input--air m-input--pill">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-12 pt-2 pb-2" *ngIf="i < data.length - 1">
+                                            <hr>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                        <!-- :end advertisement info -->
+                    </div>
+                </div>
+            </div>
+
+            <div #employment id="employment" class="pb-4">
+                <div class="col-lg-12" *ngIf="!loading">                    
+                    <div class="m-accordion m-accordion--bordered" id="m_accordion_1" role="tablist">
+                        <!-- :start advertisement info -->
+                        <div class="m-accordion__item" style="border-radius: 15px!important">
+                            <div class="row">
+                                <div class="m-accordion__item-head collapsed accordion-t-responsive" role="tab" id="m_accordion_employment_head" data-toggle="collapse" href="#m_accordion_employment_body"
+                                    aria-expanded="false" (click)="checkCollapse2('m_accordion_employment')">
+                                    <span class="m-accordion__item-mode"></span>
+                                    <span class="m-accordion__item-title m-accordian__item-mode-title" style="vertical-align: baseline!important;">
+                                        Previous Employment
+                                    </span>
+                                </div>
+                                <div class="row pt-2 accordion-a-responsive">
+                                    <div class="pt-1" style="width: 50%;display: flex;justify-content: flex-end;align-content: flex-end !important;">
+                                        <button style="margin-right: 15%; margin-top: -0.25rem;display: none" id="m_accordion_employment_btn" class="btn btn-outline-orange m-btn m-btn--icon m-btn--icon-only m-btn--pill m-btn--air" data-target="#m_modal_previous_add" data-toggle="modal">
+                                            <i class="fa fa-plus"></i>
+                                        </button>
+                                        <i class="fa fa-eye" style="margin-right: 10%;font-size:25px; color:#01A8C6; cursor: pointer" *ngIf="prevAccess === 1 || prevAccess === true"></i>
+                                        <i class="fa fa-eye-slash"  style="margin-right: 10%;font-size:25px; color:#dfe2ea; cursor: pointer" *ngIf="prevAccess === 0 || prevAccess === false"></i>
+                                    </div>
+                                    <div style="height: 30px; width: 50%">
+                                        <span class="m-switch">
+                                            <label>
+                                                <input type="checkbox" [(ngModel)]="prevAccess" (change)="accessToggle('prev')">
+                                                <span></span>
+                                            </label>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="m-accordion__item-body collapsing" id="m_accordion_employment_body" role="tabpanel" aria-labelledby="m_accordion_employment_head">
+                                <div class="m-accordion__item-content">
+                                    <!-- CONTENT -->
+                                    <div class="row" *ngIf="prevData.length < 1">
+                                        <div class="col-sm-12 text-center">
+                                            <button type="button" class="btn btn-link" data-target="#m_modal_previous_add" data-toggle="modal" style="text-decoration: underline; color: black" (click)="clearData()">
+                                                There are no information for this. <br>
+                                                Click here to add it.
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div class="row pb-2"  *ngFor="let item of prevData; let i=index;">
+                                        <div class="col-sm-2 m-card-profile">
+                                            <div class="m-card-profile__pic text-right pr-0 pl-3">
+                                                <div class="mt-4 mb-0" style="height: 70px; width: 80px;">
+                                                    <i class="fa fa-bars" style="padding: 12px; font-size: 30px;color: white; border-radius: 9px;" [ngStyle]="{'background-color': item.color}"></i>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-8 pt-4">
+                                            <h3 style="display: table-cell; vertical-align: middle; font-size: 1.3rem; font-weight: 500; font-family: Roboto; color: #575962;">{{item.Employer}} <br>
+                                                <small class="small" *ngIf="item.Position">{{item.Position}} <br> </small>
+                                                    <small class="small">{{item.Start_Date}}</small>
+                                            </h3> 
+                                        </div>
+                                        <div class="col-sm-1 text-right pt-4">
+                                            <a href="#m_modal_previous_edt" class="btn btn-outline-warning m-btn m-btn--icon m-btn--icon-only m-btn--pill m-btn--air" (click)="selPrev(item)" data-toggle="modal">
+                                                <i class="la la-pencil"></i>
+                                            </a>
+                                        </div>
+                                        <div class="col-sm-1 pt-4">
+                                            <button class="btn btn-outline-danger m-btn m-btn--icon m-btn--icon-only m-btn--pill m-btn--air" (click)="submitDeletePrev(item)" id="deletePrev">
+                                                <i class="fa fa-trash"></i>
+                                            </button>
+                                        </div>
+                                        <div class="col-sm-12" *ngIf="i < data5.length - 1">
+                                            <hr>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                        <!-- :end advertisement info -->
+                    </div>
+                </div>
+            </div>
+
+            <div #education id="education" class="pb-4">
+                <div class="col-lg-12" *ngIf="!loading && data2.length > 0">
+                    <div class="m-accordion m-accordion--bordered" id="m_accordion_1" role="tablist">
+                        <!-- :start advertisement info -->
+                        <div class="m-accordion__item" style="border-radius: 15px!important">
+                            <div class="row">
+                                <div class="m-accordion__item-head collapsed accordion-t-responsive" role="tab" id="m_accordion_education_head" data-toggle="collapse" href="#m_accordion_education_body"
+                                    aria-expanded="false" (click)="checkCollapse2('m_accordion_education')">
+                                    <span class="m-accordion__item-mode"></span>
+                                    <span class="m-accordion__item-title m-accordian__item-mode-title" style="vertical-align: baseline!important">
+                                        Education
+                                    </span>
+                                </div>
+                                <div class="row pt-2 accordion-a-responsive">
+                                    <div class="pt-1" style="width: 50%;display: flex;justify-content: flex-end;align-content: flex-end !important;">
+                                        <i class="fa fa-eye" style="margin-right: 10%;font-size:25px; color:#01A8C6; cursor: pointer" *ngIf="eduAccess === 1"></i>
+                                        <i class="fa fa-eye-slash"  style="margin-right: 10%;font-size:25px; color:#dfe2ea; cursor: pointer" *ngIf="eduAccess === 0"></i>
+                                    </div>
+                                    <div style="height: 30px; width: 50%">
+                                        <span class="m-switch">
+                                            <label>
+                                                <input type="checkbox" [(ngModel)]="eduAccess" (change)="accessToggle('edu')">
+                                                <span></span>
+                                            </label>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="m-accordion__item-body collapsing" id="m_accordion_education_body" role="tabpanel" aria-labelledby="m_accordion_education_head">
+                                <div class="m-accordion__item-content">
+                                    <!-- CONTENT -->
+                                    <div class="row pb-2" *ngFor="let item of data2">
+                                        <div class="col-sm-2 m-card-profile">
+                                            <div class="m-card-profile__pic text-right pr-0 pl-3">
+                                                <div class="mt-4 mb-0" style="height: 70px; width: 80px;">
+                                                    <i class="fa fa-graduation-cap" style="padding: 12px; font-size: 30px; color: white; border-radius: 9px;" [ngStyle]="{'background-color': item.color}"></i>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-10 pt-3">
+                                            <h3 style="display: table-cell; vertical-align: middle; font-size: 1.3rem; font-weight: 500; font-family: Roboto; color: #575962;">{{item.Qualification_Desc}} <br>
+                                                <small class="small">{{item.Start_Date}} <br> {{item.Branch_of_Study}} <br> {{item.University}}</small>
+                                            </h3> 
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                        <!-- :end advertisement info -->
+                    </div>                        
+                </div>
+            </div>
+            
+            <div #award id="award" class="pb-4">
+                <div class="col-lg-12" *ngIf="!loading && data6.length > 0">
+                    <div class="m-accordion m-accordion--bordered" id="m_accordion_1" role="tablist">
+                        <!-- :start advertisement info -->
+                        <div class="m-accordion__item" style="border-radius: 15px!important">
+                            <div class="row">
+                                <div class="m-accordion__item-head collapsed accordion-t-responsive" role="tab" id="m_accordion_award_head" data-toggle="collapse" href="#m_accordion_award_body"
+                                    aria-expanded="false" (click)="checkCollapse('m_accordion_award_head')">
+                                    <span class="m-accordion__item-mode"></span>
+                                    <span class="m-accordion__item-title m-accordian__item-mode-title" style="vertical-align: baseline!important">
+                                        Accomplishments
+                                    </span>
+                                </div>
+                                <div class="row pt-2 accordion-a-responsive" style="background: white!important">
+                                    <div class="pt-1" style="width: 50%;display: flex;justify-content: flex-end;align-content: flex-end !important;">
+                                        <i class="fa fa-eye" style="margin-right: 10%;font-size:25px; color:#01A8C6; cursor: pointer" *ngIf="awardAccess === 1"></i>
+                                        <i class="fa fa-eye-slash"  style="margin-right: 10%;font-size:25px; color:#dfe2ea; cursor: pointer" *ngIf="awardAccess === 0"></i>
+                                    </div>
+                                    <div style="height: 30px; width: 50%">
+                                        <span class="m-switch">
+                                            <label>
+                                                <input type="checkbox" [(ngModel)]="awardAccess" (change)="accessToggle('award')">
+                                                <span></span>
+                                            </label>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="m-accordion__item-body collapsing" id="m_accordion_award_body" role="tabpanel" aria-labelledby="m_accordion_award_head">
+                                <div class="m-accordion__item-content">
+                                    <!-- CONTENT -->
+                                    <div class="col-sm-12" style="padding:15px">
+                                        <h4>AWARDS/MERITS</h4>
+                                    </div>
+                                    <div class="row pb-2" *ngFor="let item of data6">
+                                        <div class="col-sm-2 m-card-profile">
+                                            <div class="m-card-profile__pic text-right pr-0 pl-3">
+                                                <div class="mb-0" style="height: 70px; width: 80px;">
+                                                    <i class="fa fa-trophy" style="padding: 12px; font-size: 30px; color: white; border-radius: 9px;" [ngStyle]="{'background-color': item.color}"></i>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-8 pt-3">
+                                            <h3 style="display: table-cell; vertical-align: middle; font-size: 1.3rem; font-weight: 500; font-family: Roboto; color: #575962;">{{item.Award}} <br>
+                                                <small class="small">{{item.Start_Date}} </small>
+                                            </h3> 
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-12" style="padding:15px" *ngIf="data4.length > 0">
+                                        <h4>CERTIFICATIONS</h4>
+                                    </div>
+                                    <div class="row pb-2" *ngFor="let item of data4">
+                                        <div class="col-sm-2 m-card-profile">
+                                            <div class="m-card-profile__pic text-right pr-0 pl-3">
+                                                <div class="mb-0" style="height: 70px; width: 80px;">
+                                                    <i class="fa fa-certificate" style="padding: 12px; font-size: 30px; color: white; border-radius: 9px;" [ngStyle]="{'background-color': item.color}"></i>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-8 pt-3">
+                                            <h3 style="display: table-cell; vertical-align: middle; font-size: 1.3rem; font-weight: 500; font-family: Roboto; color: #575962;">{{item.Qualification}} <br>
+                                                <small class="small">{{item.Start_Date}} </small>
+                                            </h3> 
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                        <!-- :end advertisement info -->
+                    </div>
+                </div>
+            </div>
+
+            <div #skill id="skill" class="pb-4">
+                <div class="col-lg-12" *ngIf="!loading">
+                    <div class="m-accordion m-accordion--bordered" id="m_accordion_1" role="tablist">
+                        <!-- :start advertisement info -->
+                        <div class="m-accordion__item" style="border-radius: 15px!important">
+                            <div class="row">
+                                <div class="m-accordion__item-head collapsed accordion-t-responsive" role="tab" id="m_accordion_skill_head" data-toggle="collapse" href="#m_accordion_skill_body"
+                                    aria-expanded="false" (click)="checkCollapse('m_accordion_skill_head')">
+                                    <span class="m-accordion__item-mode"></span>
+                                    <span class="m-accordion__item-title m-accordian__item-mode-title" style="vertical-align: baseline!important">
+                                        Skills & Endorsements
+                                    </span>
+                                </div>
+                                <div style="display:none" class="row pt-2 accordion-a-responsive">
+                                    <div class="pt-1 col-sm-11" style="display: flex;justify-content: flex-end;align-content: flex-end !important;">
+                                        <button class="btn btn-outline-orange m-btn m-btn--icon m-btn--icon-only text-right m-btn--pill m-btn--air" data-target="#m_modal_skill_add" data-toggle="modal" (click)="clearData()">
+                                            <i class="fa fa-plus"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="m-accordion__item-body collapsing" id="m_accordion_skill_body" role="tabpanel" aria-labelledby="m_accordion_skill_head">
+                                <div class="m-accordion__item-content">
+                                    <!-- CONTENT -->
+                                    <div class="row pb-2"  *ngFor="let item of skillsetData">
+                                        <div class="col-sm-11 pt-3" (click)="getEndorseListData(item.skill_id)" data-target="#m_modal_endorse_list" data-toggle="modal">
+                                            <h5>{{item.name}} <span style="color:#01A8C6;"> | {{item.skill_endorsement}}</span></h5>
+                                        </div>
+                                        <div class="col-sm-1 text-right pt-4">
+                                            <a class="btn btn-outline-warning m-btn m-btn--icon m-btn--icon-only m-btn--pill m-btn--air"  id="edtBtn" href="#m_modal_skill_edt" data-toggle="modal" (click)="setSkill(item)">
+                                                <i class="la la-pencil"></i>
+                                            </a>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                        <!-- :end advertisement info -->
+                    </div>
+                </div>
+            </div>
+
+            <div #interest id="interest" class="pb-4">
+                <div class="col-lg-12" *ngIf="!loading">
+                    <div class="m-accordion m-accordion--bordered" id="m_accordion_1" role="tablist">
+                        <!-- :start advertisement info -->
+                        <div class="m-accordion__item" style="border-radius: 15px!important">
+                            <div class="row">
+                                <div class="m-accordion__item-head collapsed accordion-t-responsive" role="tab" id="m_accordion_interest_head" data-toggle="collapse" href="#m_accordion_interest_body"
+                                    aria-expanded="false" (click)="checkCollapse('m_accordion_interest_head')">
+                                    <span class="m-accordion__item-mode"></span>
+                                    <span class="m-accordion__item-title m-accordian__item-mode-title" style="vertical-align: baseline!important">
+                                        My Interests
+                                    </span>
+                                </div>
+                                <div style="display:none" class="row pt-2 accordion-a-responsive">
+                                    <div class="pt-1 col-sm-11" style="display: flex;justify-content: flex-end;align-content: flex-end !important;">
+                                        <button class="btn btn-outline-orange m-btn m-btn--icon m-btn--icon-only text-right m-btn--pill m-btn--air" data-target="#m_modal_interest_add" data-toggle="modal" (click)="clearData()">
+                                            <i class="fa fa-plus"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="m-accordion__item-body collapsing" id="m_accordion_interest_body" role="tabpanel" aria-labelledby="m_accordion_interest_head">
+                                <div class="m-accordion__item-content">
+                                    <!-- CONTENT -->
+                                    <div *ngIf="loadingInterest" class="text-center">
+                                        <span>
+                                            <div class="m-loader m-loader--lg m-loader--warning" style="width: 30px; display: inline-block;"></div>
+                                        </span>
+                                    </div>
+                                    <div *ngIf="!loadingInterest">
+                                        <div class="row pb-2" *ngFor="let item of interestData" >
+                                            <div class="col-sm-11 pt-2">
+                                                <h5>{{item.name}}</h5>
+                                            </div>
+                                            <div class="col-sm-1 text-right" >
+                                                <button class="btn btn-outline-danger m-btn m-btn--icon m-btn--icon-only m-btn--pill" (click)="submitDeleteInterest(item.interest_id);" id="deletePrev">
+                                                    <i class="fa fa-trash"></i>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                        <!-- :end advertisement info -->
+                    </div>
+                </div>
+            </div>
+
+            <div #replacement id="replacement" class="pb-4">
+                <div class="col-lg-12" *ngIf="!loading">
+                    <div class="m-accordion m-accordion--bordered" id="m_accordion_1" role="tablist">
+                        <!-- :start advertisement info -->
+                        <div class="m-accordion__item" style="border-radius: 15px!important">
+                            <div class="m-accordion__item-head row collapsed" style="background: white" role="tab" id="m_accordion_replacement_head" data-toggle="collapse" href="#m_accordion_replacement_body"
+                                aria-expanded="false" (click)="checkCollapse('m_accordion_replacement_head')">
+                                <span class="m-accordion__item-mode"></span>
+                                <span class="m-accordion__item-title m-accordian__item-mode-title" style="vertical-align: baseline!important">
+                                    Replacement to Successor
+                                </span>
+                            </div>
+
+                            <div class="m-accordion__item-body collapsing" id="m_accordion_replacement_body" role="tabpanel" aria-labelledby="m_accordion_replacement_head">
+                                <div class="m-accordion__item-content">
+                                    <!-- CONTENT -->
+                                    <div class="m-portlet m-portlet--head-solid-bg" style="border-radius: 1em;">
+                                        <div class="m-portlet__head subportlet">
+                                            <div class="m-portlet__head-caption">
+                                                <div class="m-portlet__head-title" style="width:100%">
+                                                    <h3 class="m-portlet__head-text">
+                                                        Present
+                                                    </h3>
+                                                    <div class="text-right pt-4 pb-4" *ngIf="successorsData1.length < 2">
+                                                        <button class="btn btn-outline-orange m-btn m-btn--icon m-btn--icon-only m-btn--pill m-btn--air" data-target="#m_modal_successor_add" data-toggle="modal" (click)="clearData(); successorType = 1">
+                                                            <i class="fa fa-plus"></i>
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="m-portlet__body pt-4 pb-4">
+                                            <div class="row" *ngIf="successorsData1.length < 1">
+                                                <div class="col-sm-12 text-center">
+                                                    <button type="button" class="btn btn-link" data-target="#m_modal_successor_add" data-toggle="modal" style="text-decoration: underline; color: black" (click)="clearData(); successorType = 1">
+                                                        There are no information for this. <br>
+                                                        Click here to add it.
+                                                    </button>
+                                                </div>
+                                            </div>
+                                            <div class="row" *ngFor="let item of successorsData1">
+                                                <div class="col-sm-2 m-card-profile">
+                                                    <div class="m-card-profile__pic text-left pr-0 pl-3">
+                                                        <div class="m-card-profile__pic-wrapper mt-0 mb-0">
+                                                            <img src="./assets/app/media/img/users/ghcm-user-default.jpg" alt="" class="pr-1 pl-1" style="height: 60px; width: 60px;" /> 
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-8 pt-2">
+                                                    <h3 style="display: table-cell; vertical-align: middle; font-size: 1.3rem; font-weight: 500; font-family: Roboto; color: #575962;">{{item.Name}} <br>
+                                                        <small style="color: #afb2c1; font-weight: 300;">
+                                                            {{item.Post_Desc}} <br>
+                                                            {{item.Email | lowercase}}
+                                                        </small>
+                                                    </h3> 
+                                                </div>
+                                                <div class="col-sm-2 text-right">
+                                                    <button class="btn btn-outline-danger m-btn m-btn--icon m-btn--icon-only m-btn--pill" (click)="submitDeleteReplacement(item.id);" id="deletePrev" style="margin-top: 20px;">
+                                                        <i class="fa fa-trash"></i>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="m-portlet m-portlet--head-solid-bg" style="border-radius: 1em;">
+                                        <div class="m-portlet__head subportlet">
+                                            <div class="m-portlet__head-caption">
+                                                <div class="m-portlet__head-title" style="width:100%">
+                                                    <h3 class="m-portlet__head-text">
+                                                        3 years
+                                                    </h3>
+                                                    <div class="text-right pt-4 pb-4" *ngIf="successorsData2.length < 2">
+                                                        <button class="btn btn-outline-orange m-btn m-btn--icon m-btn--icon-only m-btn--pill m-btn--air" data-target="#m_modal_successor_add" data-toggle="modal" (click)="clearData(); successorType = 2">
+                                                            <i class="fa fa-plus"></i>
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="m-portlet__body pt-4 pb-4">
+                                            <div class="row" *ngIf="successorsData2.length < 1">
+                                                <div class="col-sm-12 text-center">
+                                                    <button type="button" class="btn btn-link" data-target="#m_modal_successor_add" data-toggle="modal" style="text-decoration: underline; color: black" (click)="clearData(); successorType = 2">
+                                                        There are no information for this. <br>
+                                                        Click here to add it.
+                                                    </button>
+                                                </div>
+                                            </div>
+                                            <div class="row" *ngFor="let item of successorsData2">
+                                                <div class="col-sm-2 m-card-profile">
+                                                    <div class="m-card-profile__pic text-left pr-0 pl-3">
+                                                        <div class="m-card-profile__pic-wrapper mt-0 mb-0">
+                                                            <img src="./assets/app/media/img/users/ghcm-user-default.jpg" alt="" class="pr-1 pl-1" style="height: 60px; width: 60px;" /> 
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-8 pt-2">
+                                                    <h3 style="display: table-cell; vertical-align: middle; font-size: 1.3rem; font-weight: 500; font-family: Roboto; color: #575962;">{{item.Name}} <br>
+                                                        <small style="color: #afb2c1; font-weight: 300;">
+                                                            {{item.Post_Desc}} <br>
+                                                            {{item.Email | lowercase}}
+                                                        </small>
+                                                    </h3> 
+                                                </div>
+                                                <div class="col-sm-2 text-right">
+                                                    <button class="btn btn-outline-danger m-btn m-btn--icon m-btn--icon-only m-btn--pill" (click)="submitDeleteReplacement(item.id);" id="deletePrev" style="margin-top: 20px;">
+                                                        <i class="fa fa-trash"></i>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="m-portlet m-portlet--head-solid-bg" style="border-radius: 1em;">
+                                        <div class="m-portlet__head subportlet">
+                                            <div class="m-portlet__head-caption">
+                                                <div class="m-portlet__head-title" style="width:100%">
+                                                    <h3 class="m-portlet__head-text">
+                                                        5 years
+                                                    </h3>
+                                                    <div class="text-right pt-4 pb-4" *ngIf="successorsData3.length < 2">
+                                                        <button class="btn btn-outline-orange m-btn m-btn--icon m-btn--icon-only m-btn--pill m-btn--air" data-target="#m_modal_successor_add" data-toggle="modal" (click)="clearData(); successorType = 3">
+                                                            <i class="fa fa-plus"></i>
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="m-portlet__body pt-4 pb-4">
+                                            <div class="row" *ngIf="successorsData3.length < 1">
+                                                <div class="col-sm-12 text-center">
+                                                    <button type="button" class="btn btn-link" data-target="#m_modal_successor_add" data-toggle="modal" style="text-decoration: underline; color: black" (click)="clearData(); successorType = 3">
+                                                        There are no information for this. <br>
+                                                        Click here to add it.
+                                                    </button>
+                                                </div>
+                                            </div>
+                                            <div class="row" *ngFor="let item of successorsData3">
+                                                <div class="col-sm-2 m-card-profile">
+                                                    <div class="m-card-profile__pic text-left pr-0 pl-3">
+                                                        <div class="m-card-profile__pic-wrapper mt-0 mb-0">
+                                                            <img src="./assets/app/media/img/users/ghcm-user-default.jpg" alt="" class="pr-1 pl-1" style="height: 60px; width: 60px;" /> 
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-8 pt-2">
+                                                    <h3 style="display: table-cell; vertical-align: middle; font-size: 1.3rem; font-weight: 500; font-family: Roboto; color: #575962;">{{item.Name}} <br>
+                                                        <small style="color: #afb2c1; font-weight: 300;">
+                                                            {{item.Post_Desc}} <br>
+                                                            {{item.Email | lowercase}}
+                                                        </small>
+                                                    </h3> 
+                                                </div>
+                                                <div class="col-sm-2 text-right">
+                                                    <button class="btn btn-outline-danger m-btn m-btn--icon m-btn--icon-only m-btn--pill" (click)="submitDeleteReplacement(item.id);" id="deletePrev" style="margin-top: 20px;">
+                                                        <i class="fa fa-trash"></i>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                        <!-- :end advertisement info -->
+                    </div>
+                </div>
+            </div>
+
+            <div #funcComp id="funcComp" class="pb-4" style="display: none">
+                <div class="col-lg-12" *ngIf="!loading">
+                    <div class="m-accordion m-accordion--bordered" id="m_accordion_1" role="tablist">
+                        <!-- :start advertisement info -->
+                        <div class="m-accordion__item" style="border-radius: 15px!important">
+                            <div class="row">
+                                <div class="m-accordion__item-head collapsed accordion-t-responsive" role="tab" id="m_accordion_funcComp_head" data-toggle="collapse" href="#m_accordion_funcComp_body"
+                                    aria-expanded="false" (click)="checkCollapse('m_accordion_funcComp_head')">
+                                    <span class="m-accordion__item-mode"></span>
+                                    <span class="m-accordion__item-title m-accordian__item-mode-title" style="vertical-align: baseline!important">
+                                        Functional Competency
+                                    </span>
+                                </div>
+                                <div style="display:none" class="row pt-2 accordion-a-responsive">
+                                    <div class="pt-1 col-sm-11" style="display: flex;justify-content: flex-end;align-content: flex-end !important;">
+                                        <button class="btn btn-outline-orange m-btn m-btn--icon m-btn--icon-only text-right m-btn--pill m-btn--air" data-target="#m_modal_func_com_upd" data-toggle="modal" style="margin-left: 40%!important;" (click)="clearData()">
+                                            <i class="fa fa-plus"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="m-accordion__item-body collapsing" id="m_accordion_funcComp_body" role="tabpanel" aria-labelledby="m_accordion_funcComp_head">
+                                <div class="m-accordion__item-content">
+                                    <!-- CONTENT -->
+                                    <div class="row" *ngIf="funcData.length < 1">
+                                        <div class="col-sm-12 text-center">
+                                            <button type="button" class="btn btn-link" data-target="#m_modal_func_com_upd" data-toggle="modal" style="text-decoration: underline; color: black" (click)="clearData()">
+                                                There are no information for this. <br>
+                                                Click here to add it.
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div class="row pb-2"  *ngFor="let item of funcData">
+                                        <div class="col-sm-11 pt-3">
+                                            <h5>{{item.competency}} 
+                                                <span style="color:#01A8C6;" *ngIf="item.rating === 1"> | Beginner</span>
+                                                <span style="color:#01A8C6;" *ngIf="item.rating === 2"> | Intermediate</span>
+                                                <span style="color:#01A8C6;" *ngIf="item.rating === 3"> | Advanced</span>
+                                            </h5>
+                                        </div>
+                                        <div class="col-sm-1 text-right pt-4">
+                                            <a class="btn btn-outline-warning m-btn m-btn--icon m-btn--icon-only m-btn--pill m-btn--air"  id="edtBtnComp" href="#m_modal_comp_edt" data-toggle="modal" (click)="setComp(item)">
+                                                <i class="la la-pencil"></i>
+                                            </a>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                        <!-- :end advertisement info -->
+                    </div>
+                </div>
+            </div>
+
+            <div #success id="success" class="pb-4">
+                <div class="col-lg-12" *ngIf="!loading">
+                    <div class="m-accordion m-accordion--bordered" id="m_accordion_1" role="tablist">
+                        <!-- :start advertisement info -->
+                        <div class="m-accordion__item" style="border-radius: 15px!important">
+                            <div class="row">
+                                <div class="m-accordion__item-head collapsed accordion-t-responsive" role="tab" id="m_accordion_success_head" data-toggle="collapse" href="#m_accordion_success_body"
+                                    aria-expanded="false" (click)="checkCollapse('m_accordion_success_head')">
+                                    <span class="m-accordion__item-mode"></span>
+                                    <span class="m-accordion__item-title m-accordian__item-mode-title" style="vertical-align: baseline!important">
+                                        SUCCESS Leadership Competency
+                                    </span>
+                                </div>
+                                <div style="display:none" class="row pt-2 accordion-a-responsive">
+                                    <div class="pt-1 col-sm-11" style="display: flex;justify-content: flex-end;align-content: flex-end !important;">
+                                        <button class="btn btn-outline-orange m-btn m-btn--icon m-btn--icon-only text-right m-btn--pill m-btn--air" data-target="#m_modal_func_leader_add" data-toggle="modal" style="margin-left: 40%!important;" (click)="clearData()">
+                                            <i class="fa fa-plus"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="m-accordion__item-body collapsing" id="m_accordion_success_body" role="tabpanel" aria-labelledby="m_accordion_success_head">
+                                <div class="m-accordion__item-content">
+                                    <!-- CONTENT -->
+                                    <div class="row" *ngIf="leaderData.length < 1">
+                                        <div class="col-sm-12 text-center">
+                                            <button type="button" class="btn btn-link" data-target="#m_modal_func_leader_add" id="addLeader" data-toggle="modal" style="text-decoration: underline; color: black" (click)="clearData()">
+                                                There are no information for this. <br>
+                                                Click here to add it.
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div class="row pb-2"  *ngFor="let item of leaderData">
+                                        <div class="col-sm-11 pt-3">
+                                            <h5>{{item.type}}
+                                                <span style="color:#01A8C6;" *ngIf="item.rating === 1"> | Beginner</span>
+                                                <span style="color:#01A8C6;" *ngIf="item.rating === 2"> | Intermediate</span>
+                                                <span style="color:#01A8C6;" *ngIf="item.rating === 3"> | Advanced</span>
+                                            </h5>
+                                        </div>
+                                        <div class="col-sm-1 text-right pt-4">
+                                            <a class="btn btn-outline-warning m-btn m-btn--icon m-btn--icon-only m-btn--pill m-btn--air"  id="edtBtnLeader" href="#m_modal_func_leader_edt" data-toggle="modal" (click)="setLeader(item)">
+                                                <i class="la la-pencil"></i>
+                                            </a>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                        <!-- :end advertisement info -->
+                    </div>
+                </div>
+            </div>
+
+            <div #traits id="traits" class="pb-4">
+                <div class="col-lg-12" *ngIf="!loading">
+                    <div class="m-accordion m-accordion--bordered" id="m_accordion_1" role="tablist">
+                        <!-- :start advertisement info -->
+                        <div class="m-accordion__item" style="border-radius: 15px!important">
+                            <div class="row">
+                                <div class="m-accordion__item-head collapsed accordion-t-responsive" role="tab" id="m_accordion_traits_head" data-toggle="collapse" href="#m_accordion_traits_body"
+                                    aria-expanded="false" (click)="checkCollapse('m_accordion_traits_head')">
+                                    <span class="m-accordion__item-mode"></span>
+                                    <span class="m-accordion__item-title m-accordian__item-mode-title" style="vertical-align: baseline!important">
+                                        Traits
+                                    </span>
+                                </div>
+                                <div style="display:none" class="row pt-2 accordion-a-responsive">
+                                    <div class="pt-1 col-sm-11" style="display: flex;justify-content: flex-end;align-content: flex-end !important;">
+                                        <button class="btn btn-outline-orange m-btn m-btn--icon m-btn--icon-only text-right m-btn--pill m-btn--air" data-target="#m_modal_traits_add" data-toggle="modal" style="margin-left: 40%!important;" (click)="clearData()">
+                                            <i class="fa fa-plus"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="m-accordion__item-body collapsing" id="m_accordion_traits_body" role="tabpanel" aria-labelledby="m_accordion_traits_head">
+                                <div class="m-accordion__item-content">
+                                    <!-- CONTENT -->
+                                    <div class="row" *ngIf="traitsData.length < 1">
+                                        <div class="col-sm-12 text-center">
+                                            <button type="button" class="btn btn-link" data-target="#m_modal_traits_add" id="addTraits" data-toggle="modal" style="text-decoration: underline; color: black" (click)="clearData()">
+                                                There are no information for this. <br>
+                                                Click here to add it.
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div class="row pb-2"  *ngFor="let item of traitsData">
+                                        <div class="col-sm-11 pt-3">
+                                            <h5>{{item.Name}} 
+                                                <span style="color:#01A8C6;" *ngIf="item.rating === 1"> | Beginner</span>
+                                                <span style="color:#01A8C6;" *ngIf="item.rating === 2"> | Intermediate</span>
+                                                <span style="color:#01A8C6;" *ngIf="item.rating === 3"> | Advanced</span>
+                                            </h5>
+                                        </div>
+                                        <div class="col-sm-1 text-right pt-4">
+                                            <a class="btn btn-outline-warning m-btn m-btn--icon m-btn--icon-only m-btn--pill m-btn--air"  id="edtBtnTraits" href="#m_modal_traits_edt" data-toggle="modal" (click)="setTraits(item)">
+                                                <i class="la la-pencil"></i>
+                                            </a>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                        <!-- :end advertisement info -->
+                    </div>
+                </div>
+            </div>
+
+            <div #supervisor id="supervisor" class="pb-4">
+                <div class="col-lg-12" *ngIf="!loading">
+                    <div class="m-accordion m-accordion--bordered" id="m_accordion_1" role="tablist">
+                        <!-- :start advertisement info -->
+                        <div class="m-accordion__item" style="border-radius: 15px!important">
+                            <div class="row">
+                                <div class="m-accordion__item-head collapsed col-md-12" role="tab" id="m_accordion_supervisor_head" data-toggle="collapse" href="#m_accordion_supervisor_body"
+                                    aria-expanded="true">
+                                    <span class="m-accordion__item-mode"></span>
+                                    <span class="m-accordion__item-title m-accordian__item-mode-title" style="vertical-align: baseline!important">
+                                        Direct Supervisor
+                                    </span>
+                                </div>
+                            </div>
+
+                            <div class="m-accordion__item-body collapsing" id="m_accordion_supervisor_body" role="tabpanel" aria-labelledby="m_accordion_supervisor_head">
+                                <div class="m-accordion__item-content">
+                                    <!-- CONTENT -->
+                                    <div class="row" routerLink="/circle/{{profile.supervisorID}}">
+                                        <div class="col-sm-2 m-card-profile">
+                                            <div class="m-card-profile__pic text-left pr-0 pl-3">
+                                                <div class="m-card-profile__pic-wrapper mt-0 mb-0">
+                                                    <img src="{{supervisorImg}}" alt="" class="pr-1 pl-1" style="height: 70px; width: 70px;" /> 
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-9 pt-4">
+                                            <h3 style="display: table-cell; vertical-align: middle; font-size: 1.3rem; font-weight: 500; font-family: Roboto; color: #575962;">{{profile.supervisor}} <br>
+                                                <small style="color: #afb2c1; font-weight: 300;">{{profile.supervisorPosition}}</small>
+                                            </h3> 
+                                        </div>
+                                        <!-- <div class="col-sm-1 text-right">
+                                            <div class="pt-4" style="display: flex;justify-content: flex-end;align-content: flex-end !important;width: 100%" *ngIf="edit === true">
+                                                <button class="btn btn-outline-orange text-right" (click)="clickEditAbout()">
+                                                    EDIT
+                                                </button>
+                                            </div>
+                                            <div class="pt-4" style="display: flex;justify-content: flex-end;align-content: flex-end !important;width: 100%" *ngIf="edit === false">
+                                                <button class="btn btn-outline-orange text-right" (click)="submitAboutMe()">
+                                                    Save
+                                                </button>
+                                            </div>
+                                        </div> -->
+                                        <div class="col-sm-1 text-right">
+                                            <i class="fa fa-angle-right pt-4" router style="font-size:50px; color: #01A8C6;"></i>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                        <!-- :end advertisement info -->
+                    </div>
+                </div>
+            </div>
+
+            <div #resume id="resume" class="pb-4">
+                <div class="col-lg-12" *ngIf="!loading">
+                    <div class="m-accordion m-accordion--bordered" id="m_accordion_1" role="tablist">
+                        <!-- :start advertisement info -->
+                        <div class="m-accordion__item" style="border-radius: 15px!important">
+                            <div class="row">
+                                <div class="m-accordion__item-head collapsed col-md-12" role="tab" id="m_accordion_resume_head" data-toggle="collapse" href="#m_accordion_resume_body"
+                                    aria-expanded="true">
+                                    <span class="m-accordion__item-mode"></span>
+                                    <span class="m-accordion__item-title m-accordian__item-mode-title" style="vertical-align: baseline!important">
+                                        Resume
+                                    </span>
+                                </div>
+                                <input type="file" id="ssImg" accept="application/pdf" style="display: none !important"
+                                    (change)="fileChange($event)" class="col-sm-12 form-control m-input" name="screenshot" size="10" > 
+
+                                <!-- <div class="col-md-3 row" style="background: white!important">
+                                    <div class="pt-2" style="display: flex;justify-content: flex-end;align-content: flex-end !important;width: 100%" *ngIf="profile.resume.length < 1">
+                                    
+                                    </div>
+                                    <div class="pt-2" style="display: flex;justify-content: flex-end;align-content: flex-end !important;width: 100%" *ngIf="profile.resume.length > 0">
+                                    <button class="btn btn-orange m-btn text-right" style="border-radius: 10px;" (click)="addImageTrigger()">
+                                        Update
+                                    </button>
+                                    </div>
+                                </div> -->
+                            </div>
+
+                            <div class="m-accordion__item-body collapsing" id="m_accordion_resume_body" role="tabpanel" aria-labelledby="m_accordion_resume_head">
+                                <div class="m-accordion__item-content">
+                                    <!-- CONTENT -->
+                                    <div class="row">
+                                        <div class="col-sm-10 text-center" *ngIf="resumeUrl.length < 1">
+                                            Upload your resume in pdf format.
+                                        </div>        
+                                        <div class="col-sm-2 text-right" *ngIf="resumeUrl.length < 1">
+                                            <button class="btn btn-outline-orange m-btn m-btn--icon m-btn--icon-only text-right m-btn--pill m-btn--air" (click)="addImageTrigger()">
+                                                    <i class="fa fa-plus"></i>
+                                            </button>
+                                        </div>        
+                                        <div class="col-sm-10" *ngIf="resumeUrl.length > 0">
+                                            <div class="row" (click)="openPDF()">
+                                                <div class="col-sm-2">
+                                                    <pdf-viewer [src]="resumeUrl" 
+                                                        [render-text]="true"
+                                                        style="display: block;"
+                                                        [page]="1"
+                                                        [original-size]="false"
+                                                        [show-all]="false" >
+                                                    </pdf-viewer>
+                                                </div> 
+                                                <div class="col-sm-8 pt-3">
+                                                    <h3 style="display: table-cell; vertical-align: middle; font-size: 1.3rem; font-weight: 500; font-family: Roboto; color: #575962;">File name: <br>
+                                                        <small style="color: #afb2c1; font-weight: 300;">{{resumeName}}</small>
+                                                    </h3> 
+                                                    <br>
+                                                    <h3 style="display: table-cell; vertical-align: middle; font-size: 1.3rem; font-weight: 500; font-family: Roboto; color: #575962;">Upload Time: <br>
+                                                        <small style="color: #afb2c1; font-weight: 300;">{{uploadTime | date:'short'}}</small>
+                                                    </h3> 
+                                                </div>
+                                            </div>
+                                        </div>       
+                                        <div class="col-sm-2 pt-6 text-right" *ngIf="resumeUrl.length > 0">
+                                            <button class="btn btn-outline-orange m-btn m-btn--icon m-btn--icon-only text-left m-btn--pill m-btn--air" (click)="addImageTrigger()">
+                                                    <i class="la la-pencil"></i>
+                                            </button>
+                                            <button class="btn btn-outline-danger m-btn m-btn--icon m-btn--icon-only m-btn--pill" (click)="submitDeleteResume();" id="removeUserResume">
+                                                <i class="fa fa-trash"></i>
+                                            </button>
+                                        </div>                  
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                        <!-- :end advertisement info -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--Add Job previous employment-->
+
+<div class="modal fade" id="m_modal_previous_add" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <form [formGroup]="addPEForm" autocomplete="off">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">
+                        <strong>Add Previous Employment</strong> 
+                    </h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">
+                            &times;
+                        </span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <div class="form-group m-form__group row">
+                            <label for="example-text-input" class="col-4 col-form-label">Company *</label>
+                            <div class="col-8">
+                                <input class="form-control m-input" type="text" formControlName= "peEmployer" required #peEmployer>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="form-group m-form__group row">
+                            <label for="example-text-input" class="col-4 col-form-label">Postition *</label>
+                            <div class="col-8">
+                                <input class="form-control m-input" type="text" formControlName= "pePosition" #peposition required >
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="form-group m-form__group row">
+                            <label for="example-text-input" class="col-4 col-form-label">Start Date *</label>
+                            <div class="col-8">
+                                <input class="form-control m-input" id="startDtAdd" formControlName="peStart" required #peStart placeholder="dd-mm-yyyy" required>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="form-group m-form__group row">
+                            <label for="example-text-input" class="col-4 col-form-label">End Date *</label>
+                            <div class="col-8">
+                                <input class="form-control m-input" id="endDtAdd" formControlName="peEnd" required #peEnd placeholder="dd-mm-yyyy" required>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                        Cancel
+                    </button>
+                    <button type="submit" class="btn btn-primary" 
+                        [disabled]="peEmployer.value == '' || peposition.value == '' || peStart.value == '' || peEnd.value == ''" 
+                        (click)="submitAddPrev()" data-dismiss="modal">
+                        Add
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!--Update Job previous employment-->
+
+<div class="modal fade" id="m_modal_previous_edt" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <form [formGroup]="updatePrevEmploymentForm" >
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">
+                        <strong>Edit Previous Employment</strong>  
+                    </h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">
+                            &times;
+                        </span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <div class="form-group m-form__group row">
+                            <label for="example-text-input" class="col-4 col-form-label">Company *</label>
+                            <div class="col-8">
+                                <input class="form-control m-input" type="text" formControlName= "previousCompany" value="{{selectedPrev.Employer}}" required #previousCompany>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="form-group m-form__group row">
+                            <label for="example-text-input" class="col-4 col-form-label">Postition *</label>
+                            <div class="col-8">
+                                <input class="form-control m-input" type="text" formControlName= "previousPosition" value="{{selectedPrev.Position}}" #previousPosition >
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="form-group m-form__group row">
+                            <label for="example-text-input" class="col-4 col-form-label">Start Date *</label>
+                            <div class="col-8">
+                                <input class="form-control m-input" id="startDtEdt" formControlName= "previousStart" value="{{selectedPrev.Start_Date}}" required #previousStart>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="form-group m-form__group row">
+                            <label for="example-text-input" class="col-4 col-form-label">End Date *</label>
+                            <div class="col-8">
+                                <input class="form-control m-input" id="endDtEdt" formControlName= "previousEnd" value="{{selectedPrev.End_Date}}" required #previousEnd >
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                        Cancel
+                    </button>
+                    <button type="submit" class="btn btn-primary" 
+                        [disabled]="previousCompany.value == '' || previousPosition.value == '' || previousStart.value == '' || previousEnd.value == ''"                         
+                        (click)="submitEdtPrev(selectedPrev)" data-dismiss="modal">
+                        Save
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!--Add Skillset-->
+
+<div class="modal fade" id="m_modal_skill_add" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <form [formGroup]="addSkillsetForm">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">
+                        <strong>Add Skills</strong> 
+                    </h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">
+                            &times;
+                        </span>
+                    </button>
+                </div>
+                <div class="modal-body pr-5 pl-5">
+                    <div class="form-group">
+                        <div class="form-group m-form__group row">
+                            <label for="example-text-input" class="col-4 col-form-label" required >Skillset</label>
+                            <div class="col-sm-8">
+                                <sui-select class="selection form-control"
+                                            formControlName="skillTitle"
+                                            [isSearchable]="true"
+                                            #skillTitle
+                                            (keydown) = "onSkillsetKeyDown($event)"
+                                            (selectedOptionChange)="selectedSkillset($event)"
+                                            style="border-radius: 1.3rem;"
+                                            id="skillTitle"
+                                            placeholder="I'm skilled at...">
+                                    <sui-select-option *ngFor="let option of skillsetList" [value]="option.name" ></sui-select-option>
+                                </sui-select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="form-group m-form__group row">
+                            <div class="col-sm-4">
+                                <label class="col-form-label" for="example-text-input" required >Skill Level</label> <br>
+                                <input type="text" class="form-control" id="m_nouislider_skill_input" style="visibility: hidden"> 
+                            </div>
+                            <div class="col-sm-8" style="padding-top:10.1px">
+                                <div class="row" style="padding-left:15px; padding-right:15px;">
+                                    <div class="col-sm-2 pl-0">
+                                        <strong>Beginner</strong>
+                                    </div>
+                                    <div class="col-sm-8 pl-0 pt-1">
+                                        <div id="m_nouislider_skill" class="m-nouislider"></div>
+                                    </div>
+                                    <div class="col-sm-2">
+                                        <strong>Advanced</strong>
+                                    </div>
+                                </div>
+                                <div class="row mt-3">
+                                    <div class="col-sm-12">
+                                        <div class="skillDescription col-sm-12 pl-0">Skill Level Description:</div>
+                                        <div class="skillDescription pl-0 pt-2">Beginner: Basic awareness and still need guidance</div>
+                                        <div class="skillDescription pl-0 pt-2">Intermediate: Able to effectively apply the knowledge</div>
+                                        <div class="skillDescription pl-0 pt-2">Advanced: Has good understanding and experience on the knowledge. Able to lead on the subject independently</div>
+                                    </div>
+                                    
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <span style="float: right;">{{text.length}} chars (maximum 100 chars)</span>
+                        </div>
+                        <div class="col-sm-12">
+                            <span style="float: right;">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                        Cancel
+                    </button>
+                    <button type="submit" class="btn btn-primary" (click)="submitAddSkillset()" data-dismiss="modal" [disabled]="text.length < 1 || text.length > 99">
+                        Add
+                    </button></span>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!--Edit Skillset-->
+
+<div class="modal fade" id="m_modal_skill_edt" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <form [formGroup]="edtSkillSetForm">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">
+                        <strong>Edit Skills </strong> 
+                    </h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">
+                            &times;
+                        </span>
+                    </button>
+                </div>
+                <div class="modal-body pr-5 pl-5">
+                    <div class="form-group">
+                        <div class="form-group m-form__group row">
+                            <label for="example-text-input" class="col-4 col-form-label" required >Skillset</label>
+                            <div class="col-sm-8">
+                                <input type="text" class="form-control m-input" formControlName="skillTitleEdt" [attr.disabled]="true">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="form-group m-form__group row">
+                            <div class="col-sm-4">
+                                <label class="col-form-label" for="example-text-input" required >Skill Level</label> <br>
+                                <input type="text" class="form-control" id="m_nouislider_skill_edt_input" style="visibility: hidden"> 
+                            </div>
+                            <div class="col-sm-8" style="padding-top:10.1px">
+                                <div class="row" style="padding-left:15px; padding-right:15px;">
+                                    <div class="col-sm-2 pl-0">
+                                        <strong>Beginner</strong>
+                                    </div>
+                                    <div class="col-sm-8 pl-0 pt-1">
+                                        <div id="m_nouislider_skill_edt" class="m-nouislider"></div>
+                                    </div>
+                                    <div class="col-sm-2">
+                                        <strong>Advanced</strong>
+                                    </div>
+                                </div>
+                                <div class="row mt-3">
+                                    <div class="col-sm-12">
+                                        <div class="skillDescription col-sm-12 pl-0">Skill Level Description:</div>
+                                        <div class="skillDescription pl-0 pt-2">Beginner: Basic awareness and still need guidance</div>
+                                        <div class="skillDescription pl-0 pt-2">Intermediate: Able to effectively apply the knowledge</div>
+                                        <div class="skillDescription pl-0 pt-2">Advanced: Has good understanding and experience on the knowledge. Able to lead on the subject independently</div>
+                                    </div>
+                                    
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                        Cancel
+                    </button>
+                    <button type="button" class="btn btn-danger" (click)="submitDeleteSkill()" data-dismiss="modal">
+                        Delete
+                    </button>
+                    <button type="submit" class="btn btn-primary" (click)="submitEdtSkill()" data-dismiss="modal">
+                        Save
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!--Add Interest-->
+
+<div class="modal fade" id="m_modal_interest_add" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <form [formGroup]="addInterestForm">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">
+                        <strong>New Interests</strong> 
+                    </h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">
+                            &times;
+                        </span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <div class="form-group m-form__group row">
+                            <label for="example-text-input" class="col-4 col-form-label">Career Interest Name:</label>
+                            <div class="col-sm-8">
+                                <sui-select class="selection form-control"
+                                            formControlName="interestName"
+                                            [isSearchable]="true"
+                                            #interestName
+                                            (keydown) = "onInterestKeyDown($event)"
+                                            (selectedOptionChange)="selectedInterest($event)"
+                                            style="border-radius: 1.3rem;"
+                                            id="interestName"
+                                            placeholder="Search Interest">
+                                    <sui-select-option *ngFor="let option of interestList" [value]="option.name" ></sui-select-option>
+                                </sui-select>
+                                <div class="mt-3">
+                                    <span class="m-form__help">*Notes: Please add only career interests</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="clearData();">
+                        Cancel
+                    </button>
+                    <button type="submit" class="btn btn-primary" (click)="submitAddInterest()" data-dismiss="modal" [disabled]="text.length < 1">
+                        Add
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!--Endorsement List-->
+
+<div class="modal fade" id="m_modal_endorse_list" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">
+                    <strong>Endorsement List</strong> 
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">
+                        &times;
+                    </span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row" *ngIf="loadingEndorse" >
+                    <div class="col-lg-12 text-center my-auto m-3 p-3">
+                        <span>Loading data. Please wait... </span>
+                        <span>
+                            <div class="m-loader m-loader--lg m-loader--warning" style="width: 30px; display: inline-block;"></div>
+                        </span>
+                    </div>
+                </div>
+                <div *ngIf="!loadingEndorse">
+                    <div class="row" *ngFor="let item of endorseList; let i=index;" >
+                        <div class="col-sm-2">
+                            <div class="text-center pt-2">
+                                <img src="{{urlImg.front}}/{{item.peopleImage}}?api_key={{urlImg.key}}"class="m--img-rounded m--marginless" alt="" height="42" width="42"/>
+                            </div>
+                        </div>
+                        <div class="col-sm-10">
+                            <h3 class="h3">{{item.friendName}}</h3>
+                            <h3 class="h3Small mt-0 pl-0">{{item.peoplePosition}} <br>
+                                Status: <span *ngIf="item.isMutualFriend === true" style="color:#01A8C6">Following</span>
+                                        <span *ngIf="item.isMutualFriend === false" style="color:gray">Not following</span>
+                            </h3>
+                        </div>
+                        <div class="col-sm-12" *ngIf="i < endorseList.length-1">
+                            <hr> 
+                        </div>
+                    </div>
+                </div> 
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                    Close
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- functional competency modal -->
+
+<div class="modal fade" id="m_modal_func_com_upd" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content">
+            <form [formGroup]="updFuncComForm">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">
+                        Functional Competencies
+                    </h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">
+                            &times;
+                        </span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="recipient-name" class="form-control-label m--font-boldest">
+                            Job Cluster:
+                        </label>
+                        <select class="form-control m-input" #jcluster formControlName="updFuncComClusIdOpt" (change)="funcChangeUpdCat()"
+                            required>
+                            <option *ngFor="let x of clusterList" [value]="x.cluster_id" [selected]="funcCluster.cluster===x.cluster">{{x.cluster}}</option>
+                        </select>
+                    </div>
+                    <div class="form-group" *ngIf="tglFuncComFam&&jcluster.value != 0">
+                        <label for="recipient-name" class="form-control-label m--font-boldest">
+                            Job Family:
+                        </label>
+                        <select class="form-control m-input" formControlName="updFuncComFamOpt" (change)="funcChangeFamily()">
+                            <option *ngFor="let x of funcFamList" [value]="x.family_id">{{x.family}} </option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="recipient-name" class="form-control-label m--font-boldest">
+                            <span *ngIf="tglFuncComDesc">Competency:</span>
+                            <span *ngIf="!tglFuncComDesc && noDescData" style="color:red">
+                                No Functional Competency Available
+                            </span>
+                        </label>
+                        <select *ngIf="tglFuncComDesc" #competency class="form-control m-input" formControlName="updFuncComDescOpt" (change)="funcChangeCompDesc()">
+                            <option *ngFor="let x of funcCompList" [value]="x.comp_id">{{x.competency}} </option>
+                        </select>
+                    </div>
+                    <div class="form-group" *ngIf="descSelected">
+                        <label for="recipient-name" class="form-control-label m--font-boldest">
+                            Description:
+                        </label> <br>
+                        <span [innerHTML]="selectedComp.description"></span>
+                    </div>
+                    <div class="row" style="padding-left:15px; padding-right:15px; margin-top:25px">
+                        <div class="col-sm-2 pl-0" *ngIf="descSelected">
+                            <strong>Beginner</strong>
+                        </div>
+                        <div class="col-sm-8 pl-0 pt-1" [ngClass]="{hideSlider: descSelected === false}">
+                            <div id="m_nouislider_comp" class="m-nouislider"></div>
+                        </div>
+                        <div class="col-sm-2" *ngIf="descSelected">
+                            <strong>Advanced</strong>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <input type="text" class="form-control" id="m_nouislider_comp_input" style="visibility: hidden"> 
+                    <button type="button" class="btn btn-primary" id="addComp" style="visibility: hidden">
+                        trigger slider competency
+                    </button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                        Close
+                    </button>
+                    <button type="button" class="btn btn-primary" (click)="onFuncComFormSubmit()" data-dismiss="modal" [disabled]="!descSelected">
+                        Add
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="m_modal_comp_edt" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">
+                    <strong>Edit Functional Competency </strong> 
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">
+                        &times;
+                    </span>
+                </button>
+            </div>
+            <div class="modal-body pr-5 pl-5">
+                <div class="form-group">
+                    <div class="form-group m-form__group row">
+                        <label for="example-text-input" class="col-4 col-form-label" required >Cluster</label>
+                        <div class="col-sm-8">
+                            <input type="text" class="form-control m-input" value="{{this.cluster}}" [attr.disabled]="true">
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="form-group m-form__group row">
+                        <label for="example-text-input" class="col-4 col-form-label" required >Family</label>
+                        <div class="col-sm-8">
+                            <input type="text" class="form-control m-input" value="{{this.family}}" [attr.disabled]="true">
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="form-group m-form__group row">
+                        <label for="example-text-input" class="col-4 col-form-label" required >Competency</label>
+                        <div class="col-sm-8">
+                            <input type="text" class="form-control m-input" value="{{this.comp}}" [attr.disabled]="true">
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="form-group m-form__group row">
+                        <div class="col-sm-4">
+                            <label class="col-form-label" for="example-text-input" required >Competency Level</label> <br>
+                            <input type="text" class="form-control" id="m_nouislider_comp_edt_input" style="visibility: hidden"> 
+                        </div>
+                        <div class="col-sm-8" style="padding-top:10.1px">
+                            <div class="row" style="padding-left:15px; padding-right:15px;">
+                                <div class="col-sm-2 pl-0">
+                                    <strong>Beginner</strong>
+                                </div>
+                                <div class="col-sm-8 pl-0 pt-1">
+                                    <div id="m_nouislider_comp_edt" class="m-nouislider"></div>
+                                </div>
+                                <div class="col-sm-2">
+                                    <strong>Advanced</strong>
+                                </div>
+                            </div>
+                            <!-- <div class="row mt-3">
+                                <div class="col-sm-12">
+                                    <div class="skillDescription col-sm-12 pl-0">Skill Level Description:</div>
+                                    <div class="skillDescription pl-0 pt-2">Beginner: Basic awareness and still need guidance</div>
+                                    <div class="skillDescription pl-0 pt-2">Intermediate: Able to effectively apply the knowledge</div>
+                                    <div class="skillDescription pl-0 pt-2">Advanced: Has good understanding and experience on the knowledge. Able to lead on the subject independently</div>
+                                </div>
+                            </div> -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                    Cancel
+                </button>
+                <button type="button" class="btn btn-danger" (click)="submitDeleteComp()" data-dismiss="modal">
+                    Delete
+                </button>
+                <button type="submit" class="btn btn-primary" (click)="submitEdtComp()" data-dismiss="modal">
+                    Save
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- leadership modal -->
+
+<div class="modal fade" id="m_modal_func_leader_add" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content">
+            <form [formGroup]="leaderComForm">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">
+                        Add SUCCESS Leadership Competency
+                    </h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">
+                            &times;
+                        </span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group row">
+                        <label for="recipient-name" class="form-control-label m--font-boldest col-md-3">
+                            Name:
+                        </label>
+                        <div class="col-md-9">
+                            <select class="form-control m-input" #suc_leader formControlName="leaderId" (change)="leaderChange()" required>
+                                <option *ngFor="let x of leaderList" [value]="x.suc_id" [selected]="defaultLeader.type===x.type">{{x.type}}</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group row mt-3" *ngIf="descriptionToggle">
+                        <label for="recipient-name" class="form-control-label m--font-boldest col-md-3">
+                            Description:
+                        </label> <br>
+                        <div class="col-md-9">
+                            <span>{{selDesc.name}}</span>
+                        </div>
+                    </div>
+                    <div class="form-group row mt-3" *ngIf="descriptionToggle">
+                        <label for="recipient-name" class="form-control-label m--font-boldest col-md-3">
+                            Details:
+                        </label> <br> 
+                        <div class="col-md-9">
+                            <span [innerHTML]="selDesc.details"></span>
+                        </div>
+                    </div>
+                    <div class="form-group row mt-4">
+                        <label for="recipient-name" class="form-control-label m--font-boldest col-md-3">
+                            Competency Level:
+                        </label>
+                        <div class="col-md-9">
+                            <div class="row" style="padding-left:15px; padding-right:15px;">
+                                <div class="col-sm-2 pl-0">
+                                    <strong>Beginner</strong>
+                                </div>
+                                <div class="col-sm-8 pl-0 pt-1">
+                                    <div id="m_nouislider_leader" class="m-nouislider"></div>
+                                </div>
+                                <div class="col-sm-2">
+                                    <strong>Advanced</strong>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <input type="text" class="form-control" id="m_nouislider_leader_input" style="visibility: hidden"> 
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                        Close
+                    </button>
+                    <button type="button" class="btn btn-primary" (click)="onLeaderSubmit()" data-dismiss="modal" [disabled]="suc_leader.value == 0">
+                        Add
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="m_modal_func_leader_edt" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content">
+            <form [formGroup]="leaderComForm">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">
+                        Edit Leadership SUCCESS Competency
+                    </h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">
+                            &times;
+                        </span>
+                    </button>
+                </div>
+                <div class="modal-body pr-5 pl-5">
+                    <div class="form-group">
+                        <div class="form-group m-form__group row">
+                            <label for="example-text-input" class="col-3 col-form-label" required >Type</label>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control m-input" value="{{this.sucType}}" [attr.disabled]="true">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="form-group m-form__group row">
+                            <label for="example-text-input" class="col-3 col-form-label" required >Name</label>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control m-input" value="{{this.sucName}}" [attr.disabled]="true">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="form-group m-form__group row">
+                            <label for="example-text-input" class="col-3 col-form-label" required >Details</label>
+                            <div class="col-sm-9">
+                                <!-- <input type="text" class="form-control m-input" value="{{this.sucDetails}}" [attr.disabled]="true"> -->
+                                <div [innerHTML]="this.sucDetails" class="details"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="form-group m-form__group row">
+                            <div class="col-sm-3">
+                                <label class="col-form-label" for="example-text-input" required >Competency Level</label> <br>
+                                <input type="text" class="form-control" id="m_nouislider_leader_edt_input" style="visibility: hidden"> 
+                            </div>
+                            <div class="col-sm-9" style="padding-top:10.1px">
+                                <div class="row" style="padding-left:15px; padding-right:15px;">
+                                    <div class="col-sm-2 pl-0">
+                                        <strong>Beginner</strong>
+                                    </div>
+                                    <div class="col-sm-8 pl-0 pt-1">
+                                        <div id="m_nouislider_leader_edt" class="m-nouislider"></div>
+                                    </div>
+                                    <div class="col-sm-2">
+                                        <strong>Advanced</strong>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <input type="text" class="form-control" id="m_nouislider_leader_input" style="visibility: hidden"> 
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                        Cancel
+                    </button>
+                    <button type="button" class="btn btn-danger" (click)="submitDeleteLeader()" data-dismiss="modal">
+                        Delete
+                    </button>
+                    <button type="submit" class="btn btn-primary" (click)="submitEdtLeader()" data-dismiss="modal">
+                        Save
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- successors modals -->
+
+<div class="modal fade" id="m_modal_successor_add" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content">
+            <form [formGroup]="replacementForm">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">
+                        Add Replacement to Successor
+                    </h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">
+                            &times;
+                        </span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group row searchRep">
+                        <label for="recipient-name" class="form-control-label m--font-boldest col-lg-3 col-md-3" style="padding-top:10px;">
+                            Name:
+                        </label>
+                        <div class="col-lg-9 col-md-9 col-sm-12 m-select2 m-input-group--pill">
+                            <sui-select class="selection form-control"
+                                        formControlName="repName"
+                                        [options]="options"
+                                        [isSearchable]="true"
+                                        #repName
+                                        (keydown) = "onReplacementKeyDown($event)"
+                                        (selectedOptionChange)="selectedReplacement($event)"
+                                        style="border-radius: 1.3rem;"
+                                        id="repName"
+                                        placeholder="Search replacement">
+                                <sui-select-option *ngFor="let option of replacementList" [value]="option.name" ></sui-select-option>
+                            </sui-select>
+                            <span class="m-form__help" *ngIf="(selReplacement.name.length < 1)" id="errLeadName">Please select project leader from the list.</span> 
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <input type="text" class="form-control" id="m_nouislider_leader_input" style="visibility: hidden"> 
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                        Close
+                    </button>
+                    <button type="button" class="btn btn-primary" (click)="onSuccessorSubmit()" data-dismiss="modal" [disabled]="disableReplace">
+                        Add
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- traits -->
+
+<div class="modal fade" id="m_modal_traits_add" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <form [formGroup]="traitsForm">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">
+                        <strong>Add Traits</strong> 
+                    </h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">
+                            &times;
+                        </span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <div class="form-group m-form__group row">
+                            <label for="example-text-input" class="col-4 col-form-label m--font-boldest">Traits Name:</label>
+                            <div class="col-sm-8">
+                                <select class="form-control m-bootstrap-select m_selectpicker" #addtraits data-live-search="true" (change)="traitsChange()" formControlName="traitsId">
+                                    <option *ngFor="let x of traitsList" [value]="x.id" [selected]="defaultTraits.id===x.id">{{x.name}}</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group row mt-4">
+                        <label for="recipient-name" class="form-control-label m--font-boldest col-md-4">
+                            Traits Level:
+                        </label>
+                        <div class="col-md-8">
+                            <div class="row" style="padding-left:15px; padding-right:15px;">
+                                <div class="col-sm-2 pl-0">
+                                    <strong>Beginner</strong>
+                                </div>
+                                <div class="col-sm-8 pl-0 pt-1">
+                                    <div id="m_nouislider_traits" class="m-nouislider"></div>
+                                </div>
+                                <div class="col-sm-2">
+                                    <strong>Advanced</strong>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <input type="text" class="form-control" id="m_nouislider_traits_input" style="visibility: hidden"> 
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="clearData();">
+                        Cancel
+                    </button>
+                    <button type="submit" class="btn btn-primary" (click)="onTraitsSubmit()" data-dismiss="modal" [disabled]="addtraits.value == 0">
+                        Add
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="m_modal_traits_edt" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">
+                    Edit Traits
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">
+                        &times;
+                    </span>
+                </button>
+            </div>
+            <div class="modal-body pr-5 pl-5">
+                <div class="form-group">
+                    <div class="form-group m-form__group row">
+                        <label for="example-text-input" class="col-3 col-form-label" required >Name</label>
+                        <div class="col-sm-9">
+                            <input type="text" class="form-control m-input" value="{{this.traitName}}" [attr.disabled]="true">
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="form-group m-form__group row">
+                        <div class="col-sm-3">
+                            <label class="col-form-label" for="example-text-input" required >Traits Level</label> <br>
+                            <input type="text" class="form-control" id="m_nouislider_leader_edt_input" style="visibility: hidden"> 
+                        </div>
+                        <div class="col-sm-9" style="padding-top:10.1px">
+                            <div class="row" style="padding-left:15px; padding-right:15px;">
+                                <div class="col-sm-2 pl-0">
+                                    <strong>Beginner</strong>
+                                </div>
+                                <div class="col-sm-8 pl-0 pt-1">
+                                    <div id="m_nouislider_traits_edt" class="m-nouislider"></div>
+                                </div>
+                                <div class="col-sm-2">
+                                    <strong>Advanced</strong>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <input type="text" class="form-control" id="m_nouislider_traits_edt_input" style="visibility: hidden"> 
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                    Cancel
+                </button>
+                <button type="button" class="btn btn-danger" (click)="submitDeleteTraits()" data-dismiss="modal">
+                    Delete
+                </button>
+                <button type="submit" class="btn btn-primary" (click)="submitEdtTraits()" data-dismiss="modal">
+                    Save
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<notifier-container></notifier-container>

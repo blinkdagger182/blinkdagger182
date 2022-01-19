@@ -1,0 +1,343 @@
+<notifier-container></notifier-container>
+<div class="table-responsive">
+    <!-- LOADING -->
+    <app-user-loading *ngIf="loadingData"></app-user-loading>
+    <app-u-loading-error *ngIf="loadingDataError"></app-u-loading-error>
+    <app-u-no-data *ngIf="noData&&!loadingData"></app-u-no-data>
+    <!-- LOADING -->
+
+    <!--*ngIf="!loading&&pagedItems.length>0"-->
+    <table *ngIf="!loadingData&&!loadingDataError&&!noData" class="table table-striped  table-hover table-sm m-table m-table--head-bg-brand tableHeader">
+        <thead class="thead-inverse">
+            <tr>
+                <th>Id</th>
+                <th>Adv Name</th>
+                <!-- <th>Timeline</th> -->
+                <!-- <th>Project Leader</th> -->
+                <th>Approved By</th>
+                <th width="15%">Status</th>
+                <th>
+                    <button href="#" class="btnActApproval2" (click)="actExor('approval')" style="display: none">
+                        <i class="la la-trash"></i>
+                    </button>
+                    <button href="#" class="btnActResubmit2" (click)="actExor('resubmit')" style="display: none">
+                        <i class="la la-trash"></i>
+                    </button>
+                    <button href="#" class="btnActAdvertise2" (click)="actExor('advertise')" style="display: none">
+                        <i class="la la-trash"></i>
+                    </button>
+                    <button href="#" class="btnActCancel2" (click)="actExor('cancel')" style="display: none">
+                        <i class="la la-trash"></i>
+                    </button>
+                    <button href="#" class="btnActClose2" (click)="actExor('close')" style="display: none">
+                        <i class="la la-exclamation-triangle"></i>
+                    </button>
+                    <button href="#" class="btnActDelete2" (click)="actExor('delete')" style="display: none">
+                        <i class="la la-trash"></i>
+                    </button>
+                </th>
+            </tr>
+            <!--<tr>
+                        <th *ngIf="showAdvId">
+                            <input class="form-control form-control-sm" name="termAdvId" [(ngModel)]="termAdvId">
+                        </th>
+                        <th *ngIf="showPosId">
+                            <input class="form-control form-control-sm" name="termPosId" [(ngModel)]="termPosId">
+                        </th>
+                        <th *ngIf="showPosName">
+                            <input class="form-control form-control-sm" name="termPosName" [(ngModel)]="termPosName">
+                        </th>
+                        <th *ngIf="showLOB">
+                            <input class="form-control form-control-sm" name="termLOB" [(ngModel)]="termLOB">
+                        </th>
+                        <th *ngIf="showAct"></th>
+                    </tr> -->
+        </thead>
+        <tbody>
+            <tr scope="row" *ngFor="let item of pagedItems">
+                <!--summDataTracking-->
+                <td>{{item.ref}}</td>
+                <td>{{item.name}}</td>
+                <!-- <td>{{item.project_start | date:'dd MMM yyyy'}} - {{item.project_close | date:'dd MMM yyyy'}} </td> -->
+                <!-- <td>{{item.leader_name}}</td> -->
+                <td>{{item.approval}} - {{item.approval_name}}</td>
+                <td>
+                    <!--  class="text-right" -->
+                    <div class="btn-group btn-group-toggle align-text-top  justify-content-end " data-toggle="buttons">
+                        <div class="m-demo__preview m-demo__preview--btn">
+                            <span style="width:9rem !important" class="m-badge m-badge--{{getStatusColor(item.status)}} m-badge--wide" title="{{item.status}}">
+                                {{item.status_text}}</span>
+                        </div>
+                    </div>
+                </td>
+                <td class="d-flex flex-row">
+                    <!--                    
+                        <button href="#" class="m-portlet__nav-link btn m-btn m-btn--hover-danger m-btn--icon m-btn--icon-only m-btn--pill"
+                                                                title="Delete" id="delJobUsr2" style="visibility: hidden" (click)="delJobUserSubmit()">
+                                                                <i class="la la-trash"></i>
+                                                            </button>
+                                                            <a href="#" class="m-portlet__nav-link btn m-btn m-btn--hover-danger m-btn--icon m-btn--icon-only m-btn--pill"
+                                                                title="Delete" id="delJobUsr" (click)="selectedUser(adm)">
+                                                                <i class="la la-trash"></i>
+                                                            </a>
+                    -->
+
+                    <button *ngIf="arrDetailNewPage.indexOf(item.status) > -1" title="View Details" class="m-portlet__nav-link btn m-btn m-btn--hover-primary m-btn--icon m-btn--icon-only m-btn--pill"
+                           (click)="exorShowDetails(item.id)"  > <!--  [routerLink]="['../extraordinaire/details',item.id]" *ngIf="showBtn(item.status, 'detail')" -->
+                        <i class="la la-file-text-o"></i> <!-- -->
+                    </button>
+
+                    <a *ngIf="arrEdit.indexOf(item.status) > -1" title="Edit" class="m-portlet__nav-link btn m-btn m-btn--hover-primary m-btn--icon m-btn--icon-only m-btn--pill"
+                         (click)="btnActClick('edit', item.id)"><!-- data-toggle="modal" data-target="#m_modal_edit" -->
+                        <i class="fa fa-pencil"></i><!-- showBtn(item.status, 'edit') -->
+                    </a>
+
+                    <!-- <a *ngIf="showBtn(item.status, 'approval')" title="Send for Approval"
+                        class="btnActApproval m-portlet__nav-link btn m-btn m-btn--hover-success m-btn--icon m-btn--icon-only m-btn--pill"
+                        data-toggle="modal" data-target="#m_modal_action" (click)="btnActClick('get-approval', item.id)">
+                        <i class="fa fa-send-o"></i>
+                    </a>Pending TODO -->
+
+                    <!--    <a *ngIf="showBtn(item.status, 'resubmit')" title="Resubmit for Approval" (click)="selectedProj(item.id)"
+                        class="btnActResubmit m-portlet__nav-link btn m-btn m-btn--hover-success m-btn--icon m-btn--icon-only m-btn--pill">
+                            <i class="fa fa-send-o"></i>
+                    </a>Pending TODO -->
+
+                    <button *ngIf="showBtn(item.status, 'advertise')" title="Advertise Adv" data-toggle="modal"
+                        data-target="#m_modal_action" (click)="btnActClick('advertise', item.id)" class="btnActAdvertise m-portlet__nav-link btn m-btn m-btn--hover-success m-btn--icon m-btn--icon-only m-btn--pill">
+                        <i class="fa fa-bullhorn"></i>
+                    </button>
+
+                    <!--<a *ngIf="showBtn(item.status, 'evaluate')" title="Select Applicants" class="m-portlet__nav-link btn m-btn m-btn--hover-primary m-btn--icon m-btn--icon-only m-btn--pill"
+                        (click)="exorShowDetails(item.id)">
+                        <i class="la la-users"></i>
+                    </a>Pending Perlu buat dari page details -->
+
+                    <button *ngIf="showBtn(item.status, 'cancel')" title="Cancel Adv" class="btnActCancel m-portlet__nav-link btn m-btn m-btn--hover-danger m-btn--icon m-btn--icon-only m-btn--pill"
+                        data-toggle="modal" data-target="#m_modal_action" (click)="btnActClick('cancel', item.id)"
+                        [disabled]="processingReq">
+                        <i class="la la-close"></i>
+                    </button>
+
+                    <button *ngIf="showBtn(item.status, 'close')" title="Close Adv" class="btnActClose m-portlet__nav-link btn m-btn m-btn--hover-danger m-btn--icon m-btn--icon-only m-btn--pill"
+                        data-toggle="modal" data-target="#m_modal_action" (click)="btnActClick('close', item.id)"
+                        [disabled]="processingReq">
+                        <i class="la la-exclamation-triangle"></i>
+                    </button>
+
+                    <button *ngIf="showBtn(item.status, 'delete')" (click)="selectedProj(item.id)" title="Permanently Delete Adv"
+                        class="btnActDelete m-portlet__nav-link btn m-btn m-btn--hover-danger m-btn--icon m-btn--icon-only m-btn--pill"
+                        data-toggle="modal" data-target="#m_modal_action" (click)="btnActClick('delete', item.id)"
+                        [disabled]="processingReq">
+                        <i class="la la-trash-o"></i>
+                    </button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<div *ngIf="summDataTracking">
+    <nav aria-label="Page navigation example" *ngIf="pager.pages && pager.pages.length>1">
+        <ul *ngIf="pager.pages && pager.pages.length" class="pagination justify-content-end">
+            <li class="page-item" [ngClass]="{disabled:pager.currentPage === 1}">
+                <button (click)="setPage(1)" class="page-link" href="#" aria-label="Previous">
+                    <span aria-hidden="true">&laquo;</span>
+                    <span class="sr-only">First</span>
+                </button>
+            </li>
+            <li class="page-item" [ngClass]="{disabled:pager.currentPage === 1}">
+                <button (click)="setPage(pager.currentPage - 1)" class="page-link" href="#" aria-label="Previous">
+                    <span aria-hidden="true">&lt;</span>
+                    <span class="sr-only">Previous</span>
+                </button>
+            </li>
+            <li class="page-item" *ngFor="let page of pager.pages" [ngClass]="{active:pager.currentPage === page}">
+                <button (click)="setPage(page)" class="page-link" href="#">{{page}}</button>
+            </li>
+            <li class="page-item" [ngClass]="{disabled:pager.currentPage === pager.totalPages}">
+                <button (click)="setPage(pager.currentPage + 1)" class="page-link" href="#" aria-label="Previous">
+                    <span aria-hidden="true">&gt;</span>
+                    <span class="sr-only">Next</span>
+                </button>
+            </li>
+            <li class="page-item" [ngClass]="{disabled:pager.currentPage === pager.totalPages}">
+                <button (click)="setPage(pager.totalPages)" class="page-link" href="#" aria-label="Next">
+                    <span aria-hidden="true">&raquo;</span>
+                    <span class="sr-only">Last</span>
+                </button>
+            </li>
+        </ul>
+    </nav>
+</div>
+
+<!--begin::resubmit/withdraw modal-->
+<div class="modal fade" id="m_modal_action" tabindex="-1" role="dialog" aria-labelledby="advertiseModalCenterTitle"
+    aria-hidden="true" style="display: none;">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document" style="justify-content:center;">
+        <form [formGroup]="actionForm">
+            <div class="modal-content" style="width: 525px; border-radius:25px;">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">
+                        Are you sure to {{clickAct}} this advertisement?
+                    </h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">
+                            ×
+                        </span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <!-- :start NOTIFICATION V2  
+                    <div class="m-alert m-alert--icon m-alert--outline alert alert-warning alert-dismissible fade show"
+                        role="alert" *ngIf="showFormErr"> 
+                        <div class="m-alert__icon">
+                            <i class="la la-thumbs-o-up"></i>  
+                        </div>
+                        <div class="m-alert__text">
+                            ::advErrMsg:: 
+                        </div>
+                    </div>
+                     :end NOTIFICATION V2 -->
+                    <div class="m-form__section m-form__section--first">
+                        <div class="form-group m-form__group row justify-content-center mr-3 ml-3" [hidden]="!apprRemark">
+                            <label for="example-text-input" class="col-lg-12 col-form-label">Remarks
+                                <span *ngIf="apprRemark">*</span>
+                            </label>
+                            <div class="col-lg-12">
+                                <textarea id="remarks" #rmk class="form-control m-input m-input--air m-input--pill"
+                                    formControlName="projRemark" [required]="apprRemark" rows="8"></textarea>
+                                <!--
+                                <p class="error_message" style="color:red" *ngIf="apprRemark && (actionForm.get('projRemark').value=='')">Required.
+									<span class="error_message" style="color:red" *ngIf="(actionForm.get('projRemark').hasError('required') && (actionForm.get('projRemark').dirty))">Please
+										add some remarks.</span>
+                                </p> -->
+                                <span class="m-form__help error_message" style="color:red" [ngStyle]="{'color': (actionForm.get('projRemark').hasError('required') && (actionForm.get('projRemark').dirty))? 'red' : 'black'}"
+                                    *ngIf="apprRemark">
+                                    Required. Please add some remarks.
+                                </span>
+                                <input type="hidden" formControlName="projId" required>
+                                <input type="hidden" formControlName="projActTaken" required value="{{projActTaken}}">
+                            </div>
+                        </div>
+
+                        <!-- ::start adv period -->
+                        <div class="m-form__seperator m-form__seperator--dashed"></div>
+                        <!-- <div class="m-form__section m-form__section--last" *ngIf="!apprRemark"> -->
+                        <div class="m-form__section m-form__section--last" [hidden]="!apprDate">
+                            <div class="form-group m-form__group row">
+                                <label for="example-text-input" class="col-3 col-form-label">Advertisement
+                                    <br />Period*</label>
+                                <div class="col-9">
+                                    <div class="input-daterange input-group  m-input-group  m-input-group--pill" id="m_datepicker_5">
+                                        <input type="text" class="form-control m-input" name="start" id="st" readonly
+                                            value="{{myStartDt | date: 'dd-MM-yyyy'}}" />
+                                        <div class="input-group-append">
+                                            <span class="input-group-text">
+                                                <i class="la la-ellipsis-h"></i>
+                                            </span>
+                                        </div>
+                                        <input type="text" class="form-control" name="end" id="et" readonly value="{{myEndDt | date: 'dd-MM-yyyy'}}" />
+                                    </div>
+                                    <p class="error_message" style="color:red" *ngIf="advDateError.isError">{{advDateError.errorMessage}}</p>
+                                    <span class="m-form__help">
+                                        {{msgAdvPeriod}}
+                                    </span>
+                                </div>
+                            </div>
+                            <!-- ::end adv period -->
+                        </div>
+                        <div class="row" *ngIf="formMsg">
+                            <div class="col-12">
+                                <div *ngIf="processingReq" class="m-alert m-alert--icon m-alert--outline alert alert-primary alert-dismissible fade show"
+                                    role="alert">
+                                    <div class="m-alert__icon">
+                                        <div class="m-loader m-loader--primary" style="width: 30px; display: inline-block;">
+                                        </div> Processing Request ...
+                                    </div>
+                                </div>
+                                <div *ngIf="showFormMsg" class="m-alert m-alert--icon m-alert--outline alert alert-{{formMsgColor}} alert-dismissible fade show"
+                                    role="alert">
+                                    <div class="m-alert__icon">
+                                        <i class="la {{formMsgIcon}}"></i>
+                                    </div>
+                                    <div class="m-alert__text">
+                                        {{advErrMsg}}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+
+                    <input type="hidden" required class="form-control m-input hide-adv-date" name="start" id="startDate2"
+                        (focus)="compareTwoDates()" />
+                    <!--formControlName="dtStart"-->
+                    <input type="hidden" required class="form-control hide-adv-date" name="end" id="endDate2" (focus)="compareTwoDates()" />
+                    <!--formControlName="dtEnd"-->
+                    <div *ngIf="showActButton">
+                        <button (click)="actionFormSubmit()" style="visibility:hidden" id="btnMyAction2" [disabled]="(apprRemark&&(rmk.value.trim()) == '')"
+                            type="submit">
+                            Confirm Hidden
+                        </button>
+                        <button type="button" class="btn btn-sm btn-secondary m-btn m-btn--icon m-btn--pill m-btn--wide pull-right"
+                            data-dismiss="modal">
+                            Close
+                        </button>
+                        <button id="btnMyAction" type="submit" class="btn btn-sm btn-brand m-btn m-btn--icon m-btn--pill m-btn--wide pull-right"
+                            [disabled]="(apprRemark&&(rmk.value.trim()) == '')">
+                            <!--onclick="$('.modal').modal('hide')" -->
+                            Confirm
+                        </button>
+                    </div>
+                    <div *ngIf="closeReload">
+                        <button id="btnMyCloseReload" type="button" class="btn btn-sm btn-brand m-btn m-btn--icon m-btn--pill m-btn--wide pull-right"
+                            (click)="btnMyCloseReload()" onclick="$('.modal').modal('hide')">
+                            Close
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<!--end::resubmit/withdraw modal-->
+
+<!--begin::Modal 
+<div class="modal fade" id="m_modal_edit" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">
+                    New message -- {{idx}}
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">
+                        &times;
+                    </span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <span showEdit></span>
+                </form>
+            </div>
+            
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                        Close
+                    </button>
+                    <button type="button" class="btn btn-primary">
+                        Send message
+                    </button>
+                </div> 
+        </div>
+    </div>
+</div>
+end::Modal
+
+<ng-template #showEdit>  
+    ABC
+    <app-u-exor-edit-component></app-u-exor-edit-component>
+ </ng-template>-->

@@ -1,0 +1,534 @@
+
+<!-- START: Subheader -->
+<div class="m-subheader" appunwraptag="">
+        <div class="d-flex align-items-center">
+            <div class="mr-auto">
+                <h3 class="m-subheader__title m-subheader__title--separator">
+                    {{title1}}
+                </h3>
+                <ul class="m-subheader__breadcrumbs m-nav m-nav--inline">
+                    <li class="m-nav__item m-nav__item--home">
+                        <a routerLink="/admin" class="m-nav__link m-nav__link--icon">
+                            <i class="m-nav__link-icon la la-home"></i>
+                        </a>
+                    </li>
+                    <li class="m-nav__item">
+                        <a href="" class="m-nav__link">
+                            <span class="m-nav__link-text">
+                                {{feedBack}}
+                            </span>
+                        </a>
+                    </li>
+                    <li class="m-nav__item">
+                        <a href="" class="m-nav__link">
+                            <span class="m-nav__link-text">
+                                <!-- Position -->
+                            </span>
+                        </a>
+                    </li>
+                    <!-- <li class="m-nav__separator">
+                                -
+                            </li> -->
+                    <li class="m-nav__item">
+                        <a href="" class="m-nav__link">
+                            <span class="m-nav__link-text">
+                                <!-- # {{posId2}} -->
+                            </span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <div>
+                <div class="m-dropdown m-dropdown--inline m-dropdown--arrow m-dropdown--align-right m-dropdown--align-push"
+                    m-dropdown-toggle="hover" aria-expanded="true">
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- END: Subheader -->
+   
+    <div class="m-content">
+        <div class="row">
+              
+            <!-- :start page loader -->
+            <div class="col-lg-12 centred my-auto" *ngIf="loading">
+                <app-settings-loading></app-settings-loading>
+            </div>
+            <!-- end::Page loader -->
+            <!-- start: nodata -->
+            <div class="col-lg-12 centred my-auto" *ngIf="!loading&&pagedItems.length<1">
+                    <app-settings-no-data></app-settings-no-data>
+            </div>
+            <!-- :end Nodata -->
+            <!-- start: nodata -->
+            <div class="col-lg-12 centred my-auto" *ngIf="!loading&&loadingErr">
+                <app-settings-loading-error></app-settings-loading-error>
+            </div>
+            <!-- :end Nodata -->
+    
+            <div class="col-lg-12" *ngIf="!loading&&pagedItems.length>0">
+                <!--begin::Portlet-->
+               
+                <div class="m-portlet m-portlet--full-height">
+                   
+                    <!--begin::Section-->
+                    <div class="m-accordion m-accordion--bordered" id="m_accordion_1" role="tablist">
+                        <!-- :start section 1 -->
+                        <div class="m-accordion__item">
+                            
+                        <form [formGroup]="filterForm" autocomplete="off">
+                         <div class="m-accordion__item-body  show" id="m_accordion_adv_info_body" role="tabpanel"
+                                aria-labelledby="m_accordion_adv_info_head">
+                             
+                                    <div class="m-accordion__item-content">
+                                        <div class="row">
+                                                <div class="col-md-3">
+                                                        <div class="row">
+                                                            <div class="col-md-3">
+                                                                <label>Status: </label>
+                                                            </div>
+                                                            <div class="col-md-7">
+                                                                 <select #searchStatus name="status" id="status" class="form-control m-input" formControlName="filterStatus" [hidden]="loading">
+                                                                    <option value="">All</option>
+                                                                    <option value="{{itemStatus.status}}" *ngFor="let itemStatus of filterArr.status">{{itemStatus.status}}</option>     
+                                                                 </select>
+                                                            </div>
+                                                        </div>
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <div class="row">
+                                                        <div class="col-md-4">
+                                                            <label>Sentiment: </label>
+                                                        </div>
+                                                            <div class="col-md-8">
+                                                                 <select #searchSent name="sentiment" id="sentiment" class="form-control m-input" formControlName="filterSent" [hidden]="loading">
+                                                                        <option value="">All</option>
+                                                                        <option value="{{itemSent.sentiment}}" *ngFor="let itemSent of filterArr.eraPool">{{itemSent.sentiment}}</option>     
+                                                                 </select>
+                                                            </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <div class="row">
+                                                        <div class="col-md-4">
+                                                            <label>Classification: </label>
+                                                        </div>
+                                                             <div class="col-md-8">
+                                                                <select #searchType name="type" id="type" class="form-control m-input" formControlName="filterType" [hidden]="loading">
+                                                                    <option value="">All</option>
+                                                                    <option value="{{itemType.type}}" *ngFor="let itemType of filterArr.type">{{itemType.type}}</option>     
+                                                                </select>                                                                   
+                                                            </div>
+                                                        </div>
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <div class="row">
+                                                        <div class="col-md-4">
+                                                            <label>Staff ID: </label>
+                                                        </div>
+                                                        <div class="col-md-5">
+                                                             <span class="m-subheader__searchID">
+                                                                <div class="m-input">
+                                                               
+                                                                   <input [value]="" #search class="form-control form-control- m-input" type="search" 
+                                                                           (keyup)="onNameKeyUp($event)" placeholder="staff Id"> 
+                                                                </div> 
+                                                                                                                                                          
+                                                                <br>
+                                                                <div class="col-3 col-md-2 m-login__form-action">
+                                                                    
+                                                                   <button (click)="submitFilter(1)" [ngClass]="{'m-loader m-loader--right m-loader--light': loading}"
+                                                                        id="m_login_signin_submit" class="btn btn-primary btn-focus m-btn m-btn--pill m-btn--custom m-btn--air m-login__btn m-login__btn--primary">
+                                                                        Submit
+                                                                    </button>
+                                                                </div>
+                                                               
+                                                             </span>
+                                                             <br />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                              
+                                            </div>
+               
+                       
+                            <!--end: Filter Form -->  
+                                              
+                              <div>
+                                    <div class="m-stack__item m-stack__item--center m-stack__item--middle" *ngIf="loading">
+                                            <span>
+                                                Loading data. Please wait...
+                                            </span>
+                                            <span>
+                                                <div class="m-loader m-loader--lg m-loader--success" style="width: 30px; display: inline-block;"></div>
+                                            </span>
+                                        </div>
+                                   <!-- begin::Portlet-->
+                                    <div id=search class="m-portlet" *ngFor="let item of pagedItems; let i = index">
+                                        
+                                        <div class="m-portlet__body">
+                                                <div class="row">
+                                                       <div class="col-md-4">
+                                                            <div class="m-portlet m-portlet--height-fluid">
+                                                                <div class="m-card-user m-card-user--skin-dark-fluid">
+                                                                 <table>
+                                                                     <tr>
+                                                                        <th>
+                                                                            <!-- <div class="m-card-profile__pic" *ngFor="let img1 of item.profile_img"> -->
+                                                                            <div class="m-card-profile__pic">
+                                                                                <span *ngIf="item.profile_img.length">
+                                                                                    <img src="{{imgAskusArrList}}/{{item.profile_img}}?api_key={{apiKeyAskusList}}" class="m--img-rounded m--marginless" alt="" height="48" width="48"/>
+                                                                                    
+                                                                                </span>
+                                                                                <span  *ngIf="item.profile_img == null"> 
+                                                                                    <img src="../../../../../../../assets/app/media/img/users/ghcm-user-default.jpg" class="m--img-rounded m--marginless m--img-centered" 
+                                                                                    style="width:48px; height:48px" alt=""/>
+                                                                                </span> 
+                                                                            </div>
+                                                                        </th>
+                                                                        <!-- <th> -->
+                                                                            <span class="font-weight-bold" style="font-size:16px; font-family: Arial, Helvetica, sans-serif">
+                                                                                 &nbsp;&nbsp; PROFILE
+                                                                            </span>
+                                                                        <!-- </th> -->
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td></td>
+                                                                        <td>
+                                                                           <span class= "card-body" style="font-size:15px; font-family: Arial, Helvetica, sans-serif">
+                                                                                <div style="color:#ff4700; font-weight: bold">
+                                                                                {{item.Name}}
+                                                                                </div>    
+                                                                                <div>
+                                                                                   >> {{item.Rept_To_Name}}
+                                                                                 </div>  
+                                                                                <br>
+                                                                               <div style="font-size:13px">
+                                                                                <div>
+                                                                                   <img src="../assets/img/askus/20x20/id20x20.png" alt="">
+                                                                                   {{item.user_id}}
+                                                                                </div>
+                                                                                <div *ngIf="item.Cell_No">
+                                                                                   <img src="../assets/img/askus/20x20/contact20x20.png" alt="">
+                                                                                    {{item.Cell_No}}
+                                                                                </div>
+                                                                                <div *ngIf="!item.Cell_No"></div>
+                                                                                <div *ngIf ="item.Email">
+                                                                                   <img src="../assets/img/askus/20x20/email20x20.png" alt="">
+                                                                                   <span style="color:#ff4700; font-size:11px; font-family: Arial, Helvetica, sans-serif">{{item.Email}}</span> 
+                                                                                </div>
+                                                                                <div *ngIf="!item.Email"></div>
+                                                                                <div>
+                                                                                  <img src="../assets/img/askus/20x20/division20x20.png" alt="">
+                                                                                  {{item.Org_Unit_Desc}}
+                                                                                </div>
+                                                                                <div>
+                                                                                    <img src="../assets/img/askus/20x20/contractOrPermenant20x20.png" alt="">
+                                                                                    {{item.EmpGroup}} | {{item.Job_Grad}}
+                                                                                </div>
+                                                                                <div>
+                                                                                    <img src="../assets/img/askus/20x20/supervisor20x20.png" alt="">
+                                                                                    {{item.EmpSGroup}}
+                                                                                </div>
+                                                                                <div *ngIf="!item.EmpSGroup"></div>
+                                                                                <div *ngIf="item.HiEduLvl">
+                                                                                    <img src="../assets/img/askus/20x20/education20x20.png" alt="">
+                                                                                    {{item.HiEduLvl}}
+                                                                                </div>
+                                                                                <div>
+                                                                                    <img src="../assets/img/askus/20x20/personal Admin20x20.png" alt="">
+                                                                                    {{item.PersAdmin_Descr}}
+                                                                                </div>
+                                                                              </div>
+                                                                           </span>
+                                                                         </td>
+                                                                      </tr>
+                                                                   </table>
+                                                                </div>
+                                                            </div>	
+                                                        </div>
+                                                    
+                                                        <!--end:: profile--> 
+                                               
+                                                          <div class="col-md-8">
+                                                            <div class="container-fluid">  
+                                                               <div class="row">
+                                                                   
+                                                                  <div class="col-8">
+                                                                     <div class="m-portlet m-portlet--height-fluid">
+                                                                       <div class="m-card-user m-card-user--skin-dark-fluid">
+                                                                          <div class="container-fluid">
+                                                                     <div>   
+                                                                        <span style="font-weight: bold">{{item.datetime| date:'dd MMM yyyy h:mma'}}</span>
+                                                                        <span style="color:#fd5806">-</span>
+                                                                        <span class ="label" style="background-color: #FC8802; color: white; font-size:13px; font-family: Arial, Helvetica, sans-serif">{{item.status | uppercase}}</span>
+                                                                    </div>
+                                                                    <br>
+                                                                  <div class="row">
+                                                                    <div class="col-12">
+                                                                        <div class="m-widget4__info">
+                                                                            <span style="color:#fd5806">
+                                                                                {{item.title}}
+                                                                            </span><br>
+                                                                            <span class="m-widget4__pos" align="justify-content-left">
+                                                                                <p>{{item.description}}</p>
+                                                                            </span><br >    
+                                                                            <span *ngFor="let img of item.displayImage" class="m-widget4__pos" align="justify-content-end">
+                                                                               <table>
+                                                                                <tr>
+                                                                                  <th> 
+                                                                                      <img src= "{{imgAskusArrList}}/{{img}}?api_key={{apiKeyAskusList}}"width="120" height="150" data-target="#m_modal_image" data-toggle="modal" (click)="selectImg(img)"/>
+                                                                                  </th> 
+                                                                               
+                                                                                    <td>                                                                
+                                                                                      <a href = "{{imgAskusArrList}}/{{img}}?api_key={{apiKeyAskusList}}" download="file.jpg" target="_blank">Open Image</a>
+                                                                                    </td>
+                                                                                </tr>
+                                                                                <br>
+                                                                               </table>
+                                                                            </span> 
+                                                                               
+                                                                        </div>
+                                                                    </div>
+                                                                        &nbsp; 
+                                                                        <button type="button" *ngIf = "item.status == 'pending' ||item.status == 'in progress'" class="btn btn-primary" style="color:white" (click)="showReply(i); getFbReply(item.id)">Close Issue
+                                                                        </button>
+                                                                        &nbsp; 
+                                                                        <button type="button" *ngIf = "item.status == 'closed'" class="btn btn-secondary" style="color:blue" (click)="showReply(i); getFbReply( item.id)">View Remark
+                                                                        </button> 
+                                                                                                                                               
+                                                                    </div>
+                                                                </div>
+                                                                </div>
+                                                                  </div>
+                                                                  </div>
+                                                                <div class="col-4">
+                                                                  <div align="center"> 
+                                                                    <div *ngIf="item.sentiment">
+                                                                        <div class="card border-primary mb-2" style="max-width: 12rem;">
+                                                                                <div class="card-header" style="background-color: #fd5806; color:white">Sentiment</div>
+                                                                                <div class="card-body text-primary" style="text-align: center">
+                                                                                        <div type="text" *ngIf="item.sentiment === 'Positive'"><img src="../assets/img/thumb_good.png" alt="" style="width:40px;height:40px">
+                                                                                            <div>Positive</div>
+                                                                                        </div>
+                                                                                        <div type="text" *ngIf="item.sentiment === 'Neutral'"><img src="../assets/img/thumb_nuetral.png" alt="" style="width:40px;height:40px">
+                                                                                            <div>Neutral</div>
+                                                                                        </div>
+                                                                                        <div type="text" *ngIf="item.sentiment === 'Negative'"><img src="../assets/img/thumb_bad.png" alt="" style="width:40px;height:40px">
+                                                                                            <div>Negative</div>
+                                                                                        </div>
+                                                                                </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div *ngIf="item.sentiment === 0"></div>
+                                                                 
+                                                                       <div *ngIf="item.type"> 
+                                                                        <div class="card border-primary mb-2" style="max-width: 12rem;">
+                                                                            <div class="card-header" style="background-color: #7a82f7; color:white">Classification</div>
+                                                                                <div class="card-body text-primary" style="text-align: center; color: black">
+                                                                                    <span *ngIf="!item.type" class ="label">{{item.type | uppercase}}</span>
+                                                                                    <span *ngIf="item.type" class ="label" style="font-size:17px; color: black; font-family: Arial, Helvetica, sans-serif; align-items: center">{{item.type | uppercase}}</span> &nbsp;
+                                                                                </div>
+                                                                        </div>
+                                                                      </div>
+                                                                      <div *ngIf="item.type == 0"></div>
+
+                                                                      <div *ngIf="item.type">
+                                                                     
+                                                                    <div *ngIf="item.verified == null">
+                                                                            <img src="../assets/img/askus/verify_btn.png" class="btn" alt="" (click)="verifyCheckYes(item.id, i)" data-toggle="tooltip" style="font-size: 15px" align="justify-content-left" title="We need your help to verify the classification">
+                                                                           <div class="tooltip bs-tooltip-top" role="tooltip">
+                                                                              <div class="arrow"></div>
+                                                                          </div>  
+                                                                         
+                                                                    </div> 
+                                                                       <!-- <div *ngIf="Checkverify" class="m-loader m-loader--primary" style="width: 30px; display: inline-block;"></div> -->
+                                                                    <div *ngIf="item.verified === 'Y'" style="color:#fd5806; font-weight: bold; font-size: 16px"><i class="fa fa-check"></i>&nbsp;Verified</div>
+                                                                                                                                 
+                                                                    </div> 
+                                                                       <div *ngIf="item.type == 0"></div>   
+                                                                                    
+                                                                      </div>
+                                                                </div>
+                                                              </div>
+                                                              </div>
+                                                        </div> 
+                                                 </div>
+                                                                                                                
+                                                                              
+                                      
+                                        <!--Reply-->
+                                      
+                                            <div class="container m--hide" id="tableReply_{{i}}">
+                                              
+                                                <div class="m-portlet__head">
+                                                            <div class="m-portlet__head-caption">
+                                                                    <div class="m-portlet__head-title">
+                                                                        <h3 class="m-portlet__head-text">
+                                                                          Remarks
+                                                                        </h3>
+                                                                    </div>
+                                                            </div>
+                                                </div>
+                                                <br>
+                                                <div *ngIf="!replyArrLoading">
+                                                    <div class="m-portlet__body" style="padding: 0rem 2.2rem !important;" data-height="410" *ngFor = "let itemReply of replyArr">
+                                                           <div class="alert alert-dark" style="border-radius: 0px !important" [style.background-color]="getbkColor(itemReply.user_id)" >
+                                                                <div class="m-widget3__header">
+                                                                    <span class="m-widget3__user-imgr">
+                                                                         <img src="{{imgAskusArrList}}/{{itemReply.image_url}}?api_key={{apiKeyAskusList}}" class="m--img-rounded m--marginless" alt="" height="42" width="42"/>
+                                                                         <span class="font-weight-bold"> {{itemReply.Pernr_Name}}</span>
+                                                                        <span> - </span>
+                                                                        <span class="m-widget3__time" *ngIf="older_24Hrs(itemReply.datetime); else ago">{{itemReply.datetime| date:'dd MMM yyyy'}}</span>
+                                                                         <ng-template #ago>{{itemReply.datetime | timeAgo}}</ng-template>
+                                                                    </span> 
+                                                                </div> 
+                                                                <div class="m-widget3__body">
+                                                                    {{itemReply.text}}
+                                                                </div>
+                                                            </div>
+                                                    </div>
+                                                </div>
+                                                <div *ngIf="replyArrLoading">
+                                                    <div class="m-loader m-loader--lg m-loader--success" style="width: 30px; display: inline-block;"></div>
+                                                </div>
+                                                
+                                              
+                                      
+
+                                            <!-- Insert comment-->
+                                                            <div *ngIf = "item.status == 'pending' ||item.status == 'in progress'" class="m-widget3__item" style="border-bottom: none !important">
+                                                                    <div class="m-widget3__header">
+                                                                         <div class="m-widget3__info">
+                                                                            <span> <img class="m--img-rounded m--marginless" src="{{currUserImgSrc}}" alt="" height="42" width="42"></span>
+                                                                            <span class="m-widget3__username">
+                                                                                {{currUserName}}
+                                                                            </span>
+                                                                            <br>
+                                                                            <span class="m-widget3__time">
+                                                                                now
+                                                                            </span>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="m-widget3__body">
+
+                                                                        <form class="m-form" #addComnt [formGroup]="addComntForm">
+                                                                
+                                                                            <div style="margin-left: 4rem">
+                                                                                <textarea formControlName="newComnt" class="form-control" rows="5" required 
+                                                                                    style="overflow-y: scroll;"
+                                                                                    placeholder="Please describe action taken to resolve this issue">
+                                                                                </textarea>
+                                                                            
+                                                                                <br>
+                                                                                <button type="submit" class="btn btn-brand" [disabled]="!addComntForm.valid" (click)="closeClicked(item.id, item)">
+                                                                                        Save
+                                                                                </button> 
+                                                                                                                                                              
+                                                                           </div>
+                                                                        </form>
+                                                                    </div>
+                                                                </div>
+                                                       
+                                                        <!-- status = closed-->
+                                                        <div *ngIf = "item.status == 'closed'" class="m-widget3__item" style="border-bottom: none !important">
+                                                        
+                                                       </div>
+
+                                                 <!-- </div> -->
+                                            </div>
+
+                                    
+
+
+                                       </div>
+                                     </div> 
+                                      <!--modal body-->
+                                        
+                                    </div>
+                                   
+                                  <!--  end::Portlet-->
+                               </div>
+                            </div>
+                          </form>
+                        </div>
+                        <!-- :end section 1 -->
+                    </div>
+                </div>
+            </div>
+    
+    
+            <div class="col-12" *ngIf="!loading&&pagedItems.length>0"> 
+                <nav aria-label="Page navigation example">
+                    <ul *ngIf="pager.pages && pager.pages.length" class="pagination justify-content-end">
+                        <li class="page-item" [ngClass]="{disabled:pager.currentPage === 1}">
+                            <button (click)="setPage(1)" class="page-link" href="#" aria-label="Previous">
+                                <span aria-hidden="true">&laquo;</span>
+                                <span class="sr-only">First</span>
+                            </button>
+                        </li>
+                        <li class="page-item" [ngClass]="{disabled:pager.currentPage === 1}">
+                            <button (click)="setPage(pager.currentPage - 1)" class="page-link" href="#" aria-label="Previous">
+                                <span aria-hidden="true">&lt;</span>
+                                <span class="sr-only">Previous</span>
+                            </button>
+                        </li>
+                        <li class="page-item" *ngFor="let page of pager.pages" [ngClass]="{active:pager.currentPage === page}">
+                            <button (click)="setPage(page)" class="page-link" href="#">{{page}}</button>
+                        </li>
+                        <li class="page-item" [ngClass]="{disabled:pager.currentPage === pager.totalPages}">
+                            <button (click)="setPage(pager.currentPage + 1)" class="page-link" href="#" aria-label="Previous">
+                                <span aria-hidden="true">&gt;</span>
+                                <span class="sr-only">Next</span>
+                            </button>
+                        </li>
+                        <li class="page-item" [ngClass]="{disabled:pager.currentPage === pager.totalPages}">
+                            <button (click)="setPage(pager.totalPages)" class="page-link" href="#" aria-label="Next">
+                                <span aria-hidden="true">&raquo;</span>
+                                <span class="sr-only">Last</span>
+                            </button>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+    
+            <div class="col-12" style="text-align: right; margin-top:20px" *ngIf="!loading&&pagedItems.length>0">
+                <div class="m-demo__preview m-demo__preview--btn">
+                    <button class="btn btn-primary m-btn m-btn--icon" (click)="download()">
+                        <span>
+                            <i class="la la-download"></i>
+                            <span>{{downloadAllXLS}}</span>
+                        </span>
+                    </button>
+                </div>
+            </div>
+    
+        </div>
+    
+        <div class="modal fade" id="m_modal_image" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-lg" role="document" style="text-align: center; width:400px; height:400px; background-size:cover; overflow:hidden;">
+                <div class="modal-content">
+                    <div class="modal-body" style="padding: 0px">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="position: absolute; right: 15px; top: 10px; z-index:100">
+                            <span aria-hidden="true">
+                                &times;
+                            </span>
+                        </button>
+                        <img src="{{imgAskusArrList}}/{{selectedImg}}?api_key={{apiKeyAskusList}}" width="100%" height="100%">
+                    </div>
+                </div>
+            </div>
+        </div>
+      
+    <app-sticky-nav-component></app-sticky-nav-component>
+
+    <style>
+
+    .dropdown-menu a {
+        white-space:normal;
+    }
+    .dropdown-menu > li{position:relative;}
+
+    .dropdown-menu > li > i{position:absolute;left:0;top:3px;}
+
+     </style>

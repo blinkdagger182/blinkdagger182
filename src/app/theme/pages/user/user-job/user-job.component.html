@@ -1,0 +1,246 @@
+<!-- <div style="margin:2.5rem"> -->
+    <div>
+        <div class="page-bg job-bg">
+            <h2 class="head-sub-title">Jobs</h2>
+        </div>
+        <div class="pg-title-div">
+            <h3 class="pg-title">{{word.avaiVac}}</h3>
+        </div>
+        <div class="d-flex align-items-center" style="margin: 20px 20px;">
+            <!--Begin-Search-->
+            <ul class="btn m-topbar__nav m-nav m-nav--inline">
+                <li class="m-nav__item m-topbar__user-profile m-topbar__user-profile--img" 
+                    (click)="searchClicked()"
+                    style="padding-right: 2rem !important">
+                    <span >	
+                        <span class="m-topbar__username " style="padding-left:10px; padding-right:10px;">
+                            {{word.search}} :
+                        </span>
+                        <span class="m-topbar__userpic">
+                            <button type="button" class="filter-btn2 btn m-btn--pill m-btn--air  active btn-sm">
+                                <i style="font-size: 1.5rem !important"class="la la-search"></i>
+                            </button>
+                        </span>
+                    </span>
+                </li>
+            </ul>
+
+            <!--End-Search-->
+
+            <!--Begin-Filter-->
+            <ul class="btn m-topbar__nav m-nav m-nav--inline">
+                <li class="m-nav__item m-topbar__user-profile m-topbar__user-profile--img" data-toggle="modal"
+                    data-target="#filter" style="padding-right: 2rem !important">
+                    <span >	
+                        <span class="m-topbar__username " style="padding-left:10px; padding-right:10px;">
+                            {{word.filter}} :
+                        </span>
+                        <span class="m-topbar__userpic">
+                            <button type="button" class="filter-btn btn m-btn--pill m-btn--air  active btn-sm">
+                                <i style="font-size: 1.5rem !important"class="la la-filter"></i>
+                            </button>
+                        </span>
+                    </span>
+                </li>
+            </ul>
+
+            <div class="modal fade" id="filter" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" style="display: none;" aria-hidden="true">
+                <div class="modal-dialog modal-sm modal-dialog-centered" role="document" style="max-width: 420px !important; margin: auto !important">
+                    <div class="modal-content">
+                        <div class="modal-header" style="padding-bottom: 0px !important">
+                            <div class="modal-title" style="margin:auto !important" id="exampleModalLabel">
+                                <h4 style="margin:auto !important; text-align: center !important">
+                                    {{word.filters}}
+                                </h4>
+                                <h4 style="margin:auto !important; text-align: center !important">
+                                    <small class="text-muted">{{word.view_vacancy}}</small>
+                                </h4>
+                                <br>
+                                <h5>
+                                    <small class="text-muted"><b>{{word.flt_all}} :</b> {{word.flt_all_Desc}}</small><br>
+                                    <!-- <small class="text-muted"><b>{{word.flt_rel}} :</b> {{word.flt_rel_Desc}}</small><br> -->
+                                    <small class="text-muted"><b>{{word.flt_exec}} :</b> {{word.flt_exec_Desc}}</small><br>
+                                    <small class="text-muted"><b>{{word.flt_nonEx}} :</b> {{word.flt_nonEx_desc}}</small><br>
+                                    <small class="text-muted"><b>{{word.flt_NE}} :</b> {{word.flt_NE_desc}} </small>
+                                </h5>
+                            </div>
+                        </div>
+                        <div class="modal-body">
+                            <ul class="m-nav">
+                                <li class="filter-item m-nav__item" (click)="changeFilter('all')">
+                                    <span class="m-nav__link">
+                                        <span class="m-nav__link-title">
+                                            <span class="m-nav__link-wrap">
+                                                <span [class.era-color]="flt_all" class="m-nav__link-text">
+                                                    {{word.flt_all}}
+                                                </span>
+                                                <span *ngIf="flt_all" class="m-nav__link-badge">
+                                                    <i class="era-color fa fa-check"></i>
+                                                </span>
+                                            </span>
+                                        </span>
+                                    </span>
+                                </li>
+                                <!-- <li class="filter-item m-nav__item" (click)="changeFilter('relevant')">
+                                    <span class="m-nav__link">
+                                        <span class="m-nav__link-title">
+                                            <span class="m-nav__link-wrap">
+                                                <span [class.era-color]="flt_rel" class="m-nav__link-text">
+                                                    {{word.flt_rel}}
+                                                </span>
+                                                <span *ngIf="flt_rel" class="m-nav__link-badge">
+                                                    <i class="era-color fa fa-check"></i>
+                                                </span>
+                                            </span>
+                                        </span>
+                                    </span>
+                                </li> -->
+                                <li class="filter-item m-nav__item" (click)="changeFilter('exec')">
+                                    <span class="m-nav__link">
+                                        <span class="m-nav__link-title">
+                                            <span class="m-nav__link-wrap">
+                                                <span [class.era-color]="flt_exec" class="m-nav__link-text">
+                                                    {{word.flt_exec}}
+                                                </span>
+                                                <span *ngIf="flt_exec" class="m-nav__link-badge">
+                                                    <i class="era-color fa fa-check"></i>
+                                                </span>
+                                            </span>
+                                        </span>
+                                    </span>
+                                </li>
+                                <li class="filter-item m-nav__item" (click)="changeFilter('non_exec')">
+                                    <span class="m-nav__link">
+                                        <span class="m-nav__link-title">
+                                            <span class="m-nav__link-wrap">
+                                                <span [class.era-color]="flt_nonEx" class="m-nav__link-text">
+                                                    {{word.flt_nonEx}}
+                                                </span>
+                                                <span *ngIf="flt_nonEx" class="m-nav__link-badge">
+                                                    <i class="era-color fa fa-check"></i>
+                                                </span>
+                                            </span>
+                                        </span>
+                                    </span>
+                                </li>
+                                <li class="filter-item m-nav__item" (click)="changeFilter('ne_promo')">
+                                    <span class="m-nav__link">
+                                        <span class="m-nav__link-title">
+                                            <span class="m-nav__link-wrap">
+                                                <span [class.era-color]="flt_neP" class="m-nav__link-text">
+                                                    {{word.flt_NE}}
+                                                </span>
+                                                <span *ngIf="flt_neP" class="m-nav__link-badge">
+                                                    <i class="era-color fa fa-check"></i>
+                                                </span>
+                                            </span>
+                                        </span>
+                                    </span>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="modal-footer" style="display: none">
+                            <div style="width: 100% !important; text-align: center !important">
+                                <button type="button" id="cancel_btn" style="margin-right: 3rem !important" class="btn btn-secondary" data-dismiss="modal">
+                                    {{word.cancel}}
+                                </button>
+                                <button type="button" class="btn btn-primary" (click)="filterOk()">
+                                    {{word.okay | uppercase}}
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--End-Filter-->
+
+            <!--Begin:Language-->
+            <ul class="btn m-topbar__nav m-nav m-nav--inline">
+                <li class="m-nav__item m-topbar__user-profile m-topbar__user-profile--img" data-toggle="modal"
+                    data-target="#langSelect">
+                    <span >	
+                        <span class="m-topbar__username " style="padding-left:10px; padding-right:10px;">
+                            {{word.lang}} :
+                        </span>
+                        <span class="m-topbar__userpic">
+                            <button *ngIf="enChecked" type="button" title="English" data-toggle="m-tooltip" data-placement="top"
+                                class="btn m-btn--pill m-btn--air btn-outline-info active btn-sm">
+                                EN
+                            </button>
+                            <button *ngIf="!enChecked" type="button" title="Malay" data-toggle="m-tooltip" data-placement="top"
+                                class="btn m-btn--pill m-btn--air btn-outline-info active btn-sm">
+                                MY
+                            </button>
+                            
+                            <!-- <img *ngIf="enChecked" src="./assets/img/us.png" title="English" data-toggle="m-tooltip" data-placement="top"
+                                style="width:28px; height:28px" class="m--img-rounded m--marginless m--img-centered" />
+                            <img *ngIf="!enChecked" src="./assets/img/my.png" title="Malay" data-toggle="m-tooltip" data-placement="top" 
+                                style="width:28px; height:28px" class="m--img-rounded m--marginless m--img-centered" /> -->
+                        </span>
+                    </span>
+                </li>
+            </ul>
+            <div class="modal fade" id="langSelect" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" style="display: none;" aria-hidden="true">
+                <div class="modal-dialog msg-dialog modal-dialog-centered" role="document" style="max-width: 235px !important; margin: auto !important">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 style="text-align: center">{{word.lang}}</h5>
+                            <button type="button" id="lang_close" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">×</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="m-dropdown__content">
+                                <label class="lang-radio m-radio m-radio--solid m-radio--success" style="font-size: 16px; width: 100%">
+                                    <input type="radio" #en name="lang" value="en" [checked]="enChecked" (change)="langChange(en)"> 
+                                    &nbsp;&nbsp; English
+                                    <span style="width:23px; height:23px"></span>
+                                </label>
+                                <br>
+                                <label class="lang-radio m-radio m-radio--solid m-radio--success" style="font-size: 16px; width: 100%">
+                                    <input type="radio" #my name="lang" value="my" [checked]="!enChecked" (change)="langChange(my)"> 
+                                    &nbsp;&nbsp; Malay 
+                                    <span style="width:23px; height:23px"></span>
+                                </label>
+                            </div>
+                        </div>    
+                    </div>
+                </div>
+            </div>
+            <!--End:Language-->
+        </div>
+    </div>
+
+    <div class="col-lg-12 centred my-auto" *ngIf="loading">
+        <job-loading></job-loading>
+    </div>
+
+    <div class="m-content" *ngIf="!loading">
+        <div class="row" *ngIf="data?.length; else noJob">
+            <div class="col-lg-6 userJobContainer" *ngFor="let jobLob of data">
+                <a [routerLink]="" (click)='jobSecClicked(jobLob.lob,jobLob.idx)'>
+                    <img class="secImg" alt="{{jobLob.lob}}" src={{jobLob.img_url}} style="width:100%; height:210px">
+                    <div class="lobTitle ">
+                        <h4 class="titleHeader" >{{jobLob.lob}}  </h4>
+                        <br>
+                        <h5 class="titleSubHeader">{{word.posOpened}} : {{jobLob.total}}</h5>
+                    </div>
+                </a>
+            </div>
+        </div>
+
+        <ng-template #noJob class="col-lg-12 userJobContainer">
+            <h5 style="text-align: center !important; margin-top: 3rem;">
+                <span *ngIf="checkFilter('all'); else other">
+                    {{word.noAvailJob}}
+                </span>
+                <ng-template #other>
+                    {{word.sryThere}} {{getFltText()}} {{word.jobForYou}}.
+                    <br>
+                    {{word.changeIcon}}.
+                </ng-template>
+            </h5>
+        </ng-template>
+
+    </div>
+<!-- </div> -->

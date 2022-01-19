@@ -1,0 +1,287 @@
+.profile-bg {
+  background-image: url(./../../../../../assets/img/user/sea-portal/bg-profile.png) !important; 
+  position: relative;
+  height: 100%; 
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.font-lato {
+  font-family: 'lato';
+}
+
+.scrollHeight{
+    height: 800px;
+    overflow:hidden;
+}
+
+.padHeader{
+    padding: 40px 20px 0px 20px;
+}
+
+.scrollable{
+    position: relative; top: 0px; left: 0px;
+}
+
+.marginLoader{
+    margin: 30px 30px 0px 30px !important;
+    border-radius:1.3rem;
+}
+
+.small{
+    color: #afb2c1; font-weight: 300;
+}
+
+.btn-orange {
+    color: white;
+    background-color: #01A8C6 ;
+    border-color: #01A8C6 ;
+  }
+  
+  .btn-orange:hover {
+    color: white;
+    background-color: #ce6802;
+    border-color: #ce6802;
+  }
+  
+  .btn-orange:focus, .btn-warning.focus {
+    box-shadow: 0 0 0 0.2rem rgba(1, 168, 198, 0.5);
+  }
+  
+  .btn-outline-orange {
+    color:#01A8C6;
+    background-color: transparent;
+    background-image: none;
+    border-color:#01A8C6;
+  }
+  
+  .btn-outline-orange:hover {
+    color: white;
+    background-color:#01A8C6;
+    border-color:#01A8C6;
+  }
+  
+  .btn-outline-orange:focus, .btn-outline-warning.focus {
+    box-shadow: 0 0 0 0.2rem rgba(1, 168, 198, 0.5);
+  }
+
+  .h3{
+    display: table-cell;
+    vertical-align: middle;
+    font-size: 1.3rem;
+    font-weight: 500;
+    font-family: Roboto;
+    color: #575962;
+  }
+
+  .h3Small {
+    display: inline-block;
+    padding-left: 5px;
+    font-size: 1rem;
+    font-weight: 300;
+    font-family: Roboto;
+    color: #afb2c1;
+  }
+  
+  .skillDescription{
+    display: inline-block;
+    font-size: 12px;
+    font-weight: 300;
+    font-family: Roboto;
+    color: gray;
+  }
+
+  .pdfViewer .page{
+    margin: auto !important;
+  }
+
+  #mr-auto {
+    margin: auto;
+  }
+
+  .m-card-profile__pic-wrapper {
+    padding: 0 !important;
+    border: 6px solid #FA8C05 !important;
+  }
+
+  .details {
+    padding: 10px 14px 10px 14px; 
+    border-color: #f4f5f8; 
+    color: #6f727d; 
+    background-color: #f4f5f8;
+    border-radius: 5px;
+  }
+
+  .searchRep {
+    margin-left: 20px;
+    margin-right: 20px;
+  }
+
+  .subportlet {
+    background-color: lightgray; 
+    height: 4.1rem; 
+    border-radius: 1em 1em 0em 0em;
+  }
+
+  .bootstrap-select .dropdown-menu {
+    margin-top: 1px;
+    min-width: 100% !important;
+    max-height: 320px; 
+  }
+
+  .hideProd {
+    display: none;
+  }
+
+  .hideSlider {
+    display: none;
+  }
+
+.m-switch input:checked ~ span:after {
+    background-color: #01A8C6 !important;
+}
+.m-card-profile .m-card-profile__details {
+    text-align: left!important;
+}
+
+.accordion-t-responsive {
+    background: white!important;
+    width: 90%!important;
+}
+
+.accordion-a-responsive {
+    background: white!important;
+    width: 10%!important;
+}
+
+#mr-auto {
+  margin: auto;
+}
+
+.m-card-profile__pic-wrapper {
+  padding: 0 !important;
+  border: 6px solid #FA8C05 !important;
+}
+
+.circle-button {
+position: relative;
+bottom: 25px;
+background-color: #009FB7;
+color: white;
+border-radius: 35px;
+font-size: 18px;
+font-weight: 300;
+padding: 14px 20px;
+display: inline-block;
+cursor: pointer;
+box-shadow: 0px 6px 18px rgba(0, 0, 0, 0.41);
+}
+
+.mrgn-6 {
+margin: 6px 0;
+}
+
+.img-icon-staffdet {
+width: 18px;
+}
+
+.img-line-staffdet {
+margin-left: 4px;
+width: 30px;
+}
+
+
+.noUi-target .noUi-connect {
+  background: #01A8C6 !important;
+}
+
+.btn-primary.disabled, .btn-primary:disabled {
+  color: #fff;
+  background-color: #01A8C6 !important;
+  border-color: #01A8C6 !important;
+}
+
+/*.ui.dropdown .menu>.item:hover{
+cursor: pointer;
+background-color: #ffb266;
+}*/
+
+.profile-det-pic {
+  display: inline-block;
+  margin: 2rem auto;
+  border-radius: 100%;
+  padding: 0 !important;
+  border: 4px solid #11AFBE !important;
+}
+
+
+.profile_img_main {
+  width: 10rem;
+  height: 10rem;
+  text-align: center;
+  margin: 0 auto !important;
+  border-radius: 100%;
+}
+
+@media (max-width: 1570px){
+
+  .accordion-t-responsive {
+      background: white!important;
+      width: 85%!important;
+  }
+
+  .accordion-a-responsive {
+      background: white!important;
+      width: 15%!important;
+  }
+}
+
+@media (max-width: 1400px){
+
+  .accordion-t-responsive {
+    background: white !important;
+    width: 80% !important;
+  }
+
+  .accordion-a-responsive {
+    background: white!important;
+    width: 20%!important;
+  }
+}
+
+@media (max-width: 768px){
+  .profile-det-pic {
+    margin: 0 auto;
+  }
+  .profile_img_main {
+    width: 8rem;
+    height: 8rem;
+  }
+  .mrgn-6 {
+    text-align: center;
+  }
+  .dt-icon {
+    display: none;
+  }
+
+  .m-card-profile .m-card-profile__details {
+    text-align: center !important;
+  }
+
+  .accordion-t-responsive {
+    background: white !important;
+    width: 65% !important;
+  }
+
+  .accordion-a-responsive {
+    background: white !important;
+    width: 35% !important;
+  }
+}
+
+@media (max-width: 540px){
+  .profile_img_main {
+    width: 6rem;
+    height: 6rem;
+  }
+}

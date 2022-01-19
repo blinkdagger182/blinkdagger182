@@ -1,0 +1,69 @@
+.job-bg {
+    background-image: url(../../../../../../assets/img/user/sea-portal/bg-jobs.png) !important; 
+    position: relative;
+    height: 20rem; 
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.edit-delete-btn{
+    margin-top: -5rem !important;
+    width: 25px !important;
+    height: 25px !important;
+}
+
+.ed_delBtn:hover{
+    cursor: pointer !important;
+}
+
+.edit-delete-wrap{
+    width: 11rem !important;
+    margin-top: -2rem !important;
+}
+
+.icon-size{
+    font-size: 1.2rem !important
+}
+
+.modal .modal-content .modal-footer {
+    padding: 10px;
+}
+
+.liked{
+    color: #E53935 !important;
+    font-weight: bold !important;
+}
+
+.like-modal-content{
+    height: 35rem !important;
+}
+
+.like-body{
+    max-height: 335px !important;
+}
+
+.jobInfo_content{
+    /* width: 90% !important; */
+    margin: auto !important;
+    /* margin-top: 3rem !important; */
+    margin-bottom: 2rem !important;
+}
+
+.acc_content{
+    padding-top: 2rem !important;
+    background: #fff !important;
+    border: 2px solid #f7f8fa !important;
+}
+
+.info_title{
+    color: black !important;
+    font-weight: bolder !important;
+}
+
+.user_img{
+    height: 3.2rem !important;
+}
+
+.user-img{
+    width : 4.2rem !important;
+}

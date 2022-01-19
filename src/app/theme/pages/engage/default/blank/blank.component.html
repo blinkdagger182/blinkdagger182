@@ -1,0 +1,346 @@
+
+<div class="m-subheader">
+    <div class="d-flex align-items-center">
+        <div class="mr-auto" style="width: 100%">
+            <h3 class="m-subheader__title m-subheader__title--separator">
+                Dashboard 
+            </h3>
+            <ul class="m-subheader__breadcrumbs m-nav m-nav--inline">
+                <li class="m-nav__item m-nav__item--home">
+                    <a routerLink="/engage/index" class="m-nav__link m-nav__link--icon">
+                        <i class="m-nav__link-icon la la-home"></i>
+                    </a>
+                </li>
+            </ul>
+            <div style="float: right !important; margin-right: 1rem;" [hidden]="!hideAdvFilter">
+                <form [formGroup]="daysSelectionForm">
+                    <select class="form-control m-input" style="width:16rem" 
+                        formControlName="daysSelect" (change)="daysChanged()">
+                        <option [value]="1">Today</option>
+                        <option [value]="day" *ngFor="let day of days">
+                            Last {{day}} Days
+                        </option>
+                    </select>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<div class="m-content" style="padding-top:10px">
+    <div class="row">
+        <div class="col-md-12" style="display: inline; text-align: right">
+            <span style="vertical-align: 1.2rem;padding-right: 8px;"> Advance Filter</span>
+            <span class="m-switch m-switch--icon" style="padding-right: 1rem">
+                <label>
+                    <input #checkFilter type="checkbox" [checked]="advFilter" (change)="advFilterSwitched(checkFilter.checked)">
+                    <span></span>
+                </label>
+            </span>
+        </div>
+    </div>
+    
+    <div class="col-md-12" style="margin-bottom: 2rem" [hidden]="hideAdvFilter">
+        <div class="m-demo">
+            <div class="m-demo__preview m-demo__preview--badge" style="border: 2px solid #716aca !important;">	
+                <form [formGroup]="advFilterForm" autocomplete="off">
+                    <div class="row">
+                        <div class="col-md-3">
+                            <label class="form_lbl">Start Date :</label>
+                            <input class="form-control m-input" id="startDt" placeholder="Select Start Date" 
+                                formControlName="filterStart" >
+                        </div>
+                                    
+                        <div class="col-md-3">
+                            <label class="form_lbl">End Date :</label>
+                            <input class="form-control m-input" id="endDt" placeholder="Select End Date" 
+                                formControlName="filterEnd">
+                        </div>
+
+                        <div class="col-md-3">
+                            <label class="form_lbl">Group :</label>
+                            <select class="form-control m-input" formControlName="filterGroup" (change)="groupChanged()" >
+                                <option value="" disabled selected>Select Group</option>
+                                <option [value]="group" *ngFor="let group of groupArray">{{group}}</option>
+                            </select>
+                            <!-- <input placeholder="Select Group" type="text" ng-model="search"
+                                class="form-control m-input" (change)="groupChanged()"
+                                list="grpList"  formControlName="filterGroup">
+                            <datalist id="grpList" [hidden]="true">
+                                <option value="" disabled selected>Select Group</option>
+                                <option [value]="group" *ngFor="let group of groupArray;">{{group}}</option>
+                            </datalist>  -->
+                        </div>
+
+                        <div class="col-md-3">
+                            <label class="form_lbl">State :</label>
+                            <select class="form-control m-input" formControlName="filterState">
+                                <option value="" disabled selected>Select State</option>
+                                <option [value]="st.State" *ngFor="let st of stateDt;">{{st.State}}</option>
+                            </select>
+                        </div>
+
+                    </div>
+                    <div class="row" style="margin-top:5px">
+
+                        <div class="col-md-3">
+                            <label class="form_lbl">LOB :</label>
+                            <input placeholder="Select LOB" type="text" ng-model="search"
+                                class="form-control m-input" (change)="lobChanged()"
+                                list="lobList"  formControlName="filterLob">
+                            <datalist id="lobList" [hidden]="true">
+                                <option value="" disabled selected>Select LOB</option>
+                                <option [value]="lob" *ngFor="let lob of lobDt;">{{lob}}</option>
+                            </datalist> 
+                        </div>
+
+                        <div class="col-md-3">
+                            <label class="form_lbl">Division :</label>
+                            <input placeholder="Select Division" type="text" ng-model="search"
+                                class="form-control m-input" (change)="divChanged()"
+                                list="divList"  formControlName="filterDiv">
+                            <datalist id="divList" [hidden]="true">
+                                <option value="" disabled selected>Select Division</option>
+                                <option [value]="div" *ngFor="let div of divDt;">{{div}}</option>
+                            </datalist>
+                        </div>
+
+                        <div class="col-md-3">
+                            <label class="form_lbl">Unit :</label>
+                            <input placeholder="Select Unit" type="text" ng-model="search"
+                                class="form-control m-input" (change)="unitChanged()"
+                                list="unitList"  formControlName="filterUnit">
+                            <datalist id="unitList" [hidden]="true">
+                                <option value="" disabled selected>Select Unit</option>
+                                <option [value]="unit" *ngFor="let unit of unitDt;">{{unit}}</option>
+                            </datalist>
+                        </div>
+
+                        <div class="col-md-3" style="text-align: center">
+                            <button id="resetBtn" class="btn m-btn m-btn--gradient-from-secondary m-btn--gradient-to-info" 
+                                type="button" style="width: 8rem; margin-top: 1.6rem" (click)="advFilterResetClicked()">
+                                Reset
+                            </button>
+                            <button class="btn m-btn m-btn--gradient-from-primary m-btn--gradient-to-info" 
+                                type="button" style="width: 8rem; margin-top: 1.6rem" (click)="advFilterClicked()">
+                                Apply
+                            </button>
+                        </div>
+                    </div> 
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="sumBox col-md-2 col-xs-4 col-sm-4" *ngIf="!loading" style="padding-left:15px !important">
+            <div class="alignCenter" style="background-color:#5867dd;">  
+                <h6 class="m-portlet__head-text m--font-light font_13px pad_top8px">
+                    #Respondent
+                </h6>
+                <div class="pad_bot6px" style="padding-bottom: 0.8rem; color: white">
+                    <i class="fa fa-users" style="font-size: 1.5rem"></i>
+                    <span style="font-size: 1.5rem">{{summaryDt[1].total}}</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="sumBox col-md-2 col-xs-4 col-sm-4" *ngIf="!loading">
+            <div class="alignCenter" style="background-color:#5867dd">  
+                <h6 class="m-portlet__head-text m--font-light font_13px pad_top8px">
+                    #Entries
+                </h6>
+                <div class="pad_bot6px" style="padding-bottom: 0.8rem; color: white">
+                    <i class="fa fa-arrow-circle-down" style="font-size: 1.5rem"></i> 
+                    <span style="font-size: 1.5rem">{{summaryDt[0].total}}</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="sumBox col-md-2 col-xs-4 col-sm-4" *ngIf="!loading">
+            <div class="alignCenter" style="background-color:#5867dd">  
+                <h6 class="m-portlet__head-text m--font-light font_13px pad_top8px">
+                    #Index
+                </h6>
+                <div class="pad_bot6px" style="padding-bottom: 0.8rem; color: white">
+                    <!-- <i class="fa fa-plus-circle" style="font-size: 1.5rem"></i>  -->
+                    <span style="font-size: 1.5rem">{{getIndexValue(summaryDt[2].total) | number:'1.2-2'}}</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="sumBox col-md-2 col-xs-4 col-sm-4" *ngIf="!loading">
+            <div class="alignCenter" style="background-color:#6d19a9">  
+                <h6 class="m-portlet__head-text m--font-light font_13px pad_top8px">
+                    #Score
+                </h6>
+                <div class="pad_bot6px" style="padding-bottom: 0.8rem; color: white">
+                    <i class="fa fa-plus-circle" style="font-size: 1.5rem"></i> 
+                    <span style="font-size: 1.5rem">{{getScore() | number:'1.0-0'}}</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="sumBox col-md-2 col-xs-4 col-sm-4" *ngIf="!loading">
+            <div class="alignCenter" style="background-color:#2ECC71">  
+                <h6 class="m-portlet__head-text m--font-light font_13px pad_top8px">
+                    #Happy
+                </h6>
+                <div class="pad_bot6px" style="padding-bottom: 0.8rem; color: white">
+                    <i class="fa fa-smile-o" style="font-size: 1.5rem"></i> 
+                    <span style="font-size: 1.5rem">{{summaryDt[3].total}}</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="sumBox col-md-2 col-xs-4 col-sm-4" *ngIf="!loading">
+            <div class="alignCenter" style="background-color:#FFD103">  
+                <h6 class="m-portlet__head-text m--font-light font_13px pad_top8px">
+                    #Neutral
+                </h6>
+                <div class="pad_bot6px" style="padding-bottom: 0.8rem; color: white">
+                    <i class="fa fa-meh-o" style="font-size: 1.5rem"></i> 
+                    <span style="font-size: 1.5rem">{{summaryDt[4].total}}</span>
+                </div>
+            </div>
+        </div>
+    
+        <div class="sumBox col-md-2 col-xs-4 col-sm-4" *ngIf="!loading">
+            <div class="alignCenter" style="background-color:#EA2803">  
+                <h6 class="m-portlet__head-text m--font-light font_13px pad_top8px">
+                    #Unhappy
+                </h6>
+                <div class="pad_bot6px" style="padding-bottom: 0.8rem; color: white">
+                    <i class="fa fa-frown-o" style="font-size: 1.5rem"></i> 
+                    <span style="font-size: 1.5rem">{{summaryDt[5].total}}</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row" style="margin-top: 2rem">
+
+        <div class="col-lg-12">
+            <div class="m-portlet">
+                <div class="m-portlet__head" style="background-color:#715bb1">
+                    <div class="m-portlet__head-caption">
+                        <div class="m-portlet__head-title">
+                            <h3 class="m-portlet__head-text" style="color: white">
+                                Total Trends
+                            </h3>
+                        </div>
+                    </div>      
+                </div>
+                <div class="m-portlet__body">
+                    <!--begin::Widget5-->
+                    <div class="m-widget4">
+                        <div class="m-widget_content-items" *ngIf="loading">
+                            <div class="m-stack__item m-stack__item--center m-stack__item--middle" style="text-align: center;margin: 2rem;">
+                                <div class="m-loader m-loader--lg m-loader--success" style="width: 30px; display: inline-block;"></div>
+                            </div>
+                        </div>
+                        <div id="rowChart_div" *ngIf="rowTrendChart" [hidden]="loading">
+                            <!-- <div class="chart-container" style="position: relative; height:80vh; width:80vw"> -->
+                                <canvas class="chartjs-render-monitor" id="rowChart">{{ rowTrendChart }}</canvas>
+                            <!-- </div> -->
+                        </div>
+                        
+                    </div>
+                    <!--end::Widget 5-->
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-6">
+            <div class="m-portlet m-portlet--bordered-semi m-portlet--full-height ">
+                <div class="m-portlet__head" style="background-color: #5075e4;">
+                    <div class="m-portlet__head-caption">
+                        <div class="m-portlet__head-title">
+                            <h3 class="m-portlet__head-text" style="color: white;">
+                                Lob Summary
+                            </h3>
+                        </div>
+                    </div>      
+                </div>
+                <div class="m-portlet__body">
+                    <!--begin::Widget5-->
+                    <div class="m-widget4">
+                        <div class="m-widget_content-items" *ngIf="loading">
+                            <div class="m-stack__item m-stack__item--center m-stack__item--middle" style="text-align: center;margin: 2rem;">
+                                <div class="m-loader m-loader--lg m-loader--success" style="width: 30px; display: inline-block;"></div>
+                            </div>
+                        </div>
+                        <div id="lobPieChart_div" *ngIf="lobPieChart" [hidden]="loading">
+                            <canvas id="lobPieChart">{{ lobPieChart }}</canvas>
+                        </div>
+                    </div>
+                    <!--end::Widget 5-->
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-6">
+            <div class="m-portlet m-portlet--bordered-semi m-portlet--full-height ">
+                <div class="m-portlet__head" style="background-color: #f4516c ">
+                    <div class="m-portlet__head-caption">
+                        <div class="m-portlet__head-title">
+                            <h3 class="m-portlet__head-text" style="color: white;">
+                                Happy Meter Summary
+                            </h3>
+                        </div>
+                    </div>      
+                </div>
+                <div class="m-portlet__body">
+                    <!--begin::Widget5-->
+                    <div class="m-widget4">
+                        <div class="m-widget_content-items" *ngIf="loading">
+                            <div class="m-stack__item m-stack__item--center m-stack__item--middle" style="text-align: center;margin: 2rem;">
+                                <div class="m-loader m-loader--lg m-loader--success" style="width: 30px; display: inline-block;"></div>
+                            </div>
+                        </div>
+                        <div id="feelDonutChart_div" *ngIf="feelTypeChart" [hidden]="loading">
+                            <canvas id="feelDonutChart">{{ feelTypeChart }}</canvas>
+                        </div>
+                    </div>
+                    <!--end::Widget 5-->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="m-portlet m-portlet--bordered-semi m-portlet--full-height ">
+                <div class="m-portlet__head" style="background-color: #942a79;">
+                    <div class="m-portlet__head-caption">
+                        <div class="m-portlet__head-title">
+                            <h3 class="m-portlet__head-text" style="color: white;">
+                                Reason Summary
+                            </h3>
+                        </div>
+                    </div>      
+                </div>
+                <div class="m-portlet__body">
+                    <!--begin::Widget5-->
+                    <div class="m-widget4">
+                        <div class="m-widget_content-items" *ngIf="loading">
+                            <div class="m-stack__item m-stack__item--center m-stack__item--middle" style="text-align: center;margin: 2rem;">
+                                <div class="m-loader m-loader--lg m-loader--success" style="width: 30px; display: inline-block;"></div>
+                            </div>
+                        </div>
+                        <div id="feelReason_div" *ngIf="reasonChart" [hidden]="loading">
+                            <canvas id="feelReason">{{ reasonChart }}</canvas>
+                        </div>
+                    </div>
+                    <!--end::Widget 5-->
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

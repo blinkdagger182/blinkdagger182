@@ -1,0 +1,785 @@
+<!-- New Design SEA portal  -->
+<div class="sea-bg" [ngClass]="bgClass" [ngStyle]="{ 'background-image': bgChange }">
+    <br /><br />
+    <!--- START: Annoucement HRComms | ZAM-->
+    <!--Start:Content-->
+    <div class="container home-container">
+        <h3 class="urgent">All Announcement 
+              <!-- <span ngif="ann_count">
+                  <i class="fa fa-bullhorn"> <span class="badge badge-danger lg-badge">{{ann_count}}</span></i>
+              </span> -->
+        </h3>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="form-group row">
+                    <!-- <label  class="col-2 col-form-label text-right text-white">Search keyword :</label>
+                    <div class="col-10">
+                        <form [formGroup]="searchCommForm" id="searchCommForm">
+                            <div class="btn-group col-12" style="padding-left: 0px;">
+                            <input type="search" class="form-control search-input" id="searchTerm" placeholder="Search.." 
+                            name="searchTerm"
+                            formControlName="searchTerm"
+                            (input)="seachComm($event.target.value);">   
+                            <button id="btnResetSearch"
+                            type="reset" style="background: ghostwhite; margin-left: 3px; border-radius: 3px;"(click)="seachComm('');" class="btn btn-sm">
+                                Clear <i class="glyphicon glyphicon-remove-circle"></i></button>
+                            
+                                </div>
+                                <div class="alert alert-danger" *ngIf="errSearchTerm">
+                                    {{errSearchTerm}}
+                                </div>
+                          
+                      </form>
+                      
+                    </div> -->
+                    <label  class="col-2 col-form-label text-right text-white">Filter by:</label>
+                            <div class="col-10">
+                            <!-- <button class="btn btn-sm btn-primary" (click)="show_list_group_users()">Group</button> -->
+                            <!-- <button class="btn btn-sm btn-warning" (click)="show_list_category_news()">Category</button> -->
+                            <button class="btn btn-sm btn-success" (click)="show_list_year_news()">Year</button>
+                            <button class="btn btn-sm btn-info" (click)="show_list_month_news()">Month</button>
+                            <!-- <button type="button" class="btn btn-outline-dark">Clear</button> -->
+
+                            </div>
+                            
+                            <!-- <div class="col-10 offset-2" *ngIf="list_group_users&&show_list_group">
+                                <div class="form-check-inline mb-2" *ngFor="let item of list_group_users; let i = index">
+                                    <label class="form-check-label btn btn-sm btn-primary">
+                                        <input (click)="searchFilterByCb('cb_gname',$event.target.value)" type="checkbox" class="form-check-input" value="{{item.group_name}}">{{item.group_name}}
+                                    </label>
+                                    </div>
+                            </div> -->
+                            <!-- <div class="col-10 offset-2" *ngIf="list_category_news&&show_list_category">
+                                <div class="form-check-inline mb-2" *ngFor="let item of list_category_news; let i = index">
+                                    <label class="form-check-label btn btn-sm btn-warning">
+                                        <input (click)="searchFilterByCb('cb_cat',$event.target.value)"  type="checkbox" class="form-check-input" value="{{item.category_name}}">{{item.category_name}}
+                                    </label>
+                                    </div>
+                            </div> -->
+                            <div class="col-10 offset-2" *ngIf="list_year&&show_list_year">
+                                <div class="form-check-inline mb-2" *ngFor="let item of list_year; let i = index">
+                                    <!-- <div class="btn-group">
+                                        <button type="button" class="btn btn-primary" (click)="searchFilterByCb(0 ,$event.target.value)" name="year" value="{{item}}"> {{item}} </button>
+
+                                    </div> -->
+                                    <label class="form-check-label btn btn-sm btn-success">
+                                        <input (click)="searchFilterByCb(0 ,$event.target.value)" type="radio" name="year" class="form-check-input" value="{{item}}">{{item}}
+                                    </label>
+                                    </div>
+                            </div>
+                            <div class="col-10 offset-2" *ngIf="list_month&&show_list_month">
+                                <div class="form-check-inline mb-2" *ngFor="let item of list_month; let i = index">
+                                    <label class="form-check-label btn btn-sm btn-info">
+                                        <input (click)="searchFilterByCb(1,$event.target.value)" type="radio" name="month" class="form-check-input" value="{{item.monthName}}">{{item.monthName}}
+                                    </label>
+                                    </div>
+                            </div>
+
+                </div><!-- end:form-group row -->   
+                <div class="form-group row">
+                            <label  class="col-2 col-form-label text-right text-white">Search keyword :</label>
+                    <div class="col-10">
+                        <form [formGroup]="searchCommForm" id="searchCommForm">
+                            <div class="btn-group col-12" style="padding-left: 0px;">
+                            <input type="search" class="form-control search-input" id="searchTerm" placeholder="Search.." 
+                            name="searchTerm"
+                            formControlName="searchTerm"
+                            (input)="seachComm($event.target.value);">   
+                            <button id="btnResetSearch"
+                            type="reset" style="background: ghostwhite; margin-left: 3px; border-radius: 3px;"(click)="seachComm('');" class="btn btn-sm">
+                                Clear <i class="glyphicon glyphicon-remove-circle"></i></button>
+                            
+                                </div>
+                                <div class="alert alert-danger" *ngIf="errSearchTerm">
+                                    {{errSearchTerm}}
+                                </div>
+                          
+                      </form>
+                      
+                    </div>
+                </div><!-- end:form-group row -->   
+            </div>   
+        </div>       
+       
+        <div class="col-lg-12 centred my-auto" *ngIf="loading">
+            <idp-loading></idp-loading>
+        </div>
+    
+            <!-- <div class="row mb-3" *ngIf="loading&&!hasAnnoucement">      
+                <div class="col-md-12">
+                    <div class="alert text-center">                  
+                        <b>No Annoucement</b>
+                      </div>
+                </div>    
+            </div> -->
+            <div *ngIf="!loading&&hasAnnoucement">
+                <div class="row mb-3" *ngIf="ann_list.length>0">
+                    <div class="col-md-4 col-lg-3 pb-3" *ngFor="let item of ann_list; let i = index">
+                        <!--begin::edm--> 
+                        <div class="alert alert-secondary ann-alert-box" style="height: 100%;">     
+                            <div class="mb-2">
+                                <a href="" (click)="viewNews(item.id)"
+                                    data-toggle="modal"
+                                    data-id="{{item.id}}"
+                                    data-target="#view_news"> 
+                                <img [src]="item.url_thumb" *ngIf="item.url_thumb" 
+                                onerror="this.src='https://via.placeholder.com/600x400?text=ERA';"
+                                class="mx-auto d-block rounded annImgThumb" alt="{{item.subject}}">        
+                                <img src="https://via.placeholder.com/600x400?text=ERA" *ngIf="!item.url_thumb" 
+                                class="img-fluid mx-auto d-block rounded annImgThumb" alt="{{item.subject}}">    
+                                </a>
+                            </div> 
+                            <div class="text-box-subject">{{item.subject}}
+                            </div>   
+                            <div>
+                                <div class="pull-left">{{ item.publish_date | date: "dd MMMM yyyy" }}</div>
+                                <div class="pull-right">
+                                    <a href="" (click)="viewNews(item.id)"
+                                        data-toggle="modal"
+                                        data-id="{{item.id}}"
+                                        data-target="#view_news"> 
+                                    <small>Details</small>
+                                    </a>
+                                </div>
+                            </div>   
+                        </div>
+                        <!--end::edm-->
+                    </div><!-- col-md-3--> 
+                </div>
+                <div class="row mb-3" style="justify-content: center;
+                color: white;
+                margin-top: 30px;" *ngIf="ann_list.length <= 0">
+                    <p style="
+                    margin: 0;">No announcement found</p>
+                </div>
+                
+            </div><!-- row --> 
+            
+            
+            <!-- start: paging - critical -->
+            <div class="row" *ngIf="!loading&&hasAnnoucement">
+                <div class="col-12">
+                    <nav aria-label="Page navigation example">
+                        <ul *ngIf="pager.pages && pager.pages.length"
+                            class="pagination justify-content-end">
+                            <li class="page-item" [ngClass]="{disabled:pager.currentPage === 1}">
+                                <button (click)="setPage(1)" class="page-link" aria-label="Previous">
+                                    <span aria-hidden="true">&laquo;</span>
+                                    <span class="sr-only">First</span>
+                                </button>
+                            </li>
+                            <li class="page-item" [ngClass]="{disabled:pager.currentPage === 1}">
+                                <button (click)="setPage(pager.currentPage - 1)" class="page-link"
+                                    aria-label="Previous">
+                                    <span aria-hidden="true">&lt;</span>
+                                    <span class="sr-only">Previous</span>
+                                </button>
+                            </li>
+                            <li class="page-item" *ngFor="let page of pager.pages"
+                                [ngClass]="{active:pager.currentPage === page}">
+                                <button (click)="setPage(page)" class="page-link">{{page}}</button>
+                            </li>
+                            <li class="page-item"
+                                [ngClass]="{disabled:pager.currentPage === pager.totalPages}">
+                                <button (click)="setPage(pager.currentPage + 1)" class="page-link"
+                                    aria-label="Previous">
+                                    <span aria-hidden="true">&gt;</span>
+                                    <span class="sr-only">Next</span>
+                                </button>
+                            </li>
+                            <li class="page-item"
+                                [ngClass]="{disabled:pager.currentPage === pager.totalPages}">
+                                <button (click)="setPage(pager.totalPages)" class="page-link"
+                                    aria-label="Next">
+                                    <span aria-hidden="true">&raquo;</span>
+                                    <span class="sr-only">Last</span>
+                                </button>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+            <!-- end: paging - critical --> 
+    
+    <!--End:Content-->
+    <!--- END: Annoucement HRComms | ZAM -->
+    <br /><br /><br />
+    </div><!-- class="sea-bg" -->
+    
+    <!-- START: Modal detail annoucement-->
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+    
+            integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
+    
+            crossorigin="anonymous">
+    
+    </script>
+    
+    <!-- <script src='../../user/default/blank/inputEmoji.js'></script> -->
+    <!-- 
+    <script>
+        $(function () {
+            $('input[name=mes]').emoji({place: 'after'});
+        })
+    </script> -->
+    
+    <div class="modal fade" id="view_news">
+        <div class="modal-dialog modal-lg">
+          <div class="modal-content">
+            <!-- Modal Header -->
+            <div class="modal-header form-header-bg text-center">
+              <h4 class="modal-title">{{view_subject}}</h4>
+              <button type="button" class="close" data-dismiss="modal">
+                &times;
+              </button>
+            </div>
+      
+            <!-- Start: Modal body -->
+            <div class="modal-body">   
+                <div class="row mb-2">
+                    <div class="col-lg-4 col-sm-12">
+                        <div *ngIf="view_bodyImg">
+                            <div>
+                                <b>EDM (Malay Version):</b>
+                                <a [attr.href]="view_urlbodyImg" target="_blank" class="pull-right">
+                                    <i class="fa fa-search-plus"></i> View Original
+                                    </a>
+                            </div>	
+                        <a [attr.href]="view_hyperlink" target="_blank"> 
+                            <img [src]="view_urlbodyImg" *ngIf="view_bodyImg" 
+                            class="img-fluid mx-auto d-block rounded mb-3" 
+                onerror="this.src='https://via.placeholder.com/600x400?text=ERA';"
+                            alt="{{view_subject}}" />
+                        <!-- <img src="https://via.placeholder.com/600x400?text={{view_category}}" *ngIf="!view_urlbodyImg" 
+                        class="img-fluid mx-auto d-block rounded mb-3" alt="{{view_subject}}"> --> 
+                        </a>
+                        </div>
+    
+                        <div *ngIf="view_bodyImgEng">
+                        <div>
+                            <b>EDM (English Version):</b>
+                            <a [attr.href]="view_urlbodyImgEng" target="_blank" class="pull-right">
+                                <i class="fa fa-search-plus"></i> View Original
+                                </a>
+                        </div>	
+                        <a [attr.href]="view_hyperlink" target="_blank">
+                        <img [src]="view_urlbodyImgEng" *ngIf="view_bodyImgEng" 
+                        class="img-fluid mx-auto d-block rounded mb-3" 
+                        onerror="this.src='https://via.placeholder.com/600x400?text=ERA';"
+                        alt="{{view_subject}}" />
+                        <!-- <img src="https://via.placeholder.com/600x400?text=No Img" *ngIf="!bodyImage_eng" 
+                    class="img-fluid mx-auto d-block rounded mb-3" alt="{{view_subject}}">  -->
+                        </a>
+                        </div>
+    
+                    </div>
+                    <div class="col-lg-8 col-sm-12">
+                        <div class="row">
+                            <div class="col-3"><b>Title:</b></div>
+                            <div class="col-9">{{view_subject}}</div>
+                        </div>
+                        <div class="row mb-1">
+                            <div class="col-3"><b>Category:</b></div>
+                            <div class="col-9">{{view_category}}</div>
+                        </div>
+                        <div class="row mb-1">
+                            <div class="col-3"><b>Comm Type:</b></div>
+                            <div class="col-9">{{view_sub_category}}</div>
+                        </div>
+                        <div class="row mb-1">
+                            <div class="col-3"><b>To:</b></div>
+                            <div class="col-9">{{view_target_employee}}</div>
+                        </div>
+                        <div class="row mb-1">
+                            <div class="col-3"><b>Location:</b></div>
+                            <div class="col-9">{{view_location}}</div>
+                        </div>
+                        <div class="row mb-1">
+                            <div class="col-3"><b>Publish Date/Time:</b></div>
+                            <div class="col-9">{{ view_publish_date | date: "dd MMMM yyyy, h:mm a" }}</div>
+                        </div>
+                        <!-- display malay content -->
+                        <div class="row mb-1" *ngIf="view_bodyHtml">
+                            <div class="col-12">
+                                <b>Content (Malay Version):</b><br />
+                                <span [innerHTML]="view_bodyHtml"></span>
+                            </div>
+                        </div>
+                        <!-- display english content -->
+                        <div class="row mb-1" *ngIf="view_bodyHtmlEng">
+                            <div class="col-12">
+                                <b>Content (English Version):</b><br />
+                                <span [innerHTML]="view_bodyHtmlEng"></span>
+                            </div>
+                        </div>
+                        
+                        <hr>
+                        <!-- START: Attachment summary total like/share-->
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="pull-left">
+                                    <span *ngIf="view_list_attachment&&view_list_attachment.length>0">
+                                    Attachment : 
+                                        <span *ngFor="let item of view_list_attachment; let i = index">
+                                            [<a [attr.href]="item.url_attachment" target="_blank">{{item.filename}}</a>] 
+                                        </span>
+                                    </span>
+                                </div>
+                                <div class="pull-right">
+                                    {{view_viewcount}}  Views | {{view_likeNewsCount}} Likes | {{totalCommArrLength}} Comments
+                                </div>
+                            </div>
+                        </div>
+                        <!-- END: Attachment summary total like/share-->
+    
+                        <hr>
+                        <!-- START:  like/share-->
+                        <div class="row">
+                            <div class="col-12">
+                                <span style = "color: #007bff;"><i class="fa fa-eye"></i> View</span>&nbsp;
+                                <!-- <a href=""><i class="fa fa-eye"></i> View </a>&nbsp; -->
+                                <span *ngIf = "view_isLiked == 0" style = "color: #007bff; cursor: pointer;">
+                                    <a (click)="addLikeNews(view_newsId)">
+                                        <span><i class="la la-heart-o"></i>Like</span>&nbsp;
+                                    </a>
+                                </span>
+                                <span *ngIf = "view_isLiked == 1" style = "cursor: pointer;">
+                                    <a (click)="unlikeNews(view_newsId)">
+                                    <span class="liked"><i class="la la-heart"></i></span><span style = "color: #007bff;">Like</span>&nbsp;
+                                    <!-- <span class="liked"><i class="la la-heart">Like</i></span>&nbsp; -->
+                                    </a>
+                                </span>
+
+                               
+                                <!-- <a href="" (click)="addLikeNews(view_newsId)"><i class="la la-heart-o"></i> Like</a>&nbsp; -->
+                                <!-- <a href=""><i class="fa fa-share"></i> Share</a>&nbsp; -->
+                                <!-- <a href=""><i class="fa fa-comment"></i> Comment</a> -->
+                                <!-- <a href ="" (click)="scrollToElement()" style="color: #007bff;"><i class="fa fa-comment"></i> Comment</a> -->
+                                <button class="button-solid" (click)="scrollToElement()" style="background: transparent; border: none; outline: none; color: #007bff;"><i class="fa fa-comment"></i> Comment</button>
+                                <!-- <a href="#cmnt"><i class="fa fa-comment"></i> Comment</a> -->
+                                <button class="btn btn-sm pull-right" style="background: whitesmoke;"(click)="showMyContainer=!showMyContainer">Show/Hide Comment</button>
+                                <!-- <button class="btn btn-sm pull-right" data-toggle="collapse"
+                                    data-target="#comment">Show/Hide Comment</button> -->
+                            </div>
+                        </div>
+                        <!-- END:  like/share-->
+    
+                        <hr>
+                        <!-- START: display comment-->
+                        <div *ngIf="showMyContainer && firstCommArr.length>0" style="overflow: auto; width: auto; max-height: 40%; min-height: auto;">
+							<ng-container class="container mt-3" id="comment"  *ngFor = "let comment of firstCommArr; let idx= index">
+								<!-- START: First layer -->
+                                <ng-container *ngIf="comment.deletecomment==null && comment.deletecomment!=0">
+                                    <div class="media border p-3">
+									
+                                        <div style="display:flex; flex-direction: row; width:100%;">
+                                            <div style="width: 100%; display: flex;">
+                        
+                                                <img src="{{comment.image_url}}"
+                                                class="mr-3 mt-3 rounded-circle" style="width:48px; height:48px;">
+                                                <div class="media-body">
+                                                <h4>{{comment.Name}} <small><i>Posted on {{comment.update_on | date: 'dd MMMM yyyy'}}</i></small></h4>
+                                                <p *ngIf="idx != commentEditIndex">{{comment.comment}}</p>
+                                                    <div style="margin-bottom: 15px;" *ngIf="idx == commentEditIndex">
+                                                        <emoji-input [(model)]="tempComment" [textArea]="{cols: 40, rows: 5}" [popupAnchor]="'bottom'"
+                                                        (setPopupAction)="setPopupAction($event)" type="text" style="margin-top: 10px; margin-bottom: 10px;"><i
+                                                        class="far fa-smile icon"(click)="openPopup()"></i>
+                                                       </emoji-input>
+    
+                                                       <button type="button" name="button"  style="display: flex; color:black; cursor: pointer; font-size: 20px; justify-content: center;
+                                                       display: flex;
+                                                       color: black;
+                                                       cursor: pointer;
+                                                       font-size: 20px;
+                                                       border-style: none;
+                                                       background: transparent;
+                                                       flex-direction: column;" (click)="openPopup()"><i
+                                                           class="far fa-smile icon"></i></button>
+    
+    
+                                                            <button type="button" class="btn btn-info" style="background: #5867dd;
+                                                            border-color: #5867dd;"(click)="updateEditComment(idx, comment.id)">Update</button>
+                                                            <button type="button" class="btn btn-secondary" style="background: #D3D3D3;" (click)="cancelEditComment()">Cancel</button>
+                                                    </div>
+    
+                                                    <div style="display:flex; flex-direction: row;">
+                                                        <p *ngIf = "comment.isLiked == 0">
+                                                            <span style = "color: #007bff; cursor: pointer;" (click)="addLikeComm(comment.id)">
+                                                                <i class="la la-heart-o"></i>Like</span>&nbsp;
+                                                        </p>
+                                                        <p *ngIf = "comment.isLiked == 1">
+                                                            <span class="liked"  (click)="unlikeComm(comment.id)">
+                                                                <i class="la la-heart"></i></span><span style = "color: #007bff;">Like</span>&nbsp;
+                                                        </p>
+                                                        <p>
+                                                            <span style = "color: #007bff; cursor: pointer;" (click)="replyFlayer(idx, comment.id, view_newsId)">
+                                                                <i class="fa fa-reply"></i>Reply</span>
+                                                        </p>		
+                                                        <!-- <a href=""><i class="fa fa-reply"></i> Reply</a> -->
+                                                        
+                                                    </div>
+                                                </div>
+                                            </div>
+    
+                                          
+                                            
+                                            <div *ngIf="currentUserId == comment.Staff_No && (comment.deletecomment==null && comment.deletecomment!=0)" style="display: flex; flex-direction: column; justify-content: start;">
+                                                <!-- <button class="btn btn-sm pull-right"><i class="la la-ellipsis-h"></i></button> -->
+                                                <div class="edit-delete-btn m-dropdown m-dropdown--inline m-dropdown--arrow m-dropdown--align-right m-dropdown--align-push" aria-expanded="true" m-dropdown-toggle="click" aria-expanded="true">
+                                                    <span class="edit-delete-btn m-portlet__nav-link btn btn-lg btn-secondary  m-btn m-btn--outline-2x m-btn--air m-btn--icon m-btn--icon-only m-btn--pill  m-dropdown__toggle">
+                                                        <i class="la la-plus m--hide"></i>
+                                                        <i class="la la-ellipsis-h"></i>
+                                                    </span>
+                                                    <div class="m-dropdown__wrapper edit-delete-wrap">
+                                                        <span class="m-dropdown__arrow m-dropdown__arrow--right m-dropdown__arrow--adjust"></span>
+                                                        <div class="m-dropdown__inner">
+                                                            <div class="m-dropdown__body">
+                                                                <div class="m-dropdown__content">
+                                                                    <ul class="m-nav">
+                                                                        <li class="m-nav__item ed_delBtn" (click)="editComm(idx, comment.id, 1)">
+                                                                            <span class="m-nav__link">
+                                                                                <i class="icon-size m-nav__link-icon 	fa flaticon-edit-1"></i>
+                                                                                <span class="m-nav__link-text" style="cursor:pointer;">
+                                                                                    {{word.edit}}
+                                                                                </span>
+                                                                            </span>
+                                                                        </li>
+                                                                        <li class="m-nav__item ed_delBtn" (click)=" deleteCommentModal(idx, comment.id)" data-toggle="modal" data-target="#m_modal_6">
+                                                                            <span class="m-nav__link">
+                                                                                <i class="icon-size m-nav__link-icon 	fa flaticon-delete-1"></i>
+                                                                                <span class="m-nav__link-text" style="cursor:pointer;">
+                                                                                    {{word.delete}}
+                                                                                </span>
+                                                                            </span>
+                                                                        </li>
+                                                                    </ul>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+    
+                                    </div>
+                                </ng-container>
+                            <ng-container *ngIf="comment.deletecomment==0 && comment.deletecomment!=null && comment.hasReply">
+                                <div class="media border p-3">
+                                    <div style="width: 100%; display: flex;">
+                        
+                                        <img src="{{comment.image_url}}"
+                                        class="mr-3 mt-3 rounded-circle" style="width:48px; height:48px;">
+                                        <div class="media-body">
+                                        <h4>[Removed]</h4>
+                                        </div>
+                                    </div>
+                                </div>
+                            </ng-container>
+								<!-- END: First layer -->
+								<!-- END: display comment-->
+
+								<!-- START: Second layer -->
+								<div class="container mt-3" *ngIf="isReplying && idx==replyCommentIndex" style="margin-left: 20px; display:flex; margin-top: 15px;margin-bottom: 15px; border: solid; border-color: #dee2e6; border-width: 1px; width: calc(100% - 20px); padding-right: 0px;">
+                                    <div style="padding: 15px; padding-right:0px; display:flex ">
+                                        <span *ngIf="userProfilePic && userProfilePic!=0" routerLink="{{rProfile}}" style="cursor: pointer !important; vertical-align: middle !important; display: table-cell !important;">
+                                            <img [src]=userProfilePic
+                                                style="margin-right: 10px; width:48px !important; height:48px !important; border-radius: 50%;" alt="{{lgnName}}"/>
+                                        </span>
+                                        <span *ngIf="!userProfilePic || userProfilePic==0" routerLink="{{rProfile}}" style="cursor: pointer !important; vertical-align: middle !important; display: table-cell !important;">
+                                            <img src="../../../../assets/app/media/img/users/ghcm-user-default.jpg"
+                                                style="margin-right: 10px; width:48px !important; height:48px !important; border-radius: 50%;" alt="{{lgnName}}"/>
+                                        </span>
+    
+                                        <div class="inputContainer" style="width: 90%; display: flex; border-style: solid; border-radius: 20px; border-color: transparent; border-width: thin; margin-left: 8px; ">
+                                            <emoji-input [(model)]="secLayComm" [textArea]="{cols: 40, rows: 5}" [popupAnchor]="'bottom'"
+                                                    (setPopupAction)="setPopupAction($event)" type="text" style="width:100%; height:50px; padding:1px; border-radius:20px;"><i
+                                                    class="far fa-smile icon"(click)="openPopup()"></i>
+                                                </emoji-input>
+    
+                                                <button type="button" name="button"  style="display: flex; color:black; cursor: pointer; font-size: 20px; justify-content: center;
+                                            display: flex;
+                                            color: black;
+                                            cursor: pointer;
+                                            font-size: 20px;
+                                            border-style: none;
+                                            background: transparent;
+                                            flex-direction: column;" (click)="openPopup()"><i
+                                                class="far fa-smile icon"></i></button>
+                                        </div>
+                                        <!-- <input [(ngModel)]="secLayComm" class="form-control" placeholder="Write Comment" type="text"
+                                        style="border-style: solid; border-color: black; border-radius: 10px; margin-top: 10px; margin-bottom: 10px;"> -->
+    
+                                       
+                                        <button type="button" class="btn btn-primary" style="margin-top: auto;margin-bottom: auto;margin-left: 6px;" [disabled]="!secLayComm" (click)="addSLayerComm(comment.id, secLayComm, view_newsId)">Post</button>
+                                    </div>
+                                    <div>
+                                        <button type="button" style="background: transparent; border-color: transparent;" (click)="cancelReply()"><i class="fa fa-close"></i></button>
+                                    </div>
+									
+                                    
+									</div>
+
+										<ng-container *ngFor="let obj of secondCommArr; let i=index">
+											<div *ngIf="obj.id_first_layer==comment.id" style="width: calc(100% - 30px); margin-left: 30px;display: flex; margin-top: 10px;">
+												<img src="{{obj.image_url_secondlayer}}"
+												class="mr-3 mt-3 rounded-circle" style="width:43px; height:43px;">
+											<div class="media-body">
+												<h4>{{obj.Name}} <small><i>Posted on {{obj.update_on | date: 'dd MMMM yyyy'}}</i></small></h4>
+												<!-- <p>{{obj.comment}}</p> -->
+												<p *ngIf="i != commentEditSecIndex">{{obj.comment}}</p>
+												<!-- <div class="inputContainer" style="width: 90%; display: flex; border-style: solid; border-radius: 20px; border-color: transparent; border-width: thin; margin-left: 8px;" *ngIf="i == commentEditSecIndex"> -->
+                                                    <div style="margin-bottom: 15px;" *ngIf="i == commentEditSecIndex">
+                                                    <emoji-input [(model)]="tempComment" [textArea]="{cols: 40, rows: 5}" [popupAnchor]="'bottom'"
+                                                    (setPopupAction)="setPopupAction($event)" type="text" style="margin-top: 10px; margin-bottom: 10px;"><i
+                                                    class="far fa-smile icon"(click)="openPopup()"></i>
+                                                   </emoji-input>
+
+                                                   <button type="button" name="button"  style="display: flex; color:black; cursor: pointer; font-size: 20px; justify-content: center;
+															display: flex;
+															color: black;
+															cursor: pointer;
+															font-size: 20px;
+															border-style: none;
+															background: transparent;
+															flex-direction: column;" (click)="openPopup()"><i
+																class="far fa-smile icon"></i></button>
+
+
+														<button type="button" class="btn btn-info" style="background: #5867dd;
+														border-color: #5867dd;"(click)="updateEditSecComment(i, obj.id)">Update</button>
+														<button type="button" class="btn btn-secondary" style="background: #D3D3D3;" (click)="cancelEditComment()">Cancel</button>
+												</div>
+												<!-- <p *ngIf="i != replyCommentIndex">{{obj.comment}}</p> -->
+												<!-- <div *ngIf="i == replyCommentIndex"> -->
+												<!-- <input [(ngModel)]="secLayComm" class="form-control" placeholder="Write Comment" type="text"
+												style="border-style: solid; border-color: black; border-radius: 10px; margin-top: 10px; margin-bottom: 10px;"> -->
+												<!-- </div> -->
+
+												<div style="display:flex; flex-direction:row;">
+													<p *ngIf = "obj.isLiked == 0">
+														<span style = "color: #007bff; cursor: pointer;" (click)="likeSecLayer(obj.id_first_layer)">
+														<i class="la la-heart-o"></i>Like</span>&nbsp;
+													</p>
+													<p *ngIf = "obj.isLiked == 1">
+														<span class="liked" (click)="unlikeSecLayer(obj.id_first_layer)">
+														<i class="la la-heart"></i></span><span style = "color: #007bff;">Like</span>&nbsp;
+													</p>
+												</div>
+											</div>
+											<div *ngIf="currentUserId == obj.Staff_No" style="display: flex; flex-direction: column; justify-content: start;">
+											<div class="edit-delete-btn m-dropdown m-dropdown--inline m-dropdown--arrow m-dropdown--align-right m-dropdown--align-push" aria-expanded="true" m-dropdown-toggle="click" aria-expanded="true">
+												<span class="edit-delete-btn m-portlet__nav-link btn btn-lg btn-secondary  m-btn m-btn--outline-2x m-btn--air m-btn--icon m-btn--icon-only m-btn--pill  m-dropdown__toggle">
+													<i class="la la-plus m--hide"></i>
+													<i class="la la-ellipsis-h"></i>
+												</span>
+												<div class="m-dropdown__wrapper edit-delete-wrap">
+													<span class="m-dropdown__arrow m-dropdown__arrow--right m-dropdown__arrow--adjust"></span>
+													<div class="m-dropdown__inner">
+														<div class="m-dropdown__body">
+															<div class="m-dropdown__content">
+																<ul class="m-nav">
+																	<li class="m-nav__item ed_delBtn" (click)="editComm(i, obj.id, 2)">
+																		<span class="m-nav__link">
+																			<i class="icon-size m-nav__link-icon 	fa flaticon-edit-1"></i>
+																			<span class="m-nav__link-text" style="cursor:pointer;">
+																				{{word.edit}}
+																			</span>
+																		</span>
+																	</li>
+																	<li class="m-nav__item ed_delBtn" (click)=" deleteCommentModal2(i, obj.id)" data-toggle="modal" data-target="#m_modal_7">
+																		<span class="m-nav__link">
+																			<i class="icon-size m-nav__link-icon 	fa flaticon-delete-1"></i>
+																			<span class="m-nav__link-text" style="cursor:pointer;">
+																				{{word.delete}}
+																			</span>
+																		</span>
+																	</li>
+																</ul>
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+										  </div>
+											</div>
+											
+										</ng-container>
+									
+
+										
+								<!-- END: Second layer -->
+									
+									
+								
+								<!-- <div class="media border p-3">
+									<img src="https://via.placeholder.com/150/00cc66?Text=User3" alt="John Doe"
+										class="mr-3 mt-3 rounded-circle" style="width:60px;">
+									<div class="media-body">
+										<h4>John Doe <small><i>Posted on March 19, 2021</i></small></h4>
+										<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
+											tempor incididunt ut labore et dolore magna aliqua.</p>
+										<p>
+											<a href=""><i class="fa fa-thumbs-up"></i> Like</a>&nbsp;
+											<a href=""><i class="fa fa-reply"></i> Reply</a>
+										</p>
+									</div>
+								</div> -->
+							</ng-container>
+						</div>
+                        <!-- END: display comment-->
+    
+                       <!--START: user comment section-->
+                       <div id="targetpage" class="media border p-3" *ngIf="commentEditIndex==null && !isReplying && commentEditSecIndex==null">
+                        <span *ngIf="userProfilePic && userProfilePic!=0" routerLink="{{rProfile}}" style="cursor: pointer !important; vertical-align: middle !important; display: table-cell !important;">
+                            <img [src]=userProfilePic
+                                style="margin-right: 10px; width:48px !important; height:48px !important; border-radius: 50%;" alt="{{lgnName}}"/>
+                        </span>
+                        <span *ngIf="!userProfilePic || userProfilePic==0" routerLink="{{rProfile}}" style="cursor: pointer !important; vertical-align: middle !important; display: table-cell !important;">
+                            <img src="../../../../assets/app/media/img/users/ghcm-user-default.jpg"
+                                style="margin-right: 10px; width:48px !important; height:48px !important; border-radius: 50%;" alt="{{lgnName}}"/>
+                        </span>
+                        <!-- <img src="" class="mr-3 mt-3 rounded-circle"
+                            style="width:60px; margin-bottom: 60px;"> -->
+                        <div class="row" style="width: 90%; margin-top: auto; margin-bottom: auto;">
+                            
+                            <div class="inputContainer" 
+                                style="width: 90%; display: flex; border-style: solid; border-radius: 20px; border-color: transparent; border-width: thin; margin-left: 8px;">
+                                 <!-- <input class="form-control" placeholder="Write Comment" type="text"
+                                    style="border-style: none; border-color: transparent; background: transparent;"><i
+                                    class="far fa-smile icon"(click)="openPopup()"></i> -->
+                                    
+                                    <!-- <a name="cmnt"><emoji-input [(model)]="announcementComment" [textArea]="{cols: 40, rows: 5}"  [onEnter]="onEnterFunction" [popupAnchor]="'bottom'"
+                                    (setPopupAction)="setPopupAction($event)" type="text" style="width:100%; height:50px; padding:1px; border-radius:20px;"><i
+                                    class="far fa-smile icon"(click)="openPopup()"></i></emoji-input>
+                                    </a> -->
+
+                                    <emoji-input [(model)]="announcementComment" [textArea]="{cols: 40, rows: 5}" [popupAnchor]="'bottom'"
+                                        (setPopupAction)="setPopupAction($event)" type="text" style="width:100%; height:50px; padding:1px; border-radius:20px;"><i
+                                        class="far fa-smile icon"(click)="openPopup()"></i>
+                                    </emoji-input>
+                                    
+
+                                
+                            
+                                <button type="button" name="button"  style="display: flex; color:black; cursor: pointer; font-size: 20px; justify-content: center;
+                                display: flex;
+                                color: black;
+                                cursor: pointer;
+                                font-size: 20px;
+                                border-style: none;
+                                background: transparent;
+                                flex-direction: column;" (click)="openPopup()"><i
+                                    class="far fa-smile icon"></i></button>
+                                
+                            </div>
+                            <button type="button" class="btn btn-primary" style="margin-top: 10px; margin-left: 10px;" [disabled]="!announcementComment" (click)="addComment(view_newsId)">Post</button>
+                        </div>
+                    </div>
+                </div>
+                    <!--END: user comment section-->
+                   
+                      
+    
+                    </div>
+                </div>                
+            </div><!-- End: Modal body -->
+      
+            <!-- Modal footer -->
+            <!-- <div class="modal-footer justify-content-center"> -->
+            <!-- <div class="col-md-4">
+                          <button id="btn_setuju" type="button" disabled class="btn btn-default btn-block" style="background-color:#11AFBE;">Setuju</button>
+                      </div>
+                      <div class="col-md-4">
+                          <button id="btn_batal" type="button" class="btn btn-outline-danger btn-block" data-dismiss="modal">Batal</button>
+                      </div>      -->
+            <!-- <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button> -->
+            <!-- </div> -->
+          </div>
+        <!-- </div> -->
+    </div>
+</div>
+    <!-- END: Modal detail annoucement-->
+    
+    <!-- Modal FILTERFORM annoucement-->
+    <div class="modal fade" id="filterForm">
+        <div class="modal-dialog modal-lg">
+          <div class="modal-content">
+            <!-- Modal Header -->
+            <div class="modal-header form-header-bg text-center">
+              <h4 class="modal-title">{{view_subject}}</h4>
+              <button type="button" class="close" data-dismiss="modal">
+                &times;
+              </button>
+            </div>
+      
+            <!-- Modal body -->
+            <div class="modal-body">  
+    
+            </div>      
+    
+          </div>
+        </div>
+    </div>
+
+    <!-- Confirmation delete box -->
+			<div class="modal fade" id="m_modal_6" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" style="display: none;" aria-hidden="true" *ngFor = "let comment of firstCommArr; let idx= index">
+				<div class="modal-dialog modal-dialog-centered" role="document">
+					<div class="modal-content">
+						<div class="modal-header" style="padding:20px !important">
+							<h5 class="modal-title" id="exampleModalLongTitle">
+								{{modalTitle}}
+							</h5>
+							<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+								<span aria-hidden="true">
+									×
+								</span>
+							</button>
+						</div>
+						<div class="modal-body">
+							<p style="margin-top:1rem !important"> {{modalBody}}</p>
+						</div>
+						<div class="modal-footer">
+							<button id="close_btn" type="button" class="btn btn-secondary" style="background: #D3D3D3;" data-dismiss="modal">
+								{{word.cancel}}
+							</button>
+							<button *ngIf="delBtn" type="button" class="btn btn-primary" (click)="delFirstLayer()">
+								{{word.delete}}
+							</button>
+						</div>
+					</div>
+				</div>
+			</div>
+
+            <div class="modal fade" id="m_modal_7" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" style="display: none;" aria-hidden="true" *ngFor="let obj of secondCommArr; let i=index">
+				<div class="modal-dialog modal-dialog-centered" role="document">
+					<div class="modal-content">
+						<div class="modal-header" style="padding:20px !important">
+							<h5 class="modal-title" id="exampleModalLongTitle">
+								{{modalTitle}}
+							</h5>
+							<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+								<span aria-hidden="true">
+									×
+								</span>
+							</button>
+						</div>
+						<div class="modal-body">
+							<p style="margin-top:1rem !important"> {{modalBody}}</p>
+						</div>
+						<div class="modal-footer">
+							<button id="close_btn" type="button" class="btn btn-secondary" style="background: #D3D3D3;" data-dismiss="modal">
+								{{word.cancel}}
+							</button>
+							<button *ngIf="delBtn" type="button" class="btn btn-primary" (click)="delSecondLayer()">
+								{{word.delete}}
+							</button>
+						</div>
+					</div>
+				</div>
+			</div>
+    <!-- END: Modal detail annoucement-->
+    
+    
+    <notifier-container></notifier-container>
+    
+    

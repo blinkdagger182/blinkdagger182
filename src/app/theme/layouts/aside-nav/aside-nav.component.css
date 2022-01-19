@@ -1,0 +1,73 @@
+.m-aside-menu.m-aside-menu--skin-dark .m-menu__nav > .m-menu__item > .m-menu__link .m-menu__link-text {
+    color: black!important;
+    font-family: Lato!important;
+}
+.m-aside-menu.m-aside-menu--skin-dark .m-menu__nav > .m-menu__item > .m-menu__link .m-menu__link-icon {
+    color: black!important;
+}
+.m-aside-menu.m-aside-menu--skin-dark .m-menu__nav > .m-menu__item > .m-menu__link:hover {
+     background-color: #f2f3f8; 
+    opacity: 0.4;
+}
+.m-aside-menu.m-aside-menu--skin-dark .m-menu__nav > .m-menu__item.m-menu__item--active > .m-menu__link .m-menu__link-text {
+    font-family: Lato!important;
+    color: #fd5806!important;
+    opacity: 0.75;
+}
+.m-aside-menu.m-aside-menu--skin-dark .m-menu__nav > .m-menu__item.m-menu__item--active > .m-menu__link .m-menu__link-icon {
+    color: #fd5806!important;
+    opacity: 0.75;
+}
+.m-aside-menu.m-aside-menu--skin-dark .m-menu__nav > .m-menu__section .m-menu__section-text {
+    font-family: Lato!important;
+    color: black!important;
+}
+.m-aside-left.m-aside-left--skin-dark {
+    background-image: linear-gradient(to right, #f2f3f8 , #f2f3f8);
+    border: 1px solid #a3a1a1;
+    /* border: 1px solid #fd5806; */
+    /* box-shadow: 0px 1px 8px 1px rgb(54, 54, 54); */
+    box-shadow: 3px 3px 10px #8888889e;
+}
+
+
+
+.m-aside-menu.m-aside-menu--skin-dark .m-menu__nav > .m-menu__item .m-menu__submenu .m-menu__item:not(.m-menu__item--parent):not(.m-menu__item--open):not(.m-menu__item--expanded):not(.m-menu__item--active):hover > .m-menu__link .m-menu__link-text {
+    font-family: Lato!important;
+    /* color: #868aa8; */
+     background-color: #fff; 
+    opacity: 0.4;
+}
+.m-aside-menu.m-aside-menu--skin-dark .m-menu__nav > .m-menu__item .m-menu__submenu .m-menu__item:not(.m-menu__item--parent):not(.m-menu__item--open):not(.m-menu__item--expanded):not(.m-menu__item--active):hover > .m-menu__link .m-menu__link-icon {
+    /* color: #868aa8; */
+     background-color: #fff; 
+    opacity: 0.4;
+}
+.menu.m-aside-menu--skin-dark .m-menu__nav > .m-menu__item .m-menu__submenu .m-menu__item.m-menu__item--active > .m-menu__link .m-menu__link-text {
+    font-family: Lato!important;
+    color: #fd5806!important;
+    opacity: 0.75;
+}
+.menu.m-aside-menu--skin-dark .m-menu__nav > .m-menu__item .m-menu__submenu .m-menu__item.m-menu__item--active > .m-menu__link .m-menu__link-icon {
+    color: #fd5806!important;
+    opacity: 0.75;
+}
+.m-aside-menu.m-aside-menu--skin-dark .m-menu__nav > .m-menu__item .m-menu__submenu .m-menu__item > .m-menu__link .m-menu__link-text {
+    font-family: Lato!important;
+    color: black!important;
+}
+.m-aside-menu.m-aside-menu--skin-dark .m-menu__nav > .m-menu__item .m-menu__submenu .m-menu__item > .m-menu__link .m-menu__link-icon {
+    color: black!important;
+}
+
+.m-aside-menu.m-aside-menu--skin-dark .m-menu__nav > .m-menu__item .m-menu__submenu .m-menu__item.m-menu__item--active > .m-menu__link .m-menu__link-text {
+    font-family: Lato!important;
+    color: #fd5806!important;
+    opacity: 0.75;
+}
+
+.m-aside-menu.m-aside-menu--skin-dark .m-menu__nav > .m-menu__item .m-menu__submenu .m-menu__item.m-menu__item--active > .m-menu__link .m-menu__link-icon {
+    color: #fd5806!important;
+    opacity: 0.75;
+    
+}

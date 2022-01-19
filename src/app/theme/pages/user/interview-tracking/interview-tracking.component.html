@@ -1,0 +1,718 @@
+
+<meta name="viewport" content="width=device=-width, initial-scale=1">
+    <notifier-container></notifier-container>
+    <div class="m-content">
+
+        <div class="d-flex justify-content-center">
+
+            <div class="col-xl-12" style="margin-top: 8rem;">
+               
+    
+               <div class="col-xl-12" >
+            <!-- <div class="centred my-auto" *ngIf="loading && loading2">
+                    <job-loading></job-loading>
+                </div> -->
+                <div class="m-portlet m-portlet--tabs">
+                  <div class="m-portlet__head" style="margin-top: 2rem;">
+                     <div class="m-portlet__head-tools">
+                            <ul class="nav nav-tabs justify-content-center m-tabs-line m-tabs-line--primary m-tabs-line--2x" role="tablist">
+                              <li class="nav-item">
+                                 <a class="nav-link a font-lato blue-text active" style="font-weight: 400; font-size: 1.12rem;" data-toggle="tab" href="#m_tab_1" role="tab">
+                                    <span style="font-size: 1.4rem;">1.</span>Acknowledgement</a>
+                              </li>
+                              <li class="nav-item">
+                                 <a class="nav-link a font-lato blue-text"   style="font-weight: 400; font-size: 1.12rem;" data-toggle="tab" href="#m_tab_2" role="tab">
+                                    <span style="font-size: 1.4rem;">2.</span>Advertisement Info</a>
+                              </li>
+                              <li class="nav-item">
+                                 <a class="nav-link a font-lato blue-text" style="font-weight: 400; font-size: 1.12rem;" data-toggle="tab" href="#m_tab_3" role="tab">
+                                    <span style="font-size: 1.4rem;">3.</span>Candidates Info</a>
+                              </li>
+                              <li class="nav-item">
+                                  <a class="nav-link a font-lato blue-text" style="font-weight: 400; font-size: 1.12rem;" data-toggle="tab" href="#m_tab_4" role="tab">
+                                    <span style="font-size: 1.4rem;">4.</span>Assessment Form</a>
+                              </li>
+                              <li class="nav-item">
+                                 <a class="nav-link a font-lato blue-text" style="font-weight: 400; font-size: 1.12rem;" data-toggle="tab" href="#m_tab_5" role="tab">
+                                    <span style="font-size: 1.4rem;">5.</span>Report</a>
+                             </li>
+                         </ul>
+                      </div>
+                    </div>
+                    
+                   
+                        
+                
+                    <div class="m-portlet__body" style="width: 100%;">                   
+                         <div class="tab-content"> 
+                              <div class="tab-pane active" id="m_tab_1" role="tabpanel">
+                                  <div class="col-lg-12 centred my-auto" >
+                                      <div class="m-section__content">
+                                               <br>
+                                             <div *ngIf="!showMenu" style="margin-top: 4rem !important; margin-bottom: 14rem !important;" class=" text-center">
+                                                <h5 style="text-align: center !important ; color: black;">Thank you for your corporation !</h5> &nbsp;
+                                                <img src="../../../../assets/blank/images/Picture2.png" class=" m--marginless m--img-centered"/>
+                                             </div>
+
+                                        <div *ngIf="!showForm" style="margin-top: 4rem !important; margin-bottom: 9rem !important; text-align: center !important ;" >
+                                           <h5 style=" color: black;">Thank you. Please advice us your replacement ..</h5> <br>
+
+                                        <div class="col-md-12">
+                                           <form class="m-form" [formGroup]="declineForm" style="padding-left: 26rem; text-align: center !important;">
+                                             <div class="form-group">
+                                                <div class="form-group m-form__group row">
+                                                    <label class="col-4 col-form-label" for="example-text-input"  style="padding-left: 7rem;">Search by staff 
+                                                          <span style="font-weight: bold;"> Name</span> or <span style="font-weight: bold;"> Email</span> :</label>
+                                                    <div class="col-sm-3">
+                                                        <input class="form-control m-input" type="text"  formControlName="search" >
+                                                        
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <br>
+
+                                          <div class ="row">
+                                              <div class="m-card-profile__pic-wrapper" *ngIf="imgOptArrList !== '0'">
+                                                 <img style="max-width: 98px !important; border-radius: 37px; box-shadow: 0px 3px 9px grey; border: 3px solid #abb2b9; margin-bottom: -9rem;
+                                                 margin-left: 9rem;" src="{{imgOptArrList}}" alt="" />
+                                              </div>
+                                             <div class="m-card-profile__pic-wrapper" *ngIf="imgOptArrList === '0'">
+                                                  <img style="max-width: 98px !important; border-radius: 37px; box-shadow: 0px 3px 9px grey; border: 3px solid #abb2b9; margin-bottom: -9rem;
+                                                  margin-left: 9rem;" src="./assets/app/media/img/users/ghcm-user-default.jpg" alt="" />
+                                              </div>
+                                           </div>
+                                            
+                                             <div class="form-group">	
+                                                <div class="form-group m-form__group row">
+                                                   <label class="col-4 col-form-label" for="example-text-input"  style="padding-left: 18rem;"> Name :</label>
+                                                   <div class="col-sm-3">
+                                                       <input class="form-control m-input font-weight-bold" type="text" disabled="true" 
+                                                       *ngIf="showUserName" style="font-size: 14px; color: rgb(7, 57, 197);" value="{{lgnName}}" >
+                                                   </div>
+                                               </div>
+                                             </div>
+                                             <div class="form-group">
+                                                <div class="form-group m-form__group row">
+                                                   <label class="col-4 col-form-label" for="example-text-input"  style="padding-left: 18rem;"> Email :</label>
+                                                   <div class="col-sm-3">
+                                                       <input class="form-control m-input font-weight-bold" type="text" disabled="true" 
+                                                       *ngIf="showUserEmail"style="font-size: 14px; color: rgb(7, 57, 197);" value="@tmrnd.com.my">
+                                                   </div>
+                                                </div>
+                                             </div>
+                                             <div class="form-group">
+                                                <div class="form-group m-form__group row">
+                                                   <label class="col-4 col-form-label" for="example-text-input"  style="padding-left: 18rem;"> LOB :</label>
+                                                   <div class="col-sm-3">
+                                                       <input class="form-control m-input font-weight-bold" type="text" disabled="true" 
+                                                       *ngIf="showUserlob" style="font-size: 14px;color: rgb(7, 57, 197);" value="">
+                                                   </div>
+                                               </div>
+                                            </div>
+                                     
+                                          <div class="row" style="padding-bottom:20px">
+                                             <div class="col-lg-2">
+                                             </div>
+                                             <div class="col-lg-5">
+                                                 <div class="pull-right">
+                                                     <button type="button" id="btn_close" class="btn btn-md btn-cancel m-btn m-btn--pill">
+                                                         Cancel
+                                                     </button>
+                                                    <!-- (click)="findInvalidControls(); exOrCreateFormSave()"-->
+                                                     <!--[disabled]="!exOrCreateForm.valid||loadingSubmit" -->
+                                                     <button type="button" id="btn_submit" value="1" class="btn btn-md btn-accent m-btn m-btn--pill">
+                                                         Submit
+                                                     </button>
+                                                 </div>
+                                             </div>
+                                         </div>
+
+                                        </form>
+                                      </div>
+                                   </div>
+
+                                            <div *ngIf="showMenu && showForm">
+                                              <h5 style="text-align: center !important ; font-style: bold; color: black;">
+                                                    You has been selected to be Head of Panel Interview for session below:-</h5>
+                                               <br><br>
+                                                <br>
+                                                <h5 style="text-align: center !important ; font-weight: 400; ">
+                                                   ASS MGR NORTH ASIA, OCEANIA & AFRICA</h5>
+                                                <h5 style="text-align: center !important ; font-weight: 500; color: rgb(100, 100, 100); ">
+                                                   20-March-2020  09:30 AM  </h5>
+                                                <h5 style="text-align: center !important ; font-weight: 400;">Menara TM, Lvl13, Topaz Room </h5>
+                                                <br><br>
+                                                <br>
+                                             <div class="mt text-center">
+                                                  <button type="button" class="btn btn-md m-btn--pill btn-outline-brand " style="width: auto;" 
+                                                          (click)="imgHide()">Accept</button> &nbsp;
+                                                  <button type="button" class="btn btn-md m-btn--pill btn-outline-brands " style="width: auto;"
+                                                           (click)="formHide()">Decline</button>
+                                             </div>
+                                          </div>
+                                            
+                                     </div>
+                                 </div>
+                             </div>
+             
+                          <div class="tab-pane" id="m_tab_2" role="tabpanel">
+                               <div class="col-lg-12 centred my-auto" >
+                                     <div class="m-section__content"><br>
+                                           <div class="job-portlet m-portlet__body">
+                                               <div class="m-widget4">
+                                                  <div class="m-widget4__item" style="width: 100% !important">
+                                                     <div class="job-details job_img_widget m-widget4__img m-widget4__img--pic">
+                                                         <img class="job_img" src="../../../../assets/blank/images/adv.png" style="margin-left: 6rem; margin-bottom: 10rem;" >
+                                                     </div>
+                                                      <div class="job_info m-widget4__info">
+                                                         <div class="job-details" style="padding-left: 2rem; ">
+                                                           <span class="job_title m-widget4__title" style="font-weight: bold;">
+                                                                            Mgr Business Performance & Reporting
+                                                          </span> <br>
+                                                          <span class="job_title_sub m-widget4__sub">
+                                                                            Unit Business
+                                                          </span><br>
+                                                          <span class="job_title_sub m-widget4__sub">
+                                                                            Menara TM ONE,Kuala Lumpur
+                                                          </span><br>
+                                                          <span class="job_close_date m-widget4__sub">
+                                                                         Close date:  2/03/2020
+                                                          </span><br>
+                                                          <span class="job_time_ago m-widget4__sub">
+                                                                          11 days ago
+                                                          </span>
+                                                                    <br><br>
+                                                       </div>
+                                                           <span class="m-widget4__sub">     
+                                                               <td style=" padding-left: 2rem;">       
+                                                                   <span style="color: red;"> <i class="la la-heart"></i> </span>                                                       
+                                                                   <span style="font-size: 1rem !important"> Likes </span>  
+                                                               </td>
+
+                                                               <td style=" padding-left: 4rem; padding-bottom: 2rem;">
+                                                                   <span style="color: orange;"><i class="icon2 la la-check-square"></i></span>
+                                                                   <span style="font-size: 1rem !important">Applicants</span>
+                                                               </td>
+                                                          </span>
+                                                                       <br><br>
+                                                        <div class=" m-widget4" style="padding-left: 2rem;">
+                                                              <span class="job_title m-widget4__title" style="font-weight: bold;">
+                                                                       Job Requirements
+                                                              </span> <br>
+                                                              <span class="job_title_sub m-widget4__sub">
+                                                                       3 years in Business Management/ Business Administration/Business Strategy/ Engineering/ Science/ Finance
+                                                              </span><br>
+                                                        </div>
+                                                                    <br>
+                                                       <div class=" m-widget4" style="padding-left: 2rem;">
+                                                               <span class="job_title m-widget4__title" style="font-weight: bold;">
+                                                                        Qualification Requirements 
+                                                              </span> <br>
+                                                              <span class="job_title_sub m-widget4__sub">
+                                                                        Education in Degree (Bachelor in Business Management/Business Administration/Engineering/ Science/ Finance)
+                                                              </span><br>
+                                                       </div>
+                                                  </div>
+                                                    <div class="job_info m-widget4__info"  style="padding-right: 4rem; padding-bottom: 13rem;">
+                                                        <div class="job-details">
+                                                             <td>
+                                                                <span class="job_title m-widget4__title" style="font-weight: bold;">
+                                                                                Job Description
+                                                                </span> <br>
+                                                                <span class="job_title_sub m-widget4__sub">
+                                                                                To strategize, plan and manage as need to engage effectively with internal and external stakeholder on variety of tasks to achieve high level operational excellence.
+                                                                 </span><br>
+                                                             </td>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                         </div>              
+                                               <br><br>
+                                       </div>
+                                  </div>
+                            </div>
+
+                                             
+                           <div class="tab-pane" id="m_tab_3" role="tabpanel">
+                                 <div class="col-lg-12 centred my-auto" >
+                                       <div class="m-section__content">
+                                                 <br>	
+                                            <!--begin::Portlet-->
+                                          <div class="m-portlet m-portlet--bordered m-portlet--rounded">
+                                               <div class="m-portlet__body">
+                                                   <table class="table">
+                                                      <div class ="row">
+                                                         <div class="m-card-profile__pic-wrapper" *ngIf="imgOptArrList !== '0'">
+                                                             <img style="max-width: 130px !important; border-radius: 37px; box-shadow: 0px 3px 9px grey; border: 3px solid #abb2b9; margin-bottom: -12rem;
+                                                               margin-left: 6rem;" src="{{imgOptArrList}}" alt="" />
+                                                         </div>
+                                                         <div class="m-card-profile__pic-wrapper" *ngIf="imgOptArrList === '0'">
+                                                             <img style="max-width: 130px !important; border-radius: 37px; box-shadow: 0px 3px 9px grey; border: 3px solid #abb2b9; margin-bottom: -12rem;
+                                                               margin-left: 6rem;" src="./assets/app/media/img/users/ghcm-user-default.jpg" alt="" />
+                                                         </div>   
+                                                      </div>
+                                                    <div>
+                                                       <span>
+                                                          <div class="m-info font-weight-bold" style="font-size: 14px;"> Mohammad Ali </div> 
+                                                          <h5 style=" padding-left: 18rem; color: #020202;">IT Executive  at ABC Company </h5>
+                                                          <h6  style=" padding-left: 18rem; color: #0066ff">Internal</h6>      
+                                                          <div class="m-info font-weight-bold" style="font-size: 14px">Experience:   5 years as IT executive </div>  
+                                                          <div class="m-info font-weight-bold" style=" font-size:14px">Highest Edu:  IT Bachelor Degree</div>  
+                                                          <div class="m-info font-weight-bold" style="font-size: 14px;">Age: 30</div>                                                                                                                                                                                                                                                                                  
+                                                       </span>
+                                                        <span> <h5  style=" padding-left: 18rem; color: #0066ff">3 Years in band (Literal) </h5> </span>
+                                                    </div>
+                                                </table>	         
+                                                      <td>
+                                                        <div style="border-style: dotted; color: #cfcfcf; border-right: 1px; height: 171px;margin-left: 39rem;margin-top: -14rem;"></div>
+                                                      </td>    
+                                                 <table class="table">
+                                                     <div>
+                                                        <span>
+                                                           <h5 class="assessment-h">Harrison Assessment <span style="float: right; width: 48rem;">85%</span></h5>
+                                                        </span>      
+                                                    </div>
+                                                    <div>
+                                                        <span>
+                                                           <h5 class="assessment">Functional Competency  <span style="float: right; width: 48rem;">85%</span></h5>
+                                                        </span>
+                                                    </div>
+                                                    <div>
+                                                        <span>
+                                                           <h5 class="assessment">Talent Assessment <span style="float: right; width: 48rem">85%</span></h5>
+                                                        </span>
+                                                    </div>
+                                                 </table>  
+                                                       <td>
+                                                         <div style=" border-style: dotted ; color:  #cfcfcf; border-right:  1px; height: 171px;margin-left: 82rem;margin-top: -15rem;"></div>
+                                                       </td>
+                                                 <table class="table">
+                                                     <div>
+                                                         <span class="job_m">85%</span>
+                                                    </div>
+                                                     <div>
+                                                         <span class="job_mt">Job Match</span>
+                                                     </div>
+
+                                                    <div class="row btn-right">
+                                                       <button type="button" class="btn btn-md btn-block m-btn--pill btn-outline-brand" style="width: 14rem;" >Perform Assessment </button>
+                                                       <button type="button" class="btn btn-md btn-block m-btn--pill btn-outline-brand" style="width: 14rem;"> View Career Profile</button>
+                                                    </div>
+                                                </table>
+                                            </div>
+                                         </div>    
+                                     </div>
+                                  </div>
+                              </div>
+                                                             
+                               <div class="tab-pane" id="m_tab_4" role="tabpanel">
+                                 <div class="col-lg-12 centred my-auto" >
+                                     <div class="m-section__content">
+                                         <div class="info">
+                                            <span *ngIf="showUserName" style="text-align: left !important ; color :#0066ff ;">{{lgnName}}</span>
+                                             <br> 
+                                            <span style="text-align: left !important ; color: #6c757d ;">Email: tan.cheong@tmrnd.com.my </span>
+                                         </div> 
+                                            <br>
+                                        <mat-horizontal-stepper [linear]="isLinear" #stepper="matHorizontalStepper">
+                                            <mat-step [stepControl]="firstForm">
+                                               <form [formGroup]="firstForm" #formone="ngForm">
+                                                 <ng-template matStepLabel>Step 1</ng-template>
+                                                  <br>
+                                                   <div id="table" class="table-editable">
+                                                    <table class="table table-bordered table-responsive-md table-striped text-center">
+                                                      <thead style="background-color: cornflowerblue; color: white;border-radius: 11px">
+                                                        <tr>
+                                                          <th class="text-left">Part A: Success</th>
+                                                          <th class="text-center">Rating   (1 – 10)
+                                                            Very Poor (1)   Average (5)    Excellent (10)
+                                                         </th>
+                                                          <th class="text-center">General Remarks</th>
+                                                       </tr>
+                                                     </thead>
+                                                    <tbody>
+                                                      <tr>
+                                                        <td class="pt-3-half text-left" contenteditable="false">
+                                                          <span style="font-weight: bold;">SERVICE EXCELLENCE </span>
+                                                           <ul> 
+                                                              <li>Leverages the customer’s viewpoint</li>
+                                                              <li> Builds very positive relationships with customer</li>
+                                                              <li> Proactively identifies and understands customer needs</li>
+                                                              <li>Delivers consistent high quality solutions to meet customer expectations</li>
+                                                              <li>Provides quick and  timely responses to customer requests</li>
+                                                          </ul>
+                                                        </td>
+                                                         <td class="pt-3-half" contenteditable="true">9</td>
+                                                         <td class="pt-3-half" contenteditable="true">nyty</td>
+                                                      </tr>
+                                                        <tr>
+                                                            <td class="pt-3-half text-left" contenteditable="false">
+                                                                <span style="font-weight: bold;">UNITY & TEAMWORK</span>
+                                                               <ul> 
+                                                                 <li> Works well together as a team to achieve organizational goals</li>
+                                                                 <li> Asks for input from others and sincerely values their ideas and expertise</li>
+                                                                 <li> Place team agenda before own agenda</li>
+                                                                 <li>Builds agreement among team members </li>
+                                                                 <li>Shares credit for team accomplishments </li>
+                                                                 <li>Takes responsibility for team shortcoming </li>  
+                                                              </ul>
+                                                           </td>
+                                                           <td class="pt-3-half" contenteditable="true">3</td>
+                                                           <td class="pt-3-half" contenteditable="true">aaaaa</td>
+                                                      </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                             <div class="pull-right">
+                                                  <button class="btn btn-sm btn-primary next-step" type="button" mat-button matStepperNext>Next</button>   
+                                             </div>
+                                          </form>
+                                        </mat-step>
+
+                                        <mat-step [stepControl]="secondForm">
+                                          <form [formGroup]="secondForm"  #formtwo="ngForm">
+                                              <ng-template matStepLabel>Step 2</ng-template>
+                                                 <br>
+                                                <div id="table" class="table-editable">
+                                                    <table class="table table-bordered table-responsive-md table-striped text-center">
+                                                       <thead style="background-color: cornflowerblue; color: white;border-radius: 11px" >
+                                                           <tr>
+                                                             <th class="text-left">Part A: Success</th>
+                                                             <th class="text-center">Rating   (1 – 10)
+                                                               Very Poor (1)   Average (5)    Excellent (10)
+                                                             </th>
+                                                             <th class="text-center">General Remarks</th>
+                                                           </tr>
+                                                      </thead>
+                                                      <tbody>
+                                                           <tr>
+                                                              <td class="pt-3-half text-left" contenteditable="false">
+                                                                 <span style="font-weight: bold;">CULTIVATES STAKEHOLDER COLLABORATION </span>
+                                                                 <ul> 
+                                                                   <li> Provides an environment where people can openly discuss and share views</li>
+                                                                   <li> Builds and maintains positive relationship with others </li>
+                                                                   <li> Operates with transparency, has no hidden agenda </li>
+                                                                   <li>Leverages collaborative relationships to work towards shared goals and win-win situation</li>
+                                                                   <li>Follows through and agreed upon actions</li>
+                                                                </ul>
+                                                             </td>
+                                                             <td class="pt-3-half" contenteditable="true">8</td>
+                                                             <td class="pt-3-half" contenteditable="true">good</td>
+                                                          </tr>
+                                                             <tr>
+                                                               <td class="pt-3-half text-left" contenteditable="false">
+                                                                   <span style="font-weight: bold;">CATALYZES CHANGE </span>
+                                                                 <ul> 
+                                                                   <li> Actively seeks to improve products or services</li>
+                                                                   <li> Is not adverse to new different approaches to address problems or meet customer needs</li>
+                                                                   <li> Promotes and encourages others to consider new ideas and new ways of doing things </li>
+                                                                   <li>Helps others overcome fear of change </li>
+                                                                 </ul>
+                                                               </td>
+                                                               <td class="pt-3-half" contenteditable="true">5</td>
+                                                               <td class="pt-3-half" contenteditable="true">ydrnju</td>
+                                                            </tr>
+                                                       </tbody>
+                                                   </table>
+                                               </div>
+                                               <div  class="pull-right">
+                                                  <button type="button" mat-button matStepperPrevious>Prev</button>
+                                                  <button  class="btn btn-sm btn-primary next-step" type="button" mat-button matStepperNext>Next</button>
+                                              </div>
+                                          </form>
+                                      </mat-step>
+
+                                       <mat-step [stepControl]="thirdForm">
+                                         <form [formGroup]="thirdForm"  #formthird="ngForm">
+                                          <ng-template matStepLabel>Step 3</ng-template>
+                                              <br>
+                                           <div id="table" class="table-editable">
+                                              <table class="table table-bordered table-responsive-md table-striped text-center">
+                                                <thead style="background-color: cornflowerblue; color: white;border-radius: 11px">
+                                                   <tr>
+                                                     <th class="text-left">Part B: Functional Competencies </th>
+                                                     <th class="text-center">Rating   (1 – 10)
+                                                       Very Poor (1)   Average (5)    Excellent (10)
+                                                     </th>
+                                                     <th class="text-center">General Remarks</th>
+                                                   </tr>
+                                               </thead>
+                                                  <tbody>
+                                                   <tr>
+                                                       <td class="pt-3-half text-left" contenteditable="false">
+                                                         <span style="font-weight: bold;">FUNCTIONAL KNOWLEDGE AND EXPERTISE </span>
+                                                         <ul> 
+                                                           <li>Keeps up to-date with the functional knowledge and subject matters (Technical / marketing / support services, whichever is relevant)</li>
+                                                           <li>Has good networking to gain knowledge of the market trends or technological changes and business opportunities. </li>
+                                                           <li> Uses knowledge of customers’ needs to enhance products and services. </li>
+                                                           <li>Leverages collaborative relationships to work towards shared goals and win-win situation</li>
+                                                           <li>Follows through and agreed upon actions</li>
+                                                         </ul>
+                                                      </td>
+                                                      <td class="pt-3-half" contenteditable="true">7</td>
+                                                      <td class="pt-3-half" contenteditable="true">w65hj</td>
+                                                   </tr>
+                                                  </tbody>
+                                             </table>
+                                          </div>
+                                       <div  class="pull-right">
+                                          <button type="button" mat-button matStepperPrevious>Prev</button>
+                                          <button  class="btn btn-sm btn-primary next-step" type="button" mat-button matStepperNext>Next</button>
+                                      </div>
+                                    </form>
+                                </mat-step>
+                                <br>
+                                <mat-step [stepControl]="summaryForm">
+                                  <form [formGroup]="summaryForm"  #formsummary="ngForm">
+                                    <ng-template matStepLabel>Summary</ng-template>
+                                      <br><br>
+                                     <div class="d-flex flex-column-fluid">
+                                          <!--begin::Container-->
+                                     <div class=" container ">
+                                       <div class="row">
+                                          <div class="col-xl-3">
+                                            <!--begin: Stats Widget 19-->
+                                            <div class="card card-custom card-stretch gutter-b" style="background-color: #d1e5fb70 ">
+                                             <!--begin::Body-->
+                                               <div class="card-body my-2">
+                                                 <div class="card-title font-weight-bolder text-success text-hover-state-dark mb-4 d-block">Part A: Success
+                                                    <span class="font-weight-bold font-size-h2 text-muted pull-right">67%</span>
+                                                 </div>
+                                                 <div class="progress progress-xs mt-7 bg-success-o-60"  style="height: 6px;">
+                                                    <div class="progress-bar bg-success" role="progressbar" style="width: 67%;" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+                                                 </div>
+                                               </div>
+                                               <!--end:: Body-->
+                                           </div>
+                                         <!--end: Stats:Widget 19-->
+                                        </div>
+                                      </div>
+
+                                   <div class="row mt-top">
+                                     <div class="col-xl-3">
+                                       <!--begin: Stats Widget 19-->
+                                        <div class="card card-custom card-stretch gutter-b" style="background-color: #d1e5fb70 ">
+                                           <!--begin::Body-->
+                                          <div class="card-body my-2">
+                                             <div class="card-title font-weight-bolder text-success text-hover-state-dark mb-4 d-block">Part B: Functional Competencies
+                                                 <span class="font-weight-bold font-size-h2 text-muted pull-right">20%</span>
+                                             </div>
+                                             <div class="progress progress-xs mt-7 bg-success-o-60" style="height: 6px;">
+                                                <div class="progress-bar bg-success" role="progressbar" style="width: 20%;" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+                                             </div>
+                                          </div>
+                                        <!--end:: Body-->
+                                       </div>
+                                    <!--end: Stats:Widget 19-->
+                                      </div>
+                                        <div class="row">
+                                            <span class=" font-weight-bold" style="font-size: 60px; color: #0066ff;margin-top: 9rem; margin-left: -17rem"> 87% </span>
+                                        </div>
+                                      </div>
+                                  </div>
+                              </div>
+                                     <td>
+                                       <div class="form-group" style="padding-left: 39rem;margin-top: -23rem">
+                                          <label for="remarksArea" style="font-weight: 600; width: 60%;">Overall Remarks</label>
+                                          <textarea class="form-control rounded-0" id="remarksArea" rows="3" style="height: 140px;width: 29rem; border: 1px solid"></textarea>
+                                       </div>
+                                     </td>
+                                      <td>
+                                         <div class="form-group" style="margin-top: -24rem;padding-left: 11rem;">
+                                           <div class="col-md-6"  style="width: 177%;">
+                                              <label for="example-text-input" style="margin-top:9px; width: 23rem; font-weight: 600;">Recommended / Not Recommended / Reserved </label>
+                                               <div class="col-sm-4">
+                                                   <input class="form-control m-input font-weight-bold" type="text" disabled="true" *ngIf="showRec" style="font-size: 14px; color: rgb(7, 57, 197);width: 21rem;" value="Reserved">
+                                              </div>   
+                                          </div>
+                                         </div>
+                                        <br>
+                                        <div class="row" style="padding-bottom:20px">
+                                         <div class="col-lg-10" style="padding-top: 2rem;">
+                                            <div class="pull-right">
+                                               <button type="button" id="btn_close" class="btn btn-md btn-cancel m-btn m-btn--pill" style="width: 8rem;" >
+                                                      Cancel
+                                               </button>
+                                              
+                                               <button type="button" id="btn_submit" value="1" class="btn btn-md btn-accent m-btn m-btn--pill" style="width: 8rem;" >
+                                                      Submit
+                                               </button>
+                                            </div>
+                                         </div>
+                                       </div>
+                                       <br>
+                                       <div class="head-panel" *ngIf="showPanel">
+                                         <span>
+                                            <div class="font-weight-bold" style=" padding-left: 16rem; font: size 20px; color: #020202;"> Head Interview Panel </div> 
+                                            <div *ngIf="showUserName" style=" padding-left: 16rem; font: size 14px; color: #020202;">Name :<span > {{lgnName}} </span></div>
+                                            <div  style=" padding-left: 16rem; color: #020202;">Position: GM GBC </div>      
+                                            <div  style=" padding-left: 16rem; color: #020202;">Date: 20 March 2020    </div>                                                                                                                                                                                                                                                                         
+                                         </span>
+                                        </div>
+                                    </td>      
+                                    <div class="pull-right">
+                                      <button type="button" mat-button matStepperPrevious>Prev</button>
+                                    </div>
+                                 </form>
+                               </mat-step>
+                              </mat-horizontal-stepper>
+                              <br>
+                            </div>
+                         </div>
+                      </div>
+                        <div class="tab-pane" id="m_tab_5" role="tabpanel">
+                          <div class="col-lg-12 centred my-auto" >
+                             <div class="m-section__content">       
+                                 <div class="info">
+                                   <span *ngIf="showUserName" style="text-align: left !important ; color :#0066ff ;">{{lgnName}}</span>
+                                     <br> 
+                                  <span style="text-align: left !important ; color: #6c757d ;">Email: tan.cheong@tmrnd.com.my </span>
+                                 </div> 
+                                  <br><br>
+                                  <div class="row">
+                                    <div class="col-md-7">
+                                       <div id="table" class="table-editable">
+                                         <table class="table table-bordered table-responsive-md table-striped text-center ">
+                                            <thead style="background-color: cornflowerblue; color: white; border-radius: 11px" >
+                                               <tr>
+                                                 <th class="text-center">Position</th>
+                                                 <th class="text-center">Position No. </th>
+                                                 <th class="text-center">Unit/Section</th>
+                                                 <th class="text-center">Division</th>
+                                                 <th class="text-center">Type of requirement</th>
+                                               </tr>
+                                            </thead>
+                                            <tbody>
+                                               <tr>
+                                                 <td class="pt-3-half" contenteditable="true">y</td>
+                                                 <td class="pt-3-half" contenteditable="true">7</td>
+                                                 <td class="pt-3-half" contenteditable="true">w</td>
+                                                 <td class="pt-3-half" contenteditable="true">y5</td>
+                                                 <td class="pt-3-half" contenteditable="true">w</td>
+                                               </tr>
+                                               <tr>
+                                                 <td class="pt-3-half" contenteditable="true">y</td>
+                                                 <td class="pt-3-half" contenteditable="true">7</td>
+                                                 <td class="pt-3-half" contenteditable="true">w</td>
+                                                 <td class="pt-3-half" contenteditable="true">y</td>
+                                                 <td class="pt-3-half" contenteditable="true">w</td>
+                                               </tr>
+                                            </tbody>
+                                        </table>
+                                      </div>
+                                   </div>
+                                 </div>
+                                 <div class="pull-right" style="padding-left: 109rem">
+                                    <button type="button" id="btn_submit" class="btn btn-md btn-accent m-btn m-btn--pill" style="width: 8rem;" >Submit</button>
+                                 </div>
+                                     <br><br>
+                                 <div class="row">
+                                    <div class="col-md-12">
+                                        <div id="table" class="table-editable">
+                                            <table class="table table-bordered table-striped text-center ">
+                                              <thead style="color: white; border-radius: 11px"> 
+                                                <tr>
+                                                   <th rowspan="1" colspan="7"></th>
+                                                   <th rowspan="1" colspan="4" style="background-color: cadetblue; font-size: 13px;">Promotion Assessment</th>
+                                                   <th rowspan="1" colspan="4"></th>
+                                                 </tr>
+                                              </thead>
+                                              <thead style="background-color: cornflowerblue; color: white; border-radius: 11px" >          
+                                                 <tr>
+                                                   <th class="text-center">No</th>
+                                                   <th class="text-center"> Name </th>
+                                                   <th class="text-center">IC No.</th>
+                                                   <th class="text-center">Current Position</th>
+                                                   <th class="text-center">Qualification</th>
+                                                   <th class="text-center">Contact No.</th>
+                                                   <th class="text-center">TM Group Yes/No</th>
+                                                   <th class="text-center">Harrison</th>
+                                                   <th class="text-center">Functional</th>
+                                                   <th class="text-center">Talent</th>
+                                                   <th class="text-center">Total Promotion Assessment(%)</th>
+                                                   <th class="text-center">Average Interview Assessment Score (%)</th>
+                                                   <th class="text-center">Total Score (%) </th>
+                                                   <th class="text-center">Result</th>
+                                                   <th class="text-center">Remarks</th>
+                                                 </tr>
+                                              </thead>
+                                               <tbody>
+                                                  <tr>
+                                                    <td class="pt-3-half" contenteditable="true">7</td>
+                                                    <td class="pt-3-half" contenteditable="true">7</td>
+                                                    <td class="pt-3-half" contenteditable="true">w</td>
+                                                    <td class="pt-3-half" contenteditable="true">7</td>
+                                                    <td class="pt-3-half" contenteditable="true">w</td>
+                                                    <td class="pt-3-half" contenteditable="true">7</td>
+                                                    <td class="pt-3-half" contenteditable="true">7</td>
+                                                    <td class="pt-3-half" contenteditable="true">w</td>
+                                                    <td class="pt-3-half" contenteditable="true">7</td>
+                                                    <td class="pt-3-half" contenteditable="true">w</td>
+                                                    <td class="pt-3-half" contenteditable="true">y</td>
+                                                    <td class="pt-3-half" contenteditable="true">7</td>
+                                                    <td class="pt-3-half" contenteditable="true">w</td>
+                                                    <td class="pt-3-half" contenteditable="true">7</td>
+                                                    <td class="pt-3-half" contenteditable="true">w</td>
+                                                  </tr>
+                                                   <tr>
+                                                     <td class="pt-3-half" contenteditable="true">7</td>
+                                                     <td class="pt-3-half" contenteditable="true">7</td>
+                                                     <td class="pt-3-half" contenteditable="true">w</td>
+                                                     <td class="pt-3-half" contenteditable="true">7</td>
+                                                     <td class="pt-3-half" contenteditable="true">w</td>
+                                                     <td class="pt-3-half" contenteditable="true">7</td>
+                                                     <td class="pt-3-half" contenteditable="true">7</td>
+                                                     <td class="pt-3-half" contenteditable="true">w</td>
+                                                     <td class="pt-3-half" contenteditable="true">7</td>
+                                                     <td class="pt-3-half" contenteditable="true">w</td>
+                                                     <td class="pt-3-half" contenteditable="true">y</td>
+                                                     <td class="pt-3-half" contenteditable="true">7</td>
+                                                     <td class="pt-3-half" contenteditable="true">w</td>
+                                                     <td class="pt-3-half" contenteditable="true">7</td>
+                                                     <td class="pt-3-half" contenteditable="true">w</td>
+                                                   </tr>
+                                                </tbody>
+                                          </table>
+                                       </div>
+                                     </div>
+                                   </div>
+                                              <br><br>
+
+                                   <div class="row">
+                                      <div class="head-panel" *ngIf="showPanel">
+                                         <span>
+                                            <div class="font-weight-bold" style=" padding-left: 6rem; font: size 20px; color: #020202;"> Approved by Head Interview Panel </div> 
+                                            <div *ngIf="showUserName" style=" padding-left: 6rem; font: size 14px; color: #020202;">Name :<span > {{lgnName}} </span></div>
+                                            <div  style=" padding-left: 6rem; color: #020202;">Position: GM GBC </div>      
+                                            <div  style=" padding-left: 6rem; color: #020202;">Date: 20 March 2020 </div>                                                                                                                                                                                                                                
+                                         </span>
+                                       </div>
+                                     <div class="head-panel" *ngIf="showPanel">
+                                        <span>
+                                            <div class="font-weight-bold" style=" padding-left: 6rem; font: size 20px; color: #020202;"> Interview Panel </div> 
+                                            <div *ngIf="showUserName" style=" padding-left: 6rem; font: size 14px; color: #020202;">Name :<span > {{lgnName}} </span></div>
+                                            <div  style=" padding-left: 6rem; color: #020202;">Position: GM GBC </div>      
+                                            <div  style=" padding-left: 6rem; color: #020202;">Date: 20 March 2020 </div>                                                                                                                                                                                                                                                                            
+                                        </span>
+                                     </div>
+                                      <div class="head-panel" *ngIf="showPanel">
+                                         <span>
+                                            <div class="font-weight-bold" style=" padding-left: 6rem; font: size 20px; color: #020202;"> Interview Panel </div> 
+                                            <div *ngIf="showUserName" style=" padding-left: 6rem; font: size 14px; color: #020202;">Name :<span > {{lgnName}} </span></div>
+                                            <div  style=" padding-left: 6rem; color: #020202;">Position: GM GBC </div>      
+                                            <div  style=" padding-left: 6rem; color: #020202;">Date: 20 March 2020 </div>                                                                                                                                                                                                                                                                        
+                                         </span>
+                                      </div>
+                                  </div>
+                              </div>
+                           </div>
+                         </div>
+                       </div>
+                    </div>
+                  </div>
+               </div>
+             </div>
+          </div>
+                                             
+                                            

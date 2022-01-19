@@ -1,0 +1,500 @@
+<div>
+    <div class="page-bg vrp-bg">
+      <h2 class="head-sub-title text-center">{{ word.head_sub_title }}</h2>
+    </div>
+    <div class="pg-title-div">
+      <!-- <h3 class="pg-title text-center">{{ word.pg_title }}</h3>     -->
+      
+        <div id="tracking-link">
+            <span class="span-track" (click)="menuClicked('/user-job/tracking')">Jobs</span>
+            <span class="span-track" (click)="menuClicked('/idp')">IDP</span>
+            <span class="span-track" (click)="menuClicked('/e-letter/tracking')" *ngIf="!env_prod" style="border-bottom: 4px solid white !important;">e-Letter</span>
+        </div>
+    </div>
+   
+    <div class="col-lg-12 centred my-auto" *ngIf="loading">
+    <idp-loading></idp-loading>
+    </div>
+
+    <div class="d-flex justify-content-center m-20">
+        <div class="col-xl-12">
+            <div class="col-lg-12" style="padding-bottom: 1rem; padding-left: 0px !important">
+                <button title="Back to User Job" class="btn m-btn--pill btn-outline-info pt-1 pb-1 pr-3 pl-3"
+                    (click)="btnBackClick()">
+                    <div class="m-demo-icon__preview" style="display: flex; align-items: center;">
+                        <img style="width:2rem !important" src="../../../../../../assets/img/user/back_icon.svg">
+                        <span>{{word.back}}</span>
+                    </div>
+                </button>
+                <!--Begin:Language-->
+                <ul class="btn m-topbar__nav m-nav m-nav--inline" style="float: right !important">
+                    <li class="m-nav__item m-topbar__user-profile m-topbar__user-profile--img" data-toggle="modal"
+                        data-target="#langSelect">
+                        <span>
+                            <span class="m-topbar__username " style="padding-left:10px; padding-right:10px;">
+                                {{word.lang}} :
+                            </span>
+                            <span class="m-topbar__userpic">
+                                <button *ngIf="enChecked" type="button" title="English" data-toggle="m-tooltip"
+                                    data-placement="top"
+                                    class="btn m-btn--pill m-btn--air btn-outline-info active btn-sm">
+                                    EN
+                                </button>
+                                <button *ngIf="!enChecked" type="button" title="Malay" data-toggle="m-tooltip"
+                                    data-placement="top"
+                                    class="btn m-btn--pill m-btn--air btn-outline-info active btn-sm">
+                                    MY
+                                </button>
+                                <!-- <img *ngIf="enChecked" src="./assets/img/us.png" title="English" data-toggle="m-tooltip" data-placement="top"
+                                    style="width:28px; height:28px" class="m--img-rounded m--marginless m--img-centered" />
+                                <img *ngIf="!enChecked" src="./assets/img/my.png" title="Malay" data-toggle="m-tooltip" data-placement="top" 
+                                    style="width:28px; height:28px" class="m--img-rounded m--marginless m--img-centered" /> -->
+                            </span>
+                        </span>
+                    </li>
+                </ul>
+                <div class="modal fade" id="langSelect" tabindex="-1" role="dialog"
+                    aria-labelledby="exampleModalCenterTitle" style="display: none;" aria-hidden="true">
+                    <div class="modal-dialog msg-dialog modal-dialog-centered" role="document"
+                        style="max-width: 235px !important; margin: auto !important">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 style="text-align: center">{{word.lang}}</h5>
+                                <button type="button" id="lang_close" class="close" data-dismiss="modal"
+                                    aria-label="Close">
+                                    <span aria-hidden="true">×</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="m-dropdown__content">
+                                    <label class="lang-radio m-radio m-radio--solid m-radio--success"
+                                        style="font-size: 16px; width: 100%">
+                                        <input type="radio" #en name="lang" value="en" [checked]="enChecked"
+                                            (change)="langChange(en)">
+                                        &nbsp;&nbsp; English
+                                        <span style="width:23px; height:23px"></span>
+                                    </label>
+                                    <br>
+                                    <label class="lang-radio m-radio m-radio--solid m-radio--success"
+                                        style="font-size: 16px; width: 100%">
+                                        <input type="radio" #my name="lang" value="my" [checked]="!enChecked"
+                                            (change)="langChange(my)">
+                                        &nbsp;&nbsp; Malay
+                                        <span style="width:23px; height:23px"></span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--End:Language-->
+
+            </div>
+
+            <!-- <div class="centred my-auto" *ngIf="loading && loading2">
+                <job-loading></job-loading>
+            </div> -->
+
+            <div class="m-portlet m-portlet--full-height">
+                <div class="m-portlet__head">
+                    <div class="m-portlet__head-caption">
+                        <div class="m-portlet__head-title">
+                            <h2 class="m-portlet__head-text" style="font-size: 24px">
+                                {{word.tracking}}
+                            </h2>
+                        </div>
+                    </div>
+                </div>
+                <div class="m-portlet__body">
+                    <ul class="nav nav-tabs" role="tablist" style="background-color:#f4f5f8">
+                        <!-- <li class="tab-item nav-item">
+                            <a id="teamApproval-tab" class="tab-title nav-link" data-toggle="tab" 
+                            href="#teamApproval"
+                            [class.active]="view_teamApproval">
+                                {{word.tab_teamApproval }} &nbsp;
+                                <sup>
+                                    <span class="badge badge-danger">5</span>
+                                </sup> 
+                            </a>
+                        </li>-->
+                        <li class="tab-item nav-item">
+                            <a id="selfTracking-tab" class="tab-title nav-link" data-toggle="tab" 
+                            href="#selfTracking"
+                            [class.active]="view_selfTracking">
+                                {{word.tab_selfTracking }} &nbsp;
+                                <!-- <sup>
+                                    <span class="badge badge-danger">5</span>
+                                </sup> -->
+                            </a>
+                        </li>
+                    </ul>
+                    <div class="tab-content">
+                        <div id="selfTracking" [class.active]="view_selfTracking" role="tabpanel" class="tab-pane">                                                       
+                            <div class="m-portlet m-portlet--full-height"  *ngFor="let appliedLetter of appliedLetterList">
+                                <div class="job-portlet m-portlet__body">
+                                    <div class="m-widget4">
+                                        <div class="row">
+                                            <div class="text-left job-details col-md-6">
+                                                <span class="job_title m-widget4__title">                                                   
+                                                    Letter: {{appliedLetter.type}} 
+                                                </span> 
+                                            </div>
+                                        </div>
+                                        <!-- first -->
+                                        <div class="row" style="padding-top: 40px;">
+                                        <div class="m-widget4__item" style="width: 100% !important">
+                                            <div class="job_info m-widget4__info">
+                                                <div>
+                                                    <span class="job_title_sub m-widget4__sub">
+
+                                                        <div class="m-wizard m-wizard--2 m-wizard--success m-wizard--step-first"
+                                                            id="m_wizard">
+
+                                                            <div class="m-portlet__padding-x">
+                                                                <!-- Here you can put a message or alert -->
+                                                            </div>
+
+                                                            <div class="m-wizard__head m-portlet__padding-x">
+                                                                <div class="m-wizard__progress">
+                                                                    <div class="progress">
+                                                                        <div class="progress-bar era-color-bk" role="progressbar"
+                                                                            aria-valuenow="100" aria-valuemin="0"d
+                                                                            aria-valuemax="100"
+                                                                            [ngStyle]="{ 'width' : chkProgressWidth(appliedLetter.status) }"></div>
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class="m-wizard__nav">
+                                                                    <div class="m-wizard__steps">
+                                                                        <div [class.m-wizard__step--current]="checkStatus(appliedLetter.status, 1)"
+                                                                            class="m-wizard__step"
+                                                                            m-wizard-target="m_wizard_form_step_1">
+                                                                            <span class="m-wizard__step-number">
+                                                                                <span class="step-number">
+                                                                                    1
+                                                                                    <!-- <i class="fa  flaticon-placeholder"></i> -->
+                                                                                </span>
+                                                                            </span>
+                                                                        </div>
+
+                                                                        <div [class.m-wizard__step--current]="checkStatus(appliedLetter.status, 2)"
+                                                                            class="m-wizard__step "
+                                                                            m-wizard-target="m_wizard_form_step_2">
+                                                                            <span class="m-wizard__step-number">
+                                                                                <span class="step-number">
+                                                                                    2
+                                                                                    <!-- <i class="fa  flaticon-layers"></i> -->
+                                                                                </span>
+                                                                            </span>
+                                                                        </div>
+
+                                                                        <div [class.m-wizard__step--current]="checkStatus(appliedLetter.status, 3)"
+                                                                            class="m-wizard__step"
+                                                                            m-wizard-target="m_wizard_form_step_3"
+                                                                            *ngIf="!(appliedLetter.type_id == '1' || appliedLetter.type_id == '2' || appliedLetter.type_id == '4')">
+                                                                            <span class="m-wizard__step-number">
+                                                                                <span class="step-number">
+                                                                                    3
+                                                                                    <!-- <i class="fa  flaticon-layers"></i> -->
+                                                                                </span>
+                                                                            </span>
+                                                                        </div>
+
+                                                                        <div [class.m-wizard__step--current]="checkStatus(appliedLetter.status, 4)"
+                                                                            class="m-wizard__step"
+                                                                            m-wizard-target="m_wizard_form_step_4"
+                                                                            *ngIf="!(appliedLetter.type_id == '1' || appliedLetter.type_id == '2' || appliedLetter.type_id == '4')">
+                                                                            <span class="m-wizard__step-number">
+                                                                                <span class="step-number">
+                                                                                    4
+                                                                                    <!-- <i class="fa  flaticon-layers"></i> -->
+                                                                                </span>
+                                                                            </span>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                    </span>
+                                                    <br><br>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        </div>
+                                        
+                                        <!-- status/detail -->                      
+                                        <div class="row">
+                                                    <div class="text-left job-details col-md-12">                                                 
+                                                        <div class="vrp-status-box vrp-status-bg mt-3 mb-3 m-accordion__item-head collapsed m-accordion--toggle-arrow"
+                                                        >
+                                                            <div class="vrp-status-text font-weight-bold font-size-h2r">                                    
+                                                                Status: <span class="font-bold">{{appliedLetter.status_desc}}</span>
+                                                            </div>
+                                                            
+                                                            <a class="perincian_arrow btn btn-sm btn-outline-info"
+                                                            data-toggle="collapse"
+                                                            href="#perincian_section_{{appliedLetter.id}}"
+                                                            role="button" aria-expanded="false"
+                                                            (click)="checkActiveDownload(appliedLetter.id)"
+                                                            attr.aria-controls="perincian_section_{{appliedLetter.id}}"
+                                                            *ngIf="!(appliedLetter.type_id=='4' && appliedLetter.status=='6')">
+                                                            Detail                           
+                                                                <i class="fa fa-chevron-up" aria-hidden="true"></i>    
+                                                                <i class="fa fa-chevron-down" aria-hidden="true"></i>
+                                                            </a>     
+
+                                                            <!-- Doc Endorsement need load document -->
+                                                            <a class="perincian_arrow btn btn-sm btn-outline-info"
+                                                            data-toggle="collapse"
+                                                            href="#perincian_section_{{appliedLetter.id}}"
+                                                            role="button" aria-expanded="false"
+                                                            (click)="loadDetail(appliedLetter.type_id,appliedLetter.id)"
+                                                            attr.aria-controls="perincian_section_{{appliedLetter.id}}"
+                                                            *ngIf="appliedLetter.type_id=='4' && appliedLetter.status=='6'">
+                                                            Detail                           
+                                                                <i class="fa fa-chevron-up" aria-hidden="true"></i>    
+                                                                <i class="fa fa-chevron-down" aria-hidden="true"></i> 
+                                                            </a>     
+                                                            
+                                                        </div>                           
+                                                    </div>
+                                        </div>
+                                                                                    
+                                        <div class="row" style="margin-top: -14px;">
+                                                    <div id="perincian_section_{{appliedLetter.id}}" 
+                                                    class="accordion-body collapse col-md-12">                                                                                                   
+                                                    <div class="card-bs4 border-dark">                                 
+                                                        <div class="card-body">   
+                                                            
+                                                            <span *ngIf="appliedLetter.applied_on || appliedLetter.updated_on">  
+                                                            <p>
+                                                                <b>Applied on:</b> {{appliedLetter.applied_on | date: 'dd-MM-yyyy HH:mm'}} 
+                                                                    <span *ngIf="!appliedLetter.applied_on">
+                                                                        {{appliedLetter.updated_on | date: 'dd-MM-yyyy HH:mm'}}
+                                                                    </span>
+                                                            </p>    
+                                                            </span>
+                                                            <span *ngIf="appliedLetter.updated_on && (appliedLetter.type_id=='1'||appliedLetter.type_id=='2')">
+                                                            <p>
+                                                                <b>Download on:</b> {{appliedLetter.updated_on | date: 'dd-MM-yyyy HH:mm'}}
+                                                            </p>
+                                                            </span>
+                                                            <span *ngIf="appliedLetter.type_id=='4' && appliedLetter.approved_on">
+                                                            <p>
+                                                                <b>Endorsed on:</b> {{appliedLetter.approved_on | date: 'dd-MM-yyyy HH:mm'}}
+                                                            </p>
+                                                            </span>
+                                                            <span *ngIf="(appliedLetter.type_id=='1'||appliedLetter.type_id=='2')">
+                                                                <!-- Enable Download -->
+                                                                <span *ngIf="(appliedLetter.updated_on | date:'yyyyMMdd') == (currDate | date:'yyyyMMdd')">      
+                                                                    
+                                                                    <span *ngIf="appliedLetter.updated_on">
+                                                                    <p>
+                                                                        <b>Download Status:</b> Available until {{appliedLetter.updated_on | date: 'dd-MM-yyyy'}} 23:59
+                                                                    </p>
+                                                                    </span>                                                          
+                                                                    <div class="btn-group" *ngIf="selectedLetterActiveStatus">
+                                                                        <button                   
+                                                                        (click)="loadLttrById(appliedLetter.id)"                                                     
+                                                                        class="btn btn-info text-uppercase" 
+                                                                        id="btn-dw1-{{appliedLetter.id}}"          
+                                                                        data-toggle="modal"
+                                                                        data-target="#modalLoading">
+                                                                        <i class="fa fa-download"></i> Download <span id="timerEnableBtn"></span></button>
+                                                                    </div>
+                                                                </span>
+                                                                <!-- Disable Download -->
+                                                                <span *ngIf="(appliedLetter.updated_on | date:'yyyyMMdd') != (currDate | date:'yyyyMMdd')">                                                                         
+                                                                    <p>
+                                                                        <b>Download Status:</b> Expired
+                                                                    </p>                                                           
+                                                                    <div class="btn-group" *ngIf="!selectedLetterActiveStatus">
+                                                                        <button class="btn btn-info text-uppercase" disabled>
+                                                                        <i class="fa fa-download"></i> Download</button>
+                                                                    </div>
+                                                                </span>
+                                                            </span>
+                                                            
+                                                            <table class="table table-striped table-hover mt-2" style="width: 100%;" 
+                                                            *ngIf="attachList && appliedLetter.type_id=='4' && appliedLetter.status=='6'">
+                                                                <thead class="thead-inverse">
+                                                                    <tr>
+                                                                        <th>No</th>
+                                                                        <th>Endorsed Filename</th>
+                                                                        <th style="width:auto">Action</th>
+                                                                    </tr>
+                                                                </thead>
+                                                    
+                                                                <tbody>
+                                                                <!-- list endorsed attachment -->
+                                                                <tr *ngFor="let att of attachList; let j = index">
+                                                                    <td>{{j+1}}</td>
+                                                                    <td>{{getFilename(att.endorsed_doc)}}</td>
+                                                                    <td style="vertical-align: middle;">
+                                                                        <button class="btn simple-save-btn  m-btn m-btn--icon btn-sm m-btn--icon-only m-btn--pill m-btn--air" 
+                                                                        type="button" (click)="openPDF(att.endorsed_doc_hash)"
+                                                                        [disabled]="">
+                                                                        <i class="fa fa-file-download"></i>
+                                                                        </button>
+                                                
+                                                                    </td>
+                                                                </tr>
+                                                                </tbody>
+                                                            </table>                                                            
+                                                            <div class="alert m-alert--outline font-bold" 
+                                                            *ngIf="attachList && appliedLetter.type_id=='4' && appliedLetter.status=='6'">
+                                                                <i>*** The download will be available until midnight nextday.</i>
+                                                            </div>
+
+                                                        </div>       
+                                                    </div>       
+                                                    </div>         
+                                        </div>
+                                </div>
+                                </div><!-- end:ngFor -->   
+                            </div>
+                        </div>
+                        <div id="teamApproval" [class.active]="view_teamApproval" role="tabpanel" class="tab-pane">
+                            
+                            <div class="m-portlet m-portlet--full-height"  *ngFor="let approvalLetter of approvalLetterList">
+                                <div class="job-portlet m-portlet__body">
+                                    <div class="m-widget4">
+                                        <div class="row">
+                                            <div class="text-left job-details col-md-6">
+                                                <span class="job_title m-widget4__title">                                                   
+                                                    Letter approval: {{approvalLetter.type}}
+                                            </span> <br>
+                                                <span class="job_title_sub m-widget4__sub">                                             
+                                                    Purpose: {{approvalLetter.purpose}}<Br />                                                 
+                                                    Destination: {{approvalLetter.destination}}
+                                                </span><br>
+                                            </div>
+                                        </div>
+                                        <!-- first -->
+                                        <div class="row" style="padding-top: 40px;">
+                                        <div class="m-widget4__item" style="width: 100% !important">
+                                            <div class="job_info m-widget4__info">
+                                                <div>
+                                                    <span class="job_title_sub m-widget4__sub">
+
+                                                        <div class="m-wizard m-wizard--2 m-wizard--success m-wizard--step-first"
+                                                            id="m_wizard">
+
+                                                            <div class="m-portlet__padding-x">
+                                                                <!-- Here you can put a message or alert -->
+                                                            </div>
+
+                                                            <div class="m-wizard__head m-portlet__padding-x">
+                                                                <div class="m-wizard__progress">
+                                                                    <div class="progress">
+                                                                        <div class="progress-bar era-color-bk" role="progressbar"
+                                                                            aria-valuenow="100" aria-valuemin="0"d
+                                                                            aria-valuemax="100"
+                                                                            [ngStyle]="{ 'width' : chkProgressWidth(approvalLetter.status) }"></div>
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class="m-wizard__nav">
+                                                                    <div class="m-wizard__steps">
+                                                                        <div [class.m-wizard__step--current]="checkStatus(approvalLetter.status, 1)"
+                                                                            class="m-wizard__step"
+                                                                            m-wizard-target="m_wizard_form_step_1">
+                                                                            <span class="m-wizard__step-number">
+                                                                                <span class="step-number">
+                                                                                    1
+                                                                                    <!-- <i class="fa  flaticon-placeholder"></i> -->
+                                                                                </span>
+                                                                            </span>
+                                                                        </div>
+
+                                                                        <div [class.m-wizard__step--current]="checkStatus(approvalLetter.status, 2)"
+                                                                            class="m-wizard__step "
+                                                                            m-wizard-target="m_wizard_form_step_2">
+                                                                            <span class="m-wizard__step-number">
+                                                                                <span class="step-number">
+                                                                                    2
+                                                                                    <!-- <i class="fa  flaticon-layers"></i> -->
+                                                                                </span>
+                                                                            </span>
+                                                                        </div>
+
+                                                                        <div [class.m-wizard__step--current]="checkStatus(approvalLetter.status, 3)"
+                                                                            class="m-wizard__step"
+                                                                            m-wizard-target="m_wizard_form_step_3">
+                                                                            <span class="m-wizard__step-number">
+                                                                                <span class="step-number">
+                                                                                    3
+                                                                                    <!-- <i class="fa  flaticon-layers"></i> -->
+                                                                                </span>
+                                                                            </span>
+                                                                        </div>
+
+                                                                        <div [class.m-wizard__step--current]="checkStatus(approvalLetter.status, 4)"
+                                                                            class="m-wizard__step"
+                                                                            m-wizard-target="m_wizard_form_step_4">
+                                                                            <span class="m-wizard__step-number">
+                                                                                <span class="step-number">
+                                                                                    4
+                                                                                    <!-- <i class="fa  flaticon-layers"></i> -->
+                                                                                </span>
+                                                                            </span>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                    </span>
+                                                    <br><br>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        </div>
+
+                                        <!-- status/detail -->                                        
+                                        <div class="row">
+                                            <div class="text-left job-details col-md-6">
+                                                <span class="job_title m-widget4__title">                                                   
+                                                    Status: {{approvalLetter.status_desc}}
+                                            </span> <br>
+                                                <span class="job_title_sub m-widget4__sub">                                                  
+                                            
+                                                </span><br>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- start: Modal Loading -->
+<div id="modalLoading" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+      <!-- Modal content-->
+      <div class="modal-content">
+   <!-- model body section -->
+        <div class="modal-body justify-content-center">
+              <span>
+                  <div class="m-loader m-loader--lg m-loader--success" style="width: 30px; display: inline-block;"></div>
+              </span>
+              <span>
+                  {{modal_msg}}
+              </span>
+          <Br />
+            <div class="progress-bar progress-bar-striped progress-bar-animated" 
+            style="width: 50%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>    
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- end: Modal Loading -->
+<notifier-container></notifier-container>

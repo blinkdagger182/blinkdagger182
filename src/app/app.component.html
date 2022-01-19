@@ -1,0 +1,64 @@
+<!-- begin::Page loader -->
+<!-- <div class="m-page-loader m-page-loader--base m-page-loader--non-block" style="margin-left: -80px; margin-top: -20px;">
+	<div class="m-blockui">
+		<span>
+			Please wait...
+		</span>
+		<span>
+			<div class="m-loader m-loader--brand"></div>
+		</span>
+	</div>
+</div> -->
+<div class="m-page-loader m-page-loader--base m-page-loader--non-block" style="margin-left: -50px; margin-top: -50px;">
+	<div>
+		<img src="../assets/img/user/ERA-loading.gif" style="width: 8rem;">
+	</div>
+</div>
+<!-- end::Page loader -->                      	
+<!-- begin:: Page -->
+<router-outlet></router-outlet>
+<!-- end:: Page -->
+<!-- <app-quick-sidebar></app-quick-sidebar> -->
+<app-scroll-top></app-scroll-top>
+<app-tooltips></app-tooltips>
+
+<button type="button" id="openModal" class="btn btn-primary" data-toggle="modal" data-target="#idleModal" [hidden]="true">
+	Open Modal
+</button>
+
+<div class="modal fade" id="idleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" style="display: none;" aria-hidden="true">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header" style="background: #05BACE;">
+				<h5 class="modal-title" id="exampleModalLabel" style="font-size: 1.3rem;color: #fff;">
+					Session Timeout
+				</h5>
+				<button type="button" id="close-btn" (click)="stay()" class="close" data-dismiss="modal" 
+					aria-label="Close" style="margin: 0rem -1rem -1rem auto;color: #fff;opacity: 1;">
+					<span aria-hidden="true">
+						×
+					</span>
+				</button>
+			</div>
+			<div class="modal-body" style="padding: 12px 2rem;font-weight: 400;color: #263238;">
+				<p style="font-size: 1.15rem;">Your session will expire in {{timeLeft}} seconds.</p>
+				<P style="font-size: 1.15rem;">Click "STAY" to stay logged in or click "CANCEL" to log out.</P>
+			</div>
+			<div class="modal-footer" style="padding: 10px 2rem;">
+				<button type="button" (click)="logout()" class="btn btn-secondary" data-dismiss="modal">
+					CANCEL
+				</button>
+				<button type="button" (click)="stay()" class="btn btn-success" data-dismiss="modal" style="padding-left: 2rem;padding-right: 2rem;background: #05BACE;">
+					STAY
+				</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!--begin::Base Scripts -->             	    	 		    	 				
+<!--end::Base Scripts -->                       
+<!--begin::Page Vendors -->                                   
+<!--end::Page Vendors -->                                                              
+<!--begin::Page Snippets -->                                   
+<!--end::Page Snippets -->

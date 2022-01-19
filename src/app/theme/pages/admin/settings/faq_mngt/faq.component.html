@@ -1,0 +1,860 @@
+<!-- BEGIN: Subheader
+
+<div class="m-subheader" appunwraptag="">
+    
+</div> -->
+<notifier-container></notifier-container>
+<div class="m-content">
+    <div class="row d-flex justify-content-center">
+        <div class="col-lg-12 faqContainer">
+            <img src="../../../../../assets/img/faq/faq_banner.png" alt="FAQs" style="width:100%;">
+            <div class="faqCentered ">
+                <span class="faqHeader">FAQs</span> <br />
+                <span class="faqSubHeader">Frequently Ask Question</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- begin::Page loader -->
+    <div class="col-lg-12 centred my-auto">
+        <ng-template #alertError></ng-template>
+    </div>
+    <!-- end::Page loader -->
+
+    <div class="row mt-3" *ngIf="!loading">
+        <div class="col-lg-12">
+            <div class="m-portlet m-portlet--full-height">
+                <ul class="nav nav-tabs" role="tablist" style="background-color:#f4f5f8">
+                    <li class="nav-item">
+                        <a class="nav-link active show" data-toggle="tab" href="#extraordinaire">Extraordinaire</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link " data-toggle="tab" href="#web_era">Web ERA</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link " data-toggle="tab" href="#app_era">App ERA</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link " data-toggle="tab" href="#job_ads">Job Ads</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link " data-toggle="tab" href="#TmMove">TM On The Move</a>
+                    </li>
+                </ul>
+                <div class="tab-content">
+                    <div class="tab-pane active show mb-5 pt-2 pb-3" id="extraordinaire" role="tabpanel">
+                        <div class="row">
+                            <div class="col-sm-12 text-right" style="padding-right: 94px;">
+                                <div class="btn btn-sm btn-brand m-btn m-btn--icon m-btn--pill m-btn--wide pull-right"
+                                    href="#m_modal_add_faq_extra" data-toggle="modal">
+                                        <span>
+                                            <i class="la la-plus"></i>
+                                            <span>Add</span>
+                                        </span>
+                                </div> 
+                            </div>
+                        </div>
+
+                        <div class="container pr-6 pl-0 row" style="margin-top:20px" *ngFor="let item of data2; let i = index">
+                            <div class = "col-sm-12">
+                                <div class="row" > 
+                                    <div class="col-md-1 pl-0  text-right align-middle faqQ">Q</div>
+                                    <div class="col-md-11 faqQText">{{item.q}}</div>
+                                </div>
+                                <div class="row" style="margin-top:-10px;">
+                                    <div class="col-md-1  text-right align-middle faqA">A</div>
+                                    <div class="col-md-11 faqAText" [innerHTML]="item.a"></div>
+                                </div>
+                            </div>
+                            <div class= "col-sm-12 text-right">
+
+                                <!--edit faq extra-->
+                                   <div class="pt-2">  
+                                            <button href="#" data-toggle="modal"  class="m-portlet__nav-link btn btn-outline-danger m-btn m-btn--icon m-btn--icon-only m-btn--pill"
+                                                title="Delete" id="delfaqweb2" style="visibility: hidden" (click)="delfaq()">
+                                                <i class="la la-trash"></i>
+                                            </button>       
+                                            <button data-target="#m_modal_edit_faq_web" data-toggle="modal" (click)="selectQnA(item)" class="m-portlet__nav-link btn btn-outline-warning m-btn m-btn--icon m-btn--icon-only m-btn--pill m-btn--air"
+                                                title="Edit" id="editfaqweb">
+                                                <i class="la la-pencil"></i>
+                                            </button>
+                                            <a href="#" class="m-portlet__nav-link btn btn-outline-danger m-btn m-btn--icon m-btn--icon-only m-btn--pill"
+                                                title="Delete" id="delfaqweb" (click)="selectQnA(item)">
+                                                <i class="la la-trash"></i>
+                                            </a>
+                                            <button href="#" data-toggle="modal" [disabled]="i === 0 ? true : false" [ngClass]="{'disable-top-bottom disabled':i === 0}" class="m-portlet__nav-link btn btn-outline-orange m-btn m-btn--icon m-btn--icon-only m-btn--pill m-btn--air"
+                                                title="Up" id="upfaqweb" (click)="UPfaq(item)">
+                                                <i class= "la la-arrow-up"></i>
+                                            </button> 
+                                            <button [disabled]="i === data2.length-1 ? true : false" [ngClass]="{'disable-top-bottom disabled':i === data2.length-1}" class="m-portlet__nav-link btn btn-outline-orange m-btn m-btn--icon m-btn--icon-only m-btn--pill m-btn--air"
+                                                title="Down" id="downfaqweb" (click)="DOWNfaq(item)">
+                                                <i class= "la la-arrow-down"></i>
+                                            </button>
+
+                                        </div> 
+                                </div>  
+                        </div>
+                    </div> <!--end tab extra-->
+                    <div class="tab-pane mb-5 mt-3 pt-2 pb-3" id="web_era" role="tabpanel">
+                            <div class="row">
+                                    <div class="col-sm-12 text-right" style="padding-right: 94px;">
+                                        <div class="btn btn-sm btn-brand m-btn m-btn--icon m-btn--pill m-btn--wide pull-right"
+                                            href="#m_modal_add_faq_web" data-toggle="modal" >
+                                                <span>
+                                                    <i class="la la-plus"></i>
+                                                    <span>Add</span>
+                                                </span>
+                                        </div> 
+                                    </div>
+                            </div>
+                            <div class="container pr-6 pl-0 row" style="margin-top:20px" *ngFor="let item of data; let i = index">
+                                <div class = "col-sm-12">
+                                    <div class="row" > 
+                                        <div class="col-md-1 pl-0  text-right align-middle faqQ">Q</div>
+                                        <div class="col-md-11 faqQText">{{item.q}}</div>
+                                    </div>
+                                    <div class="row" style="margin-top:-10px;">
+                                        <div class="col-md-1  text-right align-middle faqA">A</div>
+                                        <div class="col-md-11 faqAText" [innerHTML]="item.a"></div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-12 text-right">
+                                        <div class="pt-2">  
+                                            <button href="#" data-toggle="modal"  class="m-portlet__nav-link btn btn-outline-danger m-btn m-btn--icon m-btn--icon-only m-btn--pill"
+                                                title="Delete" id="delfaqweb2" style="visibility: hidden" (click)="delfaq()">
+                                                <i class="la la-trash"></i>
+                                            </button>       
+                                            <button data-target="#m_modal_edit_faq_web" data-toggle="modal" (click)="selectQnA(item)" class="m-portlet__nav-link btn btn-outline-warning m-btn m-btn--icon m-btn--icon-only m-btn--pill m-btn--air"
+                                                title="Edit" id="editfaqweb">
+                                                <i class="la la-pencil"></i>
+                                            </button>
+                                            <a href="#" class="m-portlet__nav-link btn btn-outline-danger m-btn m-btn--icon m-btn--icon-only m-btn--pill"
+                                                title="Delete" id="delfaqweb" (click)="selectQnA(item)">
+                                                <i class="la la-trash"></i>
+                                            </a>
+                                            <button href="#" data-toggle="modal" [disabled]="i === 0 ? true : false" [ngClass]="{'disable-top-bottom disabled':i === 0}" class="m-portlet__nav-link btn btn-outline-orange m-btn m-btn--icon m-btn--icon-only m-btn--pill m-btn--air"
+                                                title="Up" id="upfaqweb" (click)="UPfaq(item)">
+                                                <i class= "la la-arrow-up"></i>
+                                            </button> 
+                                            <button [disabled]="i === data.length-1 ? true : false" [ngClass]="{'disable-top-bottom disabled':i === data.length-1}" class="m-portlet__nav-link btn btn-outline-orange m-btn m-btn--icon m-btn--icon-only m-btn--pill m-btn--air"
+                                                title="Down" id="downfaqweb" (click)="DOWNfaq(item)">
+                                                <i class= "la la-arrow-down"></i>
+                                            </button>
+
+                                        </div> 
+                                </div> 
+                            </div>
+                    </div> <!--end tab web era-->
+                    <div class="tab-pane mb-5 mt-3 pt-2 pb-3" id="app_era" role="tabpanel">
+                            <div class="row">
+                                    <div class="col-sm-12 text-right" style="padding-right: 94px;">
+                                        <div class="btn btn-sm btn-brand m-btn m-btn--icon m-btn--pill m-btn--wide pull-right"
+                                            href="#m_modal_add_faq_app" data-toggle="modal">
+                                                <span>
+                                                    <i class="la la-plus"></i>
+                                                    <span>Add</span>
+                                                </span>
+                                        </div> 
+                                    </div>
+                            </div>
+                            <div class="container pr-6 pl-0 row" style="margin-top:20px" *ngFor="let item of data3; let i = index">
+                                <div class = "col-sm-12">
+                                    <div class="row" > 
+                                        <div class="col-md-1 pl-0  text-right align-middle faqQ">Q</div>
+                                        <div class="col-md-11 faqQText">{{item.q}}</div>
+                                    </div>
+                                    <div class="row" style="margin-top:-10px;">
+                                        <div class="col-md-1  text-right align-middle faqA">A</div>
+                                        <div class="col-md-11 faqAText" [innerHTML]="item.a"></div>
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-12 text-right">
+                                        <div class="pt-2">  
+                                                <button href="#" data-toggle="modal"  class="m-portlet__nav-link btn btn-outline-danger m-btn m-btn--icon m-btn--icon-only m-btn--pill"
+                                                    title="Delete" id="delfaqweb2" style="visibility: hidden" (click)="delfaq()">
+                                                    <i class="la la-trash"></i>
+                                                </button>       
+                                                <button data-target="#m_modal_edit_faq_web" data-toggle="modal" (click)="selectQnA(item)" class="m-portlet__nav-link btn btn-outline-warning m-btn m-btn--icon m-btn--icon-only m-btn--pill m-btn--air"
+                                                    title="Edit" id="editfaqweb">
+                                                    <i class="la la-pencil"></i>
+                                                </button>
+                                                <a href="#" class="m-portlet__nav-link btn btn-outline-danger m-btn m-btn--icon m-btn--icon-only m-btn--pill"
+                                                    title="Delete" id="delfaqweb" (click)="selectQnA(item)">
+                                                    <i class="la la-trash"></i>
+                                                </a>
+                                                <button href="#" data-toggle="modal" [disabled]="i === 0 ? true : false" [ngClass]="{'disable-top-bottom disabled':i === 0}" class="m-portlet__nav-link btn btn-outline-orange m-btn m-btn--icon m-btn--icon-only m-btn--pill m-btn--air"
+                                                    title="Up" id="upfaqweb" (click)="UPfaq(item)">
+                                                    <i class= "la la-arrow-up"></i>
+                                                </button> 
+                                                <button [disabled]="i === data3.length-1 ? true : false" [ngClass]="{'disable-top-bottom disabled':i === data3.length-1}" class="m-portlet__nav-link btn btn-outline-orange m-btn m-btn--icon m-btn--icon-only m-btn--pill m-btn--air"
+                                                    title="Down" id="downfaqweb" (click)="DOWNfaq(item)">
+                                                    <i class= "la la-arrow-down"></i>
+                                                </button>
+    
+                                            </div> 
+                                    </div> 
+                            </div>
+                    </div><!--end tab app era-->
+                    <div class="tab-pane mb-5 mt-3 pt-2 pb-3" id="job_ads" role="tabpanel">
+                        <div class="row">
+                                <div class="col-sm-12 text-right" style="padding-right: 94px;">
+                                    <div class="btn btn-sm btn-brand m-btn m-btn--icon m-btn--pill m-btn--wide pull-right"
+                                        href="#m_modal_add_faq_jobads" data-toggle="modal">
+                                            <span>
+                                                <i class="la la-plus"></i>
+                                                <span>Add</span>
+                                            </span>
+                                    </div> 
+                                </div>
+                        </div>
+                        <div class="container pr-6 pl-0 row" style="margin-top:20px" *ngFor="let item of data4; let i = index">
+                            <div class = "col-sm-12">
+                                <div class="row" > 
+                                    <div class="col-md-1 pl-0  text-right align-middle faqQ">Q</div>
+                                    <div class="col-md-11 faqQText">{{item.q}}</div>
+                                </div>
+                                <div class="row" style="margin-top:-10px;">
+                                    <div class="col-md-1  text-right align-middle faqA">A</div>
+                                    <div class="col-md-11 faqAText" [innerHTML]="item.a"></div>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 text-right">
+                                <div>
+                                        <div class="pt-2">  
+                                                <button href="#" data-toggle="modal"  class="m-portlet__nav-link btn btn-outline-danger m-btn m-btn--icon m-btn--icon-only m-btn--pill"
+                                                    title="Delete" id="delfaqweb2" style="visibility: hidden" (click)="delfaq()">
+                                                    <i class="la la-trash"></i>
+                                                </button>       
+                                                <button data-target="#m_modal_edit_faq_web" data-toggle="modal" (click)="selectQnA(item)" class="m-portlet__nav-link btn btn-outline-warning m-btn m-btn--icon m-btn--icon-only m-btn--pill m-btn--air"
+                                                    title="Edit" id="editfaqweb">
+                                                    <i class="la la-pencil"></i>
+                                                </button>
+                                                <a href="#" class="m-portlet__nav-link btn btn-outline-danger m-btn m-btn--icon m-btn--icon-only m-btn--pill"
+                                                    title="Delete" id="delfaqweb" (click)="selectQnA(item)">
+                                                    <i class="la la-trash"></i>
+                                                </a>
+                                                <button href="#" data-toggle="modal" [disabled]="i === 0 ? true : false" [ngClass]="{'disable-top-bottom disabled':i === 0}" class="m-portlet__nav-link btn btn-outline-orange m-btn m-btn--icon m-btn--icon-only m-btn--pill m-btn--air"
+                                                    title="Up" id="upfaqweb" (click)="UPfaq(item)">
+                                                    <i class= "la la-arrow-up"></i>
+                                                </button> 
+                                                <button [disabled]="i === data4.length-1 ? true : false" [ngClass]="{'disable-top-bottom disabled':i === data4.length-1}" class="m-portlet__nav-link btn btn-outline-orange m-btn m-btn--icon m-btn--icon-only m-btn--pill m-btn--air"
+                                                    title="Down" id="downfaqweb" (click)="DOWNfaq(item)">
+                                                    <i class= "la la-arrow-down"></i>
+                                                </button>
+    
+                                            </div> 
+                                    </div> 
+                            </div> 
+                        </div>
+                    </div> <!--end tab job ads-->
+
+					   <!--start tab TM Move ads-->
+					   <div class="tab-pane mb-5 mt-3 pt-2 pb-3" id="TmMove" role="tabpanel">
+                        <div class="row">
+                            <div class="col-sm-12 text-right" style="padding-right: 94px;">
+                                <div class="btn btn-sm btn-brand m-btn m-btn--icon m-btn--pill m-btn--wide pull-right"
+                                    href="#m_modal_add_faq_TmMove" data-toggle="modal">
+                                        <span>
+                                            <i class="la la-plus"></i>
+                                            <span>Add</span>
+                                        </span>
+                                </div> 
+                            </div>
+                    </div>
+                    <div class="container pr-6 pl-0 row" style="margin-top:20px" *ngFor="let item of data5; let i = index">
+                        <div class = "col-sm-12">
+                            <div class="row" > 
+                                <div class="col-md-1 pl-0  text-right align-middle faqQ">Q</div>
+                                <div class="col-md-11 faqQText">{{item.q}}</div>
+                            </div>
+                            <div class="row" style="margin-top:-10px;">
+                                <div class="col-md-1  text-right align-middle faqA">A</div>
+                                <div class="col-md-11 faqAText" [innerHTML]="item.a"></div>
+                            </div>
+                        </div>
+                        <div class="col-sm-12 text-right">
+                            <div>
+                                    <div class="pt-2">  
+                                            <button href="#" data-toggle="modal"  class="m-portlet__nav-link btn btn-outline-danger m-btn m-btn--icon m-btn--icon-only m-btn--pill"
+                                                title="Delete" id="delfaqweb2" style="visibility: hidden" (click)="delfaq()">
+                                                <i class="la la-trash"></i>
+                                            </button>       
+                                            <button data-target="#m_modal_edit_faq_web" data-toggle="modal" (click)="selectQnA(item)" class="m-portlet__nav-link btn btn-outline-warning m-btn m-btn--icon m-btn--icon-only m-btn--pill m-btn--air"
+                                                title="Edit" id="editfaqweb">
+                                                <i class="la la-pencil"></i>
+                                            </button>
+                                            <a href="#" class="m-portlet__nav-link btn btn-outline-danger m-btn m-btn--icon m-btn--icon-only m-btn--pill"
+                                                title="Delete" id="delfaqweb" (click)="selectQnA(item)">
+                                                <i class="la la-trash"></i>
+                                            </a>
+                                            <button href="#" data-toggle="modal" [disabled]="i === 0 ? true : false" [ngClass]="{'disable-top-bottom disabled':i === 0}" class="m-portlet__nav-link btn btn-outline-orange m-btn m-btn--icon m-btn--icon-only m-btn--pill m-btn--air"
+                                                title="Up" id="upfaqweb" (click)="UPfaq(item)">
+                                                <i class= "la la-arrow-up"></i>
+                                            </button> 
+                                            <button [disabled]="i === data5.length-1 ? true : false" [ngClass]="{'disable-top-bottom disabled':i === data5.length-1}" class="m-portlet__nav-link btn btn-outline-orange m-btn m-btn--icon m-btn--icon-only m-btn--pill m-btn--air"
+                                                title="Down" id="downfaqweb" (click)="DOWNfaq(item)">
+                                                <i class= "la la-arrow-down"></i>
+                                            </button>
+
+                                        </div> 
+                                </div> 
+                        </div> 
+                    </div>
+                </div> 
+                <!--end tab TM Move ads-->
+
+                    <!--start ADD FAQ Extraordinaire-->
+                    <div class="modal fade" id="m_modal_add_faq_extra" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+                        aria-hidden="true">
+                        <div class="modal-dialog modal-lg" role="document">
+                        <form [formGroup]="addFAQ_extra"> 
+                                <div class="modal-content" style="background-color: #eaeaea;">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabel">
+                                            <strong>Add Extraordinaire's FAQ  </strong> 
+                                        </h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">
+                                                &times;
+                                            </span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="form-group">
+                                            <div class="form-group m-form__group row">
+                                                    <label for="example-text-input" class="col-2 col-form-label" required > <strong>Question</strong></label>
+                                                <div class="col-10">
+                                                    <div class="input-group m-input-group m-input-group--pill">
+                                                        <input class="form-control m-input" type="text" value= "" formControlName="addQextra" id="addQextra" required #Question >
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <div class="form-group m-form__group row">
+                                                        <label for="example-text-input" class="col-2 col-form-label" required ><strong>Answer</strong> </label>
+                                                    <div class="col-10">
+                                                        <div class="input-group m-input-group m-input-group--pill">
+                                                            <quill-editor [style]="{height: '240px'}" style="width: 100%" formControlName="addAextra"
+                                                                maxlength="1000"  [modules]="modules"  id= "addAextra" >          
+                                                            </quill-editor>
+                                                        </div>
+                                                    </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                        <div class="modal-footer">
+                                            <button type="button" id="btn_submit" value="" class="btn btn-md btn-accent m-btn m-btn--pill"
+                                            [ngClass]="{'m-loader m-loader--right m-loader--light': submitting}" onclick="$('.modal').modal('hide')" (click)="addFAQ_extrasubmit()">
+                                            Submit
+                                        </button>
+                                    </div>
+                                    </div>                
+                        </form>
+                        </div>
+                    </div>
+                    <!--END ADD FAQ extraordinaire-->
+
+                    <!--Start Edit FAQ extraordinaire-->
+                    <div class="modal fade" id="m_modal_edit_faq_extra" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+                        aria-hidden="true">
+                        <div class="modal-dialog modal-lg" role="document">
+                            <form [formGroup]="editFAQ_extra"> 
+                                
+                                    <div class="modal-content" style="background-color: #eaeaea;">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabel">
+                                            <strong>Edit FAQ for Extraordinaire</strong> 
+                                        </h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">
+                                                &times;
+                                            </span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body" >
+                                        <div class="form-group">
+                                            <div class="form-group m-form__group row">
+                                                <label for="example-text-input" class="col-2 col-form-label" required > <strong>Question</strong></label>
+                                                <div class="col-10">
+                                                    <div class="input-group m-input-group m-input-group--pill" >
+                                                        <input class="form-control m-input" type="text" formControlName ="editQextra" value="{{selQnA.q}}">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <div class="form-group m-form__group row">
+                                                        <label for="example-text-input" class="col-2 col-form-label" required ><strong>Answer</strong> </label>
+                                                        <div class="col-10">
+                                                        <div class="input-group m-input-group m-input-group--pill" [style]="{height: '240px'}" style="width: 100%"
+                                                            maxlength="1000" >
+                                                                <quill-editor [style]="{height: '240px'}" style="width: 100%"
+                                                                    maxlength="1000"  [modules]="modules" name="editA" id= "editAextra" formControlName ="editAextra" [(ngModel)]="selQnA.a" >          
+                                                                </quill-editor>
+                                                            </div>
+                                                                                                
+                                                        </div>
+                                                </div>
+                                        </div>
+                                    </div>
+                                        <div class="modal-footer">
+                                            <button type="button" id="btn_submit" value="" class="btn btn-md btn-accent m-btn m-btn--pill"
+                                                [ngClass]="{'m-loader m-loader--right m-loader--light': submitting}" onclick="$('.modal').modal('hide')" (click)="editFAQ_extrasubmit()">
+                                                Update
+                                            </button>
+                                        </div>
+                                    </div>       
+                            </form>
+                        </div>
+                    </div>
+                    <!--End Edit FAQ Extraordinaire-->
+
+                    <!--start ADD FAQ WEB-->
+                    <div class="modal fade" id="m_modal_add_faq_web" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+                        aria-hidden="true">
+                        <div class="modal-dialog modal-lg" role="document">
+                            <form [formGroup]="addFAQweb">
+                                    <div class="modal-content" style="background-color: #eaeaea;">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalLabel">
+                                                <strong>Add WEB ERA's FAQ</strong> 
+                                            </h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">
+                                                    &times;
+                                                </span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <div class="form-group">
+                                                <div class="form-group m-form__group row">
+                                                        <label for="example-text-input" class="col-2 col-form-label" required > <strong>Question</strong></label>
+                                                    <div class="col-10">
+                                                        <div class="input-group m-input-group m-input-group--pill">
+                                                        <input class="form-control m-input" type="text" value= "" id="addQweb" required #Question >
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <div class="form-group m-form__group row">
+                                                            <label for="example-text-input" class="col-2 col-form-label" required ><strong>Answer</strong> </label>
+                                                        <div class="col-10">
+                                                            <div class="input-group m-input-group m-input-group--pill">
+                                                            <quill-editor [style]="{height: '240px'}" style="width: 100%" formControlName="addAweb"
+                                                                maxlength="1000"  [modules]="modules"  id= "addAweb" >          
+                                                            </quill-editor>
+                                                            </div>
+                                                        </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                            <div class="modal-footer">
+                                                <button type="button" id="btn_submit" value="" class="btn btn-md btn-accent m-btn m-btn--pill"
+                                                [ngClass]="{'m-loader m-loader--right m-loader--light': submitting}" onclick="$('.modal').modal('hide')" (click)="addFAQ_websubmit()">
+                                                Submit
+                                                </button>
+                                            </div>
+                                        </div>                
+                            </form>
+                        </div>
+                    </div>
+                    <!--END ADD FAQ Web-->
+                    <!--Start Edit FAQ Web-->
+                    <div class="modal fade" id="m_modal_edit_faq_web" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+                        aria-hidden="true">
+                        <div class="modal-dialog modal-lg" role="document">
+                            <form [formGroup]="editfaqweb"> 
+                                <div class="modal-content" style="background-color: #eaeaea;">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabel">
+                                            <strong>Edit WEB ERA's FAQ</strong> 
+                                        </h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">
+                                                &times;
+                                            </span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body" >
+                                        <div class="form-group">
+                                            <div class="form-group m-form__group row">
+                                                <label for="example-text-input" class="col-2 col-form-label" required > <strong>Question</strong></label>
+                                                <div class="col-10">
+                                                    <div class="input-group m-input-group m-input-group--pill" >
+                                                        <input class="form-control m-input" type="text" id="editQweb" formControlName = "editQweb"  value="{{selQnA.q}}">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <div class="form-group m-form__group row">
+                                                        <label for="example-text-input" class="col-2 col-form-label" required ><strong>Answer</strong> </label>
+                                                        <div class="col-10">
+                                                            <div class="input-group m-input-group m-input-group--pill" [style]="{height: '240px'}" style="width: 100%"
+                                                            maxlength="1000" >
+                                                                <quill-editor [style]="{height: '240px'}" style="width: 100%"
+                                                                maxlength="1000"  [modules]="modules" name="editAweb" id= "editAweb" formControlName ="editAweb" [(ngModel)]="selQnA.a" >          
+                                                                </quill-editor>
+                                                            </div>
+                                                        </div>
+                                            </div>
+                                        </div>
+                                        
+                                    </div>
+                                        <div class="modal-footer">
+                                            <button type="button" id="btn_submit" value="" class="btn btn-md btn-accent m-btn m-btn--pill"
+                                            [ngClass]="{'m-loader m-loader--right m-loader--light': submitting}" onclick="$('.modal').modal('hide')" (click)="editFAQ_websubmit()">
+                                            Update
+                                            </button>
+                                        </div>
+                                    </div>                
+                            </form>
+                        </div>
+                    </div>
+                    <!--End Edit FAQ Web-->
+
+                    <!--start ADD FAQ APP-->
+                    <div class="modal fade" id="m_modal_add_faq_app" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+                        aria-hidden="true">
+                        <div class="modal-dialog modal-lg" role="document">
+                            <form [formGroup]="addFAQapp">
+                            <div class="modal-content" style="background-color: #eaeaea;">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabel">
+                                            <strong>Add App ERA's FAQ</strong> 
+                                        </h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">
+                                                &times;
+                                            </span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="form-group">
+                                            <div class="form-group m-form__group row">
+                                                    <label for="example-text-input" class="col-2 col-form-label" required > <strong>Question</strong></label>
+                                                <div class="col-10">
+                                                    <div class="input-group m-input-group m-input-group--pill">
+                                                        <input class="form-control m-input" type="text" value= "" id= "addQapp" required #Question >
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <div class="form-group m-form__group row">
+                                                        <label for="example-text-input" class="col-2 col-form-label" required ><strong>Answer</strong> </label>
+                                                    <div class="col-10">
+                                                        <div class="input-group m-input-group m-input-group--pill">
+                                                            <quill-editor [style]="{height: '240px'}" style="width: 100%"
+                                                                maxlength="1000"  [modules]="modules" name="comment" formControlName= "addAapp" id= "addAapp" >          
+                                                            </quill-editor>
+                                                        </div>
+                                                    </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                        <div class="modal-footer">
+                                        
+                                            <button type="button" id="btn_submit" value="" class="btn btn-md btn-accent m-btn m-btn--pill"
+                                            [ngClass]="{'m-loader m-loader--right m-loader--light': submitting}" onclick="$('.modal').modal('hide')" (click)="addFAQ_appsubmit()">
+                                            Submit
+                                            </button>
+                                        </div>
+                                    </div>                
+                            </form>
+                        </div>
+                    </div>
+                    <!--END ADD FAQ App-->
+
+                    <!--Start Edit FAQ App-->
+                    <div class="modal fade" id="m_modal_edit_faq_app" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+                        aria-hidden="true">
+                        <div class="modal-dialog modal-lg" role="document">
+                            <form [formGroup]="editfaqapp"> 
+                            <div class="modal-content" style="background-color: #eaeaea;">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">
+                                        <strong>Edit App ERA's FAQ</strong> 
+                                    </h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">
+                                            &times;
+                                        </span>
+                                    </button>
+                                </div>
+                                <div class="modal-body" >
+                                    <div class="form-group">
+                                        <div class="form-group m-form__group row">
+                                            <label for="example-text-input" class="col-2 col-form-label" required > <strong>Question</strong></label>
+                                            <div class="col-10">
+                                                <div class="input-group m-input-group m-input-group--pill" >
+                                                    <input class="form-control m-input" type="text" formControlName = "editQapp" value="{{selQnA.q}}">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <div class="form-group m-form__group row">
+                                                    <label for="example-text-input" class="col-2 col-form-label" required ><strong>Answer</strong> </label>
+                                                    <div class="col-10">
+                                                        <div class="input-group m-input-group m-input-group--pill" [style]="{height: '240px'}" style="width: 100%"
+                                                        maxlength="1000" >
+                                                            <quill-editor [style]="{height: '240px'}" style="width: 100%"
+                                                                maxlength="1000"  [modules]="modules" name="editAapp" id= "editA" formControlName = "editAapp"  [(ngModel)]="selQnA.a"  >          
+                                                            </quill-editor>
+                                                        </div>
+                                                    </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                    
+                                    <div class="modal-footer">
+                                            <button type="button" id="btn_submit_editapp" value="" class="btn btn-md btn-accent m-btn m-btn--pill"
+                                            [ngClass]="{'m-loader m-loader--right m-loader--light': submitting}" onclick="$('.modal').modal('hide')" (click)="editFAQ_appsubmit()">
+                                            Update
+                                            </button>
+                                    </div>
+
+                                </div>                
+                            </form>
+                        </div>
+                    </div>
+                    <!--End Edit FAQ-->
+        
+                    <!--start ADD FAQ Job Ads-->
+                    <div class="modal fade" id="m_modal_add_faq_jobads" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+                        aria-hidden="true">
+                        <div class="modal-dialog modal-lg" role="document">
+                            <form [formGroup]="addFAQjobads">
+                                <div class="modal-content" style="background-color: #eaeaea;">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabel">
+                                            <strong>Add Job Ads's FAQ</strong> 
+                                        </h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">
+                                                &times;
+                                            </span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="form-group">
+                                            <div class="form-group m-form__group row">
+                                                    <label for="example-text-input" class="col-2 col-form-label" required > <strong>Question</strong></label>
+                                                <div class="col-10">
+                                                    <div class="input-group m-input-group m-input-group--pill">
+                                                        <input class="form-control m-input" type="text" value= "" formControlName= "addQjobads"  id= "addQjobads" required #Question >
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <div class="form-group m-form__group row">
+                                                        <label for="example-text-input" class="col-2 col-form-label" required ><strong>Answer</strong> </label>
+                                                    <div class="col-10">
+                                                        <div class="input-group m-input-group m-input-group--pill">
+                                                            <quill-editor [style]="{height: '240px'}" style="width: 100%"
+                                                                maxlength="1000"  [modules]="modules" name="comment" formControlName= "addAjobads" id= "addAjobads" >          
+                                                            </quill-editor>
+                                                        </div>
+                                                    </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                        <div class="modal-footer">
+                                        
+                                            <button type="button" id="btn_submit" value="" class="btn btn-md btn-accent m-btn m-btn--pill"
+                                            [ngClass]="{'m-loader m-loader--right m-loader--light': submitting}" onclick="$('.modal').modal('hide')" (click)="addFAQ_jobadssubmit()">
+                                            Submit
+                                            </button>
+                                        </div>
+                                    </div>                
+                            </form>
+                        </div>
+                    </div>
+                    <!--END ADD FAQ Job Ads-->
+
+                    <!--Start Edit FAQ extraordinaire-->
+                    <div class="modal fade" id="m_modal_edit_faq_jobads" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+                        aria-hidden="true">
+                        <div class="modal-dialog modal-lg" role="document">
+                            <form [formGroup]="editFAQ_jobads"> 
+                                
+                                    <div class="modal-content" style="background-color: #eaeaea;">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabel">
+                                            <strong>Edit FAQ for Job Ads</strong> 
+                                        </h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">
+                                                &times;
+                                            </span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body" >
+                                        <div class="form-group">
+                                            <div class="form-group m-form__group row">
+                                                <label for="example-text-input" class="col-2 col-form-label" required > <strong>Question</strong></label>
+                                                <div class="col-10">
+                                                    <div class="input-group m-input-group m-input-group--pill" >
+                                                        <input class="form-control m-input" type="text" formControlName ="editQjobads" value="{{selQnA.q}}">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <div class="form-group m-form__group row">
+                                                        <label for="example-text-input" class="col-2 col-form-label" required ><strong>Answer</strong> </label>
+                                                        <div class="col-10">
+                                                        <div class="input-group m-input-group m-input-group--pill" [style]="{height: '240px'}" style="width: 100%"
+                                                            maxlength="1000" >
+                                                                <quill-editor [style]="{height: '240px'}" style="width: 100%"
+                                                                    maxlength="1000"  [modules]="modules" name="editA" id= "editAjobads" formControlName ="editAjobads" [(ngModel)]="selQnA.a" >          
+                                                                </quill-editor>
+                                                            </div>
+                                                                                                
+                                                        </div>
+                                                </div>
+                                        </div>
+                                    </div>
+                                        <div class="modal-footer">
+                                            <button type="button" id="btn_submit" value="" class="btn btn-md btn-accent m-btn m-btn--pill"
+                                                [ngClass]="{'m-loader m-loader--right m-loader--light': submitting}" onclick="$('.modal').modal('hide')" (click)="editFAQ_jobadssubmit()">
+                                                Update
+                                            </button>
+                                        </div>
+                                    </div>       
+                            </form>
+                        </div>
+                    </div>
+
+                    <!--End Edit Job ads FAQ-->
+
+                    <!--start ADD FAQ TM Move-->
+                    <div class="modal fade" id="m_modal_add_faq_TmMove" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+                        aria-hidden="true">
+                        <div class="modal-dialog modal-lg" role="document">
+                            <form [formGroup]="addFAQTmMove">
+                                <div class="modal-content" style="background-color: #eaeaea;">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabel">
+                                            <strong>Add TM Move's FAQ</strong> 
+                                        </h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">
+                                                &times;
+                                            </span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="form-group">
+                                            <div class="form-group m-form__group row">
+                                                    <label for="example-text-input" class="col-2 col-form-label" required > <strong>Question</strong></label>
+                                                <div class="col-10">
+                                                    <div class="input-group m-input-group m-input-group--pill">
+                                                        <input class="form-control m-input" type="text" value= "" formControlName= "addQTmMove"  id= "addQTmMove" required #Question >
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <div class="form-group m-form__group row">
+                                                        <label for="example-text-input" class="col-2 col-form-label" required ><strong>Answer</strong> </label>
+                                                    <div class="col-10">
+                                                        <div class="input-group m-input-group m-input-group--pill">
+                                                            <quill-editor [style]="{height: '240px'}" style="width: 100%"
+                                                                maxlength="1000"  [modules]="modules" name="comment" formControlName= "addATmMove" id= "addATmMove" >          
+                                                            </quill-editor>
+                                                        </div>
+                                                    </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                        <div class="modal-footer">
+                                        
+                                            <button type="button" id="btn_submit" value="" class="btn btn-md btn-accent m-btn m-btn--pill"
+                                            [ngClass]="{'m-loader m-loader--right m-loader--light': submitting}" onclick="$('.modal').modal('hide')" (click)="addFAQ_TmMoveSubmit()">
+                                            Submit
+                                            </button>
+                                        </div>
+                                    </div>                
+                            </form>
+                        </div>
+                    </div>
+                    <!--END ADD FAQ TM Move-->
+
+                    
+                    <!--Start Edit FAQ TM Move -->
+                    <div class="modal fade" id="m_modal_edit_faq_TmMove" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+                        aria-hidden="true">
+                        <div class="modal-dialog modal-lg" role="document">
+                            <form [formGroup]="editFAQ_TmMove"> 
+                                
+                                    <div class="modal-content" style="background-color: #eaeaea;">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabel">
+                                            <strong>Edit FAQ for Job Ads</strong> 
+                                        </h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">
+                                                &times;
+                                            </span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body" >
+                                        <div class="form-group">
+                                            <div class="form-group m-form__group row">
+                                                <label for="example-text-input" class="col-2 col-form-label" required > <strong>Question</strong></label>
+                                                <div class="col-10">
+                                                    <div class="input-group m-input-group m-input-group--pill" >
+                                                        <input class="form-control m-input" type="text" formControlName ="editQTmMove" value="{{selQnA.q}}">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <div class="form-group m-form__group row">
+                                                        <label for="example-text-input" class="col-2 col-form-label" required ><strong>Answer</strong> </label>
+                                                        <div class="col-10">
+                                                        <div class="input-group m-input-group m-input-group--pill" [style]="{height: '240px'}" style="width: 100%"
+                                                            maxlength="1000" >
+                                                                <quill-editor [style]="{height: '240px'}" style="width: 100%"
+                                                                    maxlength="1000"  [modules]="modules" name="editA" id= "editATmMove" formControlName ="editATmMove" [(ngModel)]="selQnA.a" >          
+                                                                </quill-editor>
+                                                            </div>
+                                                                                                
+                                                        </div>
+                                                </div>
+                                        </div>
+                                    </div>
+                                        <div class="modal-footer">
+                                            <button type="button" id="btn_submit" value="" class="btn btn-md btn-accent m-btn m-btn--pill"
+                                                [ngClass]="{'m-loader m-loader--right m-loader--light': submitting}" onclick="$('.modal').modal('hide')" (click)="editFAQ_TmMoveSubmit()">
+                                                Update
+                                            </button>
+                                        </div>
+                                    </div>       
+                            </form>
+                        </div>
+                    </div>
+
+                    <!--End Edit TM Move FAQ-->
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

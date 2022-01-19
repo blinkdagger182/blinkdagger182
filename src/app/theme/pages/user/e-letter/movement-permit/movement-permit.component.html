@@ -1,0 +1,333 @@
+<div>
+  <div class="page-bg idp-bg">
+    <h2 class="head-sub-title">{{ word.head_sub_title }}</h2>
+  </div>
+  <div class="pg-title-div">
+    <h3 class="pg-title">{{ word.pg_title }}</h3>
+  </div>
+</div>
+
+<!--Start:subheadr-->
+<div class="m-subheader" style="background-color: #ffffff">
+  <div class="d-flex align-items-center">
+    <div class="mr-auto">
+      <h3 class="m-subheader__title m-subheader__title--separator">
+        {{ word.h3_subheader }}
+      </h3>
+      <ul class="m-subheader__breadcrumbs m-nav m-nav--inline" *ngIf="!loading">
+        <li class="m-nav__item m-nav__item--home">
+          <a routerLink="/index" class="m-nav__link m-nav__link--icon">
+            <i class="m-nav__link-icon la la-home"></i>
+          </a>
+        </li>
+      </ul>
+    </div>
+    <!--Begin:Language-->
+    <ul class="m-topbar__nav m-nav m-nav--inline">
+      <li
+        class="m-nav__item m-topbar__user-profile m-topbar__user-profile--img"
+        data-toggle="modal"
+        data-target="#langSelect"
+      >
+        <span>
+          <span
+            class="m-topbar__username"
+            style="padding-left: 10px; padding-right: 10px"
+          >
+            {{ word.lang }} :
+          </span>
+          <span class="m-topbar__userpic">
+            <button
+              *ngIf="enChecked"
+              type="button"
+              title="English"
+              data-toggle="m-tooltip"
+              data-placement="top"
+              class="btn m-btn--pill m-btn--air btn-outline-info active btn-sm"
+            >
+              EN
+            </button>
+            <button
+              *ngIf="!enChecked"
+              type="button"
+              title="Malay"
+              data-toggle="m-tooltip"
+              data-placement="top"
+              class="btn m-btn--pill m-btn--air btn-outline-info active btn-sm"
+            >
+              MY
+            </button>
+          </span>
+        </span>
+      </li>
+    </ul>
+    <div
+      class="modal fade"
+      id="langSelect"
+      tabindex="-1"
+      role="dialog"
+      aria-labelledby="exampleModalCenterTitle"
+      style="display: none"
+      aria-hidden="true"
+    >
+      <div
+        class="modal-dialog msg-dialog modal-dialog-centered"
+        role="document"
+        style="max-width: 235px !important; margin: auto !important"
+      >
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 style="text-align: center; font-size: 1.25rem">
+              {{ word.lang }}
+            </h5>
+            <button
+              type="button"
+              id="lang_close"
+              class="close"
+              data-dismiss="modal"
+              aria-label="Close"
+            >
+              <span aria-hidden="true">×</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <div class="m-dropdown__content">
+              <label
+                class="lang-radio m-radio m-radio--solid m-radio--success"
+                style="font-size: 16px"
+              >
+                <input
+                  type="radio"
+                  #en
+                  name="lang"
+                  value="en"
+                  [checked]="enChecked"
+                  (change)="langChange(en)"
+                />
+                &nbsp;&nbsp; English
+                <span style="width: 23px; height: 23px"></span>
+              </label>
+              <br />
+              <label
+                class="lang-radio m-radio m-radio--solid m-radio--success"
+                style="font-size: 16px"
+              >
+                <input
+                  type="radio"
+                  #my
+                  name="lang"
+                  value="my"
+                  [checked]="!enChecked"
+                  (change)="langChange(my)"
+                />
+                &nbsp;&nbsp; Malay
+                <span style="width: 23px; height: 23px"></span>
+              </label>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--End:Language-->
+  </div>
+</div>
+<!--End:subheadr-->
+
+<!--Start:Content-->
+<div class="m-content" style="background-color: #ffffff">
+  <div class="row" *ngIf="loading">
+    <div class="col-lg-12 centred my-auto">
+        <idp-loading></idp-loading>
+    </div>
+  </div>
+  <!-- <div class="row" *ngIf="!loading">
+    <div class="col-lg-12 col-md-12">
+      <p class="font-bold">
+        {{word.welcome}}
+      </p>
+      <p>{{word.intro}}</p>
+      <p>{{word.instruction}}</p>
+    </div>
+  </div>   -->
+  <!-- Start:MainContent -->
+  <div class="row" *ngIf="!loading">    
+    <div class="col">
+
+      <div class="card">
+        <h5 class="card-header">{{word.module_name}} Form</h5>
+        <div class="card-body">  
+          <div *ngIf="err_form!=null" [ngClass]="{ 'alert alert-danger': err_form || checkForm != 0 }">            
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close" style="padding-top:0px">
+              <span aria-hidden="true">&times;</span>
+            </button>
+            {{ err_form }}
+          </div>
+          <!-- form movement permit -->
+          <form [formGroup]="movementPermitForm" autocomplete="off">
+            <!-- purpose -->
+            <div class="form-group row">
+              <label for="iptPurpose" class="col-sm-2 col-form-label">Purpose</label>
+              <div class="col-sm-10">
+                <select required *ngIf="!purposeList" class="form-control ipt-border" id="iptPurpose"  formControlName="iptPurpose" required >
+                  <option *ngFor="let purposeItem of purposeList" value="">No Purpose
+                  </option>
+                </select>
+                <select required *ngIf="purposeList" class="form-control ipt-border" id="iptPurpose"  formControlName="iptPurpose" >
+                  <option value="">Please select purpose</option>
+                  <option *ngFor="let purposeItem of purposeList" value="{{purposeItem.id}}">
+                    {{purposeItem.purpose}}
+                  </option>
+                </select>
+                
+                <!-- <ng-multiselect-dropdown
+                    id="purpose" 
+                    formControlName="purpose"
+                    name="purpose"
+                    [data]="purposeList"
+                    [settings]="purpose_NgMultiSelectDropDownModule_setting"
+                    [disabled]="disabled">
+                </ng-multiselect-dropdown> -->
+              </div>
+            </div>
+            <!-- Office location -->
+            <div class="form-group row">
+              <label for="iptOfficeLoc" class="col-sm-2 col-form-label">Office Location</label>
+              <div class="col-sm-10">
+                <input type="text" formControlName="iptOfficeLoc" class="form-control ipt-border" id="iptOfficeLoc" 
+                placeholder="Level 13, North Wing, Menara TM, Jalan Pantai Baru 50672 Kuala Lumpur"
+                maxlength="100">
+              </div>
+            </div>
+            <!-- Destination (Site/Meeting Venue) -->
+            <div class="form-group row">
+              <label for="iptDestination" class="col-sm-2 col-form-label">Destination (Site/Meeting Venue)</label>
+              <div class="col-sm-10">
+                <input type="text" formControlName="iptDestination" class="form-control ipt-border" id="iptDestination" 
+                placeholder="Telekom Msc Division, 1st Floor Tm Cyberjaya Complex, Selangor"
+                maxlength="100">
+              </div>
+            </div>
+            <!-- Datetime range -->
+            <div class="form-group row">
+              <label for="iptDestination" class="col-sm-2 col-form-label">Date Time Duration:</label>
+              <div class="col-sm-10 pt-2">
+                
+                <label>
+                  From:
+                  <input formControlName="iptDateFrom"
+                        [owlDateTimeTrigger]="dt12" [owlDateTime]="dt12"
+                        [(ngModel)]="selectedMoments"
+                        [min]="dateMin"
+                        [selectMode]="'rangeFrom'"
+                        class="ipt-border">
+                  <owl-date-time #dt12></owl-date-time>
+                </label>
+
+                <label>
+                  To:
+                  <input formControlName="iptDateTo"
+                        [owlDateTimeTrigger]="dt13" [owlDateTime]="dt13"
+                        [(ngModel)]="selectedMoments"
+                        [min]="dateMin"
+                        [selectMode]="'rangeTo'"
+                        class="ipt-border">
+                  <owl-date-time #dt13></owl-date-time>
+                </label>
+
+              </div>
+            </div>
+            <!-- Upload file -->
+            <div class="form-group row">
+              <label for="iptDestination" class="col-sm-2 col-form-label">Document:</label>
+              <div class="col-sm-10">   
+              <input type="file" id="ssImg" accept="application/pdf" style="display: none !important"
+              (change)="fileChange($event)" class="col-sm-12 form-control m-input" name="screenshot" size="10" > 
+
+              <div class="col-sm-10 text-center" *ngIf="resumeUrl.length < 1">
+                Upload your supporting document in pdf format.
+                <button class="btn btn-outline-orange m-btn m-btn--icon m-btn--icon-only text-right m-btn--pill m-btn--air" (click)="addImageTrigger()">
+                        <i class="fa fa-plus"></i>
+                </button>
+            </div>          
+          </div> 
+            <div class="col-sm-10" *ngIf="resumeUrl.length > 0">
+                <div class="row" (click)="openPDF()">
+                    <div class="col-sm-2">
+                        <pdf-viewer [src]="resumeUrl" 
+                            [render-text]="true"
+                            style="display: block;"
+                            [page]="1"
+                            [original-size]="false"
+                            [show-all]="false" >
+                        </pdf-viewer>
+                    </div> 
+                    <div class="col-sm-8 pt-3">
+                        <h3 style="display: table-cell; vertical-align: middle; font-size: 1.3rem; font-weight: 500; font-family: Roboto; color: #575962;">File name: <br>
+                            <small style="color: #afb2c1; font-weight: 300;">{{resumeName}}</small>
+                        </h3> 
+                        <br>
+                        <h3 style="display: table-cell; vertical-align: middle; font-size: 1.3rem; font-weight: 500; font-family: Roboto; color: #575962;">Upload Time: <br>
+                            <small style="color: #afb2c1; font-weight: 300;">{{uploadTime | date:'short'}}</small>
+                        </h3> 
+                    </div>
+                </div>
+            </div>       
+            <div class="col-sm-2 pt-6 text-right" *ngIf="resumeUrl.length > 0">
+                <button class="btn btn-outline-orange m-btn m-btn--icon m-btn--icon-only text-left m-btn--pill m-btn--air" (click)="addImageTrigger()">
+                        <i class="la la-pencil"></i>
+                </button>
+                <button class="btn btn-outline-danger m-btn m-btn--icon m-btn--icon-only m-btn--pill ipt-border" (click)="submitDeleteResume();" id="removeUserResume">
+                    <i class="fa fa-trash"></i>
+                </button>
+            </div>  
+            </div>            
+            <!-- Supervisor -->
+            <div class="form-group row">
+              <label for="iptSupervisor" class="col-sm-2 col-form-label">Supervisor</label>
+              <div class="col-sm-10">
+                <input type="hidden" formControlName="iptSupervisor" class="form-control ipt-border" id="iptSupervisor" placeholder="Default Supervisor"
+                value="{{sup_staff_No}}">
+                <input type="text" disabled readonly class="form-control ipt-border" placeholder="Default Supervisor"
+                value="{{sup_name}} ({{sup_Post_Desc}})">
+              </div>
+            </div>
+            <!-- check_disclaimer -->
+            <div class="form-group row">
+              <div class="col-sm-12">
+                <div class="form-check">
+                  <label class="form-check-label label-form">
+                    <input
+                      id="check_disclaimer"
+                      name="check_disclaimer"
+                      [(ngModel)]="disclaimer"
+                      formControlName="checkDisclaimer"
+                      type="checkbox"
+                      required
+                      class="form-check-input"
+                    />&nbsp;{{ word.form_disclaimer }}  
+                    </label>         
+                </div>
+              </div>
+            </div>
+            <!-- button submit -->
+            <div class="form-group row justify-content-center">
+              <div class="col-sm-3">
+                <a [routerLink]="" class="btn btn-block btn-default btn-cancel" 
+                (click)="btnCancel()">Cancel</a>
+              </div>                
+              <div class="col-sm-3">
+                <button type="submit" class="btn btn-block btn-form" 
+                [disabled]="!disclaimer" (click)="submitForm()">Send</button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+
+    </div>
+  </div>  
+  <!-- End:MainContent -->
+
+</div>
+ <!--End:Content--> 
+ <notifier-container></notifier-container>

@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="22" height="22" viewBox="0 0 22 22">
+  <defs>
+    <clipPath id="clip-Custom_Size_3">
+      <rect width="22" height="22"/>
+    </clipPath>
+  </defs>
+  <g id="Custom_Size_3" data-name="Custom Size – 3" clip-path="url(#clip-Custom_Size_3)">
+    <rect width="22" height="22" fill="#fff"/>
+    <g id="Group_14689" data-name="Group 14689" transform="translate(-1792 -820)">
+      <circle id="Ellipse_3" data-name="Ellipse 3" cx="11" cy="11" r="11" transform="translate(1792 820)" fill="#fc7902"/>
+      <text id="_" data-name="+" transform="translate(1798 835)" fill="#fff" font-size="16" font-family="HelveticaNeue-Bold, Helvetica Neue" font-weight="700"><tspan x="0" y="0">+</tspan></text>
+    </g>
+  </g>
+</svg>

@@ -1,0 +1,108 @@
+<div>
+    <div class="page-bg notifi-bg">
+        <h2 class="head-sub-title">Notification</h2>
+    </div>
+    <div class="pg-title-div">
+        <h3 class="pg-title">NOTIFICATION</h3>
+    </div>
+</div>
+
+<div class="m-content">
+
+    <div class="d-flex justify-content-center">
+        <div class="col-xl-12">
+
+
+        <div class="col-xl-12" style="margin-top: 1rem;">
+            <div class="centred my-auto" *ngIf="loading">
+                <app-user-loading></app-user-loading>
+            </div>
+
+            <div class="m-portlet m-portlet--full-height" *ngIf="!loading">
+                <div class="m-portlet__head">
+                    <div class="m-portlet__head-caption">
+                        <div class="m-portlet__head-title">
+                            <h2 class="m-portlet__head-text" style="font-size: 24px">
+                                Your Notifications
+                            </h2>
+                        </div>
+                    </div>
+                </div>
+                <div class="m-portlet__body">
+                    <div class="tab-content">
+                        <div class="tab-pane active">                            
+
+                                <div class="m-timeline-3">
+                                    <div class="m-timeline-3__items" *ngFor="let noti of notifications; let i = index">
+                                        <div [class.unreadNoti]="noti.click === 0" (click)="notificationClick(i)" style="cursor: pointer"
+                                            class="m-timeline-3__item m-timeline-3__item--info m-section__content">
+                                            <div class="m-timeline-3__item-time " style="width: 4.0rem !important; height: 4rem !important; " >
+                                                <div *ngIf="checkType(noti.type) else other">
+                                                    <img *ngIf="noti.image_url" style="width: 48px; height: 48px; border-radius: 50%"
+                                                        src="{{noti.image_url}}">
+                                                    <img *ngIf="!noti.image_url" style="width: 48px; height: 48px; border-radius: 50%"
+                                                        src="../../../../assets/app/media/img/users/ghcm-user-default.jpg">
+                                                </div>
+                                                <ng-template #other>
+                                                    <span *ngIf="noti.type == 'like'"><i style="font-size: 3.5rem; color:#0FC2D0" class="la la-heart-o"></i></span>
+                                                    <span *ngIf="noti.type == 'job'"><i style="font-size: 3.5rem; color:#0FC2D0" class="la la-briefcase"></i></span>
+                                                    <span *ngIf="noti.type == 'extraordinaire'"><i style="font-size: 3.5rem; color:#0FC2D0" class="la la-rocket"></i></span>  
+                                                    <span *ngIf="noti.type == 'comment'"><i style="font-size: 3.5rem; color:#0FC2D0" class="la la-comment"></i></span>  
+                                                    <span *ngIf="noti.type == 'happymeter'"><i style="font-size: 3.5rem; color:#0FC2D0" class="la la-smile-o"></i></span>  
+                                                    <span *ngIf="noti.type == 'birthday'"><i style="font-size: 3.5rem; color:#0FC2D0" class="la la-birthday-cake"></i></span>     
+                                                    <span *ngIf="noti.type == 'video'"><i style="font-size: 3.5rem; color:#0FC2D0" class="la la-play-circle"></i></span>                                               
+                                                </ng-template>
+                                            </div>
+                                            <div class="m-timeline-3__item-desc" >
+                                                <span class="m--font-bolder">
+                                                    {{ noti.title }}
+                                                </span>
+                                                <br>
+                                                <span class="m-timeline-3__item-text" style="font-size: 1.0rem;"> 
+                                                    {{ noti.description}}
+                                                </span>
+                                                <br>
+                                                <span class="m-timeline-3__item-text" style="font-size: 0.9rem;">  
+                                                    <i class="la la-dashboard" style="font-size:1.3rem; color: #0FC2D0"></i>&nbsp;&nbsp;
+                                                    <span *ngIf="older_24Hrs(noti.datetime); else ago">{{noti.datetime | date:'dd/MM/yyyy'}}</span>
+                                                    <ng-template #ago>{{ noti.datetime | timeAgo }}</ng-template> 
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                         
+
+                            <!-- <button type="button" style="display: none;" id="extra-btn" data-toggle="modal" data-target="#extra"></button>
+                            
+                            <div class="modal appr-modal" id="extra" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog modal-sm modal-dialog-centered" role="document" style="max-width: 420px !important; margin: auto !important">
+                                    <div class="modal-content">
+                                        <div class="modal-header" style="padding-bottom: 20px !important; background: #0FC2D0">
+                                            <div class="modal-title" style="margin:auto !important" id="exampleModalLabel">
+                                                <h4 style="margin:auto !important; text-align: center !important; color: white">
+                                                    5G Academy
+                                                </h4>
+                                            </div>
+                                        </div>
+                                        <div class="modal-body col-lg-12">
+                                            <h5>
+                                                Please check 5G Academy details in the in ERA App.
+                                            </h5>
+                                        </div>
+                                        
+                                    </div>
+                                </div>
+                            </div> -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+

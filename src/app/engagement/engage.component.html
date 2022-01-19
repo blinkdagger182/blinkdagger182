@@ -1,0 +1,243 @@
+<div *ngIf="!isEngage" style="overflow: hidden !important" style="background: white">
+	<div class="full-page row" style="overflow: hidden !important">
+		<div class="col-sm-6 col-md-6 col-lg-6 left-side">
+			<!-- <div class="">
+
+			</div> -->
+
+		</div>
+
+		<div class="col-sm-6 col-md-6 col-lg-6 right-side">
+			<div class="m-login__container login-contain">
+				<div class="m-login__logo" style="text-align: center; margin-top: 1rem;">
+					<img src="/assets/app/media/img/bg/enLogin-2.png" style="width:6rem">
+				</div>
+
+				<div style="width: 100%; margin-top:2rem">
+					<form (ngSubmit)="f.form.valid && signin()" #f="ngForm"
+						class="login-form m-login__form m-form" action="">
+						<div class="login-portlet m-portlet m-portlet--tab" style="padding-top:2rem; padding-bottom: 4rem">
+						
+							<div class="m-portlet__head" style="border-bottom: none !important">	
+							
+								<ng-template #alertSignin></ng-template>
+								<div class="form-group m-form__group">
+									<input class="input-login form-control m-input" type="text" 
+										placeholder=" Username" name="email"
+										[(ngModel)]="model.email" #email="ngModel" autocomplete="off" >
+								</div>
+								<div class="form-group m-form__group">
+									<input class="input-login form-control m-input m-login__form-input--last" 
+										type="password" placeholder=" Password" name="password" 
+										[(ngModel)]="model.password" #password="ngModel">
+								</div>
+							
+							</div>
+						</div>
+
+						<div class="login-btn-div m-login__form-action">
+							<button [disabled]="loading" [ngClass]="{'m-loader m-loader--right m-loader--light': loading}" id="m_login_signin_submit" 
+								class="login-btn btn m-btn--pill m-btn m-btn--gradient-from-danger m-btn--gradient-to-warning">
+								Log In
+							</button>
+						</div>
+					</form>
+				</div>
+
+				<div style="text-align: center; margin-top: 4rem; margin-bottom: 3.8rem">
+					<img src="/assets/app/media/img/bg/enLogin-3.png" style="width:18rem">
+				</div>
+			</div>
+
+		</div>
+	</div>
+	<!-- <div class="m-grid__item m-grid__item--fluid m-grid m-grid--hor m-login m-login--signin m-login--2 m-login-2--skin-2 bg-img1" id="m_login">
+        <div class="login-container m-grid__item m-grid__item--fluid m-login__wrapper">
+            <div class="m-login__container">
+                <div class="m-login__logo">
+					<img src="/assets/app/media/img/emoji/floaticon.png" class="engage-logo">
+                </div>
+                <div class="m-login__signin">
+                    
+                    <form (ngSubmit)="f.form.valid && signin()" #f="ngForm" class="login-form m-login__form m-form" action="">
+                        <ng-template #alertSignin></ng-template>
+                        <div class="form-group m-form__group">
+                            <input class="form-control m-input"   type="text" placeholder="&#61447; Username" name="email" [(ngModel)]="model.email" #email="ngModel" autocomplete="off">
+                        </div>
+                        <div class="form-group m-form__group">
+                            <input class="form-control m-input m-login__form-input--last" type="password" placeholder="&#61475; Password" name="password" [(ngModel)]="model.password" #password="ngModel">
+                        </div>
+                        
+                        <div class="m-login__form-action">
+                            <button [disabled]="loading" [ngClass]="{'m-loader m-loader--right m-loader--light': loading}" id="m_login_signin_submit" class="btn btn-focus m-btn m-btn--pill m-btn--custom m-btn--air m-login__btn m-login__btn--primary">
+                                Sign In
+                            </button>
+                        </div>
+                    </form>
+                </div>
+                
+            </div>
+        </div>
+    </div> -->
+</div>
+    <style>
+		body {
+			background: white !important;
+		} 
+		.full-page {
+			margin-right: 0px;
+			margin-left: 0px;
+			/* margin-top: 4rem; */
+			overflow: hidden;
+		}
+		.login-portlet {
+			margin-bottom: 0;
+			box-shadow: none !important;
+			background:#5759621f !important;
+		}
+
+		.login-contain {
+			width: 50%; 
+			margin-top:15%
+		}
+
+		.login-btn-div {
+			text-align: center;
+			position: relative;
+			top: -20px;
+		}
+
+		.login-btn {
+			width: 13rem;
+			background: linear-gradient(135deg, #FF6600 30%, #ffb822 100%) !important;
+		}
+
+		.input-login {
+			background: #fff !important;
+			border: 1px solid  #F3A257 !important;
+		}
+		.left-side {
+			/* height: 43.65rem !important; */
+			background-image: url(/assets/app/media/img/bg/enLogin-1.png);
+			background-size: 100%;
+			background-position: -13rem 13rem;
+			background-repeat: no-repeat;
+			height: 100vh;
+		}
+
+		.right-side {
+			height: 100vh;
+		}
+
+		.nav-item__title1 {	
+			font-size: 1.0rem;
+			line-height: 1.33333;
+			font-weight: 200;
+			display: block;
+			color: rgb(10, 0, 0);
+			transition: color .3s;
+			font-style:normal;
+		}
+				
+		.btn-focus-signin
+		{
+			background-color: #F3A257;
+            border-color: #F3A257;
+			color: #fff;
+		}
+
+		 .navbar {
+			margin-bottom: 0;
+			background-color: #f1f1f1;
+			z-index: 9999;
+			border: 0;
+			font-size: 12px !important;
+			line-height: 1.42857143 !important;
+			letter-spacing: 4px;
+			border-radius: 0;
+			/*font-family: Montserrat, sans-serif;*/
+		}
+
+       h2 {
+			font-size: 30px;
+			text-transform: titlecase;
+			color: #fff;
+			font-weight: 300;
+			margin-top: 30px;
+		}
+
+		.m-login__title{
+			font-size: 20px;
+			font-family: italic, sans-serif;
+			text-transform: titlecase;
+			color: #fff;
+			font-weight: 300;
+			margin-top: 30px;
+		}
+
+		.logo-img{
+			width: 50%;
+			height: 50%;
+		}
+
+		.bg-img{
+			background-image: url('./assets/app/media/img/bg/banner.jpg');
+			background-repeat:no-repeat;
+			background-size: cover;
+			background-position: center;
+			height: 100%;
+			/* width: 100vw;
+			height: 100vh !important; */
+			background-repeat: no-repeat;
+			/* margin-top: 0;
+			display: block; */
+		}
+
+		.bg-img1{
+			background-image: url('./assets/app/media/img/bg/bg-8.jpg');
+			background-repeat:no-repeat;
+			background-size: cover;
+			width: 100vw;
+			height: 100vh !important;
+			background-repeat: no-repeat;
+			margin-top: 0;
+			display: block;
+		}
+
+		.login-form{
+			margin: 0 !important;
+		}
+
+		.engage-logo{
+			width: 18vw !important;
+		}
+
+		@media (max-width: 768px){
+			.engage-logo{
+				width: 22vw !important;
+			}
+
+			.login-contain {
+				width: 100%; 
+			}
+		}
+
+		@media (max-width: 425px){
+			.engage-logo{
+				width: 35vw !important;
+			}
+		}
+
+		@media (max-width: 575px){
+			.right-side {
+				height: 100%;
+			}
+
+			.left-side {
+				background-size: 30%;
+				background-position: 0rem 0rem;
+				height: 17vh;
+			}
+		}
+
+	</style>

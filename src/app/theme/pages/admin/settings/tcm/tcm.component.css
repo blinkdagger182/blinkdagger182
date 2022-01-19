@@ -1,0 +1,96 @@
+@media (max-width: 575px) {
+  .col-xs-1 {
+    flex: 0 0 8.33333%;
+    max-width: 8.33333%; 
+  }
+  .col-xs-2 {
+    flex: 0 0 16.66667%;
+    max-width: 16.66667%; 
+  }
+  .col-xs-3 {
+    flex: 0 0 25%;
+    max-width: 25%; 
+  }
+  .col-xs-4 {
+    flex: 0 0 33.33333%;
+    max-width: 33.33333%; 
+  }
+  .col-xs-5 {
+    flex: 0 0 41.66667%;
+    max-width: 41.66667%; 
+  }
+  .col-xs-6 {
+    flex: 0 0 50%;
+    max-width: 50%; 
+  }
+  .col-xs-7 {
+    flex: 0 0 58.33333%;
+    max-width: 58.33333%; 
+  }
+  .col-xs-8 {
+    flex: 0 0 66.66667%;
+    max-width: 66.66667%; 
+  }
+  .col-xs-9 {
+    flex: 0 0 75%;
+    max-width: 75%; 
+  }
+  .col-xs-10 {
+    flex: 0 0 83.33333%;
+    max-width: 83.33333%; 
+  }
+  .col-xs-11 {
+    flex: 0 0 91.66667%;
+    max-width: 91.66667%; 
+  }
+  .col-xs-12 {
+    flex: 0 0 100%;
+    max-width: 100%; 
+  }
+  .xs-tc-font {
+    font-size: 10px;
+  }
+}
+
+.bg-table-cal {
+  background-color: #FF5A00;
+  color: white;
+  font-weight: 200;
+}
+
+.employee-cell-link {
+  color: white;
+  font-size: 4vw;
+  cursor: pointer;
+  text-align: center;
+}
+
+.employee-cell-link:hover {
+  font-weight: 600;
+  text-decoration: underline;
+}
+
+.fa-eye:hover, .fa-pencil-square-o:hover, .fa-search:hover, .fa-reply:hover {
+color: #FF5A00;
+cursor: pointer;
+}
+
+.user-grid-img {
+width: 45px;
+height: 45px;
+}
+
+.grid-img-div {
+position: relative;
+top: 30%;
+}
+
+th.talent-table {
+width: 20%
+}
+
+.btn-orange {
+background: #FF5A00 !important; 
+background-color: #FF5A00 !important; 
+border-color: #FF5A00 !important;
+}

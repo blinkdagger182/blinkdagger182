@@ -1,0 +1,269 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.13/semantic.min.css">
+<div class="m-subheader">
+    <div class="d-flex align-items-center">
+        <div class="mr-auto">
+            <h3 class="m-subheader__title m-subheader__title--separator">
+                {{title1}}
+            </h3>
+            <ul class="m-subheader__breadcrumbs m-nav m-nav--inline">
+                <li class="m-nav__item m-nav__item--home">
+                    <a routerLink="/admin/index" class="m-nav__link m-nav__link--icon">
+                        <i class="m-nav__link-icon la la-home"></i>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+<!-- END: Subheader -->
+
+<div class="m-content">
+    <div class="row">
+        <!-- begin::Page loader -->
+        <div class="col-lg-12 centred my-auto">
+            <ng-template #alertError></ng-template>
+        </div>
+        <notifier-container></notifier-container>
+        <div class="col-lg-12 centred my-auto" *ngIf="loading">
+            <div class="m-section__content">
+                <div class="m-demo" data-code-preview="true" data-code-html="true" data-code-js="false">
+                    <div class="m-demo__preview">
+                        <div class="m-stack m-stack--ver m-stack--general m-stack--demo">
+
+                            <div class="m-stack__item m-stack__item--center m-stack__item--middle">
+                                <span>
+                                    Loading data. Please wait...
+                                </span>
+                                <span>
+                                    <div class="m-loader m-loader--lg m-loader--success" style="width: 30px; display: inline-block;"></div>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- end::Page loader -->
+
+        <div class="col-lg-12" *ngIf="!loading">
+            <div class="m-portlet m-portlet--rounded">
+                <div class="m-portlet__head m--bg-focus" style="background: #FF5A00!important">
+                    <div class="m-portlet__head-caption">
+                        <div class="m-portlet__head-title">
+                            <h3 class="m-portlet__head-text  m--font-inverse-primary">
+                                {{vttitle2}}
+                                <small>
+                                    <!--portlet sub title-->
+                                </small>
+                            </h3>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="m-portlet__body">
+                    <div class="m-section container" style="max-width: 100% !important;">
+
+                        <!-- :start no data -->
+                        <div class="col-lg-12 centred my-auto" *ngIf="empty">
+                            <div class="m-demo__preview" style="padding-top:20px">
+                                <div class="m-stack m-stack--ver m-stack--general m-stack--demo">
+                                    <div class="m-stack__item m-stack__item--center m-stack__item--middle">
+                                        <span>
+                                            No Result!
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                         <!-- :end no data -->
+        
+                        <div *ngIf="!empty">
+
+                            <div>                               
+                                <h3>9 Grid Box Details:</h3>
+
+                                <div class="m-content" style="padding: 30px 0;">
+                                    <div class="row">
+                                        <div class="col-sm-4 col-md-4 col-lg-4" style="height: 750px;">
+                                            
+                                            <div class="m-portlet m-portlet__body" data-height="750" style="height: 750px;">                                                
+					                            <div class="d-flex p-2 col-example" style="background-color: #F2F0F0;">Supervisor</div>
+                                                <div class="modal-body">
+                                                    <table class="table">
+                                                        <tr *ngFor="let item of getFilteredComp()">
+                                                            <td>
+                                                                <span class="font-weight-bold">
+                                                                    {{item}}
+                                                                </span>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                </div>
+                                                <div class="d-flex p-2 col-example" style="background-color: #F2F0F0;">Subordinate</div>
+                                                <div class="modal-body" data-height="550" style="height:550px;" data-scrollable="true">                                       
+                                                    <table class="table">                                                       
+                                                        <tr>
+                                                            <td colspan="2">
+                                                                <div class="input-group" style="margin-bottom: 1rem;">
+                                                                    <input type="text" autocomplete="off" class="form-control search-input" name="name" [(ngModel)]="name" placeholder="Search Subordinate">
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                        <tr *ngFor="let item of getFilteredUsers() | filter: name">
+                                                            <td>
+                                                                <div class="m-card-profile__pic">
+                                                                    <span class="m-card-profile__pic-wrapper">
+                                                                        <img style="max-width: 160px !important;" src="{{item.image_url}}" class="m--img-rounded m--marginless m--img-centered" style="width:45px; height:45px" alt="" />
+                                                                    </span>
+                                                                </div>
+                                                            </td>
+                                                            <td>
+                                                                <div class="m-widget4__info">
+                                                                    <div>
+                                                                        <span class="font-weight-bold">
+                                                                            {{item.name}}
+                                                                        </span>
+                                                                        <br>
+                                                                        <span class="m-widget4__pos">
+                                                                            <b>Talent Class: </b> <i>{{item.talent_class}}</i> 
+                                                                        </span>
+                                                                        <br>
+                                                                    </div>                                                               
+                                                                </div>						
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                </div>							
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-8 col-md-8 col-lg-8">
+                                            <div class="m-card-user m-card-user--skin-dark" align="center" class="m-portlet__body" style="padding: 0;">
+                                                <div class="container">
+                                                    <div class="row" style="max-width: 800px; margin: auto;">
+                                                    <div class="col-lg-2 col-md-2 col-xl-2 col-sm-2 col-xs-2">
+                                                        <img src="assets/blank/images/talent_sustained_performance.jpg" style="max-width: 100%; flex: 0 0 100%; height: 30vw; min-height: 150px; max-height: 450px;">
+                                                    </div>
+                                                    <div class="col-lg-10 col-md-10 col-xl-10 col-sm-10 col-xs-10" style="padding: 0;">
+                                                        <div class="container" style="box-sizing: border-box;">
+                                                            <div class="row" style="height: 10vw; min-height: 50px; min-width: 185px; max-width: 695px; max-height: 150px;">
+                                                                <div class="col-lg-4 col-md-4 col-sm-4 col-xl-4 col-xs-4" style="box-sizing: border-box; background-color:#33CCFF; border: solid white 3px; border-radius: 1vw;">
+                                                                    <h3 style="position: absolute; right: 8px; font-size: 1.5vw; margin-top: 0.5vw; color: black; background-color: white; border-radius: 100%; width: 2vw">4</h3>
+                                                                    <h1 class="employee-cell-link" (click)="particularBox(4, 'SOLID PERFORMER - BOX 4')">{{getCellNum(4)}}</h1>
+                                                                    <h5 style="position: absolute; bottom: 0px; font-size: 1vw; text-align: initial; color: white;">SOLID PERFORMER</h5>
+                                                                </div>
+                                                                <div class="col-lg-4 col-md-4 col-sm-4 col-xl-4 col-xs-4" style="box-sizing: border-box; background-color:#376B8A; border: solid white 3px; border-radius: 1vw;">
+                                                                    <h3 style="position: absolute; right: 8px; font-size: 1.5vw; margin-top: 0.5vw; color: black; background-color: white; border-radius: 100%; width: 2vw">2</h3>
+                                                                    <h1 class="employee-cell-link" (click)="particularBox(2, 'STRONG CONTRIBUTOR - BOX 2')">{{getCellNum(2)}}</h1>
+                                                                    <h5 style="position: absolute; bottom: 0px; font-size: 1vw; text-align: initial; color: white;">STRONG CONTRIBUTOR</h5>
+                                                                </div>
+                                                                <div class="col-lg-4 col-md-4 col-sm-4 col-xl-4 col-xs-4" style="box-sizing: border-box; background-color:#376B8A; border: solid white 3px; border-radius: 1vw;">
+                                                                    <h3 style="position: absolute; right: 8px; font-size: 1.5vw; margin-top: 0.5vw; color: black; background-color: white; border-radius: 100%; width: 2vw">1</h3>
+                                                                    <h1 class="employee-cell-link" (click)="particularBox(1, 'STAR TALENT - BOX 1')">{{getCellNum(1)}}</h1>
+                                                                    <h5 style="position: absolute; bottom: 0px; font-size: 1vw; text-align: initial; color: white;">STAR TALENT</h5>
+                                                                </div>
+                                                            </div>
+                                                            <div class="row" style="height: 10vw; min-height: 50px; min-width: 185px; max-width: 695px; max-height: 150px;">
+                                                                <div class="col-lg-4 col-md-4 col-sm-4 col-xl-4 col-xs-4" style="box-sizing: border-box; background-color:#F1D9BA; border: solid white 3px; border-radius: 1vw;">
+                                                                    <h3 style="position: absolute; right: 8px; font-size: 1.5vw; margin-top: 0.5vw; color: black; background-color: white; border-radius: 100%; width: 2vw">7</h3>
+                                                                    <h1 class="employee-cell-link" (click)="particularBox(7, 'SATISFACTORY CONTRIBUTOR - BOX 7')">{{getCellNum(7)}}</h1>
+                                                                    <h5 style="position: absolute; bottom: 0px; font-size: 1vw; text-align: initial; color: black;">SATISFACTORY CONTRIBUTOR</h5>
+                                                                </div>
+                                                                <div class="col-lg-4 col-md-4 col-sm-4 col-xl-4 col-xs-4" style="box-sizing: border-box; background-color:#F1D9BA; border: solid white 3px; border-radius: 1vw;">
+                                                                    <h3 style="position: absolute; right: 8px; font-size: 1.5vw; margin-top: 0.5vw; color: black; background-color: white; border-radius: 100%; width: 2vw">5</h3>
+                                                                    <h1 class="employee-cell-link" (click)="particularBox(5, 'GOOD CONTRIBUTOR - BOX 5')">{{getCellNum(5)}}</h1>
+                                                                    <h5 style="position: absolute; bottom: 0px; font-size: 1vw; text-align: initial; color: black;">GOOD CONTRIBUTOR</h5>
+                                                                </div>
+                                                                <div class="col-lg-4 col-md-4 col-sm-4 col-xl-4 col-xs-4" style="box-sizing: border-box; background-color:#376B8A; border: solid white 3px; border-radius: 1vw;">
+                                                                    <h3 style="position: absolute; right: 8px; font-size: 1.5vw; margin-top: 0.5vw; color: black; background-color: white; border-radius: 100%; width: 2vw">3</h3>
+                                                                    <h1 class="employee-cell-link" (click)="particularBox(3, 'HIGH FLYER - BOX 3')">{{getCellNum(3)}}</h1>
+                                                                    <h5 style="position: absolute; bottom: 0px; font-size: 1vw; text-align: initial; color: white;">HIGH FLYER</h5>
+                                                                </div>
+                                                            </div>
+                                                            <div class="row" style="height: 10vw; min-height: 50px; min-width: 185px; max-width: 695px; max-height: 150px;">
+                                                                <div class="col-lg-4 col-md-4 col-sm-4 col-xl-4 col-xs-4" style="box-sizing: border-box; background-color:#FF3757; border: solid white 3px; border-radius: 1vw;">
+                                                                    <h3 style="position: absolute; right: 8px; font-size: 1.5vw; margin-top: 0.5vw; color: black; background-color: white; border-radius: 100%; width: 2vw">9</h3>
+                                                                    <h1 class="employee-cell-link" (click)="particularBox(9, 'TALENT RISK - BOX 9')">{{getCellNum(9)}}</h1>
+                                                                    <h5 style="position: absolute; bottom: 0px; font-size: 1vw; text-align: initial; color: white;">TALENT RISK</h5>
+                                                                </div>
+                                                                <div class="col-lg-4 col-md-4 col-sm-4 col-xl-4 col-xs-4" style="box-sizing: border-box; background-color:#F1D9BA; border: solid white 3px; border-radius: 1vw;">
+                                                                    <h3 style="position: absolute; right: 8px; font-size: 1.5vw; margin-top: 0.5vw; color: black; background-color: white; border-radius: 100%; width: 2vw">8</h3>
+                                                                    <h1 class="employee-cell-link" (click)="particularBox(8, 'PROMISING CONTRIBUTOR - BOX 8')">{{getCellNum(8)}}</h1>
+                                                                    <h5 style="position: absolute; bottom: 0px; font-size: 1vw; text-align: initial; color: black;">PROMISING CONTRIBUTOR</h5>
+                                                                </div>
+                                                                <div class="col-lg-4 col-md-4 col-sm-4 col-xl-4 col-xs-4" style="box-sizing: border-box; background-color:#33CCFF; border: solid white 3px; border-radius: 1vw;">
+                                                                    <h3 style="position: absolute; right: 8px; font-size: 1.5vw; margin-top: 0.5vw; color: black; background-color: white; border-radius: 100%; width: 2vw">6</h3>
+                                                                    <h1 class="employee-cell-link" (click)="particularBox(6, 'MISMATCHED TALENT - BOX 6')">{{getCellNum(6)}}</h1>
+                                                                    <h5 style="position: absolute; bottom: 0px; font-size: 1vw; text-align: initial; color: white;">MISMATCHED TALENT</h5>
+                                                                </div>
+                                                            </div>
+                                                            <div class="row" style="min-width: 185px; max-width: 695px;">
+                                                                <img style="width: 100%; height: 100%; padding-top: 1vw;" src="assets/blank/images/talent_potential.jpg">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- calling looping every second to update -->
+<div [hidden]="true" *ngFor="let item of getNineGridUsers()">{{item.cell}}</div>
+<!-- MODAL -->
+<button [hidden]="true" id="particular-box" data-toggle="modal" data-target="#particularBox">x</button>
+
+<!-- Modal employee Cell particular box -->
+<div class="modal fade" id="particularBox" tabindex="-1" role="dialog" aria-labelledby="exampleModalTitle" aria-hidden="true">
+	<div class="modal-dialog modal-dialog-centered" role="document" style="max-inline-size: fit-content;">
+		<div class="modal-content" style="width: 820px;">
+			<div class="modal-header">
+				<h5 class="modal-title" style="margin: auto;" id="exampleModalLongTitle">{{nameOfCell}}</h5>
+			</div>
+				<table class="table table-striped table-hover">
+                    <thead class="thead-inverse bg-table-cal">
+                        <tr>
+                            <th style="vertical-align: middle;">No</th>
+                            <th style="vertical-align: middle;">Staff ID</th>
+                            <th style="vertical-align: middle;">Staff Name</th>
+                            <th style="vertical-align: middle;">Band</th>
+                            <th style="vertical-align: middle;">LOB</th>
+                            <th style="vertical-align: middle;">Position</th>
+                            <th style="vertical-align: middle;">Potential</th>
+                            <th style="vertical-align: middle;">Performance</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let item of particularBoxData">
+                            <td><span>{{item.num}}</span></td>
+                            <td><span>{{item.staff_no}}</span></td>
+                            <td><span>{{item.name}}</span></td>
+                            <td><span>{{item.job_grad}}</span></td>
+                            <td><span>{{item.lob_desc}}</span></td>
+                            <td><span>{{item.empsgroup}}</span></td>
+                            <td><span>{{item.potential}}</span></td>
+                            <td><span>{{item.performance}}</span></td>	
+
+                        </tr>
+                    </tbody>
+				</table>
+			<div class="modal-footer">
+                <label class=" col-form-label label-data"
+                    style="font-size: 1.0rem;;background-color: white; color: #FF7F24; border-color:#FF7F24;">
+                    <button type="button" class="btn m-btn--pill btn-outline-warning" (click)="downloadParticularBox()" [disabled]="downloadCell">                                           
+                        <span class="fa fa-download"> Download</span>
+                    </button>				
+                </label>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+		</div>
+	</div>
+</div>

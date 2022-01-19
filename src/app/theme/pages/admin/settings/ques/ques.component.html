@@ -1,0 +1,388 @@
+<!-- BEGIN: Subheader
+
+<div class="m-subheader" appunwraptag="">
+    
+</div> -->
+<notifier-container></notifier-container>
+<div class="m-content">
+    <div class="row d-flex justify-content-center">
+        <div class="col-lg-12 faqContainer">
+            <img src="../../../../../assets/img/faq/faq_banner.png" alt="FAQs" style="width:100%;">
+            <div class="faqCentered ">
+                <span class="faqHeader" style="vertical-align: middle;">Talent Classification</span> <br />
+                <!-- <span class="faqSubHeader">Talent Classification</span> -->
+            </div>
+        </div>
+    </div>
+
+    <!-- begin::Page loader -->
+    <div class="col-lg-12 centred my-auto">
+        <ng-template #alertError></ng-template>
+    </div>
+    <!-- end::Page loader -->
+
+    <div class="row mt-3" *ngIf="!loading">
+        <div class="col-lg-12">
+            <div class="m-portlet m-portlet--full-height">
+                <ul class="nav nav-tabs" role="tablist" style="background-color:#f4f5f8">
+                    <li class="nav-item">
+                        <a class="nav-link active show" data-toggle="tab" href="#quesmgmt">Question Mgmt</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" data-toggle="tab" href="#copyset">Copy Set</a>
+                    </li>
+
+                </ul>
+                <div class="tab-content">
+                    <!-- quesmgmt : start -->
+                    <div class="tab-pane active show mb-5 pt-2 pb-3" id="quesmgmt" role="tabpanel">
+                        <form [formGroup]="filterForm" autocomplete="off">
+                            <div class="row">
+                                <div class="col-md-2">
+                                    <label style="margin-top:9px;float: right;">Session :</label>
+                                </div>
+                                <div class="col-md-2 text-left">
+                                    <select name="tc_year" id="tc_year" class="form-control m-input"
+                                        formControlName="tc_year" #tc_year (change)="changeyr()">
+                                        <option [value]="item.year" *ngFor="let item of batchInfo">{{item.year}}
+                                        </option>
+                                    </select>
+
+                                </div>
+                                <!-- <div class="col-md-8 text-right">test</div>                                               -->
+                            </div>
+                            <div class="row">
+                                <div class="col-md-2"></div>
+                                <div class="col-md-10">
+                                    <div class="m-demo__preview m-demo__preview--btn" style="padding-right: 15px;">
+                                        <button [disabled]="overdue" href="#m_modal_add_faq_extra" data-toggle="modal"
+                                            class="btn btn-sm btn-brand m-btn m-btn--icon m-btn--pill m-btn--wide pull-right"
+                                            style="margin:2px;padding:7px;font-size: 11px;">
+                                            <span>
+                                                <i class="la la-plus-square"></i>
+                                                <span>Add Question</span>
+                                            </span>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+
+                        <div style="text-align: center; padding: 5rem" *ngIf="loading2">
+                            <img src="../assets/img/user/ERA.gif" style="width:auto;height:100px;">
+                        </div>
+
+                        <!-- :start no data -->
+                        <div class="m-demo__preview" style="padding-top:20px" *ngIf="data2.length<1 && !loading2">
+                            <div class="m-stack m-stack--ver m-stack--general m-stack--demo">
+                                <div class="m-stack__item m-stack__item--center m-stack__item--middle">
+                                    <span>No Record Found</span>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- :end no data -->
+
+                        <!-- display data: start -->
+                        <div class="table-responsive" *ngIf="data2.length>0 && !loading2">
+                            <table class="table table-striped  table-hover">
+                                <thead class="thead-inverse">
+                                    <tr>
+                                        <th style="width: 5%;">No</th>
+                                        <th style="width: 42%;">Question</th>
+                                        <th style="width: 20%;">Star Desc</th>
+                                        <th style="width: 10%;">No of Star</th>
+                                        <th style="width: 23%;">Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <!-- if all, data2 -->
+                                    <tr *ngFor="let item of data2; let i = index">
+                                        <td>{{i+1}}</td>
+                                        <td>{{item.ques}}</td>
+                                        <td>{{item.star}}</td>
+                                        <td>{{item.nostar}}</td>
+                                        <td>
+                                            <a href="#"
+                                                [ngClass]="{'disable-top-bottom disabled':this.overdue === true?true:false}"
+                                                class="m-portlet__nav-link btn btn-outline-danger m-btn m-btn--icon m-btn--icon-only m-btn--pill"
+                                                title="Delete" id="delquesweb" (click)="selectQnA(item)">
+                                                <i class="la la-trash"></i>
+                                            </a>
+                                            <button data-target="#m_modal_edit_ques" data-toggle="modal"
+                                                (click)="selectQnA(item)" [disabled]="this.overdue === true?true:false"
+                                                [ngClass]="{'disable-top-bottom disabled':this.overdue === true?true:false}"
+                                                class="m-portlet__nav-link btn btn-outline-warning m-btn m-btn--icon m-btn--icon-only m-btn--pill m-btn--air"
+                                                title="Edit" id="editfaqweb">
+                                                <i class="la la-pencil"></i>
+                                            </button>
+
+                                            <button href="#" data-toggle="modal"
+                                                [disabled]="this.overdue === true || i === 0 ?true:false"
+                                                [ngClass]="{'disable-top-bottom disabled':this.overdue === true || i === 0 ?true:false}"
+                                                class="m-portlet__nav-link btn btn-outline-orange m-btn m-btn--icon m-btn--icon-only m-btn--pill m-btn--air"
+                                                title="Up" id="upfaqweb" (click)="UPfaq(item)">
+                                                <i class="la la-arrow-up"></i>
+                                            </button>
+                                            <button
+                                                [disabled]="this.overdue === true || i === data2.length-1 ?true:false"
+                                                [ngClass]="{'disable-top-bottom disabled':this.overdue === true || i === data2.length-1 ?true:false}"
+                                                class="m-portlet__nav-link btn btn-outline-orange m-btn m-btn--icon m-btn--icon-only m-btn--pill m-btn--air"
+                                                title="Down" id="downfaqweb" (click)="DOWNfaq(item)">
+                                                <i class="la la-arrow-down"></i>
+                                            </button>
+                                            <button href="#" data-toggle="modal"
+                                                [disabled]="this.overdue === true?true:false"
+                                                [ngClass]="{'disable-top-bottom disabled':this.overdue === true?true:false}"
+                                                class="m-portlet__nav-link btn btn-outline-danger m-btn m-btn--icon m-btn--icon-only m-btn--pill"
+                                                title="Delete" id="delquesweb2" style="visibility: hidden"
+                                                (click)="delfaq()">
+                                                <i class="la la-trash"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <!-- display data: end -->
+                    </div>
+
+                    <!--start add ques-->
+                    <div class="modal fade" id="m_modal_add_faq_extra" tabindex="-1" role="dialog"
+                        aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-lg" role="document">
+                            <form [formGroup]="addNewQ">
+                                <div class="modal-content" style="background-color: #eaeaea;">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabel">
+                                            <strong>Add Question </strong>
+                                        </h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">
+                                                &times;
+                                            </span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="form-group">
+                                            <div class="form-group m-form__group row">
+                                                <label for="example-text-input" class="col-2 col-form-label">
+                                                    <strong>Year</strong></label>
+                                                <div class="col-10">
+                                                    <div class="input-group m-input-group m-input-group--pill">
+                                                        <input class="form-control m-input" type="text" value=""
+                                                            formControlName="addYear" id="addYear">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="form-group m-form__group row">
+                                                <label for="example-text-input" class="col-2 col-form-label">
+                                                    <strong>Question</strong></label>
+                                                <div class="col-10">
+                                                    <div class="input-group m-input-group m-input-group--pill">
+                                                        <input class="form-control m-input" type="text" value=""
+                                                            formControlName="addQuestion" id="addQuestion">
+
+                                                    </div>
+
+                                                    <!-- <div class="input-group m-input-group m-input-group--pill"
+                                                        [style]="{height: '240px'}" style="width: 100%"
+                                                        maxlength="1000">
+                                                        <quill-editor [style]="{height: '100px'}" style="width: 100%"
+                                                            maxlength="1000" [modules]="modules" name="addQuestion"
+                                                            id="addQuestion" formControlName="addQuestion"
+                                                          >
+                                                        </quill-editor>
+                                                    </div> -->
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="form-group m-form__group row">
+                                                <label for="example-text-input" class="col-2 col-form-label">
+                                                    <strong>Star Desc</strong></label>
+                                                <div class="col-10">
+                                                    <div class="input-group m-input-group m-input-group--pill">
+                                                        <select name="addStarDesc" id="addStarDesc"
+                                                            class="form-control m-input" formControlName="addStarDesc">
+                                                            <option value='' disabled>Select One</option>
+                                                            <option [value]="item.starDesc"
+                                                                *ngFor="let item of starDescInfo">{{item.starDesc}}
+                                                            </option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="form-group m-form__group row">
+                                                <label for="example-text-input" class="col-2 col-form-label">
+                                                    <strong>No of Star</strong></label>
+                                                <div class="col-10">
+                                                    <div class="input-group m-input-group m-input-group--pill">
+                                                        <input class="form-control m-input" type="text" maxlength="2"
+                                                            value="" formControlName="addNoofStar" id="addNoofStar"
+                                                            #Question>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" id="btn_submit" value=""
+                                            class="btn btn-md btn-accent m-btn m-btn--pill"
+                                            [ngClass]="{'m-loader m-loader--right m-loader--light': submitting}"
+                                            onclick="$('.modal').modal('hide')" (click)="addNewQsubmit()">
+                                            Submit
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    <!--END add ques-->
+
+                    <!--Start Edit ques-->
+                    <div class="modal fade" id="m_modal_edit_ques" tabindex="-1" role="dialog"
+                        aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-lg" role="document">
+                            <form [formGroup]="updateQs">
+
+                                <div class="modal-content" style="background-color: #eaeaea;">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabel">
+                                            <strong>Edit Question</strong>
+                                        </h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">
+                                                &times;
+                                            </span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+
+                                        <div class="form-group">
+                                            <div class="form-group m-form__group row">
+                                                <label for="example-text-input" class="col-2 col-form-label">
+                                                    <strong>Year</strong></label>
+                                                <div class="col-10">
+                                                    <div class="input-group m-input-group m-input-group--pill">
+                                                        <input class="form-control m-input" type="text"
+                                                            [(ngModel)]="selQnA.yr" formControlName="updYear"
+                                                            id="updYear">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="form-group m-form__group row">
+                                                <label for="example-text-input" class="col-2 col-form-label">
+                                                    <strong>Question</strong></label>
+                                                <div class="col-10">
+                                                    <div class="input-group m-input-group m-input-group--pill">
+                                                        <input class="form-control m-input" type="text"
+                                                            formControlName="updQuestion" id="updQuestion"
+                                                            [(ngModel)]="selQnA.ques">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="form-group m-form__group row">
+                                                <label for="example-text-input" class="col-2 col-form-label">
+                                                    <strong>Star Desc</strong></label>
+                                                <div class="col-10">
+                                                    <div class="input-group m-input-group m-input-group--pill">
+                                                        <select [(ngModel)]="selQnA.star" name="updStarDesc"
+                                                            id="updStarDesc" class="form-control m-input"
+                                                            formControlName="updStarDesc">
+                                                            <option value='' disabled>Select One</option>
+                                                            <option [value]="item.starDesc"
+                                                                *ngFor="let item of starDescInfo">{{item.starDesc}}
+                                                            </option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="form-group m-form__group row">
+                                                <label for="example-text-input" class="col-2 col-form-label">
+                                                    <strong>No of Star</strong></label>
+                                                <div class="col-10">
+                                                    <div class="input-group m-input-group m-input-group--pill">
+                                                        <input class="form-control m-input" maxlength="2" type="text"
+                                                            formControlName="updNoofStar" id="updNoofStar"
+                                                            [(ngModel)]="selQnA.nostar">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" id="btn_update" value=""
+                                            class="btn btn-md btn-accent m-btn m-btn--pill"
+                                            [ngClass]="{'m-loader m-loader--right m-loader--light': submitting}"
+                                            onclick="$('.modal').modal('hide')" (click)="editQsubmit()">
+                                            Update
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    <!--End Edit ques-->
+                    <!-- quesmgmt : end -->
+
+                    <!-- copyset : start -->
+                    <div class="tab-pane mb-5 pt-2 pb-3" id="copyset" role="tabpanel">
+                        <br><br>
+                        <form [formGroup]="filterForm1" autocomplete="off">
+                            <div class="row">
+                                <div class="col-md-2">
+                                    <label style="margin-top:9px;float: right;">Source Year</label>
+                                </div>
+                                <div class="col-md-2">
+                                    <select name="copyfrom" id="copyfrom" class="form-control m-input"
+                                        formControlName="copyfrom">
+                                        <option value='' disabled>-Select-</option>
+                                        <option [value]="item.year" *ngFor="let item of batchInfo">{{item.year}}
+                                        </option>
+                                    </select>
+                                </div>
+                                <div class="col-md-2">
+                                    <label style="margin-top:9px;float: right;">Destination Year</label>
+                                </div>
+                                <div class="col-md-2">
+                                    <select name="copyto" id="copyto" class="form-control m-input"
+                                        formControlName="copyto">
+                                        <option value='' disabled>-Select-</option>
+                                        <option [value]="item.year" *ngFor="let item of batchInfo">{{item.year}}
+                                        </option>
+                                    </select>
+                                </div>
+                                <div class="col-md-2">
+                                    <button href="#" id="generateSet"
+                                        class="btn btn-sm btn-brand m-btn m-btn--icon m-btn--pill m-btn--wide pull-right">
+                                        <span>
+                                            <i class="la la-copy"></i>
+                                            <span>Generate</span>
+                                        </span>
+                                    </button>
+                                    <button href="#" data-toggle="modal" id="generateSet2" style="visibility: hidden"
+                                        (click)="copySet()">
+
+                                    </button>
+                                </div>
+                            </div>
+
+                        </form>
+                        <br><br>
+                    </div>
+                    <!-- copyset : end  -->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

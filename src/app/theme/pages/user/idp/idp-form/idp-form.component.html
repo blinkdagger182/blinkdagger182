@@ -1,0 +1,1619 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.13/semantic.min.css"/>
+
+<div>
+	<div class="page-bg idp-bg">
+		<h2 class="head-sub-title">IDP</h2>
+	</div>
+	<div class="pg-title-div">
+		<h3 class="pg-title">INDIVIDUAL DEVELOPMENT PLAN (IDP)</h3>
+	</div>
+</div>
+
+<div class="m-subheader" style="background-color: #ffffff">
+  	<div class="d-flex align-items-center">
+		<div class="mr-auto">
+			<button title="Back to User Job" class="btn m-btn--pill btn-outline-info pt-1 pb-1 pr-3 pl-3" (click)="btnBackClick()">
+				<div class="m-demo-icon__preview" style="display: flex; align-items: center;">
+					<img style="width: 2rem !important" src="../../../../../../assets/img/user/back_icon.svg"/>
+					<span>{{ word.back }}</span>
+				</div>
+			</button>
+		</div>
+
+    	<!--Begin:Language-->
+		<ul class="m-topbar__nav m-nav m-nav--inline" style="float: right !important">
+			<li class="m-nav__item m-topbar__user-profile m-topbar__user-profile--img" data-toggle="modal" data-target="#langSelect">
+				<span>
+					<span class="m-topbar__username" style="padding-left: 10px; padding-right: 10px">
+						{{ word.lang }} :
+					</span>
+					<span class="m-topbar__userpic">
+						<button *ngIf="enChecked" type="button" title="English" data-toggle="m-tooltip"
+						data-placement="top" class="btn m-btn--pill m-btn--air btn-outline-info active btn-sm">
+						EN
+						</button>
+						<button *ngIf="!enChecked" type="button" title="Malay"
+						data-toggle="m-tooltip" data-placement="top" class="btn m-btn--pill m-btn--air btn-outline-info active btn-sm">
+						MY
+						</button>
+					</span>
+				</span>
+			</li>
+		</ul>
+		<div class="modal fade" id="langSelect" tabindex="-1" role="dialog"
+		aria-labelledby="exampleModalCenterTitle" style="display: none" aria-hidden="true">
+			<div class="modal-dialog msg-dialog modal-dialog-centered" role="document" 
+			style="max-width: 235px !important; margin: auto !important">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 style="text-align: center; font-size: 1.25rem">
+							{{ word.lang }}
+						</h5>
+						<button type="button" id="lang_close" class="close" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">×</span>
+						</button>
+					</div>
+					<div class="modal-body">
+						<div class="m-dropdown__content">
+							<label class="lang-radio m-radio m-radio--solid m-radio--success" style="font-size: 16px">
+								<input type="radio" #en name="lang" value="en" [checked]="enChecked" (change)="langChange(en)"/>
+								&nbsp;&nbsp; English
+								<span style="width: 23px; height: 23px"></span>
+							</label>
+							<br/>
+							<label class="lang-radio m-radio m-radio--solid m-radio--success" style="font-size: 16px">
+								<input type="radio" #my name="lang" value="my" [checked]="!enChecked" (change)="langChange(my)"/>
+								&nbsp;&nbsp; Malay
+								<span style="width: 23px; height: 23px"></span>
+							</label>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+    	<!--End:Language-->
+  	</div>
+</div>
+
+<div class="m-content" style="background-color: #ffffff">
+	<div class="col-lg-12 centred my-auto" *ngIf="loading">
+		<idp-loading></idp-loading>
+	</div>
+
+	<div class="row" *ngIf="!loading && idpDetails?.length < 1" style="padding: 3rem 0rem; justify-content: center">
+		<p>You are not allowed to access the idp profile.</p>
+	</div>
+
+	<div class="row justify-content-md-center" [ngStyle]="{ display: loading ? 'none !important' : 'flex' }">
+		<div class="col-lg-11" [hidden]="loading || idpDetails?.length < 1">
+			<h3 style="margin: auto; text-align: center" *ngIf="!loading">
+				{{ idpSummary?.idp[0].idp_name }}
+			</h3>
+
+			<div class="row" *ngIf="!loading && idpDetails?.length > 0">
+				<div class="col-lg-12">
+					<div class="m-portlet m-portlet--creative m-portlet--bordered-semi idp_portlet">
+						<div class="m-portlet__body idp_portlet_body_moveup" style="padding-top: 2rem !important; min-height: 450px;">
+							<div class="m-portlet__body" style="padding-bottom: 0.5rem">
+								<div class="row" *ngIf="isSupervisor || menteeValue === 'true'">
+									<label class="col-md-2 col-form-label label-data" style="top: 1.5vw">
+										Created by:
+									</label>
+									<label class="col-md-10 col-form-label label-title">
+										<div class="m-widget3">
+											<div class="m-widget3__item">
+												<div class="m-widget3__header">
+													<div class="m-widget3__user-img">
+														<img class="m-widget3__img" src="{{ idpOwnerPic }}" style="width: 4rem; height: 4rem"/>
+													</div>
+													<div class="m-widget3__info">
+														<span style="font-size: 1.2rem">{{ idpDetails[0].ownerName }}</span>
+													</div>
+												</div>
+											</div>
+										</div>
+									</label>
+								</div>
+								<div class="row" *ngIf="isOwner && idpDetails[0].reptToName.length">
+									<label class="col-md-2 col-form-label label-data">
+										Report To:
+									</label>
+									<label class="col-md-10 col-form-label label-title">
+										{{ idpDetails[0].reptToName }}
+									</label>
+								</div>
+								<div class="row">
+									<label class="col-md-2 col-form-label label-data">
+										Route:
+									</label>
+									<label class="col-md-10 col-form-label label-title">
+										<span *ngIf="enChecked">{{ idpDetails[0].text_en }}</span>
+										<span *ngIf="!enChecked">{{ idpDetails[0].text_bm }}</span>
+									</label>
+								</div>
+								<div class="row" *ngIf="idpStatus === 3 || idpStatus === 4">
+									<label class="col-md-2 col-form-label label-data">
+										{{ word.action }}:
+									</label>
+									<label class="col-md-10 col-form-label label-title">
+										{{ idpDetails[0].action_complete }} / {{ idpDetails[0].action_count }} Complete
+									</label>
+								</div>
+
+								<div class="m-wizard m-wizard--2 m-wizard--success m-wizard--step-first" id="m_wizard">
+									<div class="m-portlet__padding-x">
+										<!-- Here you can put a message or alert -->
+									</div>
+
+									<div class="m-wizard__head m-portlet__padding-x">
+										<div class="m-wizard__progress">
+											<div class="progress">
+												<div class="progress-bar era-color-bk" role="progressbar" aria-valuenow="100" aria-valuemin="0"
+												aria-valuemax="100" [ngStyle]="{ width: chkProgressWidth(idpStatus) }"></div>
+											</div>
+										</div>
+
+										<div class="m-wizard__nav">
+											<div class="m-wizard__steps">
+												<div [class.m-wizard__step--current]="checkStatus(idpStatus, 1)" class="m-wizard__step" m-wizard-target="m_wizard_form_step_1">
+													<span class="m-wizard__step-number">
+														<span class="step-number"> 1 </span>
+													</span>
+													<div class="idpStatus">
+														{{ word.status_1 }}
+														<div style="font-weight: 200">
+															<div>{{ word.toBeCompleteBy }}:</div>
+															<div>{{ myIDPDue }}</div>
+														</div>
+													</div>
+												</div>
+
+												<div [class.m-wizard__step--current]="checkStatus(idpStatus, 2)" class="m-wizard__step" m-wizard-target="m_wizard_form_step_2">
+													<span class="m-wizard__step-number">
+														<span class="step-number"> 2 </span>
+													</span>
+													<div class="idpStatus">
+														{{ word.status_2 }}
+														<div style="font-weight: 200">
+															<div>{{ word.toBeCompleteBy }}:</div>
+															<div>{{ myIDPDue }}</div>
+														</div>
+													</div>
+												</div>
+
+												<div [class.m-wizard__step--current]="checkStatus(idpStatus, 3)" class="m-wizard__step" m-wizard-target="m_wizard_form_step_3">
+													<span class="m-wizard__step-number">
+														<span class="step-number"> 3 </span>
+													</span>
+													<div class="idpStatus">
+														{{ word.status_3 }}
+														<div *ngIf="currentDate < myIDPComplStartCheck && myIDPComplStartCheck" style="font-weight: 200">
+															<div>{{ word.toUpdateProgBy }}:</div>
+															<div>{{ myIDPComplStart }}</div>
+														</div>
+														<div *ngIf="currentDate >= myIDPComplStartCheck && myIDPComplDueCheck" style="font-weight: 200">
+															<div>{{ word.toCompleteProgBy }}:</div>
+															<div>{{ myIDPComplDue }}</div>
+														</div>
+													</div>
+												</div>
+
+												<div [class.m-wizard__step--current]="checkStatus(idpStatus, 4)" class="m-wizard__step" m-wizard-target="m_wizard_form_step_4">
+													<span class="m-wizard__step-number">
+														<span class="step-number"> 4 </span>
+													</span>
+													<div class="idpStatus">
+														{{ word.status_4 }}
+														<div *ngIf="myIDPComplete" style="font-weight: 200">
+															<div>{{ word.completeOn }}:</div>
+															<div>{{ myIDPComplete }}</div>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<form class="m-form" [formGroup]="aspirationForm">
+				<div class="m-portlet m-portlet--creative m-portlet--bordered-semi idp_portlet">
+					<div class="m-portlet__head">
+						<div class="m-portlet__head-caption">
+							<h2 class="m-portlet__head-label idp_head-label era-color-bk">
+								<span>
+									{{ word.ttlCareerAsp }}
+									&nbsp;&nbsp;
+									<a class="btn btn-warning m-btn m-btn--icon btn-sm m-btn--icon-only m-btn--pill info-btn"
+										title data-toggle="m-popover" data-placement="top" data-html="true" attr.data-content="{{ help.career }}">
+										<i class="la la-info white-col"></i>
+									</a>
+								</span>
+							</h2>
+						</div>
+					</div>
+					<div class="m-portlet__body idp_portlet_body_moveup">
+						<div class="form-group m-form__group row">
+							<div class="col-lg-10">
+								<textarea class="form-control m-input m-input--air m-input--pill" rows="6" maxlength="300"
+									formControlName="aspiration" placeholder="{{ word.phCareerAspiration }}"></textarea>
+								<span class="textarea-msg" *ngIf="!isSupervisor">
+									<i>{{ word.textLimitMsg }}</i>
+									<span style="float: right">{{ aspirationForm.value.aspiration?.length }}/300</span>
+								</span>
+							</div>
+							<div class="col-lg-2" *ngIf="idpStatus === 1 && !isSupervisor">
+								<button type="button" class="btn btn-outline simple-save-btn savebtn-top"
+									[ngClass]="{ 'm-loader m-loader--right m-loader--light btn-submitting': aspLoading }"
+									(click)="updateAspiration(aspirationForm.value)">
+									{{ word.save }}
+								</button>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="col-lg-6">
+						<div class="m-portlet m-portlet--creative m-portlet--bordered-semi idp_portlet">
+							<div class="m-portlet__head">
+								<div class="m-portlet__head-caption">
+									<h2 class="m-portlet__head-label idp_head-label era-color-bk">
+										<span>
+											{{ word.ttlStrength }}
+											&nbsp;&nbsp;
+											<a class="btn btn-warning m-btn m-btn--icon btn-sm m-btn--icon-only m-btn--pill info-btn" title
+												data-toggle="m-popover" data-placement="top" data-html="true" attr.data-content="{{ help.strength }}">
+												<i class="la la-info white-col"></i>
+											</a>
+										</span>
+									</h2>
+								</div>
+							</div>
+							<div class="m-portlet__body idp_portlet_body_moveup">
+								<div class="m-portlet__head portlet-item-head">
+									<div class="m-portlet__head-caption">
+										<div class="m-portlet__head-title">
+											<span class="m-portlet__head-icon m--hide">
+												<i class="flaticon-statistics"></i>
+											</span>
+										</div>
+									</div>
+									<div class="m-portlet__head-tools" *ngIf="idpStrengths?.length < 5">
+										<ul class="m-portlet__nav" *ngIf="idpStatus === 1 && !isSupervisor">
+											<li class="m-portlet__nav-item">
+												<a class="btn btn-outline-danger m-btn m-btn--icon m-btn--icon-only m-btn--custom m-btn--pill m-btn--air add-item-btn"
+													data-toggle="modal" data-target="#form_modal" data-backdrop="static" (click)="openAddModal(1, 'add')">
+													<i class="fa fa-plus"></i>
+												</a>
+											</li>
+										</ul>
+									</div>
+								</div>
+
+								<div class="m-portlet__body portlet-item-body item-body-radious">
+									<div class="m-list-search" style="margin-top: 2rem" *ngIf="idpStrengths?.length > 0; else noStrength">
+										<div class="m-list-search__results">
+											<p class="m-list-search__result-item" *ngFor="let stren of idpStrengths; let i = index">
+												<span class="m-list-search__result-item-icon">
+													{{ i + 1 }}
+												</span>
+												<span class="m-list-search__result-item-text" style="color: black">
+													{{ stren.strength }}
+												</span>
+												<span style="overflow: visible; position: relative; width: 110px;" *ngIf="idpStatus === 1 && !isSupervisor">
+													<div class="dropdown">
+														<a href="#" style="right: 1rem" class="btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only m-btn--pill" data-toggle="dropdown">
+															<i class="la la-ellipsis-h"></i>
+														</a>
+														<div class="dropdown-menu dropdown-menu-right">
+															<a class="dropdown-item" style="cursor: pointer" data-toggle="modal" data-target="#form_modal" data-backdrop="static"
+																(click)="openAddModal(1, 'edit', i + 1); setStrengthForm(stren)">
+																<i class="flaticon-edit m--font-warning"></i>
+																{{ word.edit }}
+															</a>
+															<a class="dropdown-item" style="cursor: pointer" (click)="deleteStrength(stren)">
+																<i class="flaticon-delete-1 m--font-danger"></i>
+																{{ word.delete }}
+															</a>
+														</div>
+													</div>
+												</span>
+											</p>
+										</div>
+									</div>
+									<ng-template #noStrength>
+										<div style="margin-top: 2rem; text-align: center">
+											<p class="m-list-search__result-item-text">
+												{{ word.noStrength }}
+											</p>
+										</div>
+									</ng-template>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<div class="col-lg-6">
+						<div class="m-portlet m-portlet--creative m-portlet--bordered-semi idp_portlet">
+							<div class="m-portlet__head">
+								<div class="m-portlet__head-caption">
+									<h2 class="m-portlet__head-label idp_head-label era-color-bk">
+										<span>
+											{{ word.ttlAreaOfDev }}
+											&nbsp;&nbsp;
+											<a class="btn btn-warningm-btn m-btn--icon btn-sm m-btn--icon-only m-btn--pill info-btn" title data-toggle="m-popover"
+												data-placement="top" data-html="true" attr.data-content="{{ help.area }}">
+												<i class="la la-info white-col"></i>
+											</a>
+										</span>
+									</h2>
+								</div>
+							</div>
+							<div class="m-portlet__body idp_portlet_body_moveup">
+								<div class="m-portlet__head portlet-item-head">
+									<div class="m-portlet__head-caption">
+										<div class="m-portlet__head-title">
+											<span class="m-portlet__head-icon m--hide">
+												<i class="flaticon-statistics"></i>
+											</span>
+										</div>
+									</div>
+									<div class="m-portlet__head-tools" *ngIf="idpArea?.length < 2">
+										<ul class="m-portlet__nav" *ngIf="idpStatus === 1 && !isSupervisor">
+											<li class="m-portlet__nav-item">
+												<a class="btn btn-outline-danger m-btn m-btn--icon m-btn--icon-only m-btn--custom m-btn--pill m-btn--air add-item-btn"
+													data-toggle="modal" data-target="#form_modal" data-backdrop="static" (click)="openAddModal(2, 'add')">
+													<i class="fa fa-plus"></i>
+												</a>
+											</li>
+										</ul>
+									</div>
+								</div>
+
+								<div class="m-portlet__body portlet-item-body item-body-radious">
+									<div class="m-list-search" style="margin-top: 2rem" *ngIf="idpArea?.length > 0; else noAreaDev">
+										<div class="m-list-search__results">
+											<p class="m-list-search__result-item" *ngFor="let area of idpArea; let i = index">
+												<span class="m-list-search__result-item-icon">
+													{{ i + 1 }}
+												</span>
+												<span class="m-list-search__result-item-text" style="color: black">
+													{{ area.descr }}
+												</span>
+												<span style="overflow: visible; position: relative; width: 110px;" *ngIf="idpStatus === 1 && !isSupervisor">
+													<div class="dropdown">
+														<a href="#" style="right: 1rem" class="btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only m-btn--pill" data-toggle="dropdown">
+															<i class="la la-ellipsis-h"></i>
+														</a>
+														<div class="dropdown-menu dropdown-menu-right">
+															<a class="dropdown-item" style="cursor: pointer" data-toggle="modal" data-target="#form_modal" data-backdrop="static"
+																(click)="openAddModal(2, 'edit', i + 1); setAreaForm(area)">
+																<i class="flaticon-edit m--font-warning"></i>
+																{{ word.edit }}
+															</a>
+															<a class="dropdown-item" style="cursor: pointer" (click)="deleteAreaDev(area)">
+																<i class="flaticon-delete-1 m--font-danger"></i>
+																{{ word.delete }}
+															</a>
+														</div>
+													</div>
+												</span>
+											</p>
+										</div>
+									</div>
+									<ng-template #noAreaDev>
+										<div style="margin-top: 2rem; text-align: center">
+											<p class="m-list-search__result-item-text">
+												{{ word.noAreaDev }}
+											</p>
+										</div>
+									</ng-template>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="col-lg-12">
+						<div class="m-portlet m-portlet--creative m-portlet--bordered-semi idp_portlet">
+							<div class="m-portlet__head">
+								<div class="m-portlet__head-caption">
+									<h2 class="m-portlet__head-label idp_head-label era-color-bk">
+										<span>
+											{{ word.ttlActionPlan }}
+											&nbsp;&nbsp;
+											<a class="btn btn-warning m-btn m-btn--icon btn-sm m-btn--icon-only m-btn--pill info-btn"
+												title data-toggle="m-popover" data-placement="top" data-html="true" attr.data-content="{{ help.action }}">
+												<i class="la la-info white-col"></i>
+											</a>
+										</span>
+									</h2>
+								</div>
+							</div>
+							<div class="m-portlet__body idp_portlet_body_moveup">
+								<div class="m-portlet__head portlet-item-head">
+									<div class="m-portlet__head-caption">
+										<div class="m-portlet__head-title">
+											<span class="m-portlet__head-icon m--hide">
+												<i class="flaticon-statistics"></i>
+											</span>
+										</div>
+									</div>
+									<div class="m-portlet__head-tools" *ngIf="idpActionPlans?.length < 3">
+										<ul class="m-portlet__nav" *ngIf="idpStatus === 1 && !isSupervisor">
+											<li class="m-portlet__nav-item">
+												<div class="dropdown">
+													<a style="right: 1rem" class="btn btn-outline-danger m-btn m-btn--icon m-btn--icon-only m-btn--custom m-btn--pill m-btn--air add-item-btn" data-toggle="dropdown">
+														<i class="fa fa-plus"></i>
+													</a>
+													<div class="dropdown-menu dropdown-menu-right">
+														<a class="dropdown-item" style="cursor: pointer" data-toggle="modal" data-target="#form_modal" data-backdrop="static" (click)="openAddModal(3, 'add')">
+															<i class="fa fa-plus-square" aria-hidden="true"></i>
+														{{ word.newAction }}
+														</a>
+														<a class="dropdown-item" style="cursor: pointer" data-toggle="modal" data-target="#copy_action_modal" (click)="prevYearsArray()">
+															<i class="fa fa-files-o" aria-hidden="true"></i>
+														{{ word.copyAction }}
+														</a>
+													</div>
+												</div>
+											</li>
+										</ul>
+									</div>
+								</div>
+
+								<div class="m-portlet__body portlet-item-body item-body-radious">
+									<div class="table-responsive" *ngIf="idpActionPlans?.length > 0; else noActionPlans" style="margin-top: 1rem">
+										<table class="table table-striped table-hover" style="margin-top: 1rem">
+											<thead class="thead-inverse era-color-bk" style="color: white; text-align: center">
+												<tr>
+													<th style="width: 5%">No</th>
+													<th style="text-align: left">{{ word.what }}</th>
+													<th style="text-align: left; width: 18%">{{ word.how }}</th>
+													<th style="width: 20%" *ngIf="idpStatus >= 3">Status</th>
+													<th style="width: 10%">{{ word.action }}</th>
+												</tr>
+											</thead>
+											<tbody>
+												<tr *ngFor="let plan of idpActionPlans; let i = index" style="cursor: pointer" (click)="openAddModal(3, 'edit', i + 1); setActionForm(plan)">
+													<td style="width: 5%; text-align: center">{{ i + 1 }}</td>
+													<td>{{ plan.descr }}</td>
+													<td>
+														<span *ngIf="enChecked">{{ plan.how_en }}</span>
+														<span *ngIf="!enChecked">{{ plan.how_bm }}</span>
+													</td>
+													<td style="width: 20%; text-align: center" *ngIf="idpStatus >= 3">
+														<span class="m-badge m-badge--metal m-badge--wide">
+														{{ plan.action_status }}
+														</span>
+													</td>
+													<td style="width: 10%; text-align: center">
+														<span class="m-list-search__result-item-icon" style="cursor: pointer">
+														<i class="flaticon-eye m--font-primary" style="position: relative; top: 2px"></i>
+														</span>
+													</td>
+												</tr>
+											</tbody>
+										</table>
+									</div>
+
+									<ng-template #noActionPlans>
+										<div style="margin-top: 2rem; text-align: center">
+											<p class="m-list-search__result-item-text">
+												{{ word.noActionPlan }}
+											</p>
+										</div>
+									</ng-template>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="row" [hidden]="loading || idpSummary?.idp[0].mobility != 1">
+					<div class="col-lg-12">
+						<div class="m-portlet m-portlet--creative m-portlet--bordered-semi idp_portlet">
+							<div class="m-portlet__head">
+								<div class="m-portlet__head-caption">
+									<h2 class="m-portlet__head-label idp_head-label era-color-bk">
+										<span>
+											{{ word.mobilityAssessment }}
+											&nbsp;&nbsp;
+											<a class="btn btn-warning m-btn m-btn--icon btn-sm m-btn--icon-only m-btn--pill info-btn"
+												title data-toggle="m-popover" data-placement="top" attr.data-content="{{ help.mobility }}">
+												<i class="la la-info white-col"></i>
+											</a>
+										</span>
+									</h2>
+								</div>
+							</div>
+							<div class="m-portlet__body idp_portlet_body_moveup">
+								<form class="m-form" [formGroup]="mobilityForm">
+								<div class="m-portlet__body">
+									<div class="m-form__section m-form__section--first">
+									<div class="form-group m-form__group row">
+										<label class="col-lg-6 col-form-label">
+										{{ word.areYouFlexi }}? &nbsp;
+										<a class="btn btn-warning m-btn m-btn--icon btn-sm m-btn--icon-only m-btn--pill info-btn" title
+											data-toggle="m-popover" data-placement="top" attr.data-content="{{ help.flexi }}">
+											<i class="la la-info white-col"></i>
+										</a>
+										</label>
+										<div class="col-lg-6">
+										<div class="m-radio-inline" style="width: 100%">
+											<label class="m-radio m-radio--bold m-radio--state-success" style="vertical-align: -webkit-baseline-middle; width: 60px;">
+											<input type="radio" name="flexible" value="1" (click)="changeFlexi(1)"
+												[checked]="flexi" [disabled]="idpStatus != 1"/>
+											{{ word.yes }}
+											<span></span>
+											</label>
+											<label class="m-radio m-radio--bold m-radio--state-danger" style="vertical-align: -webkit-baseline-middle">
+											<input type="radio" name="flexible" value="0" (click)="changeFlexi(0)"
+												[checked]="!flexi" [disabled]="idpStatus != 1"/>
+											{{ word.no }}
+											<span></span>
+											</label>
+										</div>
+										</div>
+									</div>
+									<div class="form-group m-form__group row" [hidden]="mobilityForm.value.flexible != 1">
+										<label class="col-lg-6 col-form-label">
+										{{ word.preferLoc }}? &nbsp;
+										<a class="btn btn-warningm-btn m-btn--icon btn-smm-btn--icon-only m-btn--pill info-btn" title
+											data-toggle="m-popover" data-placement="top" attr.data-content="{{ help.location }}">
+											<i class="la la-info white-col"></i>
+										</a>
+										</label>
+										<div class="col-lg-6">
+										<select class="form-control m-input" formControlName="location" *ngIf="!isSupervisor">
+											<option value="" disabled>Select State</option>
+											<option [value]="state" *ngFor="let state of states">
+											{{ state }}
+											</option>
+										</select>
+										<input class="form-control m-input" formControlName="location" type="text" *ngIf="isSupervisor"/>
+										</div>
+									</div>
+									<div class="form-group m-form__group row" [hidden]="mobilityForm.value.flexible != 1">
+										<label class="col-lg-6 col-form-label">
+										{{ word.preferFunc }}? &nbsp;
+										<a class="btn btn-warning m-btn m-btn--icon btn-sm m-btn--icon-only m-btn--pill info-btn" title
+											data-toggle="m-popover" data-placement="top" attr.data-content="{{ help.function }}">
+											<i class="la la-info white-col"></i>
+										</a>
+										</label>
+										<div class="col-lg-6">
+										<div class="m-checkbox-inline">
+											<label class="m-checkbox m-checkbox--bold m-checkbox--state-success" style="margin-right: 2rem; width: 120px;">
+											<input type="checkbox" formControlName="funct" value="Technical" (change)="onChangeFunc($event)" [checked]="checkSelectedFunc('Technical')"/>
+											Technical
+											<a class="btn btn-white m-btn m-btn--icon btn-sm m-btn--icon-only m-btn--pill info-btn" title
+												data-toggle="m-popover" data-placement="top" data-content="Example: Network Operation, Network Delivery">
+												<i class="fa fa-question info-col"></i>
+											</a>
+											<span></span>
+											</label>
+										</div>
+										<div *ngIf="checkSelectedFunc('Technical')" style="margin-bottom: 30px">
+											<label for="inputsm1" style="width: 100px;">Please Specify : </label>
+											<input class="form-control input-sm" id="inputsm1" formControlName="specifyTechnical" type="text" placeholder="Example: Network Operation, Network Delivery"/>
+										</div>
+
+										<div>
+											<label class="m-checkbox m-checkbox--bold m-checkbox--state-success" style="margin-right: 2rem; width: 120px;">
+											<input type="checkbox" formControlName="funct" value="Sales" (change)="onChangeFunc($event)" [checked]="checkSelectedFunc('Sales')"/>
+											Sales
+											<a class="btn btn-white m-btn m-btn--icon btn-sm m-btn--icon-only m-btn--pill info-btn" title
+												data-toggle="m-popover" data-placement="top" data-content="Example: Consumer Sales, SME Sales, Enterprise Sales">
+												<i class="fa fa-question info-col"></i>
+											</a>
+											<span></span>
+											</label>
+										</div>
+										<div *ngIf="checkSelectedFunc('Sales')" style="margin-bottom: 30px">
+											<label for="inputsm2" style="width: 100px;">Please Specify : </label>
+											<input class="form-control input-sm" id="inputsm2" formControlName="specifySales" type="text"
+											placeholder="Example: Consumer Sales, SME Sales, Enterprise Sales"/>
+										</div>
+
+										<div>
+											<label class="m-checkbox m-checkbox--bold m-checkbox--state-success" style="margin-right: 2rem; width: 120px;">
+											<input type="checkbox" formControlName="funct" value="Support" (change)="onChangeFunc($event)" [checked]="checkSelectedFunc('Support')"/>
+											Support
+											<a class="btn btn-white m-btn m-btn--icon btn-sm m-btn--icon-only m-btn--pill info-btn" title
+												data-toggle="m-popover" data-placement="top" data-content="Example: Customer Experience, Business Development">
+												<i class="fa fa-question info-col"></i>
+											</a>
+											<span></span>
+											</label>
+										</div>
+										<div *ngIf="checkSelectedFunc('Support')">
+											<label for="inputsm3" style="width: 100px;">Please Specify : </label>
+											<input class="form-control input-sm" id="inputsm3" formControlName="specifySupport" type="text" placeholder="Example: Customer Experience, Business Development"/>
+										</div>
+										</div>
+									</div>
+									<div class="form-group m-form__group row" [hidden]="mobilityForm.value.flexible != 0">
+										<label class="col-lg-6 col-form-label">
+										{{ word.why }}? &nbsp;
+										<a class="btn btn-warning m-btn m-btn--icon btn-sm m-btn--icon-only m-btn--pill info-btn" title
+											data-toggle="m-popover" data-placement="top" attr.data-content="{{ help.why }}">
+											<i class="la la-info white-col"></i>
+										</a>
+										</label>
+										<div class="col-lg-6">
+										<textarea class="form-control" rows="4" maxlength="300" formControlName="reason"></textarea>
+										<span class="textarea-msg" *ngIf="!isSupervisor">
+											<i>{{ word.textLimitMsg }}</i>
+											<span style="float: right">{{ mobilityForm.value.reason?.length }}/300</span>
+										</span>
+										</div>
+									</div>
+									<div class="form-group m-form__group row" [hidden]="mobilityForm.value.flexible != 0">
+										<label class="col-lg-6 col-form-label">
+										{{ word.untilWhen }}? &nbsp;
+										<a class="btn btn-warning m-btn m-btn--icon btn-sm m-btn--icon-only m-btn--pill info-btn" title
+											data-toggle="m-popover" data-placement="top" attr.data-content="{{ help.until }}">
+											<i class="la la-info white-col"></i>
+										</a>
+										</label>
+										<div class="col-lg-6">
+										<input type="text" [matDatepicker]="mobDueDate" (focus)="mobDueDate.open()" (click)="mobDueDate.open()"
+											class="form-control" [ngStyle]="{ background: idpStatus === 1 ? '#FFF' : '' }" formControlName="due" placeholder="DD/MM/YYYY" readonly/>
+										<mat-datepicker #mobDueDate></mat-datepicker>
+										</div>
+									</div>
+
+									<div class="row" style="margin-top: 1rem" *ngIf="idpStatus === 1 && !isSupervisor">
+										<div class="col-lg-6"></div>
+										<div class="col-lg-6">
+										<p *ngIf="errorMobility" style="color: red">
+											*{{ word.errorMobilityMsg }}
+										</p>
+
+										<button type="button" class="btn btn-warning" (click)="resetMobilityClicked()">
+											Reset
+										</button>
+
+										<button type="button" class="btn btn-outline simple-save-btn" [ngClass]="{ 'm-loader m-loader--right m-loader--light btn-submitting': mobilityLoading }"
+											[ngStyle]="{ cursor: !isMobiltyValid(mobilityForm.value) ? 'no-drop' : '' }" [disabled]="!isMobiltyValid(mobilityForm.value)" (click)="updateMobility(mobilityForm.value)">
+											{{ word.save }}
+										</button>
+										</div>
+									</div>
+									</div>
+								</div>
+								</form>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="row" *ngIf="idpStatus != 1 && menteeValue === 'false'">
+					<div class="col-lg-12">
+						<div class="m-portlet m-portlet--creative m-portlet--bordered-semi idp_portlet" style="margin-top: 0">
+							<div class="m-portlet__body idp_portlet_body_moveup" style="padding-top: 2rem !important">
+								<div class="m-portlet__body" style="padding-bottom: 0.5rem">
+									<div class="m-form__section m-form__section--first">
+										<div class="form-group m-form__group row" *ngIf="isOwner">
+											<label class="col-md-3 col-form-label" style="font-size: 1rem">
+												<span *ngIf="idpStatus === 2">Submitted to Supervisor :</span>
+												<span *ngIf="idpStatus === 3 || idpStatus === 4">Supervisor :</span>
+											</label>
+											<label class="col-md-9 col-form-label" style="font-size: 1.2rem">
+												<b style="padding-left: 1rem">{{ idpDetails[0].reptToName }}</b>
+											</label>
+										</div>
+
+										<form class="m-form" [formGroup]="nextReviwForm" *ngIf="idpStatus === 3 || idpStatus === 4 || isSupervisor">
+											<div class="form-group m-form__group row">
+												<label class="col-md-3 col-form-label">
+													{{ word.nextReviewDate }} :
+												</label>
+												<div class="col-md-3">
+													<input type="text" [min]="minNextReviewDate" [matDatepicker]="reviewDate" (focus)="reviewDate.open()" (click)="reviewDate.open()" class="form-control"
+														[ngStyle]="{ background: idpStatus === 2 && isSupervisor ? '#FFF' : '' }" formControlName="nextReview" placeholder="DD/MM/YYYY" readonly/>
+													<mat-datepicker #reviewDate></mat-datepicker>
+												</div>
+											</div>
+										</form>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="col-lg 12" style="text-align: center">
+						<button type="button" *ngIf="idpStatus === 1 && !isSupervisor" class="btn btn-outline submit-btn" 
+							style="margin: 0.5rem 2rem; height: 3rem; width: 8rem" (click)="submitIDPForm()">
+							{{ word.submit }}
+						</button>
+
+						<button type="button" class="btn btn-primary" *ngIf="(idpStatus === 1 || idpStatus === 3) && !isSupervisor"
+							class="btn btn-outline submit-btn" style="margin: 0.5rem 2rem; height: 3rem; width: 8rem" (click)="saveDraftNotifier()">
+							Save Draft
+						</button>
+
+						<button type="button" *ngIf="idpStatus === 3 || idpStatus === 4 || isSupervisor" class="btn btn-primary" class="btn btn-outline submit-btn"
+							style="margin: 0.5rem 2rem; height: 3rem; width: 8rem" (click)="onClickDownloadBtn()">
+							Save PDF file
+						</button>
+
+						<span data-toggle="m-popover" data-placement="top" data-html="true" attr.data-content="{{ help.completeWarning }}" *ngIf="currentDate >= myIDPComplStartCheck">
+							<button type="button" *ngIf="idpStatus === 3 && !isSupervisor" class="btn btn-outline submit-btn" style="margin: 0.5rem 2rem; height: 3rem; width: 8rem"
+								[disabled]="checkActionStatusValid()" [ngStyle]="{ cursor: checkActionStatusValid() ? 'no-drop' : '' }" data-toggle="modal" data-target="#submit_modal"
+								data-placement="top" data-html="true" attr.data-content="{{ help.completeWarning }}">
+								{{ word.complete }}
+							</button>
+						</span>
+
+						<button type="button" *ngIf="idpStatus === 2 && isSupervisor && menteeValue === 'false'" class="btn btn-outline submit-btn" 
+							style="margin: 0.5rem 2rem; height: 3rem; width: 8rem" (click)="supervisorAction(1)" [disabled]="nextReviwForm.invalid">
+							{{ word.acknowledge }}
+						</button>
+
+						<button type="button" *ngIf="(idpStatus === 2 || idpStatus === 3) && isSupervisor && menteeValue === 'false'"
+							class="btn btn-danger" style="margin: 0.5rem 2rem; height: 3rem; width: 8rem" (click)="supervisorAction(0)">
+							{{ word.revert }}
+						</button>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+
+<div class="modal fade" id="form_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true" style="display: none" data-keyboard="false" data-backdrop="static">
+	<div class="modal-dialog modal-lg modal-dialog-scrollable" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="exampleModalLabel" *ngIf="!isTrainModalOpen">
+					{{ modalTitle }}
+				</h5>
+				<h5 class="modal-title" id="exampleModalLabel" *ngIf="isTrainModalOpen">
+					{{ word.addTraining }}
+				</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close" id="modal-close-btn2" *ngIf="!isTrainModalOpen" (click)="cancelModalClicked()">
+					<span aria-hidden="true">×</span>
+				</button>
+			</div>
+			<div class="modal-body height-modal-idp">
+				<div *ngIf="itemNo === 1">
+					<form [formGroup]="strengthForm">
+						<div class="form-group">
+							<label for="message-text" class="form-control-label">
+								{{ word.strength }}:
+							</label>
+							<textarea class="form-control" formControlName="strength" placeholder="{{ word.phStrength }}" rows="6" maxlength="300"></textarea>
+							<span class="textarea-msg" *ngIf="!isSupervisor">
+								<i>{{ word.textLimitMsg }}</i>
+								<span style="float: right">{{ strengthForm.value.strength?.length }}/300</span>
+							</span>
+						</div>
+					</form>
+				</div>
+
+				<div *ngIf="itemNo === 2">
+					<form [formGroup]="areaOfDevForm">
+						<div class="form-group">
+							<label for="message-text" class="form-control-label">
+								{{ word.areaOfDev }}:
+							</label>
+							<textarea class="form-control" formControlName="area" placeholder="{{ word.phAreaOfDev }}" rows="6" maxlength="300"></textarea>
+							<span class="textarea-msg" *ngIf="!isSupervisor">
+								<i>{{ word.textLimitMsg }}</i>
+								<span style="float: right">{{ areaOfDevForm.value.area?.length }}/300</span>
+							</span>
+						</div>
+					</form>
+				</div>
+				<!-- Action plan form start -->
+				<div [hidden]="itemNo != 3 || isTrainModalOpen">
+					<form [formGroup]="actionPlanForm">
+						<div class="form-group">
+							<label for="message-text" class="form-control-label">
+								{{ word.what }}
+								&nbsp;
+								<a class="btn btn-warning m-btn m-btn--icon btn-sm m-btn--icon-only m-btn--pill info-btn" title
+									data-toggle="m-popover" data-placement="top" data-html="true" attr.data-content="{{ help.what }}">
+									<i class="la la-info white-col"></i>
+								</a>
+							</label>
+							<textarea class="form-control" formControlName="what" placeholder="{{ word.phActionPlan }}" rows="4" maxlength="300"></textarea>
+							<span class="textarea-msg" *ngIf="!isSupervisor">
+								<i>{{ word.textLimitMsg }}</i>
+								<span style="float: right">{{ actionPlanForm.value.what?.length }}/300</span>
+							</span>
+						</div>
+
+						<div class="row">
+							<div class="col-md-6 form-group">
+								<label for="message-text" class="form-control-label">
+									{{ word.stDate }}: &nbsp;
+									<a class="btn btn-warning m-btn m-btn--icon btn-sm m-btn--icon-only m-btn--pill info-btn"
+										title data-toggle="m-popover" data-placement="top" attr.data-content="{{ help.startDate }}">
+										<i class="la la-info white-col"></i>
+									</a>
+								</label>
+								<input type="text" [matDatepicker]="jobStartDate" (focus)="jobStartDate.open()" (click)="jobStartDate.open()" class="form-control" 
+									formControlName="startDate" placeholder="DD/MM/YYYY" readonly #startDate (dateChange)="compareDates(startDate.value, endDate.value)"/>
+								<mat-datepicker touchUi #jobStartDate></mat-datepicker>
+							</div>
+							<div class="col-md-6 form-group">
+								<label for="message-text" class="form-control-label">
+									{{ word.dueDate }}: &nbsp;
+									<a class="btn btn-warning m-btn m-btn--icon btn-sm m-btn--icon-only m-btn--pill info-btn" title
+										data-toggle="m-popover" data-placement="top" attr.data-content="{{ help.dueDate }}">
+										<i class="la la-info white-col"></i>
+									</a>
+								</label>
+								<input type="text" [matDatepicker]="jobEndDate" (focus)="jobEndDate.open()" (click)="jobEndDate.open()" class="form-control"
+								formControlName="endDate" placeholder="DD/MM/YYYY" readonly #endDate (dateChange)="compareDates(startDate.value, endDate.value)"/>
+								<mat-datepicker touchUi #jobEndDate></mat-datepicker>
+							</div>
+							<div class="col-md-12" *ngIf="errDate">
+								<span style="color: red">{{ word.dateErrMsg }}</span>
+							</div>
+						</div>
+
+						<div class="row">
+							<div class="col-lg-6 form-group">
+								<label for="message-text" class="form-control-label">
+									{{ word.competencyType }}: &nbsp;
+									<a class="btn btn-warning m-btn m-btn--icon btn-sm m-btn--icon-only m-btn--pill info-btn" title
+										data-toggle="m-popover" data-placement="top" data-html="true" attr.data-content="{{ help.competency }}">
+										<i class="la la-info white-col"></i>
+									</a>
+								</label>
+								<select class="form-control m-input" formControlName="competencyType" #competency (change)="changeCompetency(competency.value)">
+									<option value="null" [selected]="true" disabled>
+										{{ word.selectType }}
+									</option>
+									<option value="functional">
+										<span *ngIf="enChecked">Functional Competency</span>
+										<span *ngIf="!enChecked">Kecekapan Fungsian</span>
+									</option>
+									<option value="leadership">
+										<span *ngIf="enChecked">Leadership Competency</span>
+										<span *ngIf="!enChecked">Kecekapan Teknikal</span>
+									</option>
+								</select>
+							</div>
+
+							<div class="col-lg-6 form-group">
+								<label for="message-text" class="form-control-label">
+									{{ word.how }}: &nbsp;
+									<a class="btn btn-warning m-btn m-btn--icon btn-sm m-btn--icon-only m-btn--pill info-btn" title
+										data-toggle="m-popover" data-placement="top" data-html="true" attr.data-content="{{ help.how }}">
+										<i class="la la-info white-col"></i>
+									</a>
+								</label>
+								<select id="how" class="form-control m-input" formControlName="how" #how (change)="changeHow(how.value)">
+									<option value="null" [selected]="true" disabled>
+										{{ word.selectHow }}
+									</option>
+									<option value="1">
+										<span *ngIf="enChecked">10% - Learning From Structured Training/Education</span>
+										<span *ngIf="!enChecked">10% - Belajar dari latihan berstruktur/pendidikan</span>
+									</option>
+									<option value="2">
+										<span *ngIf="enChecked">20% - Learning From Relationship</span>
+										<span *ngIf="!enChecked">20% - Belajar dari hubungan orang lain</span>
+									</option>
+									<option value="3">
+										<span *ngIf="enChecked">70% - Learning From Experience</span>
+										<span *ngIf="!enChecked">70% - Belajar dari pengalaman</span>
+									</option>
+								</select>
+							</div>
+						</div>
+
+						<div class="form-group" [hidden]="how.value != 1 || !competency.value">
+							<label for="message-text" class="form-control-label">
+								{{ word.trainingName }}: &nbsp;
+								<a class="btn btn-warning m-btn m-btn--icon btn-sm m-btn--icon-only m-btn--pill info-btn" title
+									data-toggle="m-popover" data-placement="top" attr.data-content="{{ help.training }}">
+									<i class="la la-info white-col"></i>
+								</a>
+
+								<a class="btn btn-outline-danger m-btn m-btn--icon m-btn--icon-only m-btn--custom m-btn--pill m-btn--air add-item-btn"
+									(click)="openTrainModal()" *ngIf="addedTrainings.length < 5 && idpStatus === 1 && isOwner" style="width: 30px; height: 30px">
+									<i class="fa fa-plus"></i>
+								</a>
+							</label>
+							<input class="form-control m-input" formControlName="trainingName" style="display: none"/>
+
+							<div class="table-responsive" [hidden]="addedTrainings.length < 1" style="margin-top: 1rem">
+								<table class="table">
+									<tbody>
+										<tr *ngFor="let train of addedTrainings">
+											<td style="width: 90%; border-top: none">
+												{{ train.train_name }}
+											</td>
+											<td style="width: 10%; text-align: center; border-top: none" *ngIf="idpStatus === 1 && isOwner">
+												<span class="m-list-search__result-item-icon" style="cursor: pointer" (click)="removeTraining(train)">
+													<i class="flaticon-delete-1 m--font-danger" style="position: relative; top: 2px"></i>
+												</span>
+											</td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+							<div [hidden]="addedTrainings.length > 0">
+								<p>{{ word.plsAddTraining }}</p>
+							</div>
+						</div>
+
+						<div class="form-group" [hidden]="how.value != 2">
+							<label for="message-text" class="form-control-label">
+								{{ word.mentorName }}: &nbsp;
+								<a class="btn btn-warning m-btn m-btn--icon btn-sm m-btn--icon-only m-btn--pill info-btn" title
+									data-toggle="m-popover" data-placement="top" attr.data-content="{{ help.mentor }}">
+									<i class="la la-info white-col"></i>
+								</a>
+							</label>
+							<input class="form-control m-input" formControlName="mentorName" #mentor [hidden]="tohideInput(mentor.value)"/>
+
+							<div *ngIf="tohideInput(mentor.value)">
+								<sui-multi-select class="form-control" [options]="options" [isSearchable]="true" #multiSelect [optionFormatter]="formatter"
+									(keyup)="onNameKeyUp($event)" (selectedOptionsChange)="multiSelectedUser($event)" [maxSelected]="1">
+									<sui-select-option *ngFor="let option of newData" [value]="option"></sui-select-option>
+								</sui-multi-select>
+							</div>
+						</div>
+					</form>
+					<form [formGroup]="menteeNoteForm">
+						<!-- mentee note start -->
+						<div class="form-group" [hidden]="!showMenteeAddBtn || idpStatus < 3">
+							<label for="message-text" class="form-control-label" [hidden]="!isOwner">
+								{{ word.addMentee }}: &nbsp;
+								<a class="btn btn-warning m-btn m-btn--icon btn-sm m-btn--icon-only m-btn--pill info-btn" title
+									data-toggle="m-popover" data-placement="top" attr.data-content="{{ help.mentee }}">
+									<i class="la la-info white-col"></i>
+								</a>
+
+								<a *ngIf="menteeNoteView.length < 12 && isOwner" class="btn btn-outline-danger m-btn m-btn--icon m-btn--icon-only m-btn--custom m-btn--pill m-btn--air add-item-btn"
+								style="width: 30px; height: 30px" data-toggle="modal" data-target="#menteeNote">
+									<i class="fa fa-plus"></i>
+								</a>
+							</label>
+							<div *ngIf="menteeNoteView.length > 0" style="margin-bottom: 20px">
+								Mentee Note:
+							</div>
+							<mat-tab-group *ngIf="menteeNoteView.length > 0">
+								<mat-tab label="{{ item.meeting_date }}" *ngFor="let item of menteeNoteView; let i = index">
+									<div style="border-radius: 10px; padding: 10px; margin-bottom: 10px; color: #6f727d;"
+										[ngStyle]="{ 'background-color': isOwner && !item.fb_mentor ? 'white' : '#f4f5f8' }">
+										<div style="margin-bottom: 15px">
+											<b>Meeting Date:</b> {{ item.meeting_date }}
+										</div>
+										<div style="margin-bottom: 15px">
+											<b>Topic Covered:</b> {{ item.topic }}
+										</div>
+										<div style="margin-bottom: 15px">
+											<b>Learning Outcome:</b> {{ item.outcome }}
+										</div>
+										<div style="margin-bottom: 15px">
+											<b>Planned date of next meeting:</b>
+											{{ item.nm_planned_time }}
+										</div>
+										<div *ngIf="item.mentor_name" style="margin-bottom: 15px">
+											<b>Mentor name:</b>
+											{{ item.mentor_name }}
+										</div>
+									</div>
+									<div *ngIf="isOwner && !item.fb_mentor" style="text-align: right">
+										<button class="btn btn-primary" (click)="editMenteeNote(i)">
+											Edit
+										</button>
+										<button class="btn btn-danger" (click)="deleteMenteeNote(i)">
+											Delete
+										</button>
+									</div>
+									<div *ngIf="menteeValue === 'true' && mentorPersno == item.mentor && !item.fb_mentor" style="text-align: right">
+										<button class="btn btn-primary" data-toggle="modal" data-target="#addFeedbackMentor" (click)="fbMentorId(item.id)">
+											Add Feedback
+										</button>
+									</div>
+									<div style="margin-bottom: 15px" *ngIf="item.fb_mentor">
+										<b>Feedback from Mentor: </b>
+										<div class="feedback-whitebox">{{ item.fb_mentor }}</div>
+									</div>
+								</mat-tab>
+							</mat-tab-group>
+						</div>
+						<!-- mentee note end -->
+
+						<!-- Outcome start -->
+						<div [hidden]="(isOwner && !(idpStatus === 3 || idpStatus === 4)) || (isSupervisor && idpStatus != 4)">
+							<div class="row">
+								<div class="col-lg-6 form-group">
+									<label for="message-text" class="form-control-label">
+										Status:
+									</label>
+									<select class="form-control m-input" formControlName="status">
+										<option value="Pending">Pending</option>
+										<option value="Incomplete" [hidden]="showMenteeAddBtn && menteeNoteView?.length === 0">Incomplete</option>
+										<option value="Complete" [hidden]="showMenteeAddBtn && menteeNoteView?.length === 0">Complete</option>
+									</select>
+								</div>
+							</div>
+						</div>
+						<!-- Outcome start -->
+					</form>
+				</div>
+				<div [hidden]="!isTrainModalOpen">
+					<div [hidden]="selectedCompetency != 1">
+						<form [formGroup]="funcTrainingForm">
+							<div class="form-group">
+								<label class="form-control-label">
+									{{ word.jobCluster }}: &nbsp;
+									<a class="btn btn-warning m-btn m-btn--icon btn-sm m-btn--icon-only m-btn--pill info-btn" title
+										data-toggle="m-popover" data-placement="top" attr.data-content="{{ help.jobCluster }}">
+										<i class="la la-info white-col"></i>
+									</a>
+								</label>
+								<select class="form-control m-input" #jcluster formControlName="funcComCluster" (change)="funcJobClusChange()">
+									<option *ngFor="let x of clusterList" [value]="x.cluster_id">
+										{{ x.cluster }}
+									</option>
+								</select>
+							</div>
+
+							<div class="form-group" [hidden]="!funcFamily || jcluster.value === 0">
+								<label class="form-control-label">
+									{{ word.jobFamily }}: &nbsp;
+									<a class="btn btn-warning m-btn m-btn--icon btn-sm m-btn--icon-only m-btn--pill info-btn" title
+										data-toggle="m-popover" data-placement="top" attr.data-content="{{ help.jobFamily }}">
+										<i class="la la-info white-col"></i>
+									</a>
+								</label>
+								<select class="form-control m-input" #jfamily formControlName="funcComFamily" (change)="funcFamilyChange()">
+									<option *ngFor="let x of funcFamList" [value]="x.family_id">
+										{{ x.family }}
+									</option>
+								</select>
+							</div>
+
+							<div class="form-group" [hidden]="!funcCompetency">
+								<label class="form-control-label">
+									{{ word.jobCompetency }}: &nbsp;
+									<a class="btn btn-warning m-btn m-btn--icon btn-sm m-btn--icon-only m-btn--pill info-btn" title
+										data-toggle="m-popover" data-placement="top" attr.data-content="{{ help.jobCompetency }}">
+										<i class="la la-info white-col"></i>
+									</a>
+								</label>
+								<select class="form-control m-input" formControlName="funcComComp" (change)="funcCompChange()">
+									<option *ngFor="let x of funcCompList" [value]="x.comp_id">
+										{{ x.competency }}
+									</option>
+								</select>
+							</div>
+							<div *ngIf="noCompData" style="color: red">
+								<p>{{ word.noCompetencyMsg }}</p>
+							</div>
+
+							<div class="form-group" [hidden]="!funcTraining">
+								<label class="form-control-label">
+									{{ word.jobTrainingName }}: &nbsp;
+									<a class="btn btn-warning m-btn m-btn--icon btn-sm m-btn--icon-only m-btn--pill info-btn" title
+										data-toggle="m-popover" data-placement="top" attr.data-content="{{ help.funcTrainTxt }}">
+										<i class="la la-info white-col"></i>
+									</a>
+								</label>
+								<select class="form-control m-input" formControlName="funcComTraining" (change)="funcTraningChange()">
+									<option *ngFor="let x of funcTrainList" [value]="x.train_id">
+										{{ x.train_name }}
+									</option>
+								</select>
+								<div *ngIf="existTraining" style="color: red">
+									<p>{{ word.addedTrainingMsg }}</p>
+								</div>
+							</div>
+							<div *ngIf="noTrainData" style="color: red">
+								<p>{{ word.noTraingMsg }}</p>
+							</div>
+						</form>
+					</div>
+
+					<div [hidden]="selectedCompetency != 2">
+						<form [formGroup]="leadTrainingForm">
+							<div class="form-group">
+								<label class="form-control-label">
+									{{ word.jobCompetency }}: &nbsp;
+									<a class="btn btn-warning m-btn m-btn--icon btn-sm m-btn--icon-only m-btn--pill info-btn" title
+										data-toggle="m-popover" data-placement="top" attr.data-content="{{ help.leadCompetency }}">
+										<i class="la la-info white-col"></i>
+									</a>
+								</label>
+								<select class="form-control m-input" formControlName="leadCompetency" (change)="leadCompChange()">
+									<option value="" [selected]="true" disabled>
+										-- Select Competency --
+									</option>
+									<option *ngFor="let x of leadCompList" [value]="x.name">
+										{{ x.name }}
+									</option>
+								</select>
+							</div>
+
+							<div class="form-group" [hidden]="!leadTraining">
+								<label class="form-control-label">
+									{{ word.jobTrainingName }}: &nbsp;
+									<a class="btn btn-warning m-btn m-btn--icon btn-sm m-btn--icon-only m-btn--pill info-btn" title
+										data-toggle="m-popover" data-placement="top" attr.data-content="{{ help.leadTraining }}">
+										<i class="la la-info white-col"></i>
+									</a>
+								</label>
+								<select class="form-control m-input" formControlName="leadTraining" (change)="leadTrainingChange()">
+									<option *ngFor="let x of leadTrainList" [value]="x.train_id">
+										{{ x.train_name }}
+									</option>
+								</select>
+								<div *ngIf="existLeadTraining" style="color: red">
+									<p>{{ word.addedTrainingMsg }}</p>
+								</div>
+							</div>
+							<div *ngIf="noTrainData" style="color: red">
+								<p>{{ word.noTraingMsg }}</p>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<div *ngIf="!isTrainModalOpen">
+				<button
+					id="modal-close-btn"
+					type="button"
+					class="btn btn-secondary"
+					data-dismiss="modal"
+					(click)="cancelModalClicked()"
+				>
+					{{ word.close }}
+				</button>
+				<button
+					type="button"
+					class="btn add-modal-btn"
+					(click)="addItemClicked()"
+					*ngIf="idpStatus === 1 && isAddData"
+					[ngClass]="{ 'm-loader m-loader--right m-loader--light': adding }"
+					[disabled]="checkDisabled()"
+					[ngStyle]="{ cursor: checkDisabled() ? 'no-drop' : '' }"
+				>
+					{{ word.add }}
+				</button>
+				<button
+					type="button"
+					class="btn add-modal-btn"
+					(click)="updateItemClicked()"
+					*ngIf="idpStatus === 1 && !isAddData"
+					[ngClass]="{ 'm-loader m-loader--right m-loader--light': updating }"
+					[disabled]="checkDisabled()"
+					[ngStyle]="{ cursor: checkDisabled() ? 'no-drop' : '' }"
+				>
+					{{ word.update }}
+				</button>
+				<button
+					type="button"
+					class="btn btn-danger"
+					*ngIf="idpStatus === 1 && this.itemNo === 3 && !isAddData"
+					[ngClass]="{
+					'm-loader m-loader--right m-loader--light': actDeleting
+					}"
+					(click)="deleteActionPlan()"
+				>
+					{{ word.delete }}
+				</button>
+				<button
+					type="button"
+					class="btn add-modal-btn"
+					*ngIf="isOwner && idpStatus === 3 && itemNo === 3"
+					(click)="updateItemClicked()"
+				>
+					{{ word.add }}
+				</button>
+				</div>
+
+				<div *ngIf="isTrainModalOpen">
+				<button
+					id="train-close-btn"
+					type="button"
+					class="btn btn-secondary"
+					data-dismiss="modal"
+					(click)="closeTrainModal()"
+				>
+					{{ word.cancel }}
+				</button>
+				<button
+					type="button"
+					class="btn add-modal-btn"
+					[ngClass]="{
+					'm-loader m-loader--right m-loader--light': addingTrain
+					}"
+					[disabled]="addTrainingDisabled()"
+					(click)="addTrainingClicked()"
+					[ngStyle]="{ cursor: addTrainingDisabled() ? 'no-drop' : '' }"
+				>
+					{{ word.addTrain }}
+				</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- modal for mentee note -->
+<button [hidden]="true" id="addMenteeNote" data-toggle="modal" data-target="#menteeNote">x</button>
+<div class="modal" id="menteeNote" data-keyboard="false" data-backdrop="static">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<!-- Modal Header -->
+			<div class="modal-header">
+				<h4 class="modal-title">Add Mentee Note</h4>
+				<button type="button" class="close" data-dismiss="modal">
+					&times;
+				</button>
+			</div>
+
+			<!-- Modal body -->
+			<div class="modal-body">
+				<form [formGroup]="menteeNoteForm">
+					<div>Meeting Date :</div>
+					<input type="text" [matDatepicker]="meetingStartDate" (focus)="meetingStartDate.open()" (click)="meetingStartDate.open()" class="form-control"
+						formControlName="meetingDate" placeholder="DD/MM/YYYY" readonly #meetingDate (dateChange)="compareDatesMn(meetingDate.value, plannedTime.value)"/>
+					<mat-datepicker touchUi #meetingStartDate></mat-datepicker>
+
+					<div style="margin-top: 15px">Topics covered :</div>
+					<input class="form-control" formControlName="topic" style="width: 100%"/>
+
+					<div style="margin-top: 15px">Learning Outcome :</div>
+					<textarea class="form-control" style="width: 100%" rows="6" formControlName="outcome"></textarea>
+
+					<div style="margin-top: 15px">Planned date of next meeting</div>
+					<input type="text" [matDatepicker]="plannedMeetingDate" (focus)="plannedMeetingDate.open()" (click)="plannedMeetingDate.open()" class="form-control"
+						formControlName="plannedTime" placeholder="DD/MM/YYYY" readonly #plannedTime (dateChange)="compareDatesMn(meetingDate.value, plannedTime.value)"/>
+					<mat-datepicker touchUi #plannedMeetingDate></mat-datepicker>
+				</form>
+				<div class="col-md-12" *ngIf="errDateMn">
+					<span style="color: red">{{ word.dateErrMsgMn }}</span>
+				</div>
+			</div>
+
+			<!-- Modal footer -->
+			<div class="modal-footer">
+				<button id="closeMenteeModal" type="button" class="btn btn-danger" data-dismiss="modal">
+					Close
+				</button>
+				<button type="button" class="btn add-modal-btn" (click)="addingMenteeNote()" [ngStyle]="{ cursor: checkDisabledMenteeNote() ? 'no-drop' : 'pointer' }">
+					Add
+				</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- modal for feedback mentor -->
+<div class="modal" id="addFeedbackMentor" data-keyboard="false" data-backdrop="static">
+	<div class="modal-dialog modal-dialog-centered">
+		<div class="modal-content">
+			<!-- Modal Header -->
+			<div class="modal-header">
+				<h4 class="modal-title">Add Feedback from Mentor</h4>
+				<button type="button" class="close" data-dismiss="modal">
+					&times;
+				</button>
+			</div>
+
+			<!-- Modal body -->
+			<div class="modal-body">
+				<form [formGroup]="feedbackMentorForm">
+					<p style="margin-top: 15px">Feedback :</p>
+					<textarea class="form-control" style="width: 100%" rows="6" formControlName="fbMentor" (keyup)="counterFbMentor()"></textarea>
+					<div style="text-align: right; font-weight: 400;" [ngStyle]="{'color': countColorFbMentor}">{{countFbMentor}}</div>
+				</form>
+                <p *ngIf="invalidLengthFbMentor" style="color: red; font-weight: 500;">{{word.invalidLengthModalFbMentor}}</p>
+			</div>
+
+			<!-- Modal footer -->
+			<div class="modal-footer">
+				<button id="closeFbMentorModal" type="button" class="btn btn-danger" data-dismiss="modal">
+					Close
+				</button>
+				<button type="button" class="btn add-modal-btn" (click)="checkFbMentor()" 
+					[ngStyle]="{ cursor: checkDisabledFeedbackMentor() ? 'no-drop' : 'pointer' }">
+					Submit
+				</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- modal for feedback mentor confirmation -->
+<div class="modal" id="feedbackConfirmationModal" data-keyboard="false" data-backdrop="static">
+	<div class="modal-dialog modal-dialog-centered">
+		<div class="modal-content">
+			<!-- Modal Header -->
+			<div class="modal-header">
+				<h4 class="modal-title">Warning!</h4>
+				<button type="button" class="close" data-dismiss="modal">
+					&times;
+				</button>
+			</div>
+
+			<!-- Modal body -->
+			<div class="modal-body">
+				<p style="margin-top: 15px">Once saved you would not be able to change. Is this your final feedback?</p>
+			</div>
+
+			<!-- Modal footer -->
+			<div class="modal-footer">
+				<button type="button" class="btn btn-danger" data-dismiss="modal">
+					No
+				</button>
+				<button type="button" class="btn add-modal-btn" data-dismiss="modal" (click)="addFeedbackFromMentor()">
+					Yes
+				</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="modal fade" id="submit_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" style="display: none">
+	<div class="modal-dialog modal-dialog-centered" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="exampleModalLabel">
+					<span *ngIf="isOwner && idpStatus === 1">{{ word.confirm }}?</span>
+					<span *ngIf="isOwner && idpStatus === 3">{{ word.complete }}?</span>
+					<span *ngIf="isSupervisor && superDecision">{{ word.acknowledge }}?</span>
+					<span *ngIf="isSupervisor && !superDecision">{{ word.revert }}?</span>
+				</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+				<span aria-hidden="true"> × </span>
+				</button>
+			</div>
+
+			<div class="modal-body" style="font-size: 1.2rem; text-align: justify">
+				<div *ngIf="isOwner && idpStatus === 1">
+					<p> {{ word.idpSubmitMsg1 }} <b>{{ idpDetails[0].reptToName }}</b> {{ word.idpSubmitMsg2 }} </p>
+				</div>
+				<div *ngIf="isOwner && idpStatus === 3">
+					<p>{{ word.completeQues }} ?</p>
+				</div>
+
+				<div *ngIf="isSupervisor && superDecision">
+					<p> {{ word.ackQues_1 }} <b>{{ idpDetails[0].ownerName }}</b>? {{ word.ackQues_2 }} </p>
+				</div>
+				<div *ngIf="isSupervisor && !superDecision">
+					<p> {{ word.revertQues_1 }} <b>&nbsp;{{ idpDetails[0].ownerName }}</b>&nbsp;? </p>
+				</div>
+			</div>
+
+			<div class="modal-footer" style="justify-content: center">
+				<button type="button" class="btn add-modal-btn" style="margin: 0rem 1rem" *ngIf="isOwner && idpStatus === 1"
+					[ngClass]="{ 'm-loader m-loader--right m-loader--light': submitting }" (click)="submitToSupirior()">
+					{{ word.yes }}
+				</button>
+				<!-- IDP submitting -->
+				<button type="button" class="btn add-modal-btn" style="margin: 0rem 1rem" *ngIf="isOwner && idpStatus === 3"
+					[ngClass]="{ 'm-loader m-loader--right m-loader--light': completing }" (click)="completeClicked()">
+					{{ word.yes }}
+				</button>
+
+				<button type="button" class="btn add-modal-btn" style="margin: 0rem 1rem" *ngIf="isSupervisor && superDecision"
+					[ngClass]="{ 'm-loader m-loader--right m-loader--light': ack_ing }" (click)="supAcknowledge()">
+					{{ word.yes }}
+				</button>
+
+				<button type="button" class="btn add-modal-btn" style="margin: 0rem 1rem" *ngIf="isSupervisor && !superDecision"
+					[ngClass]="{ 'm-loader m-loader--right m-loader--light': reverting }" (click)="supRevert()">
+					{{ word.yes }}
+				</button>
+
+				<button type="button" class="btn btn-secondary" data-dismiss="modal" style="margin: 0rem 1rem" id="close-btn-1">
+					{{ word.no }}
+				</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="modal fade" id="error_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" style="display: none">
+	<div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="exampleModalLabel">
+					{{ word.failToSubmit }}
+				</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true"> × </span>
+				</button>
+			</div>
+
+			<div class="modal-body" style="font-size: 1.2rem; text-align: justify">
+				<div class="alert alert-warning" role="alert">
+					<P *ngIf="aspErr" style="margin: 0">{{ word.careerFailErr }}</P>
+					<P *ngIf="strengthErr" style="margin: 0">{{ word.strengthFailErr }}</P>
+					<P *ngIf="areaErr" style="margin: 0">{{ word.areaFailErr }}</P>
+					<P *ngIf="actionErr" style="margin: 0">{{ word.actionFailErr }}</P>
+					<P *ngIf="mobilityErr" style="margin: 0">{{ word.mobilityFailErr }}</P>
+				</div>
+			</div>
+
+			<div class="modal-footer" style="justify-content: center">
+				<button type="button" class="btn btn-secondary" data-dismiss="modal" style="margin: 0rem 1rem" id="close-btn-2">
+					{{ word.cancel }}
+				</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- Modal Copy 3 years action Plan -->
+<div class="modal fade" id="copy_action_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+	aria-hidden="true" style="display: none" data-keyboard="false" data-backdrop="static">
+	<div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="exampleModalLabel">
+				<!-- {{word.copyActionPlan}} -->
+				</h5>
+			</div>
+			<div class="modal-body height-modal-idp">
+				<form [formGroup]="copyActionPlanForm">
+					<div class="row">
+						<div class="col-lg-6 form-group">
+							<label class="form-control-label">
+								{{ word.idpForm }}: &nbsp;
+								<a class="btn btn-warning m-btn m-btn--icon btn-sm m-btn--icon-only m-btn--pill info-btn" title
+									data-toggle="m-popover" data-placement="top" data-html="true" attr.data-content="{{ help.copyActionYear }}">
+									<i class="la la-info white-col"></i>
+								</a>
+							</label>
+						<select class="form-control m-input" formControlName="year" (change)="copyPrevYear()">
+							<option value="null" [selected]="true" disabled>
+								Choose Individual Development Plan
+							</option>
+							<option [value]="item?.idp_year" *ngFor="let item of threeYearsPrev">
+								{{ item?.idp_name }}
+							</option>
+						</select>
+						</div>
+						<div class="col-lg-6 form-group">
+							<label for="message-text" class="form-control-label">
+								{{ word.actionNum }}: &nbsp;
+								<a class="btn btn-warning m-btn m-btn--icon btn-sm m-btn--icon-only m-btn--pill info-btn" title
+								data-toggle="m-popover" data-placement="top" data-html="true" attr.data-content="{{ help.copyActionNum }}">
+									<i class="la la-info white-col"></i>
+								</a>
+							</label>
+						<select class="form-control m-input" formControlName="actionNum" (change)="copyPrevYearNum()">
+							<option value="null" [selected]="true" disabled>
+								Choose Description to Preview
+							</option>
+							<option [value]="item.index" *ngFor="let item of threeNumberPrev">
+								{{ item.descr }}
+							</option>
+						</select>
+						</div>
+					</div>
+				</form>
+				<div *ngIf="previewActionPlanNum.length > 0">
+					<p style="margin: 20px 0"></p>
+					<div *ngFor="let item of previewActionPlanNum">
+						<p>
+							<b>Action Plan:</b> {{ item.descr }}
+						</p>
+						<p>
+							<b>Status:</b> {{ item.action_status }}
+						</p>
+						<p>
+							<b>Competency Type:</b> {{ item.competency }}
+						</p>
+						<p>
+							<b>Type of Action Plan:</b>
+							<span *ngIf="!enChecked">{{ item.how_bm }}</span>
+							<span *ngIf="enChecked">{{ item.how_en }}</span>
+						</p>
+						<p *ngIf="item.training_details && item.act_type === 1">
+							<b>Training Name:</b> {{ item.training_details }}
+						</p>
+						<p *ngIf="item.mentor_name && item.act_type === 2">
+							<b>Mentor Name:</b> {{ item.mentor_name }}
+						</p>
+						<p>
+							<b>Start Date:</b> {{ item.startView }}
+						</p>
+						<p>
+							<b>Due Date:</b> {{ item.dueView }}
+						</p>
+					</div>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<div>
+					<button type="button" class="btn btn-secondary" style="margin-right: 5px" data-dismiss="modal">
+						{{ word.cancel }}
+					</button>
+					<button *ngIf="previewActionPlanNum.length > 0" type="button" class="btn btn-primary" data-dismiss="modal" (click)="checkCopyPrevAction()">
+						{{ word.add }}
+					</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- modal for confirmation copy action plan -->
+<div class="modal" id="confirmationCopyAction" data-keyboard="false" data-backdrop="static">
+	<div class="modal-dialog modal-dialog-centered">
+		<div class="modal-content">
+		<!-- Modal Header -->
+			<div class="modal-header">
+				<h4 class="modal-title">Warning!</h4>
+				<button type="button" class="close" data-dismiss="modal">
+					&times;
+				</button>
+			</div>
+
+			<!-- Modal body -->
+			<div class="modal-body">
+				<p style="margin-top: 15px">
+				Due date has passed. Kindly verify and update accordingly.
+				</p>
+				<form [formGroup]="actionPlanForm">
+					<div class="row">
+						<div class="col-md-6 form-group">
+						<label for="message-text" class="form-control-label">
+							{{ word.stDate }}: &nbsp;
+							<a class="btn btn-warning m-btn m-btn--icon btn-sm m-btn--icon-only m-btn--pill info-btn" title
+								data-toggle="m-popover" data-placement="top" attr.data-content="{{ help.startDate }}">
+								<i class="la la-info white-col"></i>
+							</a>
+						</label>
+						<input type="text" [matDatepicker]="jobStartDate2" (focus)="jobStartDate2.open()" (click)="jobStartDate2.open()" class="form-control"
+							formControlName="startDate" placeholder="DD/MM/YYYY" readonly #startDate (dateChange)="compareDates(startDate.value, endDate.value)"/>
+						<mat-datepicker touchUi #jobStartDate2></mat-datepicker>
+						</div>
+						<div class="col-md-6 form-group">
+							<label for="message-text" class="form-control-label">
+								{{ word.dueDate }}: &nbsp;
+								<a class="btn btn-warning m-btn m-btn--icon btn-sm m-btn--icon-only m-btn--pill info-btn" title
+									data-toggle="m-popover" data-placement="top" attr.data-content="{{ help.dueDate }}">
+									<i class="la la-info white-col"></i>
+								</a>
+							</label>
+						<input type="text" [matDatepicker]="jobEndDate2" (focus)="jobEndDate2.open()" (click)="jobEndDate2.open()" class="form-control"
+							formControlName="endDate" placeholder="DD/MM/YYYY" readonly #endDate (dateChange)="compareDates(startDate.value, endDate.value)"/>
+						<mat-datepicker touchUi #jobEndDate2></mat-datepicker>
+						</div>
+						<div class="col-md-12" *ngIf="errDate">
+							<span style="color: red">{{ word.dateErrMsg }}</span>
+						</div>
+					</div>
+				</form>
+			</div>
+
+			<!-- Modal footer -->
+			<div class="modal-footer">
+				<button [hidden]="true" id="close-btn-copy-action" data-dismiss="modal"></button>
+				<button type="button" class="btn btn-danger" data-dismiss="modal" data-toggle="modal" data-target="#copy_action_modal">
+					Back
+				</button>
+				<button type="button" class="btn add-modal-btn" (click)="submitPrevCopyAction()">
+					Yes
+				</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<notifier-container></notifier-container>

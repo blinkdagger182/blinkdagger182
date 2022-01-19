@@ -1,0 +1,349 @@
+.hide-adv-date{
+    opacity: 0; position: absolute; top: -9999px; left: -9999px;
+}
+
+.edit-delete-btn{
+    margin-top: -5rem !important;
+    width: 25px !important;
+    height: 25px !important;
+}
+
+.bg-color-header-g{
+    background: #575962!important
+}
+
+.bg-color-header-o{
+    background: #FF5A00!important
+}
+
+.ed_delBtn:hover{
+    cursor: pointer !important;
+}
+
+.edit-delete-wrap{
+    width: 11rem !important;
+    margin-top: -2rem !important;
+}
+
+.icon-size{
+    font-size: 1.2rem !important
+}
+
+.modal .modal-content .modal-footer {
+    padding: 10px;
+}
+
+.liked{
+    color: #fd5806 !important;
+    font-weight: bold !important;
+}
+
+.like-modal-content{
+    height: 35rem !important;
+}
+
+.like-body{
+    max-height: 335px !important;
+}
+
+.jobInfo_content{
+    /* width: 90% !important; */
+    margin: auto !important;
+    /* margin-top: 3rem !important; */
+    margin-bottom: 2rem !important;
+}
+
+.theme_color {
+    color :#fd5806 !important;
+}
+
+.acc_content{
+    padding-top: 2rem !important;
+    background: #fff !important;
+    border: 2px solid #f7f8fa !important;
+}
+
+.info_title{
+    color: black !important;
+    font-weight: bolder !important;
+}
+
+.skillset{
+    padding: 6px 10px 6px 10px !important;
+}
+
+.custom-dropdown{
+    border: 1px solid #d9d9d9!important;
+    border-radius:0.25rem!important;
+    margin-left: 2%!important;
+}
+
+.skillDiv{
+    margin-left: 2%!important;
+    float: left!important;
+    position: absolute!important;
+    margin-top: 37px!important;
+    overflow-y: auto!important;
+}
+
+.skillDivItem{
+    border-bottom: 1px solid #d9d9d9!important;
+    cursor: pointer!important;
+    margin-top: 0.25rem!important;
+    margin-bottom: 0.25rem!important;
+}
+
+.skillDivItem:hover {
+    /*color: #fff!important;*/
+    background-color: #d9d9d9!important;
+}
+
+.skillBg{
+    border: 1px solid #d9d9d9!important;
+    background: white;
+    z-index: 1!important;
+}
+
+
+/*Overwrite style.bundle.css*/
+.btn.btn-outline-brand {
+    color: #ff8000!important;
+    border-color: #ff8000!important;
+}
+
+.btn.btn-outline-brand:hover {
+    color: #fff!important;
+    background-color: #ff8000!important;
+}
+
+.btn.btn-outline-brand:focus {
+    color: #fff!important;
+    background-color: #ff8000!important;
+}
+
+.m-table.m-table--head-bg-brand thead th {
+    background: #ff5A00!important;
+}
+
+.alert-primary {
+    background-color: #0066ff!important;
+    border-color: #0066ff!important;
+}
+
+.btn.btn-outline-primary {
+    color: #0066ff!important;
+}
+btn.btn-outline-danger {
+    color: #e60d0d!important;
+}
+
+.btn.btn-outline-primary:hover {
+    color: #fff!important;
+    background-color: #0066ff!important;
+}
+
+.btn.btn-outline-primary:focus {
+    color: #fff!important;
+    background-color: #0066ff!important;
+}
+
+.btn-primary {
+    background-color: #0066ff!important;
+    border-color: #0066ff!important;
+}
+.btn-danger {
+    background-color: #e60d0d!important;
+    border-color: #e60d0d!important;
+}
+.btn-brand {
+    background-color: #0066ff!important;
+    border-color: #0066ff!important;
+}
+
+.m-badge.m-badge--primary {
+    background-color: #0066ff!important;
+}
+.m-badge.m-badge--danger {
+    background-color: #e60d0d!important;
+}
+
+.page-item.active .page-link {
+    background-color: #0066ff!important;
+    border-color: #0066ff!important;
+}
+.form-control:focus {
+  border-color: rgba(255, 202, 122)!important;
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(255, 0, 0, 0.06)!important;
+}
+
+src/app/theme/pages/admin/job/job-css.css
+
+.login_form_btn {
+    margin: auto !important;
+    color:white !important;
+    text-align: left !important;
+    background-color: #f05a26;
+}
+
+.summary_modal{
+    border-radius: 35px !important;
+    
+    
+}
+
+.input_field{
+    height: 2.5rem !important;
+    width: 55% !important;
+    margin: auto;
+}
+
+.header_modal{
+    text-align: center !important;
+    width:100% !important;
+    margin-left: 21px !important;
+}
+
+.footer_modal{
+    text-align: center !important;
+    width:100% !important;
+    margin-left: 21px !important;
+}
+
+@media (min-width: 576px){
+
+.modal-dialog {
+    max-width: 961px;
+    margin: 1.75rem auto;
+}
+}
+.modal_logo{
+    width: 35% !important;
+}
+
+.modal-title{
+    text-align: center !important;
+    width:100% !important;
+    margin-left: 15px !important;
+}
+
+.login_icon{
+    font-size: 2rem !important;
+    color: #fd5806 !important;
+}
+
+.form-control:focus{
+    border: 2px solid #fd5806 !important;
+}
+
+.column {
+    float: left;
+    padding: 5px;
+  }
+  
+  .row::after {
+    content: "";
+    clear: both;
+    display: table;
+  }
+  .m-topbar__username{
+    width: 100%;
+    padding-left: 0px;
+    display: none;
+}
+
+.m-button-side {
+    float: right;
+}
+
+.nav-panel-tab {
+    color: #6c757d !important;
+    background-color: #EEECE0 !important;
+    border-color: #dee2e6 #dee2e6 #fff;
+    font-weight: 400 !important;
+    font-size: 1.5rem !important;
+    border-radius: 10px 10px 0px 0px !important;
+}
+
+.nav-panel-tab.active, .nav-panel-tab:hover, .nav-panel-tab:focus {
+    color: white !important;
+    background-color: #558ED5 !important;
+    border-color: #dee2e6 #dee2e6 #fff;
+    font-weight: 400 !important;
+    font-size: 1.5rem !important;
+    border-radius: 10px 10px 0px 0px !important;
+}
+
+.panel-icon-size {
+    font-size: 3rem !important;
+    cursor: pointer;
+}
+
+.panel-icon-position {
+    text-align: center;
+    vertical-align: middle !important;
+}
+
+.panel-table-head1 th {
+    background-color: #FFC000 !important;
+    color: white !important;
+    border-bottom: 0.5rem solid white !important;
+    border: 0.2rem solid white;
+}
+
+.panel-table-body1 td {
+    color: black !important;
+    border: 0.2rem solid white;
+}
+
+.panel-table-body1 tbody:nth-child(even) {
+    background-color: #DBEEF4;
+}
+
+.panel-table-body1 tbody:nth-child(odd) {
+    background-color: #EEECDF;
+}
+
+.panel-table-body1 tbody:hover {
+    background-color: #F0F0F0;
+}
+
+.panel-table-head2 th {
+    background-color: #8FB3E3 !important;
+    color: white !important;
+    border-bottom: 0.5rem solid white !important;
+    border: 0.2rem solid white;
+}
+
+.panel-table-body2 td {
+    color: black;
+    border: 0.2rem solid white;
+}
+
+.panel-table-body2 tr:nth-of-type(even) {
+    background-color: #E7E7E7;
+}
+
+.panel-table-body2 tr:nth-of-type(odd) {
+    background-color: #CCCCCC;
+}
+
+.panel-table-body2 tr:hover {
+    background-color: #F0F0F0;
+}
+
+.mainTable{
+    counter-reset: section;
+}
+
+.counter::before {
+    counter-increment: section;
+    content: counter(section);
+    cursor: text;
+}
+
+.dialog-style {
+    border: 1px solid #FF5A00 !important;
+    border-radius: 25px 25px 25px 25px !important;
+}
+
+/*End Overwrite style.bundle.css*/

@@ -1,0 +1,410 @@
+.happy-bg {
+    background-image: url(../../../../../../assets/img/user/sea-portal/bg-happy.png) !important; 
+    position: relative;
+    height: 20rem; 
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.meter_page {
+    min-height: 84vh !important;
+    max-height: 43em !important;
+}
+
+.hitory_tab:hover{
+    cursor:  pointer !important;
+}
+
+.meter_separator{
+    border-right: 2px solid #fd5806 !important;
+}
+
+.a_way{
+    font-size: 3.4vw !important;
+    margin-top: 5rem !important;
+    margin-bottom: -2rem !important;
+    font-weight: 200 !important;
+    text-align: left !important;
+    margin-left: 4rem !important;
+}
+
+.feel_today{
+    font-size: 2.8rem !important;
+    /* margin-top: 1rem !important; */
+    font-weight: 200 !important;
+}
+
+.feel_today_400{
+    font-weight: 400 !important;
+}
+
+.weight_600{
+    font-weight: 600 !important;
+}
+
+.feel_today_600{
+    color: #fd5806 !important;
+    font-weight: 600 !important;
+}
+
+.thankyou{
+    font-size: 3rem !important;
+    font-weight: 700 !important;
+    text-align: center !important;
+    color: #fd5806 !important;
+
+}
+.selectOne{
+    font-size: 1.3rem !important;
+    font-weight: 500 !important;
+    color: #00000063 !important;
+}
+
+.feelColored{
+    color: #fd5806 !important;
+    font-weight: 600;
+}
+
+.hapyTitle{
+    font-size: 6vw !important;
+    font-weight: 600 !important;
+    text-align: left !important;
+    margin-left: 4rem !important;
+}
+
+.feel_icons{
+    /* font-weight: 600 !important; */
+    margin-left: 8vw;
+    margin-right: 8vw;
+    /* margin-left: 14rem !important; */
+}
+.hpyMsg{
+    /* font-family: 'helvetica-neue' !important; */
+    width: 80% !important;
+    font-weight: 600 !important;
+    font-size: 1vw !important;
+    text-align: justify !important;
+    color: #000000 !important;
+    margin-left: 4rem;
+}
+
+.enternow-btn{
+    margin-left: 2rem !important;     
+    width: 10rem !important;
+    height: 3rem !important;
+}
+
+.col20{
+    width: 20% !important;
+}
+.grow {
+    transition: all .2s ease-in-out;
+}
+.grow:hover {
+    transform: scale(1.2);
+}
+
+
+.smile_icon{
+    margin: 1.5vw !important;
+    height: 18rem !important;
+    border-radius: 15px !important;
+}
+
+.smile_icon:hover{
+    cursor: pointer;
+}
+
+.feel_text{
+    font-size: 28px !important;
+    font-weight: 500 !important;
+    /* color: white !important; */
+    display: block !important;
+    margin-top: 12px !important;
+    margin-left: 20px !important;
+    margin-right: 20px !important;
+}
+
+.emoji_width{
+    box-shadow: 0 5px 10px 2px rgba(18,19,18,.19) !important;
+    border-radius: 50% !important;
+    width: 60% !important;
+    margin-top: 2rem !important;
+}
+
+.v_happy{
+    color: #f2f3f8 !important; 
+    background-color: #2ECC71 !important;
+}
+
+/* .v_happy:hover{
+    background-color: #2ECC71 !important; 
+    color: white !important;
+} */
+
+.happy{
+    color: #f2f3f8 !important;
+    background-color: #00A6FB !important;
+}
+
+/* .happy:hover{
+    background-color: #00A6FB !important;
+    color: white !important;
+} */
+
+.neutral{
+    color: #f2f3f8 !important;
+    background-color: #FFD103 !important;
+}
+
+/* .neutral:hover{
+    background-color: #FFD103 !important;
+    color: white !important;
+} */
+
+.upset{
+    color: #f2f3f8 !important;
+    background-color: #FF8811 !important;
+}
+
+/* .upset:hover{
+    background-color: #FF8811 !important;
+    color: white !important;
+} */
+
+.v_upset{
+    color: #f2f3f8 !important;
+    background-color: #EA2803 !important;
+}
+/* .v_upset:hover{
+    background-color: #EA2803 !important;
+    color: white !important;
+} */
+
+.meter-btn:hover{
+    cursor: pointer;
+}
+
+.smily_card{
+    margin: auto !important;
+    width: 15rem !important;
+    height: 20rem !important;
+    border-radius: 2rem !important;
+    box-shadow: 0px 1px 15px 1px rgba(69, 65, 78, 0.37) !important;
+}
+
+.card_text{
+    font-size: 28px !important;
+    font-weight: 500 !important;
+    width: 60% !important;
+    margin: auto !important;
+}
+
+.v_happy-btn{
+    color: #2ECC71 !important;
+    background: white !important;
+    border-color: #2ECC71 !important;
+}
+
+.v_happy-btn:hover{
+    background: #2ECC71 !important;
+    color: white !important
+}
+
+.vh-click{
+    background: #2ECC71 !important;
+    color: white !important;
+}
+
+.happy-btn{
+    color: #00A6FB !important;
+    background: white !important;
+    border-color: #00A6FB !important;
+}
+
+.happy-btn:hover{
+    background: #00A6FB !important;
+    color: white !important
+}
+
+.h-click{
+    background: #00A6FB !important;
+    color: white !important
+}
+
+.neutral-btn{
+    color: #FFD103 !important;
+    background: white !important;
+    border-color: #FFD103 !important;
+}
+
+.neutral-btn:hover{
+    background: #FFD103 !important;
+    color: white !important
+}
+
+.n-click{
+    background: #FFD103 !important;
+    color: white !important
+}
+
+.upset-btn{
+    color: #FF8811 !important;
+    background: white !important;
+    border-color: #FF8811 !important;
+}
+
+.upset-btn:hover{
+    background: #FF8811 !important;
+    color: white !important
+}
+
+.u-click{
+    background: #FF8811 !important;
+    color: white !important
+}
+
+.v_upset-btn{
+    color: #EA2803 !important;
+    background: white !important;
+    border-color: #EA2803 !important;
+}
+
+.v_upset-btn:hover{
+    background: #EA2803 !important;
+    color: white !important
+}
+
+.vu-click{
+    background: #EA2803 !important;
+    color: white !important
+}
+
+.img-feel{
+    width:75% !important;
+    box-shadow: 0 5px 10px 2px rgba(18,19,18,.19) !important;
+    border-radius: 50% !important;
+}
+
+.submit-feel{
+    color: white;
+    float: right !important;
+    font-size: 1.4rem !important;
+    width: 10rem !important;
+    height: 3rem !important;
+}
+
+.thanks-card{
+    border-radius: 2rem !important;
+    box-shadow: 0px 1px 15px 1px rgba(69, 65, 78, 0.47) !important;
+}
+
+.modal_heading{
+    margin:auto !important; 
+    text-align: center !important;
+}
+
+.note2{
+    font-size: 16px !important;
+    color: #0000009c !important;
+}
+
+.submitted{
+    font-size: 2rem !important;
+    font-weight: 200 !important;
+    color: black !important;
+    text-align: center !important;
+}
+
+.errMsg{
+    color:red !important; font-size: 14px;
+    text-decoration: underline;
+}
+
+.thanksNote{
+    margin-right: 4rem !important;
+    margin-left: 4rem !important;
+}
+
+.sharing{
+    font-size: 28px !important;
+    font-weight: 500 !important;
+    width: 65% !important;
+    margin: auto !important;
+    padding-top: 1rem !important;
+    padding-bottom: 1rem !important;
+}
+
+.thanks-close-btn{
+    color: white !important;
+    margin-top: 2rem !important;
+    width: 12rem !important;
+    box-shadow: 0 5px 10px 2px rgba(18,19,18,.19) !important;
+}
+
+
+
+@media (max-width: 768px){
+
+    .col20{
+        width: 100% !important;
+    }
+    .emoji_width{
+        width: 4rem !important;
+        margin-top: 0 !important;
+    }
+    .smile_icon{
+        height: 6rem !important;
+    }
+    .feel_text{
+        display: inline-block !important;
+        text-align: left !important;
+        width: 9rem !important;
+        font-size: 18px !important;
+        margin-left: 3rem !important;
+    }
+    .img-line{
+        display: inline-block !important;
+        margin-top: 1rem !important;
+    }
+
+    .v_happy{
+        background: #2ECC71 !important;
+        color: white !important;
+    }
+
+    .happy{
+        background-color: #00A6FB !important;  
+        color: #f2f3f8 !important;
+    }
+    
+    .neutral{
+        background-color: #FFD103 !important;
+        color: #f2f3f8 !important; 
+    }
+    
+    .upset{
+        background-color: #FF8811 !important;  
+        color: #f2f3f8 !important;
+    }
+        
+    .v_upset{
+        background-color: #EA2803 !important;
+        color: #f2f3f8 !important; 
+    }
+
+}
+
+@media (max-width: 375px){
+    .feel_today{
+        font-size: 2.2rem !important;
+        margin-top: 1rem !important;
+    }
+    .smily_card{
+        width: 13rem !important;
+        height: 16rem !important;
+    }
+    .img-feel{
+        width: 50% !important;
+    }
+}

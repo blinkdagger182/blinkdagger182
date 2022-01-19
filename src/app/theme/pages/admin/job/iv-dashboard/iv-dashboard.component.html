@@ -1,0 +1,473 @@
+<!-- <div class="container"> -->
+    <div class="m-content" style="max-width: 100% !important">
+        <div class="row">
+            <div class="col-lg-12 centred my-auto">
+                <div class="m-portlet m-portlet--rounded">
+                    <div class="m-portlet__head m--bg-focus" style="background: #FF5A00!important">
+                        <div class="m-portlet__head-caption">
+                            <div class="m-portlet__head-title">
+                                <h3 class="m-portlet__head-text  m--font-inverse-primary">
+                                    Recruitment Dashboard
+                                </h3>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="container" style = "padding: 0;">
+                       <div class="m-portlet__body ">
+
+                         <form [formGroup]="filterForm" autocomplete="off" >
+                            <div class="m-accordion m-accordion--default" id="m_accordion_1" role="tablist">
+                                <div class="m-accordion__item">
+                                    <div class="m-accordion__item-head collapsed" role="tab" id="m_accordion_1_item_1_head"
+                                        data-toggle="collapse" href="#m_accordion_1_item_1_body" aria-expanded="false">
+                                        <span class="m-accordion__item-icon">
+                                            <i class="fa fa-filter" style="font-size:25px;"></i>
+                                        </span>
+                                        <span class="m-accordion__item-title" style="font-size:1rem;">
+                                            Filter By
+                                        </span>
+                                        <span class="m-accordion__item-mode"></span>
+                                    </div>
+                                    <div class="m-accordion__item-body collapse show" id="m_accordion_1_item_1_body">
+                                        <div class="m-accordion__item-content">
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <div class="row">
+                                                        <div class="col-md-1">
+                                                            <label style="margin-top:9px;">Month: </label>
+                                                        </div>
+                                                        <div class="col-md-2">
+                                                            <select name="fltrMonth" id="fltrMonth" class="form-control m-input"
+                                                                formControlName="fltrMonth" #fltrMonth>
+                                                                <option value="">All</option>
+                                                                <option value="1">January</option>
+                                                                <option value="2">February</option>
+                                                                <option value="3">March</option>
+                                                                <option value="4">April</option>
+                                                                <option value="5">May</option>
+                                                                <option value="6">June</option>
+                                                                <option value="7">July</option>
+                                                                <option value="8">August</option>
+                                                                <option value="9">September</option>
+                                                                <option value="10">October</option>
+                                                                <option value="11">November</option>
+                                                                <option value="12">December</option>
+        
+                                                            </select>
+                                                        </div>
+                                                        <div class="col-md-1">
+                                                            <label style="margin-top:9px;">Year: </label>
+                                                        </div>
+                                                        <div class="col-md-2">
+                                                            <select name="fltrYear" id="fltrYear" class="form-control m-input"
+                                                                formControlName="fltrYear" #fltrYear >
+                                                                <!-- <option value="">All</option> -->
+                                                                <option *ngFor="let item of yearList" value="{{item.yr}}">{{item.yr}}
+                                                                </option>
+                                                            </select>
+                                                        </div>
+                                                        <div class="col-md-1">
+                                                            <label style="margin-top:9px;">LOB: </label>
+                                                        </div>
+                                                        <div class="col-md-2">
+                                                            <select name="fltrLOB" id="fltrLOB" class="form-control m-input"
+                                                                formControlName="fltrLOB" #fltrLOB >
+                                                                <option value="" *ngIf="mylob===''">All</option>
+                                                                <option *ngFor="let item of optLobList" value="{{item.lob}}">
+                                                                    {{item.lob}}
+                                                                </option>
+                                                            </select>
+                                                        </div>
+        
+                                                        <div class="col-md-3">
+                                                            <button
+                                                                class="btn m-btn m-btn--gradient-from-primary m-btn--gradient-to-info"
+                                                                type="button" [disabled]="loadingYear||loadingLob"
+                                                                (click)="submitFilter(1)"
+                                                                style="background: #FF5A00; background-color: #FF5A00; border-color: #FF5A00;">Submit</button>
+                                                            <button
+                                                                class="btn m-btn m-btn--gradient-from-danger m-btn--gradient-to-warning ml-3"
+                                                                type="button" (click)="submitFilter(2)"
+                                                                style="background: darkgrey; background-color: darkgrey; border-color: darkgrey;">Reset</button>       
+                                                        </div>
+                                                    </div>       
+                                                </div>
+                                            </div>       
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+
+                        <!--start: default -->
+                        <div class="col-lg-12 centred my-auto" *ngIf="!submitted">
+                            <div class="m-demo__preview" style="padding-top:20px">
+                                <div class="m-stack m-stack--ver m-stack--general m-stack--demo">
+                                    <div class="m-stack__item m-stack__item--center m-stack__item--middle">
+                                        <span>
+                                            <br>
+                                            {{descEmptyData2}}
+                                            <br><br>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!--end: default -->
+
+                        <div class="col-lg-12 centred my-auto" *ngIf="submitted&&loading2">
+                            <div class="m-demo__preview" style="padding-top:20px">
+                                <div class="m-stack m-stack--ver m-stack--general m-stack--demo">
+                                    <div class="m-stack__item m-stack__item--center m-stack__item--middle">
+                                        <span>
+                                            Loading data. Please wait...
+                                        </span>
+                                        <span>
+                                            <div class="m-loader m-loader--lg m-loader--success"
+                                                style="width: 30px; display: inline-block;"></div>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- start: dashboard data -->
+                        <div class="row" *ngIf="!loading2">
+                            <div class="col-sm-2 pb-1">
+                                <div class="m-portlet m-portlet--rounded mb-0 grid-enlarge">
+                                    <div class="m-portlet__body text-center responsive-grid">
+                                        <div class="m--font-bolder text-adapt">Total Jobs<br> interview</div>
+                                        <!-- <div class="row"> -->
+                                            <div class="col-md-12" style="vertical-align: bottom;">
+                                                <img src="../../../../../../assets/blank/images/icon/Intv_totalJob.png"
+                                                class="pt-1 responsive-img-2">
+                                            </div>
+                                            <div class="col-md-12 value-adapt" style="margin-top: 2px;vertical-align: bottom;">
+                                                {{totalJobIntvw}}
+                                            </div>
+                                        <!-- </div> -->
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-2 pb-1">
+                                <div class="m-portlet m-portlet--rounded mb-0 grid-enlarge">
+                                    <div class="m-portlet__body text-center responsive-grid">
+                                        <div class="m--font-bolder text-adapt">Shortlisted
+                                        </div>
+                                        <!-- <div class="row"> -->
+                                            <div class="col-md-12" style="vertical-align: bottom;margin-top: 10px;">
+                                                <img src="../../../../../../assets/blank/images/icon/shortlisted.png"
+                                                class="pt-1 responsive-img-2">
+                                            </div>
+                                            <div class="col-md-12 value-adapt" style="margin-top: 2px;vertical-align: bottom;">
+                                                {{totalShortlisted}}
+                                            </div>
+                                        <!-- </div> -->
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-2 pb-1">
+                                <div class="m-portlet m-portlet--rounded mb-0 grid-enlarge">
+                                    <div class="m-portlet__body text-center responsive-grid">
+                                        <div class="m--font-bolder text-adapt">Interview <br>In Progress</div>
+                                        <!-- <div class="row"> -->
+                                            <div class="col-md-12" style="vertical-align: bottom;">
+                                                <img src="../../../../../../assets/blank/images/icon/IntInProgress.png"
+                                                class="pt-1 responsive-img-2">
+                                            </div>
+                                            <div class="col-md-12 value-adapt" style="margin-top: 2px;vertical-align: bottom;">
+                                                {{totalInProgress}}
+                                            </div>
+                                        <!-- </div> -->
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-2 pb-1">
+                                <div class="m-portlet m-portlet--rounded mb-0 grid-enlarge">
+                                    <div class="m-portlet__body text-center responsive-grid">
+                                        <div class="m--font-bolder text-adapt">Successful</div>
+                                        <!-- <div class="row"> -->
+                                            <div class="col-md-12" style="vertical-align: bottom;margin-top: 10px;">
+                                                <img src="../../../../../../assets/blank/images/icon/Intsuccess.png"
+                                                class="pt-1 responsive-img-2">
+                                            </div>
+                                            <div class="col-md-12 value-adapt" style="margin-top: 2px;vertical-align: bottom;">
+                                                {{totalSuccess}}
+                                            </div>
+                                        <!-- </div> -->
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-2 pb-1">
+                                <div class="m-portlet m-portlet--rounded mb-0 grid-enlarge">
+                                    <div class="m-portlet__body text-center responsive-grid">
+                                        <div class="m--font-bolder text-adapt">Unsuccessful
+                                        </div>
+                                        <!-- <div class="row"> -->
+                                            <div class="col-md-12" style="vertical-align: bottom;margin-top: 10px;">
+                                                <img src="../../../../../../assets/blank/images/icon/IntUnsuccessful.png"
+                                                class="pt-1 responsive-img-2">
+                                            </div>
+                                            <div class="col-md-12 value-adapt" style="margin-top: 2px;vertical-align: bottom;">
+                                                {{totalUnsuccessful}}
+                                            </div>
+                                        <!-- </div> -->
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-2 pb-1">
+                                <div class="m-portlet m-portlet--rounded mb-0 grid-enlarge">
+                                    <div class="m-portlet__body text-center responsive-grid">
+                                        
+                                        <div class="m--font-bolder text-adapt">Supervisor <br>Rejected</div>
+                                        <!-- <div class="row"> -->
+                                            <div class="col-md-12" style="vertical-align: bottom;">
+                                                <img src="../../../../../../assets/blank/images/icon/Supervisor_reject.png"
+                                                class="pt-1 responsive-img-2">
+                                            </div>
+                                            <div class="col-md-12 value-adapt" style="margin-top: 2px;vertical-align: bottom;">
+                                                {{totalRejected}}
+                                            </div>
+                                        <!-- </div> -->
+                                    </div>
+                                </div>
+                            </div>
+        
+                        </div><br>
+                        <div class="row" *ngIf="!loading2">
+                            <div class="col-lg-7">
+                                <span class="table-responsive">
+                                <table class="table table-bordered table-hover" style="font-size: smaller;width:100%;">
+                                    <thead style="background-color: #cde9fc;">
+                                        <tr>
+                                            <th rowspan="2" style="vertical-align: middle;min-width: 130px;">
+                                                Application Status <br>by Band<br>
+                                                <button type="button" class="btn m-btn--pill btn-primary"
+                                                   style="margin-top:5px;padding:2px 5px 2px 5px;" (click)="download1()">
+                                                    <span class="fa fa-download" style="font-size: smaller;"> Download</span>
+                                                </button>
+                                            </th>
+                                            <th colspan="2" style="text-align: center;">Band 1</th>
+                                            <th colspan="2" style="text-align: center;">Band 2</th>
+                                            <th colspan="2" style="text-align: center;">Band 3</th>
+                                        </tr>
+                                        <tr>
+                                            <th >Lateral</th>
+                                            <th >Promotion</th>
+                                            <th >Lateral</th>
+                                            <th >Promotion</th>
+                                            <th >Lateral</th>
+                                            <th >Promotion</th>
+                                        </tr>
+                                    </thead>
+                                    <tr>
+                                        <th scope="row">Shortlisted</th>
+                                        <td>{{cntShortlistB1_lat}}</td>
+                                        <td>{{cntShortlistB1_promo}}</td>
+                                        <td>{{cntShortlistB2_lat}}</td>
+                                        <td>{{cntShortlistB2_promo}}</td>
+                                        <td>{{cntShortlistB3_lat}}</td>
+                                        <td>{{cntShortlistB3_promo}}</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">Interview <br>In Progress</th>
+                                        <td>{{cntIntvwIProgB1_lat}}</td>
+                                        <td>{{cntIntvwIProgB1_promo}}</td>
+                                        <td>{{cntIntvwIProgB2_lat}}</td>
+                                        <td>{{cntIntvwIProgB2_promo}}</td>
+                                        <td>{{cntIntvwIProgB3_lat}}</td>
+                                        <td>{{cntIntvwIProgB3_promo}}</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">Unsuccessful</th>
+                                        <td>{{cntUnsuccessfulB1_lat}}</td>
+                                        <td>{{cntUnsuccessfulB1_promo}}</td>
+                                        <td>{{cntUnsuccessfulB2_lat}}</td>
+                                        <td>{{cntUnsuccessfulB2_promo}}</td>
+                                        <td>{{cntUnsuccessfulB3_lat}}</td>
+                                        <td>{{cntUnsuccessfulB3_promo}}</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">Successful</th>
+                                        <td>{{cntSuccessfulB1_lat}}</td>
+                                        <td>{{cntSuccessfulB1_promo}}</td>
+                                        <td>{{cntSuccessfulB2_lat}}</td>
+                                        <td>{{cntSuccessfulB2_promo}}</td>
+                                        <td>{{cntSuccessfulB3_lat}}</td>
+                                        <td>{{cntSuccessfulB3_promo}}</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">Supervisor Rejected</th>
+                                        <td>{{cntRejectedB1_lat}}</td>
+                                        <td>{{cntRejectedB1_promo}}</td>
+                                        <td>{{cntRejectedB2_lat}}</td>
+                                        <td>{{cntRejectedB2_promo}}</td>
+                                        <td>{{cntRejectedB3_lat}}</td>
+                                        <td>{{cntRejectedB3_promo}}</td>
+                                    </tr>
+                                    <tfoot style="background-color: #cde9fc;">
+                                        <tr>
+                                            <th>Total</th>
+                                            <th>{{total_Status_lat_B1}}</th>
+                                            <th>{{total_Status_promo_B1}}</th>
+                                            <th>{{total_Status_lat_B2}}</th>
+                                            <th>{{total_Status_promo_B2}}</th>
+                                            <th>{{total_Status_lat_B3}}</th>
+                                            <th>{{total_Status_promo_B3}}</th>
+                                        </tr>
+                                    </tfoot>
+                                </table></span><br>
+                            </div>
+                            <div class="col-lg-5">
+                                <table class="table table-bordered table-hover" style="font-size: smaller;width: 100%;">
+                                    <thead style="background-color: #cde9fc;">
+                                        <tr>
+                                            <th style="padding-top: 10px;padding-bottom: 10px;vertical-align: middle;">
+                                                Recruitment Status
+                                                <br>by Band
+                                                <br>
+                                                <button type="button" class="btn m-btn--pill btn-primary"
+                                                   style="margin-top:5px;padding:2px 5px 2px 5px;" (click)="download2()">
+                                                    <span class="fa fa-download" style="font-size: smaller;"> Download</span>
+                                                </button>
+                                            </th>
+                                            <th style="vertical-align: middle;">Band 1</th>
+                                            <th style="vertical-align: middle;">Band 2</th>
+                                            <th style="vertical-align: middle;">Band 3</th>
+                                        </tr>
+                                    </thead>
+                                    <tr>
+                                        <th scope="row">Create Session</th>
+                                        <td>{{status_CreateSessionB1}}</td>
+                                        <td>{{status_CreateSessionB2}}</td>
+                                        <td>{{status_CreateSessionB3}}</td>
+        
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">In Progress</th>
+                                        <td>{{status_InProgressB1}}</td>
+                                        <td>{{status_InProgressB2}}</td>
+                                        <td>{{status_InProgressB3}}</td>
+        
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">Submitted</th>
+                                        <td>{{status_SubmittedB1}}</td>
+                                        <td>{{status_SubmittedB2}}</td>
+                                        <td>{{status_SubmittedB3}}</td>
+        
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">Started</th>
+                                        <td>{{status_StartedB1}}</td>
+                                        <td>{{status_StartedB2}}</td>
+                                        <td>{{status_StartedB3}}</td>
+        
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">Completed<br>(Report Submitted)</th>
+                                        <td>{{status_CompletedB1}}</td>
+                                        <td>{{status_CompletedB2}}</td>
+                                        <td>{{status_CompletedB3}}</td>
+        
+                                    </tr>
+                                    <tfoot style="background-color: #cde9fc;">
+                                        <tr>
+                                            <th>Total</th>
+                                            <th>{{total_recStatus_B1}}</th>
+                                            <th>{{total_recStatus_B2}}</th>
+                                            <th>{{total_recStatus_B3}}</th>
+        
+                                        </tr>
+                                    </tfoot>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="row" *ngIf="!loading2 && lobdata.length>1">
+                            <div class="col-lg-12">
+                                <span class="table-responsive">
+                                <table class="table table-bordered table-hover" style="font-size: smaller;width:fit-content;">
+                                    <thead style="background-color: #cde9fc;">
+                                        <tr>
+                                            <th rowspan="2" style="vertical-align: middle;min-width: 134px;">Recruitment Status <br>by LOB
+                                                <br>
+                                                <button type="button" class="btn m-btn--pill btn-primary"
+                                                   style="margin-top:5px;padding:2px 5px 2px 5px;" (click)="download3()">
+                                                    <span class="fa fa-download" style="font-size: smaller;"> Download</span>
+                                                </button>
+                                            </th>
+        
+                                            <th *ngFor="let item of lobdata" style="text-align: center;vertical-align: middle;"
+                                                colspan="3">{{item.LOB}}
+                                            </th>
+                                        </tr>
+                                        <tr style="margin: 0;padding: 0;">
+                                            <ng-container *ngFor="let item of lobdata">
+                                                <th style="min-width: 65px;">Band 1</th>
+                                                <th style="min-width: 65px;">Band 2</th>
+                                                <th style="min-width: 65px;">Band 3</th>
+                                            </ng-container>
+                                        </tr>
+                                    </thead>
+                                    <tr>
+                                        <th scope="row">Create Session</th>
+                                        <ng-container *ngFor="let item of lobdata">
+                                            <td>{{item.status_CreateSessionB1}}</td>
+                                            <td>{{item.status_CreateSessionB2}}</td>
+                                            <td>{{item.status_CreateSessionB3}}</td>
+                                        </ng-container>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">In Progress</th>
+                                        <ng-container *ngFor="let item of lobdata">
+                                            <td>{{item.status_InProgressB1}}</td>
+                                            <td>{{item.status_InProgressB2}}</td>
+                                            <td>{{item.status_InProgressB3}}</td>
+                                        </ng-container>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">Submitted</th>
+                                        <ng-container *ngFor="let item of lobdata">
+                                            <td>{{item.status_SubmittedB1}}</td>
+                                            <td>{{item.status_SubmittedB2}}</td>
+                                            <td>{{item.status_SubmittedB3}}</td>
+                                        </ng-container>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">Started</th>
+                                        <ng-container *ngFor="let item of lobdata">
+                                            <td>{{item.status_StartedB1}}</td>
+                                            <td>{{item.status_StartedB2}}</td>
+                                            <td>{{item.status_StartedB3}}</td>
+                                        </ng-container>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">Completed<br>(Report Submitted)</th>
+                                        <ng-container *ngFor="let item of lobdata">
+                                            <td>{{item.status_CompletedB1}}</td>
+                                            <td>{{item.status_CompletedB2}}</td>
+                                            <td>{{item.status_CompletedB3}}</td>
+                                        </ng-container>
+                                    </tr>
+                                    <tfoot style="background-color: #cde9fc;">
+                                        <tr>
+                                            <th>Total</th>
+                                            <ng-container *ngFor="let item of lobdata">
+                                                <th>{{item.totalB1}}</th>
+                                                <th>{{item.totalB2}}</th>
+                                                <th>{{item.totalB3}}</th>
+                                            </ng-container>
+                                        </tr>
+                                    </tfoot>
+                                </table>
+                            </span>
+                            </div>
+                        </div>   
+                        <!-- end: dashboard data -->
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

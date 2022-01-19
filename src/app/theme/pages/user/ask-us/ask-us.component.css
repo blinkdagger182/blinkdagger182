@@ -1,0 +1,18 @@
+.ask-bg {
+    background-image: url(../../../../../assets/img/user/sea-portal/bg-askus.jpg) !important; 
+    position: relative;
+    height: 20rem; 
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.btn-askussubmit {
+    color: #fff;
+    background-color: #0FC2D0 !important;
+    border-color: #0FC2D0 !important; 
+    opacity: unset;
+}
+.btn-askussubmit.disabled, .btn-askussubmit:disabled {
+    opacity: 0.65 !important;
+    cursor: not-allowed !important;
+}

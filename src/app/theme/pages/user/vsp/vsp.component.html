@@ -1,0 +1,544 @@
+<div>
+  <div class="page-bg idp-bg">
+    <h2 class="head-sub-title">{{ word.head_sub_title }}</h2>
+  </div>
+  <div class="pg-title-div">
+    <h3 class="pg-title">{{ word.pg_title }}</h3>
+  </div>
+</div>
+
+<!--Start:subheadr-->
+<div class="m-subheader" style="background-color: #ffffff">
+  <div class="d-flex align-items-center">
+    <div class="mr-auto">
+      <h3 class="m-subheader__title m-subheader__title--separator">
+        {{ word.h3_subheader }}
+      </h3>
+      <ul class="m-subheader__breadcrumbs m-nav m-nav--inline" *ngIf="!loading">
+        <li class="m-nav__item m-nav__item--home">
+          <a routerLink="/index" class="m-nav__link m-nav__link--icon">
+            <i class="m-nav__link-icon la la-home"></i>
+          </a>
+        </li>
+      </ul>
+    </div>
+    <!--Begin:Language-->
+    <ul class="m-topbar__nav m-nav m-nav--inline d-none">
+      <li
+        class="m-nav__item m-topbar__user-profile m-topbar__user-profile--img"
+        data-toggle="modal"
+        data-target="#langSelect"
+      >
+        <span>
+          <span
+            class="m-topbar__username"
+            style="padding-left: 10px; padding-right: 10px"
+          >
+            {{ word.lang }} :
+          </span>
+          <span class="m-topbar__userpic">
+            <button
+              *ngIf="enChecked"
+              type="button"
+              title="English"
+              data-toggle="m-tooltip"
+              data-placement="top"
+              class="btn m-btn--pill m-btn--air btn-outline-info active btn-sm"
+            >
+              EN
+            </button>
+            <button
+              *ngIf="!enChecked"
+              type="button"
+              title="Malay"
+              data-toggle="m-tooltip"
+              data-placement="top"
+              class="btn m-btn--pill m-btn--air btn-outline-info active btn-sm"
+            >
+              MY
+            </button>
+          </span>
+        </span>
+      </li>
+    </ul>
+    <div
+      class="modal fade"
+      id="langSelect"
+      tabindex="-1"
+      role="dialog"
+      aria-labelledby="exampleModalCenterTitle"
+      style="display: none"
+      aria-hidden="true"
+    >
+      <div
+        class="modal-dialog msg-dialog modal-dialog-centered"
+        role="document"
+        style="max-width: 235px !important; margin: auto !important"
+      >
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 style="text-align: center; font-size: 1.25rem">
+              {{ word.lang }}
+            </h5>
+            <button
+              type="button"
+              id="lang_close"
+              class="close"
+              data-dismiss="modal"
+              aria-label="Close"
+            >
+              <span aria-hidden="true">×</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <div class="m-dropdown__content">
+              <label
+                class="lang-radio m-radio m-radio--solid m-radio--success"
+                style="font-size: 16px"
+              >
+                <input
+                  type="radio"
+                  #en
+                  name="lang"
+                  value="en"
+                  [checked]="enChecked"
+                  (change)="langChange(en)"
+                />
+                &nbsp;&nbsp; English
+                <span style="width: 23px; height: 23px"></span>
+              </label>
+              <br />
+              <label
+                class="lang-radio m-radio m-radio--solid m-radio--success"
+                style="font-size: 16px"
+              >
+                <input
+                  type="radio"
+                  #my
+                  name="lang"
+                  value="my"
+                  [checked]="!enChecked"
+                  (change)="langChange(my)"
+                />
+                &nbsp;&nbsp; Malay
+                <span style="width: 23px; height: 23px"></span>
+              </label>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--End:Language-->
+  </div>
+</div>
+<!--End:subheadr-->
+
+<!--Start:Content-->
+<div class="m-content" style="background-color: #ffffff">
+    <div class="col-lg-12 centred my-auto" *ngIf="loading">
+        <idp-loading></idp-loading>
+    </div>
+    
+  <div *ngIf="!loading&&showVrp">
+    <div class="row justify-content-md-center text-center" >
+      <div class="col-xl-11 mx-auto ">
+        <div class="section-title">
+          <h2>{{ word.sec_title_greet }}</h2>
+          <p>
+            {{ word.sec_title_content1 }}
+            <a href="/vrp" data-toggle="modal" data-target="#vrp-tnc" (click)="getTnc()">{{
+              word.tnc
+            }}</a>
+            &
+            <a href="/vrp" data-toggle="modal" data-target="#vrp-faq" (click)="getFaq()">{{
+              word.faq
+            }}</a>
+            {{ word.sec_title_content2 }}
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div
+      class="row"
+      *ngIf="!checkStatus || checkStatus === 1"
+    >
+      <div class="col-xl-10 mx-auto">
+        <p class="text-center">{{ word.content_instruction }}</p>
+      </div>
+    </div>
+    <div
+      class="row justify-content-center"
+      *ngIf="!checkStatus || checkStatus === 2"
+    >
+      <div class="col-xl-10 mx-auto">
+        <p class="text-center">{{ word.content_applied }}</p>
+      </div>
+    </div>
+
+    <!-- If no offer list -->
+    <div class="row mb-5"  *ngIf="offerList.length === 0">
+      <div class="col-xl-10 mx-auto justify-content-center">
+        <div class="alert alert-warning">
+          No offer list
+        </div>
+      </div>
+    </div>
+
+    <!-- If has offer list -->
+    <div class="row justify-content-md-center mb-5"  *ngIf="offerList">
+      
+      <div class="col-xl-10 mx-auto text-center">{{ word.content_applied }}</div>
+      <!-- new API for-->
+      <div class="col-md-6 col-xl-4" *ngFor="let offer of offerList; let i = index" style="font-size: initial !important;">
+        <div class="mat-card mt-2 mb-2 mb-lg-0 text-center" 
+        [class.border-success]="checkStatus > 1 && date_apply === offer.exit_date">
+          <div
+            class="card-body card-offer1-bg"
+            [class.card-offer3-bg] = "checkStatus > 1 && date_apply === offer.exit_date"
+          >
+            {{ word.date_end_service }}:<br />
+            <p style="font-weight: bold !important;">{{ offer.exit_date | date: 'd' }} {{ convertMonthBM(offer.exit_date) }} {{ offer.exit_date | date: 'yyyy' }}</p>
+            {{ word.est_special_reward }}:<br />
+            <p style="font-weight: bold !important;">
+              {{ offer.benefit }}
+              <span *ngIf="!offer.benefit">0 (No data)</span>
+            </p>
+            {{ word.est_debt_bal }}:<br />
+            <p style="font-weight: bold !important;">
+              {{ offer.loan }}
+              <span *ngIf="!offer.loan">0 (No data)</span>
+            </p>
+            <span *ngIf="checkStatus > 1 && checkStatus != 11 && date_apply === offer.exit_date">
+              <a href="/vsp/result" class="btn btn-success btn-block">
+                <i class="fa fa-check-square-o"></i> {{ word.applied }}</a>
+            </span>
+            <span *ngIf="checkStatus > 1 && date_apply != offer.exit_date">
+              <button class="btn btn-block text-white d-none" disabled>{{ word.not_applied }}</button>
+            </span>
+            <span *ngIf="checkStatus >= 6 && checkStatus <= 9">
+              <a href="/vsp/tracking" class="btn btn-success btn-block">
+                <i class="fa fa-check-square-o"></i> {{ checkStatusConv }}</a>
+            </span>
+            <div *ngIf="(checkStatus == 1 || checkStatus == 11) && offer.exit_date != null">
+              <a
+                href="#"
+                (click)="setPlan(offer.exit_date)"
+                data-toggle="modal"
+                data-id="1"
+                data-target="#vsp-form-apply"
+                class="btn text-uppercase btn-apply"
+                >{{ word.apply }}</a
+              >
+              
+              <a
+                href="#"
+                (click)="setPlan(offer.exit_date)"
+                data-toggle="modal"
+                data-id="1"
+                data-target="#vsp-not-interest"
+                class="btn text-uppercase btn-not-interest"
+                >{{ word.not_interest }}</a
+              >
+            </div>
+
+          </div>
+        </div>
+      </div>
+  </div>
+  
+  </div>
+</div>
+
+
+<!-- Modal TNC-->
+<div class="modal fade" id="vrp-tnc">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <h4 class="modal-title">{{ word.tnc }}</h4>
+        <button type="button" class="close" data-dismiss="modal">
+          &times;
+        </button>
+      </div>
+
+      <!-- Modal body -->
+      <div class="modal-body">
+        <p>{{ word.disclaimer_doc }}</p>
+        <hr />
+        <div class="text-center">
+          <a
+            class="m-link m-link--state m-link--success m--font-bolder btn btn-info"
+            [href]="tncMesraPdfURL"
+            target="_blank"
+          >
+          <i class="fa fa-external-link" aria-hidden="true"></i>&nbsp;
+          {{ word.download }}
+          </a>
+        </div>
+      </div>
+
+      <!-- Modal footer -->
+      <!-- <div class="modal-footer">
+          <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+        </div> -->
+    </div>
+  </div>
+</div>
+
+<!-- Modal FAQ-->
+<div class="modal fade" id="vrp-faq">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <h4 class="modal-title">{{ word.faq }}</h4>
+        <button type="button" class="close" data-dismiss="modal">
+          &times;
+        </button>
+      </div>
+
+      <!-- Modal body -->
+      <div class="modal-body">
+        <p>{{ word.disclaimer_doc }}</p>
+        <hr />
+        <div class="text-center">
+          <a
+            class="m-link m-link--state m-link--success m--font-bolder btn btn-info"
+            [href]="faqMesraPdfURL"
+            target="_blank"
+          >
+          <i class="fa fa-external-link" aria-hidden="true"></i>&nbsp;
+          {{ word.download }}
+          </a>
+        </div>
+      </div>
+
+      <!-- Modal footer -->
+      <!-- <div class="modal-footer">
+          <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+        </div> -->
+    </div>
+  </div>
+</div>
+
+<!-- Modal Permohonan-->
+<div class="modal fade" id="vsp-form-apply">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <!-- Modal Header -->
+      <div class="modal-header form-header-bg text-center">
+        <h4 class="modal-title text-white">Borang Permohonan {{word.pg_title}}</h4>
+        <button type="button" class="close" data-dismiss="modal">
+          &times;
+        </button>
+      </div>
+
+      <!-- Modal body -->
+      <div class="modal-body">
+        <form [formGroup]="applyForm" id="form_apply">
+          <div class="form-group row">
+            <div class="col-12">
+              <ol>
+                <li>
+                  {{ word.saya }} <b>{{ staff_name }}</b>
+                  {{ word.form_disclaimer1 }}
+                </li>
+                <li>{{ word.form_disclaimer2 }}</li>
+                <li>{{ word.form_disclaimer3 }}</li>
+              </ol>
+            </div>
+          </div>          
+          <div class="form-check">
+            <label class="form-check-label label-form">
+              <input
+                formControlName="tnc"
+                [(ngModel)]="tncCheck"
+                id="tnc"
+                name="tnc"
+                type="checkbox"
+                required
+                class="form-check-input"
+              />{{ word.from_check_disclaimer }}
+              </label>
+          </div>
+          <div class="form-group row">
+            <label class="col-md-4 col-form-label">              
+              <!-- <div class="pad-top-5px"> -->
+                {{ word.form_label_verify_ic }}
+              <!-- </div> -->
+            </label>
+            <div class="col-md-8">
+              <div class="input-group">
+                <div class="input-group-prepend">
+                  <div class="input-group-text">
+                    <i class="fa fa-address-card"></i>
+                  </div>
+                </div>
+                <input
+                  (change)="resetErrIc()"
+                  formControlName="ic"
+                  id="ic"
+                  name="ic"
+                  type="text"
+                  class="form-control"
+                  placeholder="eg: 871230145259"
+                  maxlength="12"
+                />
+              </div>
+              
+              <div [ngClass]="{ 'text-danger': err_ic || checkForm != 0 }">
+                <small>{{ err_ic }}</small>
+              </div>
+            </div>
+          </div>
+          <div class="form-group row">
+            <div class="col-12">
+              {{ word.date }}: {{ currentDate | date: 'd' }} {{ convertMonthBM(currentDate) }} {{ currentDate | date: 'yyyy' }}
+              <!-- <br>       
+                    <input formControlName="selectedPlan" type="text" name="selectedPlan" id="selectedPlan" 
+                    value="{{selectedExitDate}}"/> -->
+            </div>
+          </div>
+          <div class="form-group row justify-content-center">
+            <div class="col-md-4">
+              <button
+                (click)="submitForm()"
+                [disabled]="!tncCheck"
+                id="btn_setuju"
+                type="submit"
+                class="btn btn-block text-white btn-agree"
+              >
+                Setuju
+              </button>
+            </div>
+            <div class="col-md-4">
+              <button
+                id="btn_batal"
+                type="button"
+                (click)="resetApplyForm();"
+                class="btn btn-outline-danger btn-block"
+                data-dismiss="modal"
+              >
+                Batal
+              </button>
+            </div>
+          </div>
+        </form>
+        <!-- <button (click)="test()">test</button> -->
+      </div>
+
+      <!-- Modal footer -->
+      <!-- <div class="modal-footer justify-content-center"> -->
+      <!-- <div class="col-md-4">
+                    <button id="btn_setuju" type="button" disabled class="btn btn-default btn-block" style="background-color:#11AFBE;">Setuju</button>
+                </div>
+                <div class="col-md-4">
+                    <button id="btn_batal" type="button" class="btn btn-outline-danger btn-block" data-dismiss="modal">Batal</button>
+                </div>      -->
+      <!-- <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button> -->
+      <!-- </div> -->
+    </div>
+  </div>
+</div> 
+
+<!-- Modal Tidak Berminat-->
+<div class="modal fade" id="vsp-not-interest">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <!-- Modal Header -->
+      <div class="modal-header form-header-bg text-center">
+        <h4 class="modal-title text-white">Sebab tidak berminat dengan tawaran {{word.pg_title}}</h4>
+        <button type="button" class="close" data-dismiss="modal">
+          &times;
+        </button>
+      </div>
+
+      <!-- Modal body -->
+      <div class="modal-body">
+        <form [formGroup]="notApplyForm" id="notApplyForm">
+          <div class="form-group row">
+            <div class="col-12">
+              <p>Sila Pilih Yang Berkaitan:</p>
+              <div class="alert alert-secondary mb-0">
+              <div class="radio">
+                <label><input type="checkbox" name="reason1" 
+                  formControlName="reason1"   
+                  (click)="showReasonText($event.target.value)"        
+                  value="1"> Komitmen kewangan</label>
+              </div>
+              <div class="radio">
+                <label><input type="checkbox" name="reason2" 
+                  formControlName="reason2"    
+                  (click)="showReasonText($event.target.value)"       
+                  value="2"> Masih mahu berkhidmat di Syarikat</label>
+              </div>
+              <div class="radio">
+                <label><input type="checkbox" name="reason3" 
+                  formControlName="reason3"       
+                  (click)="showReasonText($event.target.value)"
+                  value="3"> Pakej tawaran tidak menarik</label>
+              </div> 
+              <div class="radio">
+                <label><input type="checkbox" name="reason4"   
+                  formControlName="reason4"
+                  [(ngModel)]="showLain2"
+                  (click)="showReasonText($event.target.value)"
+                  value="4"> Lain-lain</label>                  
+              </div> 
+                <div [hidden]="!showLain2">
+                  <textarea class="form-control" rows="3" 
+                  name="reasonLain" 
+                  #reasonLainFocus 
+                  formControlName="reasonLain" minlength="3" maxlength="100"
+                  [(ngModel)]="reasonLain"
+                  (ngModelChange)="reasonLainChar(reasonLain)">
+                </textarea>
+                <span>{{remainingText}}</span>
+                </div>                
+                <small  [ngClass]="{ 'text-danger': err_reason || checkForm != 0 }">{{ err_reason }}</small>    
+              </div><!-- alert alert-secondary --> 
+              {{ word.date }}: {{ currentDate | date: 'd' }} {{ convertMonthBM(currentDate) }} {{ currentDate | date: 'yyyy' }}    
+            </div>
+          </div>
+          <div class="form-group row justify-content-center">
+            <div class="col-md-4">
+              <button
+                (click)="submitFormNotInterest()"
+                id="btn_setuju_notInterested"
+                type="submit"
+                class="btn btn-block text-white btn-agree"
+              >
+                Hantar
+              </button>
+            </div>
+            <div class="col-md-4">
+              <button
+                id="btn_batal_notInterested"
+                type="button"
+                (click)="resetNotApplyForm();"
+                class="btn btn-outline-danger btn-block"
+                data-dismiss="modal"
+              >
+                Batal
+              </button>
+            </div>
+          </div>
+        </form>
+        <!-- <button (click)="test()">test</button> -->
+      </div>
+
+      <!-- Modal footer -->
+      <!-- <div class="modal-footer justify-content-center"> -->
+      <!-- <div class="col-md-4">
+                    <button id="btn_setuju" type="button" disabled class="btn btn-default btn-block" style="background-color:#11AFBE;">Setuju</button>
+                </div>
+                <div class="col-md-4">
+                    <button id="btn_batal" type="button" class="btn btn-outline-danger btn-block" data-dismiss="modal">Batal</button>
+                </div>      -->
+      <!-- <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button> -->
+      <!-- </div> -->
+    </div>
+  </div>
+</div> 

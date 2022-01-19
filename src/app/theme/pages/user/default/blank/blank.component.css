@@ -1,0 +1,408 @@
+.modal-close-btn:focus {
+  outline: none !important;
+}
+.sea-bg {
+  background-repeat: no-repeat;
+  height: 100%;
+  position: relative;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-attachment: fixed;
+  background-position: center;
+}
+.mor-bg {
+  background-blend-mode: multiply;
+  background-color: rgba(0, 0, 0, 0.25);
+  background-image: url("../../../../../../assets/img/user/sea-portal/morningBG.jpg");
+}
+.eve-bg {
+  background-image: url("../../../../../../assets/img/user/sea-portal/nightBG.jpg");
+}
+.noon-bg {
+  background-image: url("../../../../../../assets/img/user/sea-portal/noonBG.jpg");
+}
+.greet-div {
+  padding-top: 8rem;
+  font-family: "Lato";
+  font-size: 18pt;
+  font-weight: 400;
+  color: white;
+  text-align: center;
+  text-shadow: 3px 3px 3px black;
+}
+.home-container {
+  /* max-width: 950px; */
+  margin-top: 4rem;
+  background: #00000059;
+  border-radius: 8px;
+}
+.urgent {
+  color: white;
+  font-weight: 500;
+  font-family: "Lato";
+  font-size: 20px;
+  text-align: center;
+  padding: 1rem;
+}
+.progressText {
+  position: relative;
+  bottom: 120px;
+  cursor: pointer;
+}
+.daysNo {
+  color: white;
+  font-size: 32px;
+  font-weight: 600;
+  height: 36px;
+  margin: 0;
+}
+.todayPay {
+  color: white;
+  font-size: 20px;
+  font-weight: 600;
+  height: 50px;
+  margin: 0;
+  padding: 1rem;
+}
+.daysLeft {
+  font-size: 12px;
+  font-weight: 600;
+  margin: 0;
+  color: white;
+}
+.payDate {
+  font-size: 10px;
+  font-weight: 600;
+  margin: 0;
+  color: white;
+}
+.sal-counters {
+  color: white;
+  font-size: 18px;
+  position: relative;
+  top: -7rem;
+  padding: 0rem 3rem;
+}
+.menuDiv {
+  text-align: center;
+  padding: 1rem;
+}
+.menuIcons {
+  border-radius: 50%;
+  cursor: pointer;
+  width: 60px;
+}
+.menuTxt {
+  color: white;
+  font-family: "Lato";
+  font-size: 14px;
+  font-weight: 500;
+}
+
+@media (min-width: 992px) {
+  .home-container {
+    max-width: 900px;
+  }
+}
+
+@media (max-width: 576px) {
+  .home-container {
+    width: 85%;
+  }
+}
+
+@media (max-width: 992px) {
+  .eve-bg {
+    background-position: 95%;
+  }
+}
+
+/*
+    code by Iatek LLC 2018 - CC 2.0 License - Attribution required
+    code customized by Azmind.com
+*/
+@media (min-width: 768px) and (max-width: 991px) {
+  /* Show 4th slide on md if col-md-4*/
+  .carousel-inner .active.col-md-4.carousel-item + .carousel-item + .carousel-item + .carousel-item {
+      position: absolute;
+      top: 0;
+      right: -33.3333%;  /*change this with javascript in the future*/
+      z-index: -1;
+      display: block;
+      visibility: visible;
+  }
+}
+@media (min-width: 576px) and (max-width: 768px) {
+  /* Show 3rd slide on sm if col-sm-6*/
+  .carousel-inner .active.col-sm-6.carousel-item + .carousel-item + .carousel-item {
+      position: absolute;
+      top: 0;
+      right: -50%;  /*change this with javascript in the future*/
+      z-index: -1;
+      display: block;
+      visibility: visible;
+  }
+}
+@media (min-width: 576px) {
+  .carousel-item {
+      margin-right: 0;
+  }
+  /* show 2 items */
+  .carousel-inner .active + .carousel-item {
+      display: block;
+  }
+  .carousel-inner .carousel-item.active:not(.carousel-item-right):not(.carousel-item-left),
+  .carousel-inner .carousel-item.active:not(.carousel-item-right):not(.carousel-item-left) + .carousel-item {
+      transition: none;
+  }
+  .carousel-inner .carousel-item-next {
+      position: relative;
+      transform: translate3d(0, 0, 0);
+  }
+  /* left or forward direction */
+  .active.carousel-item-left + .carousel-item-next.carousel-item-left,
+  .carousel-item-next.carousel-item-left + .carousel-item,
+  .carousel-item-next.carousel-item-left + .carousel-item + .carousel-item {
+      position: relative;
+      transform: translate3d(-100%, 0, 0);
+      visibility: visible;
+  }
+  /* farthest right hidden item must be also positioned for animations */
+  .carousel-inner .carousel-item-prev.carousel-item-right {
+      position: absolute;
+      top: 0;
+      left: 0;
+      z-index: -1;
+      display: block;
+      visibility: visible;
+  }
+  /* right or prev direction */
+  .active.carousel-item-right + .carousel-item-prev.carousel-item-right,
+  .carousel-item-prev.carousel-item-right + .carousel-item,
+  .carousel-item-prev.carousel-item-right + .carousel-item + .carousel-item {
+      position: relative;
+      transform: translate3d(100%, 0, 0);
+      visibility: visible;
+      display: block;
+      visibility: visible;
+  }
+}
+/* MD */
+@media (min-width: 768px) {
+  /* show 3rd of 3 item slide */
+  .carousel-inner .active + .carousel-item + .carousel-item {
+      display: block;
+  }
+  .carousel-inner .carousel-item.active:not(.carousel-item-right):not(.carousel-item-left) + .carousel-item + .carousel-item {
+      transition: none;
+  }
+  .carousel-inner .carousel-item-next {
+      position: relative;
+      transform: translate3d(0, 0, 0);
+  }
+  /* left or forward direction */
+  .carousel-item-next.carousel-item-left + .carousel-item + .carousel-item + .carousel-item {
+      position: relative;
+      transform: translate3d(-100%, 0, 0);
+      visibility: visible;
+  }
+  /* right or prev direction */
+  .carousel-item-prev.carousel-item-right + .carousel-item + .carousel-item + .carousel-item {
+      position: relative;
+      transform: translate3d(100%, 0, 0);
+      visibility: visible;
+      display: block;
+      visibility: visible;
+  }
+}
+/* LG */
+@media (min-width: 991px) {
+  /* show 4th item */
+  .carousel-inner .active + .carousel-item + .carousel-item + .carousel-item {
+      display: block;
+  }
+  .carousel-inner .carousel-item.active:not(.carousel-item-right):not(.carousel-item-left) + .carousel-item + .carousel-item + .carousel-item {
+      transition: none;
+  }
+  /* Show 5th slide on lg if col-lg-3 */
+  .carousel-inner .active.col-lg-3.carousel-item + .carousel-item + .carousel-item + .carousel-item + .carousel-item {
+      position: absolute;
+      top: 0;
+      right: -25%;  /*change this with javascript in the future*/
+      z-index: -1;
+      display: block;
+      visibility: visible;
+  }
+  /* left or forward direction */
+  .carousel-item-next.carousel-item-left + .carousel-item + .carousel-item + .carousel-item + .carousel-item {
+      position: relative;
+      transform: translate3d(-100%, 0, 0);
+      visibility: visible;
+  }
+  /* right or prev direction //t - previous slide direction last item animation fix */
+  .carousel-item-prev.carousel-item-right + .carousel-item + .carousel-item + .carousel-item + .carousel-item {
+      position: relative;
+      transform: translate3d(100%, 0, 0);
+      visibility: visible;
+      display: block;
+      visibility: visible;
+  }
+}
+
+.lg-badge {
+  font-size: 1.2em;
+  margin-top: -10px;
+}
+
+.bootstrap-select .bs-ok-default::after {
+  width: 0.3em;
+  height: 0.6em;
+  border-width: 0 0.1em 0.1em 0;
+  transform: rotate(45deg) translateY(0.5rem);
+}
+
+.btn.dropdown-toggle:focus {
+  outline: none !important;
+}
+
+/* MD *//* LG */
+@media (min-width: 768px) {
+#view_news .modal-dialog {
+  max-width: 80vw;
+  max-height: 80vw;  
+}
+}
+
+.annImgThumb {
+  min-width: 100% !important;
+  max-width: 100% !important;
+  min-height: 120px !important;
+  max-height: 120px !important;
+}
+
+.btn-view-all {
+  color: white;
+  font-family: "Lato";
+  text-align: right;
+  padding: 1.2rem;
+  padding-right: 1.5rem;
+  margin-left: 1.5rem;
+}
+
+.annCommentdiv {
+  height:400px;
+  overflow-y: scroll;
+}
+
+.alert.ann-alert-box {
+      padding: 1rem;
+      border-radius: 0;
+      border-radius: 4px;
+}
+
+.text-box-subject {
+  font-size: 14px;
+  line-height: 14px;
+  height: 30px;
+  text-overflow: ellipsis;
+  overflow: auto;
+}
+
+  /* Track */
+  .text-box-subject::-webkit-scrollbar-track {
+    background: #00000059; 
+  }
+   
+  /* Handle */
+.text-box-subject::-webkit-scrollbar-thumb {
+    background: #888; 
+  }
+  
+  /* Handle on hover */
+.text-box-subject::-webkit-scrollbar-thumb:hover {
+    background: #555; 
+  }
+
+  textarea {
+    /* border-style:none; please change the textarea class if want to implement this borderstyle */
+    background:transparent;
+    margin-top: 0px;
+    margin-bottom: 0px;
+    height: 100% !important;
+    width: 100%;
+    padding: 7px;
+    border-radius: 20px;
+    font-size: 1rem;
+    resize: none;
+    padding:7px;    
+  }
+
+  textarea:focus {
+    outline-width: 0;
+    /* border-style:none; */
+    background:transparent;
+}
+
+ textarea::-webkit-scrollbar {
+  width: 12px;
+  background-color: #F5F5F5; 
+}
+  
+textarea::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.1);
+  box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.1);
+  background-color: #4285F4; 
+}
+
+.la {
+  text-decoration: none;
+  font-size: 15px;
+}
+
+.liked {
+  color: red !important;
+}
+
+/* snow */
+
+.editor-stage .snow {
+  height:50px;
+  background: #fff;
+}
+.snow{
+  position:fixed;
+  pointer-events:none;
+  top:0;
+  left:0;
+  right:0;
+  bottom:0;
+  height:100vh;
+  background: none;
+  background-image: url('https://s3-eu-west-1.amazonaws.com/static-ressources/s1.png'), url('https://s3-eu-west-1.amazonaws.com/static-ressources/s2.png'), url('https://s3-eu-west-1.amazonaws.com/static-ressources/s3.png');
+  z-index:100;
+  -webkit-animation: snow 10s linear infinite;
+  -moz-animation: snow 10s linear infinite;
+  -ms-animation: snow 10s linear infinite;
+  animation: snow 10s linear infinite;
+}
+@keyframes snow {
+  0% {background-position: 0px 0px, 0px 0px, 0px 0px;}
+  50% {background-position: 500px 500px, 100px 200px, -100px 150px;}
+  100% {background-position: 500px 1000px, 200px 400px, -100px 300px;}
+}
+@-moz-keyframes snow {
+  0% {background-position: 0px 0px, 0px 0px, 0px 0px;}
+  50% {background-position: 500px 500px, 100px 200px, -100px 150px;}
+  100% {background-position: 400px 1000px, 200px 400px, 100px 300px;}
+}
+@-webkit-keyframes snow {
+  0% {background-position: 0px 0px, 0px 0px, 0px 0px;}
+  50% {background-position: 500px 500px, 100px 200px, -100px 150px;}
+  100% {background-position: 500px 1000px, 200px 400px, -100px 300px;}
+}
+@-ms-keyframes snow {
+  0% {background-position: 0px 0px, 0px 0px, 0px 0px;}
+  50% {background-position: 500px 500px, 100px 200px, -100px 150px;}
+  100% {background-position: 500px 1000px, 200px 400px, -100px 300px;}
+}

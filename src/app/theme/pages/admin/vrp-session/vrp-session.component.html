@@ -1,0 +1,284 @@
+<div class="m-subheader">
+    <div class="d-flex align-items-center">
+        <div class="mr-auto">
+            <h3 class="m-subheader__title m-subheader__title--separator">
+                {{title1}}
+            </h3>
+            <ul class="m-subheader__breadcrumbs m-nav m-nav--inline">
+                <li class="m-nav__item m-nav__item--home">
+                    <a routerLink="/admin/index" class="m-nav__link m-nav__link--icon">
+                        <i class="m-nav__link-icon la la-home"></i>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+<!-- END: Subheader -->
+<div class="m-content">
+    <div class="row">
+        <!-- begin::Page loader -->
+        <div class="col-lg-12 centred my-auto">
+            <ng-template #alertError></ng-template>
+        </div>
+
+        <div class="col-lg-12 centred my-auto" *ngIf="loading">
+            <div class="m-section__content">
+                <div class="m-demo" data-code-preview="true" data-code-html="true" data-code-js="false">
+                    <div class="m-demo__preview">
+                        <div class="m-stack m-stack--ver m-stack--general m-stack--demo">
+
+                            <div class="m-stack__item m-stack__item--center m-stack__item--middle">
+                                <span>
+                                    Loading data. Please wait...
+                                </span>
+                                <span>
+                                    <div class="m-loader m-loader--lg m-loader--success" style="width: 30px; display: inline-block;"></div>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- end::Page loader -->
+
+        <div class="col-lg-12" *ngIf="!loading">
+            <div class="m-portlet m-portlet--rounded">
+                <div class="m-portlet__head m--bg-focus" style="background: #FF5A00!important">
+                    <div class="m-portlet__head-caption">
+                        <div class="m-portlet__head-title">
+                            <h3 class="m-portlet__head-text  m--font-inverse-primary">
+                                {{title2}}
+                                <small>
+                                    <!--portlet sub title-->
+                                </small>
+                            </h3>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="m-portlet__body">
+                    <div class="m-section container" style="max-width: 100% !important;">
+
+                        <div class="col-md-12 text-right mb-2">
+                            <button class="btn m-btn--pill simple-save-btn" id="create-new-cycle" type="button" data-toggle="modal" data-target="#m_modal_advert" (click)="openAddModal('add');">
+                                <i class="flaticon-file-1"></i> Create New
+                            </button>
+                        </div>
+       
+                        <div class="table-responsive" *ngIf="!loading&&sessionList.length>0">
+                            <div class="col-lg-12 centred my-auto" *ngIf="!loading&&sessionList.length<1">
+                                <div class="m-demo__preview" style="padding-top:20px">
+                                    <div class="m-stack m-stack--ver m-stack--general m-stack--demo">
+                                        <div class="m-stack__item m-stack__item--center m-stack__item--middle">
+                                            <span>
+                                                List is empty
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <table class="table table-striped  table-hover">
+                                <thead class="thead-inverse">
+                                    <tr>
+                                        <th>Year</th>
+                                        <th>Start Date</th>
+                                        <th>End Date</th>
+                                        <th>Exit Date 1</th>
+                                        <th>Exit Date 2</th>
+                                        <th>Exit Date 3</th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                    </tr>
+
+                                </thead>
+                                <tbody>
+                                    <!-- if all, data2 -->
+                                    <tr *ngFor="let item of sessionList ;let i = index">
+                                        <td><span>{{item.vrp_year}}</span>
+                                        </td>
+                                        <td><span>{{this.datePipe.transform(item.vrp_start, 'dd-MM-yyyy')}}</span>
+                                        </td>
+                                        <td><span>{{this.datePipe.transform(item.vrp_end, 'dd-MM-yyyy')}}</span>
+                                        </td>
+                                        <td><span>{{this.datePipe.transform(item.vrp_exit_date_1, 'dd-MM-yyyy')}}</span>
+                                        </td>
+                                        <td><span>{{this.datePipe.transform(item.vrp_exit_date_2, 'dd-MM-yyyy')}}</span>
+                                        </td>
+                                        <td><span>{{this.datePipe.transform(item.vrp_exit_date_3, 'dd-MM-yyyy')}}</span>
+                                        </td>
+                                        <td style="vertical-align: sub; width:120px ">
+                                            <button class="btn simple-save-btn  m-btn m-btn--icon btn-sm m-btn--icon-only m-btn--pill m-btn--air" id="edit-cycle" type="button" data-toggle="modal" data-target="#m_modal_advert" (click)="openAddModal('edit',item.vrp_id);">
+                                                <i class="fa fa-edit"></i>
+                                            </button>
+                                        </td>
+                                        <td style="vertical-align: sub; width:120px ">
+                                            <!-- <button class="btn simple-save-btn  m-btn m-btn--icon btn-sm m-btn--icon-only m-btn--pill m-btn--air" id="edit-status" type="button" (click)="updBatchStatus(item.vrp_id);">
+                                                <i class="fa fa-podcast"></i>
+                                            </button> -->
+                                        </td> --
+                                        <td style="vertical-align: sub; width:120px ">
+                                            <button class="btn simple-save-btn  m-btn m-btn--icon btn-sm m-btn--icon-only m-btn--pill m-btn--air" id="edit-status" type="button" (click)="generateExcel(item.vrp_batch)" [disabled]="IsCalling">
+                                                <i class="fa fa-flag-checkered"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        
+                        <!--<div class="row" *ngIf="downloadCSV&&sessionList.length>0">
+                            <div class="col-12" style="text-align: right; margin-top:20px">
+                                <div class="m-demo__preview m-demo__preview--btn">
+                                    <button href="#" class="btn btn-primary m-btn m-btn--icon" (click)="download()" [disabled]="downloading" [ngClass]="{'m-loader m-loader--right m-loader--light': downloading}">
+                                        <span>
+                                            <i class="la la-download"></i>
+                                            <span>{{downloadAllXLS}}</span>
+                                        </span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>-->
+                        
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--begin::advertise modal-->
+<div class="modal fade" id="m_modal_advert" tabindex="-1" role="dialog" aria-labelledby="advertiseModalCenterTitle"
+    aria-hidden="true" style="display: none;">
+    <div class="modal-dialog modal-lg" role="document">
+   
+        <div class="modal-content">
+            <form [formGroup]="VrpSessionInfoForm" (ngSubmit)="onVrpSessionInfoFormSubmit()" autocomplete="off">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">
+                            {{modalTitle}} 
+                        </h5>
+                    </div>
+                 <div class="modal-body">
+                        <div class="m-demo" *ngIf="loading1" data-code-preview="true" data-code-html="true" data-code-js="false">
+                            <div class="m-demo__preview">
+                                <div class="m-stack m-stack--ver m-stack--general m-stack--demo">
+        
+                                    <div class="m-stack__item m-stack__item--center m-stack__item--middle">
+                                        <span>
+                                            Loading data. Please wait...
+                                        </span>
+                                        <span>
+                                            <div class="m-loader m-loader--lg m-loader--success" style="width: 30px; display: inline-block;"></div>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="m-form__section m-form__section--first" *ngIf="!loading1">
+                                <div class="col-12 alert m-alert m-alert--default" *ngIf="updPorposeMsg" role="alert">
+                                    <strong>{{updPorposeMsg}}</strong>
+                                </div>
+                                <!-- Id -->
+                                <div class="form-group m-form__group row" *ngIf="canEditPage && typeVrpSessionAct != 'add'">
+                                    <label for="example-text-input" class="col-4 col-form-label">Id</label>
+                                    <div class="col-4">
+                                        {{data[0]?.id}} <input type="hidden" formControlName="infoVrpId" #infoVrpId id="infoVrpId" required>
+                                    </div>
+                                </div>
+                                <!-- end Id -->
+                                <!-- year -->
+                                <div class="form-group m-form__group row">
+                                    <label for="example-text-input" class="col-4 col-form-label">Year</label>
+                                    <div class="col-4">
+                                        <input type="number" min="4" required class="form-control m-input" 
+                                        formControlName="infoVrpYear" #infoVrpYear id="infoVrpYear">
+                                              <span class="m-form__help date_help m--hide errMsg" id="errInfoVrpYear">
+                                                  <p style="color:red!important">Please define MESRA Year.</p>
+                                              </span>
+                                    </div>
+                                </div>
+                                <!-- end year -->
+                                <!-- start date -->
+                                <div class="form-group m-form__group row">
+                                    <label for="example-text-input" class="col-4 col-form-label">Start date</label>
+                                    <div class="col-4">
+                                        <input type="date" size="16" class="form-control" required placeholder="dd/MM/yyyy"
+                                        formControlName="infoVrpStart" #infoVrpStart id="infoVrpStart">
+                                              <span class="m-form__help date_help m--hide errMsg" id="errInfoVrpStart">
+                                                  <p style="color:red!important">Please define MESRA Start Date.</p>
+                                              </span>
+                                    </div>
+                                </div>
+                                <!-- end date -->
+                                <div class="form-group m-form__group row">
+                                    <label for="example-text-input" class="col-4 col-form-label">End date</label>
+                                    <div class="col-4">
+                                        <input type="date" size="16" class="form-control" required placeholder="dd/MM/yyyy"
+                                        formControlName="infoVrpEnd" #infoVrpEnd id="infoVrpEnd">
+                                              <span class="m-form__help date_help m--hide errMsg" id="errInfoVrpEnd">
+                                                  <p style="color:red!important">Please define MESRA End Date.</p>
+                                              </span>
+                                    </div>
+                                </div>
+                                <!-- end end date -->
+                                <!-- Exit date 1 -->
+                                <div class="form-group m-form__group row">
+                                    <label for="example-text-input" class="col-4 col-form-label">Exit Date 1</label>
+                                    <div class="col-4">
+                                        <input type="date" size="16" class="form-control" required placeholder="dd/MM/yyyy"
+                                        formControlName="infoVrpExit1" #infoVrpExit1 id="infoVrpExit1">
+                                              <span class="m-form__help date_help m--hide errMsg" id="errInfoVrpExit1">
+                                                  <p style="color:red!important">Please define MESRA Exit Date 1.</p>
+                                              </span>
+                                    </div>
+                                </div>
+                                <!-- end Exit date 1 -->
+                                <!-- Exit date 2 -->
+                                <div class="form-group m-form__group row">
+                                    <label for="example-text-input" class="col-4 col-form-label">Exit Date 2</label>
+                                    <div class="col-4">
+                                        <input type="date" size="16" class="form-control" required placeholder="dd/MM/yyyy"
+                                        formControlName="infoVrpExit2" #infoVrpExit2 id="infoVrpExit2">
+                                              <span class="m-form__help date_help m--hide errMsg" id="errInfoVrpExit2">
+                                                  <p style="color:red!important">Please define MESRA Exit Date 2.</p>
+                                              </span>
+                                    </div>
+                                </div>
+                                <!-- end Exit date 2 -->
+                                <!-- Exit date 3 -->
+                                <div class="form-group m-form__group row">
+                                    <label for="example-text-input" class="col-4 col-form-label">Exit Date 3</label>
+                                    <div class="col-4">
+                                        <input type="date" size="16" class="form-control" required placeholder="dd/MM/yyyy"
+                                        formControlName="infoVrpExit3" #infoVrpExit3 id="infoVrpExit3">
+                                              <span class="m-form__help date_help m--hide errMsg" id="errInfoVrpExit3">
+                                                  <p style="color:red!important">Please define MESRA Exit Date 3.</p>
+                                              </span>
+                                    </div>
+                                </div>
+                                <!-- end Exit date 3 -->
+                            </div>
+                    
+                 </div>
+
+                 <div class="modal-footer" *ngIf="!loading1 && canEditPage && typeVrpSessionAct != 'add'" >
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Back</button>
+                    <button type="submit" class="btn btn-submitting" >Update</button>
+                 </div>
+
+                 <div class="modal-footer" *ngIf="!loading1 && canEditPage && typeVrpSessionAct == 'add'" >
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Back</button>
+                    <button type="submit" class="btn btn-submitting">Add</button>
+                 </div>
+                
+                </form>
+        </div>
+
+    </div>
+</div>
+<!--end::advertise modal-->

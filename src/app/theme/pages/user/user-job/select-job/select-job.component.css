@@ -1,0 +1,153 @@
+.job-bg {
+    background-image: url(../../../../../../assets/img/user/sea-portal/bg-jobs.png) !important; 
+    position: relative;
+    height: 20rem; 
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.joblistContainer{
+    position: relative;
+    text-align: center;
+}
+
+.lobImg{
+    width: 88%;
+    height: 200px;
+    margin-top: 5.5rem;
+    border-radius: 22px !important;
+    box-shadow: 0px 0px 15px 1px rgba(69,65,78,0.2) !important;
+}
+
+.secTitle{
+    position: absolute;
+    top: 60%;
+    width: 100%;
+}
+
+.secHeader{
+    color: white;
+}
+
+.m-portlet__head-title{
+    margin-left: 1.1rem !important;
+    height: 6rem !important;
+}
+
+.m-widget5__item{
+    border :0.15rem dashed #ebedf2 !important;
+}
+
+.job_img_widget{
+    width: 25% !important;
+
+}
+
+.job_img {
+    width: 100% !important;
+    height: 100% !important;
+    border-radius: 0px !important;
+}
+
+.job_img2 {
+    
+    border-radius: 0px !important;
+}
+
+.job_info{
+    width: 30% !important;
+}
+
+.job_title {
+    font-size: 1.2 rem !important;
+}
+
+.job_title_sub{
+    font-size: 1rem !important;
+}
+
+.job_close_date{
+    font-size: 1rem !important;
+    color: red !important;
+}
+
+.job_time_ago{
+    font-size: 1rem !important;
+    color: green !important;
+}
+
+.job-portlet{
+    padding-top: 1rem !important;
+    padding-bottom: 1rem !important;
+}
+
+.job-details:hover{
+    cursor: pointer;
+}
+
+.liked{
+    color: #7CA3CF !important;
+    font-weight: bold !important;
+}
+
+.btn-second{
+    margin-left: 2vw !important;
+    margin-top : 0.5vw !important;
+}
+
+.like-modal-content{
+    height: 35rem !important;
+}
+
+.like-body{
+    max-height: 335px !important;
+}
+
+.filter-btn{
+    color: #ffffff !important;
+    background-color: #fd5806 !important;
+    border: #fd5806 !important;
+    box-shadow: 0px 5px 10px 2px rgba(253, 88, 6, 0.19) !important;
+}
+
+.filter-item{
+    cursor: pointer !important;
+}
+
+.user-img{
+    width : 4.2rem !important;
+    height: 4.2rem !important;
+}
+
+.applicant-widget {
+    display: table-cell;
+    width: 32% !important;
+    vertical-align: bottom;
+    text-align: right;
+}
+
+.p-r-20 {
+    padding-right: 20px;
+}
+.bt-style {
+    cursor: pointer;
+}
+
+.fa {
+    color: #7CA3CF;
+}
+
+.m-widget4 .m-widget4__item {
+    display: table;
+    padding-top: 0px !important;
+    padding-bottom: 0px !important;
+}
+
+@media (max-width: 768px){
+    .job_img_widget{
+        display: none !important;
+    }
+}
+
+
+

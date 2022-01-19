@@ -1,0 +1,212 @@
+<!-- START: Subheader -->
+<div class="m-subheader" appunwraptag="">
+    <div class="d-flex align-items-center">
+        <div class="mr-auto">
+            <h3 class="m-subheader__title m-subheader__title--separator">
+                {{title1}}
+            </h3>
+            <ul class="m-subheader__breadcrumbs m-nav m-nav--inline">
+                <li class="m-nav__item m-nav__item--home">
+                    <a routerLink="/admin/index" class="m-nav__link m-nav__link--icon">
+                        <i class="m-nav__link-icon la la-home"></i>
+                    </a>
+                </li>
+                <li class="m-nav__item">
+                    <a href="" class="m-nav__link">
+                        <span class="m-nav__link-text">
+                            {{feedBack}}
+                        </span>
+                    </a>
+                </li>
+                <li class="m-nav__item">
+                    <a href="" class="m-nav__link">
+                        <span class="m-nav__link-text">
+                            <!-- Position -->
+                        </span>
+                    </a>
+                </li>
+                <!-- <li class="m-nav__separator">
+                            -
+                        </li> -->
+                <li class="m-nav__item">
+                    <a href="" class="m-nav__link">
+                        <span class="m-nav__link-text">
+                            <!-- # {{posId2}} -->
+                        </span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <div>
+            <div class="m-dropdown m-dropdown--inline m-dropdown--arrow m-dropdown--align-right m-dropdown--align-push"
+                 m-dropdown-toggle="hover" aria-expanded="true">
+            </div>
+        </div>
+    </div>
+</div>
+<!-- END: Subheader -->
+
+
+<div class="m-content">
+    <div class="row">
+        <!-- :start page loader -->
+        <div class="col-lg-12 centred my-auto" *ngIf="loading">
+            <app-settings-loading></app-settings-loading>
+        </div>
+        <!-- end::Page loader -->
+        <!-- start: nodata -->
+        <div class="col-lg-12 centred my-auto" *ngIf="!loading&&pagedItems.length<1">
+            <app-settings-no-data></app-settings-no-data>
+        </div>
+        <!-- :end Nodata -->
+        <!-- start: nodata -->
+        <div class="col-lg-12 centred my-auto" *ngIf="!loading&&loadingErr">
+            <app-settings-loading-error></app-settings-loading-error>
+        </div>
+        <!-- :end Nodata -->
+
+        <div class="col-lg-12" *ngIf="!loading&&pagedItems.length>0">
+            <!--begin::Portlet-->
+            <div class="m-portlet m-portlet--full-height">
+                <!--begin::Section-->
+                <div class="m-accordion m-accordion--bordered" id="m_accordion_1" role="tablist">
+                    <!-- :start section 1 -->
+                    <div class="m-accordion__item">
+                        <div class="m-accordion__item-head" role="tab" id="m_accordion_adv_info_head" data-toggle="collapse"
+                             href="#m_accordion_adv_info_body" aria-expanded="    false">
+                            <span class="m-accordion__item-mode"></span>
+                            <span class="m-accordion__item-title m-accordian__item-mode-title"> 
+                                {{feedBack}}
+                            </span>
+                            <span class="m-accordion__item-icon">
+                                <i class="fa flaticon-clipboard"></i>
+                            </span>
+                        </div>
+                        <div class="m-accordion__item-body  show" id="m_accordion_adv_info_body" role="tabpanel"
+                             aria-labelledby="m_accordion_adv_info_head">
+                            <div class="m-accordion__item-content">
+                                <!--begin::Portlet-->
+                                <div class="m-portlet m-portlet--tabs" *ngFor="let item of pagedItems;let i = index">
+                                    <div class="m-portlet__head">
+                                        <div class="m-portlet__head-tools">
+                                            <ul class="nav nav-tabs m-tabs-line m-tabs-line--primary m-tabs-line--2x"
+                                                role="tablist">
+                                                <li class="nav-item m-tabs__item">
+                                                    <a class="nav-link m-tabs__link active" data-toggle="tab" href="#m_tabs_6_1_{{i}}"
+                                                       role="tab">
+                                                        <i class="la la-comments-o"></i>
+                                                        Messages
+                                                    </a>
+                                                </li>
+                                                <li class="nav-item m-tabs__item">
+                                                    <a class="nav-link m-tabs__link" data-toggle="tab" href="#m_tabs_6_2_{{i}}"
+                                                       role="tab">
+                                                        <i class="la la-user"></i>
+                                                        Profile
+                                                    </a>
+                                                </li>
+                                                <li class="nav-item m-tabs__item">
+                                                    <span class="nav-link m-tabs__link" role="tab">
+                                                        <i class="la la-calendar"></i>
+                                                        {{item.datetime| date:'dd MMM yyyy h:mma'}}
+                                                    </span>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div class="m-portlet__body">
+                                        <div class="tab-content">
+                                            <div class="tab-pane active" id="m_tabs_6_1_{{i}}" role="tabpanel">
+                                                <h5>{{item.title}}</h5>
+                                                <p>{{item.description}}</p>
+                                                <div class="row">
+                                                    <div class="col-sm-4" *ngFor="let img of item.displayImage">
+                                                        <img src="{{apiUrl}}{{APIGetImg}}/{{img}}?api_key={{apiKey}}" width="300" height="200" data-target="#m_modal_image" data-toggle="modal" (click)="selImg(img)">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="tab-pane" id="m_tabs_6_2_{{i}}" role="tabpanel">
+                                                <p><i class="fa flaticon-interface-10"></i> {{item.user_id}}</p>
+                                                <p><i class="fa flaticon-avatar"></i> {{item.Name}}</p>
+                                                <p><i class="fa flaticon-mail-1"></i> {{item.Email}}</p>
+                                                <p><i class="fa flaticon-support"></i> {{item.Cell_No}}</p>
+                                                <p><i class="fa flaticon-star"></i> {{item.EmpGroup}}</p>
+                                                <p><i class="fa flaticon-book"></i> {{item.EmpSGroup}}, {{item.LOB_Desc}}, {{item.Company_Desc}}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!--end::Portlet-->
+                            </div>
+                        </div>
+                    </div>
+                    <!-- :end section 1 -->
+                </div>
+            </div>
+        </div>
+
+
+        <div class="col-12" *ngIf="!loading&&pagedItems.length>0">
+            <nav aria-label="Page navigation example">
+                <ul *ngIf="pager.pages && pager.pages.length" class="pagination justify-content-end">
+                    <li class="page-item" [ngClass]="{disabled:pager.currentPage === 1}">
+                        <button (click)="setPage(1)" class="page-link" href="#" aria-label="Previous">
+                            <span aria-hidden="true">&laquo;</span>
+                            <span class="sr-only">First</span>
+                        </button>
+                    </li>
+                    <li class="page-item" [ngClass]="{disabled:pager.currentPage === 1}">
+                        <button (click)="setPage(pager.currentPage - 1)" class="page-link" href="#" aria-label="Previous">
+                            <span aria-hidden="true">&lt;</span>
+                            <span class="sr-only">Previous</span>
+                        </button>
+                    </li>
+                    <li class="page-item" *ngFor="let page of pager.pages" [ngClass]="{active:pager.currentPage === page}">
+                        <button (click)="setPage(page)" class="page-link" href="#">{{page}}</button>
+                    </li>
+                    <li class="page-item" [ngClass]="{disabled:pager.currentPage === pager.totalPages}">
+                        <button (click)="setPage(pager.currentPage + 1)" class="page-link" href="#" aria-label="Previous">
+                            <span aria-hidden="true">&gt;</span>
+                            <span class="sr-only">Next</span>
+                        </button>
+                    </li>
+                    <li class="page-item" [ngClass]="{disabled:pager.currentPage === pager.totalPages}">
+                        <button (click)="setPage(pager.totalPages)" class="page-link" href="#" aria-label="Next">
+                            <span aria-hidden="true">&raquo;</span>
+                            <span class="sr-only">Last</span>
+                        </button>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+
+        <div class="col-12" style="text-align: right; margin-top:20px" *ngIf="!loading&&pagedItems.length>0">
+            <div class="m-demo__preview m-demo__preview--btn">
+                <button class="btn btn-primary m-btn m-btn--icon" (click)="download()">
+                    <span>
+                        <i class="la la-download"></i>
+                        <span>{{downloadAllXLS}}</span>
+                    </span>
+                </button>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<div class="modal fade" id="m_modal_image" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document" style="text-align: center; width: 100%; height: 100%; margin: auto;">
+        <div class="modal-content">
+            <div class="modal-body" style="padding: 0px">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="position: absolute; right: 15px; top: 10px; z-index:100">
+                    <span aria-hidden="true">
+                        &times;
+                    </span>
+                </button>
+                <img src="{{apiUrl}}{{APIGetImg}}/{{selectedImg}}?api_key={{apiKey}}" width="100%" height="100%">
+            </div>
+        </div>
+    </div>
+</div>
+
+<app-sticky-nav-component></app-sticky-nav-component>

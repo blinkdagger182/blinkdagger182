@@ -1,0 +1,131 @@
+.vrp-bg {
+    background-image: url(../../../../../../assets/img/user/sea-portal/hand_shake_new.png) !important; 
+    position: relative;
+    height: 20rem; 
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.form-group.required .control-label:after {
+    content:"*";
+    color:red;
+  }
+
+  .pad-top-5px {
+     padding-top: 5px;
+ }
+.form-header-bg {
+    background-color:#0EC7D4;
+}
+
+.bgStatus {
+    background-color:#11AFBE !important; 
+}
+
+.step-number{
+    font-size: 18px;
+    font-weight: 900;
+    color: white;
+}
+
+#tracking-link {
+    text-align: center;
+    font-size: 1.5rem;
+    font-weight: 400;
+    padding-bottom: 10px;
+    color: white;
+}
+
+.vrp-portlet{
+    padding-top: 1rem !important;
+    padding-bottom: 1rem !important;
+}
+
+.span-track {
+    margin: 0 10px;
+    cursor: pointer;
+}
+
+.vrp-status-bg {
+    background-color: #BEF4F8 !important;    
+}
+
+.vrp-status-box {    
+    padding: 1rem 1rem;
+    text-align: center;    
+    vertical-align: middle;
+}
+
+.vrp-status-text {    
+    font-size: 1.1em;
+    text-align: center !important;
+}
+
+.m-step-title {
+    font-size: 20px;
+    font-weight: 400;
+}
+
+.font-1em {
+    font-size: 1.1em;
+}
+
+.accordian-title-black {
+    color: black !important;
+}
+
+
+.btn-agree {
+    background-color: #00b3b3;
+}
+
+.btn-offer {
+    background-color: #00b3b3;
+    color: white;
+}
+
+button:disabled {
+    cursor: not-allowed;
+    pointer-events: all !important;
+    background-color: #848585;
+}
+
+.disabled {
+    pointer-events: none;
+    cursor: not-allowed;
+}
+
+.star-icon:hover{
+    cursor: pointer;
+}
+.star-icon{
+    font-size: 3rem !important;
+    padding-left: 18px !important;
+    padding-right: 18px !important;
+}
+
+.star_color {
+    color: #ffcc00 !important;
+}
+
+.perincian_arrow {
+    float: right;
+    margin-top: -20px;
+    cursor: pointer;
+}
+
+.m-accordion--toggle-arrow .perincian_arrow .fa-chevron-down,
+.m-accordion--toggle-arrow.collapsed .perincian_arrow .fa-chevron-up {
+    display: none;
+}
+
+.m-accordion--toggle-arrow.collapsed .perincian_arrow .fa-chevron-down,
+.m-accordion--toggle-arrow .perincian_arrow .fa-chevron-up {
+    display: inline-block;
+}
+
+.m-wizard__head {
+    position: relative !important;
+    margin: 0 !important;
+    padding: 0 0rem !important;
+}

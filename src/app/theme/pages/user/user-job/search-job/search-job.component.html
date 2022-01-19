@@ -1,0 +1,371 @@
+
+<div>
+    <div class="page-bg job-bg">
+        <h2 class="head-sub-title">Jobs</h2>
+    </div>
+    <div class="pg-title-div">
+        <h3 class="pg-title">{{word.avaiVac}}</h3>
+    </div>
+</div>
+
+<div class="m-content">
+
+        <div class="d-flex justify-content-center">
+            
+            <div class="col-xl-12">
+                
+                <div class="col-lg-12" style="padding-bottom: 1rem; padding-left: 0px !important">
+                    <button title="Back to User Job" class="btn m-btn--pill btn-outline-info pt-1 pb-1 pr-3 pl-3"
+                        (click)="btnBackClick()">
+                        <div class="m-demo-icon__preview" style="display: flex; align-items: center;">
+                            <img style="width:2rem !important" src="../../../../../../assets/img/user/back_icon.svg">
+                            <span>{{word.back}}</span>
+                        </div>
+                        
+                    </button>
+    
+                    <!--Begin:Language-->
+                    <ul class="btn m-topbar__nav m-nav m-nav--inline" style="float: right !important">
+                        <li class="m-nav__item m-topbar__user-profile m-topbar__user-profile--img" data-toggle="modal"
+                            data-target="#langSelect">
+                            <span >	
+                                <span class="m-topbar__username " style="padding-left:10px; padding-right:10px;">
+                                    {{word.lang}} :
+                                </span>
+                                <span class="m-topbar__userpic">
+                                    <button *ngIf="enChecked" type="button" title="English" data-toggle="m-tooltip" data-placement="top"
+                                        class="btn m-btn--pill m-btn--air btn-outline-info active btn-sm">
+                                        EN
+                                    </button>
+                                    <button *ngIf="!enChecked" type="button" title="Malay" data-toggle="m-tooltip" data-placement="top"
+                                        class="btn m-btn--pill m-btn--air btn-outline-info active btn-sm">
+                                        MY
+                                    </button>  
+                                </span>
+                            </span>
+                        </li>
+                    </ul>
+                    <div class="modal fade" id="langSelect" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" style="display: none;" aria-hidden="true">
+                        <div class="modal-dialog msg-dialog modal-dialog-centered" role="document" style="max-width: 235px !important; margin: auto !important">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 style="text-align: center">{{word.lang}}</h5>
+                                    <button type="button" id="lang_close" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">×</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="m-dropdown__content">
+                                        <label class="lang-radio m-radio m-radio--solid m-radio--success" style="font-size: 16px; width: 100%">
+                                            <input type="radio" #en name="lang" value="en" [checked]="enChecked" (change)="langChange(en)"> 
+                                            &nbsp;&nbsp; English
+                                            <span style="width:23px; height:23px"></span>
+                                        </label>
+                                        <br>
+                                        <label class="lang-radio m-radio m-radio--solid m-radio--success" style="font-size: 16px; width: 100%">
+                                            <input type="radio" #my name="lang" value="my" [checked]="!enChecked" (change)="langChange(my)"> 
+                                            &nbsp;&nbsp; Malay 
+                                            <span style="width:23px; height:23px"></span>
+                                        </label>
+                                    </div>
+                                </div>    
+                            </div>
+                        </div>
+                    </div>
+                    <!--End:Language-->
+                </div>
+
+                <div class="centred my-auto" *ngIf="loading">
+                    <job-loading></job-loading>
+                </div>
+    
+                <div class="m-portlet m-portlet--full-height" *ngIf="!loading">
+
+                    
+                    <div class="m-portlet__head" style="padding:2rem">
+                        <div class="m-portlet__head-caption">
+                            <div class="m-portlet__head-title" style="width:100% !important; margin-left: 0rem !important">
+                                <form [formGroup]="searchForm" autocomplete="off">
+                                    <div class="row">
+                                        <div style="margin: 2rem 0rem;text-align: justify;padding-left: 20px;">
+                                            <h3>{{word.welcomeImprovJobs}}</h3>
+                                            <p style="font-size: 1.2rem;" >
+                                                {{word.welcomeParaPage}}
+                                            </p>
+                                            <br>
+                                            <!-- <a style="font-size: 1.2rem;" class="m-link m-link--state m-link--success m--font-bolder" href="https://era.tm.com.my:8443/api/get/image/NE_Promo_Job_Advertised_List?api_key=6wc0PzSPHUWN2ojiNYz9MLMV11bUOoeD8GDXEgYY" target="_blank">
+                                                {{word.JobAdvListNEPROMO}}
+                                            </a> -->
+                                            <br>
+                                            <a style="font-size: 1.2rem;" class="m-link m-link--state m-link--success m--font-bolder" href="https://drive.google.com/file/d/1iYFPCyS12hbzLIoNgEvW6ZpTKn9Yy4Ji/view?usp=drivesdk" target="_blank">
+                                                {{word.JobAppGuide}}
+                                            </a>
+                                            <br>
+                                            <a style="font-size: 1.2rem;" class="m-link m-link--state m-link--success m--font-bolder" href="https://era.tm.com.my:8443/api/get/image/Job_Application_Guideline?api_key=6wc0PzSPHUWN2ojiNYz9MLMV11bUOoeD8GDXEgYY" target="_blank">
+                                                {{word.nePromoGuidelines}}
+                                            </a><br>
+                                            <a style="font-size: 1.2rem;" class="m-link m-link--state m-link--success m--font-bolder" href="https://era.tm.com.my:8443/api/get/image/NE_Promo_TMLearn_Assessment_Guideline?api_key=6wc0PzSPHUWN2ojiNYz9MLMV11bUOoeD8GDXEgYY" target="_blank">
+                                                {{word.tmLearnAssessNEPROMO}}
+                                            </a><br>
+                                            <a style="font-size: 1.2rem;" class="m-link m-link--state m-link--success m--font-bolder" href="https://era.tm.com.my:8443/api/get/image/NE_Promo_Supervisor_Assessment?api_key=6wc0PzSPHUWN2ojiNYz9MLMV11bUOoeD8GDXEgYY" target="_blank">
+                                                {{word.SupervAssessGuideNEPROMO}}
+                                            </a><br>
+                                            <a style="font-size: 1.2rem;" class="m-link m-link--state m-link--success m--font-bolder" href="https://era.tm.com.my:8443/api/get/image/NE_Promo_Interview?api_key=6wc0PzSPHUWN2ojiNYz9MLMV11bUOoeD8GDXEgYY" target="_blank">
+                                                {{word.interviewAssessNEPROMO}}
+                                            </a><br>
+                                            <a style="font-size: 1.2rem;" class="m-link m-link--state m-link--success m--font-bolder" href="https://era.tm.com.my:8443/api/get/image/Teams_Interview_Guideline?api_key=6wc0PzSPHUWN2ojiNYz9MLMV11bUOoeD8GDXEgYY" target="_blank">
+                                                {{word.teamInterviewAssessNEPROMO}}
+                                            </a><br>
+                                            
+                                            
+                                            
+                                            
+                                            <!-- <p style="font-size: 1.2rem;text-align: justify;">
+                                                {{word.hbClick}} 
+                                                <a class="m-link m-link--state m-link--success m--font-bolder" [href]="handbookURL" target="_blank">{{word.hbHere}}</a> 
+                                                {{word.hbView}} 
+                                                <b>{{word.hbBook}}</b> 
+                                                {{word.hbUnderstanding}} 
+                                                <a class="m-link m-link--state m-link--success m--font-bolder" 
+                                                    [href]="ccToolURL" download="Career Conversation Tool.pptx">
+                                                    {{word.hbCareerTool}}
+                                                </a> 
+                                                {{word.hbActivity}}
+                                                <a>{{word.hbDownload}}</a>
+                                            </p> -->
+                                            <br>
+                                            <!-- <p style="font-size: 1.2rem;">{{word.idpLetsStart}}</p> -->
+                                        </div>
+                                        <div class="col-md-12">
+                                            <h2 class="m-portlet__head-text" style="font-size: 24px">
+                                                {{word.searchJobs}}
+                                            </h2>
+                                        </div><br><br>
+                                        <div class="col-md-6">
+                                            <div class="row">
+                                                <div class="col-md-3">
+                                                    <label style="margin-top:9px;width: 110px;">{{word.companyDesc}} : </label>
+                                                </div>
+                                                <div class="col-md-9">
+                                                    <select name="company" id="company" class="form-control m-input" formControlName="filterCompany">
+                                                        <option value="">{{word.all}}</option>
+                                                        <option [value]="item.Company_Desc" *ngFor="let item of filterData.company">{{item.Company_Desc}}</option>
+                                                    </select> 
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="row">
+                                                <div class="col-md-3">
+                                                    <label style="margin-top:9px;width: 75px;">LOB: </label>
+                                                </div>
+                                                <div class="col-md-9">
+                                                    <select name="lob" id="lob" class="form-control m-input" formControlName="filterLob">
+                                                        <option value="">{{word.all}}</option>
+                                                        <option [value]="item.lob" *ngFor="let item of filterData.lob">{{item.lob}}</option>
+                                                    </select> 
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="row">
+                                                <div class="col-md-3">
+                                                    <label style="margin-top:9px;width: 60px;">{{word.regionSJ}}: </label>
+                                                </div>
+                                                <div class="col-md-9">
+                                                    <select name="region" id="region" class="form-control m-input" formControlName="filterRegion">
+                                                        <option value="">{{word.all}}</option>
+                                                        <option [value]="item.region" *ngFor="let item of filterData.region">{{item.region}}</option>
+                                                    </select> 
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="row">
+                                                <div class="col-md-3">
+                                                    <label style="margin-top:9px;width: 80px;">{{word.relevant}}: </label>
+                                                </div>
+                                                <div class="col-md-9">
+                                                    <select name="relavant" id="relavant" class="form-control m-input" formControlName="filterRelevant">
+                                                        <option value="">{{word.all}}</option>
+                                                        <option value="1">Yes</option>
+                                                        <option value="0">No</option>
+                                                    </select> 
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="row">
+                                                <div class="col-md-3">
+                                                    <label style="margin-top:9px;width: 85px;">{{word.positionID}}: </label>
+                                                </div>
+                                                <div class="col-md-9">
+                                                    <input name="positionID" id="positionID" class="form-control m-input" formControlName="filterPositionID" placeholder="{{word.allID}}">
+                                                        <!-- <option value="">All</option>
+                                                        <option value="1">Yes</option>
+                                                        <option value="0">No</option> -->
+                                                     
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="col-md-6">
+                                            <div class="row">
+                                                <div class="col-md-3">
+                                                    <label style="margin-top:9px;">{{word.typeSJ}}: </label>
+                                                </div>
+                                                <div class="col-md-9">
+                                                    <select name="type" id="type" class="form-control m-input" formControlName="filterType">
+                                                        <option value="">{{word.all}}</option>
+                                                        <option [value]="item.id" *ngFor="let item of filterData.type">{{item.type}}</option>
+                                                    </select> 
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        
+                                        <div class="col-md-12" style="text-align: center">
+                                            <br>
+                                            <button class="btn m-btn era-btn" 
+                                                type="button" style="width: 8rem" (click)="searchSubmit()">
+                                                {{word.search}}
+                                            </button>
+                                        </div>
+
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="m-portlet__body">
+                        <div class="tab-content">
+                            <div class="centred my-auto" *ngIf="loading2">
+                                <job-loading></job-loading>
+                            </div>
+                            <div *ngIf="!loading2">
+                                <div class="tab-pane active" *ngIf="jobListArray?.length; else notResults">
+                                    <div class="m-portlet m-portlet--full-height" *ngFor="let job of jobListArray; let i=index">
+                                        <div class="job-portlet m-portlet__body">
+                                            <div class="m-widget4">
+                                                <div class="m-widget4__item" style="width: 100% !important">
+                                                    <div (click)="jobInfoClicked(job.id)" class="job-details job_img_widget m-widget4__img m-widget4__img--pic">
+                                                        <img class="job_img" src="{{job.img}}">
+                                                    </div>
+                                                    <div class="job_info m-widget4__info">
+                                                        <div class="job-details" (click)="jobInfoClicked(job.id)">
+                                                            <span class="job_title m-widget4__title">
+                                                                    {{job.jTitle}} <span *ngIf="job.type == 3"><img src="assets/demo/default/media/img/logo/NE Promo icon.png"></span>
+                                                            </span> <br>
+                                                            <span class="job_title_sub m-widget4__sub">
+                                                                    {{job.div}}
+                                                            </span><br>
+                                                            <span class="job_title_sub m-widget4__sub">
+                                                                    {{job.loc}}
+                                                            </span><br>
+                                                            <span class="job_close_date m-widget4__sub">
+                                                                    {{word.closeDt}} : {{job.closeDt | date:'d/M/yyyy'}}
+                                                            </span>
+                                                            <br><br>
+                                                        </div>
+                                                        <span class="m-widget4__sub">
+                                                            <td *ngIf="job.no_like > 0" class="btn" (click)="totalLikeClicked(i,job.id)" data-toggle="modal" data-target="#likes">
+                                                                <b>{{job.no_like}}</b> {{word.like}}<span *ngIf="enChecked && job.no_like > 1">s</span>
+                                                            </td>
+                                                            <td *ngIf="job.no_like > 0" style="width:2rem"></td>
+                                                            <td *ngIf="job.no_comnt > 0" class="btn" (click)="commentClicked(job.id)">
+                                                                <b>{{job.no_comnt}}</b> {{word.comment}}<span *ngIf="enChecked && job.no_comnt > 1">s</span>
+                                                            </td>
+                                                            <td *ngIf="job.no_comnt > 0" style="width:2rem"></td>
+                                                            <td *ngIf="job.no_view > 0">
+                                                                <span><i class="icon la la-eye"></i></span>
+                                                                <span style="font-size: 1rem !important"><b >&nbsp;&nbsp; {{job.no_view}}</b> {{word.view}}<span *ngIf="enChecked && job.no_view > 1">s</span></span>
+                                                            </td>
+                                                            <td *ngIf="job.no_view > 0" style="width:2rem"></td>
+                                                            <td *ngIf="job.no_apply > 0">
+                                                                <span><i class="icon2 la la-check-square"></i></span>
+                                                                <span style="font-size: 1rem !important"><b >&nbsp;&nbsp; {{job.no_apply}}</b> {{word.applicant}}<span *ngIf="enChecked && job.no_apply > 1">s</span></span>
+                                                            </td>
+                                                        </span><br>
+                                                        
+                                                        <hr>
+                                                        <span class="m-widget4__sub">
+                                                            <a class="btn btn-secondary m-btn m-btn--icon btn-second" (click)="likeClicked(i,job.id)">
+                                                                <span> 
+                                                                    <i *ngIf="job.isLiked" [class.liked]="job.isLiked" style="font-size: 1.6rem" class="la la-heart"></i>                                                            
+                                                                    <i *ngIf="!job.isLiked" style="font-size: 1.6rem" class="la la-heart-o"></i>
+                                                                    <span [class.liked]="job.isLiked"> {{word.like}} </span>
+                                                                </span>
+                                                            </a>
+                                                            <a class="btn btn-secondary m-btn m-btn--icon btn-second" (click)="commentClicked(job.id)" style="margin-left: 2rem">
+                                                                <span> <i style="font-size: 1.6rem" class="la la-comment"></i>
+                                                                    <span> {{word.comment}} </span>
+                                                                </span>
+                                                            </a>
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>          
+                                </div>
+                                <ng-template #notResults >
+                                    <h5 *ngIf="showNoResults" style="text-align: center !important; margin-top: 3rem;">
+                                        {{word.noSearchResults}}
+                                    </h5>
+                                </ng-template>
+                            </div>
+                            
+                        </div>
+                    </div>
+                </div>
+    
+                <div class="modal fade" id="likes" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" style="display: none;" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered" role="document">
+                        <div class="modal-content like-modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">
+                                    <i style="font-size: 1.6rem" class="liked la la-heart-o"></i> &nbsp; {{totalLikes}}
+                                </h5>
+                                <button type="button" class="close" id="close_btn" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">
+                                        ×
+                                    </span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="m-scrollable like-body" data-scrollbar-shown="true" data-scrollable="true" style=" overflow: auto;">
+                                    <div class="centred my-auto" *ngIf="likeLoading">
+                                        <job-loading></job-loading>
+                                    </div>
+                                    <div class="m-widget3" *ngIf="!likeLoading">
+                                        <div class="m-widget3__item" *ngFor="let lk of likedList;">
+                                            <div class="m-widget3__header" style="cursor: pointer !important" (click)="viewUser(lk.staffId)">
+                                                <div class="m-widget3__user-img" style="padding-top: 6px !important;">
+                                                    <img class="user-img m-widget3__img" [src]="lk.img" onError="this.src='./assets/app/media/img/users/ghcm-user-default.jpg'">
+                                                </div>
+                                                <div class="m-widget3__info">
+                                                    <span class="m-widget3__username">
+                                                        {{lk.name}}
+                                                    </span>
+                                                    <br>
+                                                    <span class="m-widget3__time">
+                                                        {{lk.pos}}
+                                                    </span>
+                                                    <br>
+                                                    <span *ngIf="!lk.currUser" class="m-widget3__time">
+                                                        Status : <span style="color: #fd5806"><i>{{getStatus(lk.isCircle)}}</i></span>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+    
+            </div>
+        </div>
+    </div>
+    

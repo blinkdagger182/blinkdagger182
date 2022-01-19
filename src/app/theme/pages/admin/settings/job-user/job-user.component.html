@@ -1,0 +1,1643 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.13/semantic.min.css">
+
+<notifier-container></notifier-container>
+<!-- START: Subheader -->
+<div class="m-subheader" appunwraptag="">
+    <div class="d-flex align-items-center">
+        <div class="mr-auto">
+            <h3 class="m-subheader__title m-subheader__title--separator">
+                {{title1}}
+            </h3>
+            <ul class="m-subheader__breadcrumbs m-nav m-nav--inline">
+                <li class="m-nav__item m-nav__item--home">
+                    <a routerLink="/admin/index" class="m-nav__link m-nav__link--icon">
+                        <i class="m-nav__link-icon la la-home"></i>
+                    </a>
+                </li>
+                <!--
+                <li class="m-nav__separator">
+                    -
+                </li>-->
+                <li class="m-nav__item">
+                    <a href="" class="m-nav__link">
+                        <span class="m-nav__link-text">
+                            {{jobUser}}
+                        </span>
+                    </a>
+                </li>
+                <!-- <li class="m-nav__separator">
+                        -
+                    </li>-->
+                <li class="m-nav__item">
+                    <a href="" class="m-nav__link">
+                        <span class="m-nav__link-text">
+                            <!-- Position -->
+                        </span>
+                    </a>
+                </li>
+                <!-- <li class="m-nav__separator">
+                            -
+                        </li> -->
+                <li class="m-nav__item">
+                    <a href="" class="m-nav__link">
+                        <span class="m-nav__link-text">
+                            <!-- # {{posId2}} -->
+                        </span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <div>
+            <div class="m-dropdown m-dropdown--inline m-dropdown--arrow m-dropdown--align-right m-dropdown--align-push"
+                m-dropdown-toggle="hover" aria-expanded="true">
+            </div>
+        </div>
+    </div>
+</div>
+<!-- END: Subheader -->
+
+
+<div class="m-content">
+    <div class="row">
+        <div class="col-lg-12">
+            <!--begin::Portlet-->
+            <div class="m-portlet m-portlet--full-height">
+                <!--begin::Section-->
+                <div class="m-accordion m-accordion--bordered" id="m_accordion_1" role="tablist">
+                    <!-- :start section 1 -->
+                    <div class="m-accordion__item">
+                        <div class="m-accordion__item-head" role="tab" id="m_accordion_sec1_head" data-toggle="collapse"
+                            href="#m_accordion_sec1_body" aria-expanded="    false">
+                            <span class="m-accordion__item-mode"></span>
+                            <span class="m-accordion__item-title m-accordian__item-mode-title pl-2">
+                                {{sec1Title}}
+                            </span>
+                            <span class="m-accordion__item-icon">
+                                <i class="fa {{sec1Icon}}"></i>
+                            </span>
+                        </div>
+                        <div class="m-accordion__item-body  show" id="m_accordion_sec1_body" role="tabpanel"
+                            aria-labelledby="m_accordion_sec1_head" data-parent="#m_accordion_1">
+                            <div class="m-accordion__item-content">
+                                <div class="col-lg-12 centred my-auto">
+                                    <!-- <ng-template #alertErrorSec1></ng-template> -->
+                                </div>
+
+                                <div *ngIf="loading1">
+                                    <span>Loading data. Please wait... </span>
+                                    <span>
+                                        <div class="m-loader m-loader--lg m-loader--success"
+                                            style="width: 30px; display: inline-block;"></div>
+                                    </span>
+                                </div>
+
+                                <div *ngIf="!loading1&&!err1">
+                                    <div class="row">
+                                        <div class="col-lg-12 text-right">
+                                            <button type="button" class="btn m-btn--pill btn-primary btn-sm"
+                                                data-toggle="modal" (click)="updateJobUser(1)"
+                                                data-target="#modal_new_job_user">
+                                                <i class="fa {{sec1Icon}}"></i> Add {{sec1Title}}
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div class="row table-responsive">
+                                        <div class="col-lg-12">
+                                            <table class="table table-striped table-hover m_datatable">
+                                                <thead class="thead-inverse">
+                                                    <tr>
+                                                        <th>Staff Id</th>
+                                                        <th>Name</th>
+                                                        <th>LOB</th>
+                                                        <th style="width:20px"></th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr *ngFor="let adm of pagedItemsAdm">
+                                                        <td>{{adm.Staff_No}}</td>
+                                                        <td>{{adm.Name}}</td>
+                                                        <td>{{adm.lob}}</td>
+                                                        <td class="d-flex flex-row">
+                                                            <!--<a href="#" class="m-nav__link m-nav__link--icon"
+                                                                        data-toggle="modal" data-target="#modal_aor_delete"
+                                                                        (click)="delAor(a.NO)">
+                                                                        <a href="#" class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only m-btn--pill" title="Edit details">
+                                                                            <i class="la la-edit"></i>
+                                                                        </a>-->
+                                                            <button href="#"
+                                                                class="m-portlet__nav-link btn m-btn m-btn--hover-danger m-btn--icon m-btn--icon-only m-btn--pill"
+                                                                title="Delete" id="delJobUsr2"
+                                                                style="visibility: hidden" (click)="delJobUserSubmit()">
+                                                                <i class="la la-trash"></i>
+                                                            </button>
+                                                            <a href="#"
+                                                                class="m-portlet__nav-link btn m-btn m-btn--hover-danger m-btn--icon m-btn--icon-only m-btn--pill"
+                                                                title="Delete" id="delJobUsr"
+                                                                (click)="selectedUser(adm)">
+                                                                <i class="la la-trash"></i>
+                                                            </a>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <nav aria-label="Page navigation example">
+                                                <ul *ngIf="pagerAdm.pages && pagerAdm.pages.length"
+                                                    class="pagination justify-content-end">
+                                                    <li class="page-item"
+                                                        [ngClass]="{disabled:pagerAdm.currentPage === 1}">
+                                                        <button (click)="setPageAdm(1)" class="page-link" href="#"
+                                                            aria-label="Previous">
+                                                            <span aria-hidden="true">&laquo;</span>
+                                                            <span class="sr-only">First</span>
+                                                        </button>
+                                                    </li>
+                                                    <li class="page-item"
+                                                        [ngClass]="{disabled:pagerAdm.currentPage === 1}">
+                                                        <button (click)="setPageAdm(pagerAdm.currentPage - 1)"
+                                                            class="page-link" href="#" aria-label="Previous">
+                                                            <span aria-hidden="true">&lt;</span>
+                                                            <span class="sr-only">Previous</span>
+                                                        </button>
+                                                    </li>
+                                                    <li class="page-item" *ngFor="let page of pagerAdm.pages"
+                                                        [ngClass]="{active:pagerAdm.currentPage === page}">
+                                                        <button (click)="setPageAdm(page)" class="page-link"
+                                                            href="#">{{page}}</button>
+                                                    </li>
+                                                    <li class="page-item"
+                                                        [ngClass]="{disabled:pagerAdm.currentPage === pagerAdm.totalPages}">
+                                                        <button (click)="setPageAdm(pagerAdm.currentPage + 1)"
+                                                            class="page-link" href="#" aria-label="Previous">
+                                                            <span aria-hidden="true">&gt;</span>
+                                                            <span class="sr-only">Next</span>
+                                                        </button>
+                                                    </li>
+                                                    <li class="page-item"
+                                                        [ngClass]="{disabled:pagerAdm.currentPage === pagerAdm.totalPages}">
+                                                        <button (click)="setPageAdm(pagerAdm.totalPages)"
+                                                            class="page-link" href="#" aria-label="Next">
+                                                            <span aria-hidden="true">&raquo;</span>
+                                                            <span class="sr-only">Last</span>
+                                                        </button>
+                                                    </li>
+                                                </ul>
+                                            </nav>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- :end section 1 -->
+
+                    <!-- :start section 2 -->
+                    <div class="m-accordion__item">
+                        <div class="m-accordion__item-head collapsed" role="tab" id="m_accordion_sec2_head"
+                            data-toggle="collapse" href="#m_accordion_sec2_body" aria-expanded="    false">
+                            <span class="m-accordion__item-mode"></span>
+                            <span class="m-accordion__item-title m-accordian__item-mode-title pl-2">
+                                {{sec2Title}}
+                            </span>
+                            <span class="m-accordion__item-icon">
+                                <i class="fa {{sec2Icon}}"></i>
+                            </span>
+                        </div>
+                        <div class="m-accordion__item-body collapse" id="m_accordion_sec2_body" role="tabpanel"
+                            aria-labelledby="m_accordion_sec2_head" data-parent="#m_accordion_1">
+                            <div class="m-accordion__item-content">
+                                <div class="col-lg-12 centred my-auto">
+                                    <!-- <ng-template #alertErrorSec2></ng-template> -->
+                                </div>
+
+                                <div *ngIf="loading2">
+                                    <span>Loading data. Please wait... </span>
+                                    <span>
+                                        <div class="m-loader m-loader--lg m-loader--success"
+                                            style="width: 30px; display: inline-block;"></div>
+                                    </span>
+                                </div>
+
+                                <div *ngIf="!loading2&&!err2">
+                                    <div class="row">
+                                        <div class="col-lg-12 text-right">
+                                            <button type="button" class="btn m-btn--pill btn-primary btn-sm"
+                                                data-toggle="modal" (click)="updateJobUser(2)"
+                                                data-target="#modal_new_job_user">
+                                                <i class="fa {{sec2Icon}}"></i> Add {{sec2Title}}
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div class="row table-responsive">
+                                        <div class="col-lg-12">
+                                            <table class="table table-striped table-hover m_datatable">
+                                                <thead class="thead-inverse">
+                                                    <tr>
+                                                        <th>Staff Id</th>
+                                                        <th>Name</th>
+                                                        <th>LOB</th>
+                                                        <th style="width:20px"></th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr *ngFor="let head of pagedItemsHead">
+                                                        <td>{{head.Staff_No}}</td>
+                                                        <td>{{head.Name}}</td>
+                                                        <td>{{head.lob}}</td>
+                                                        <td class="d-flex flex-row">
+                                                            <button href="#"
+                                                                class="m-portlet__nav-link btn m-btn m-btn--hover-danger m-btn--icon m-btn--icon-only m-btn--pill"
+                                                                title="Delete" id="delJobUsr2"
+                                                                style="visibility: hidden" (click)="delJobUserSubmit()">
+                                                                <i class="la la-trash"></i>
+                                                            </button>
+                                                            <a href="#"
+                                                                class="m-portlet__nav-link btn m-btn m-btn--hover-danger m-btn--icon m-btn--icon-only m-btn--pill"
+                                                                title="Delete" id="delJobUsr"
+                                                                (click)="selectedUser(head)">
+                                                                <i class="la la-trash"></i>
+                                                            </a>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <nav aria-label="Page navigation example">
+                                                <ul *ngIf="pagerHead.pages && pagerHead.pages.length"
+                                                    class="pagination justify-content-end">
+                                                    <li class="page-item"
+                                                        [ngClass]="{disabled:pagerHead.currentPage === 1}">
+                                                        <button (click)="setPageHead(1)" class="page-link" href="#"
+                                                            aria-label="Previous">
+                                                            <span aria-hidden="true">&laquo;</span>
+                                                            <span class="sr-only">First</span>
+                                                        </button>
+                                                    </li>
+                                                    <li class="page-item"
+                                                        [ngClass]="{disabled:pagerHead.currentPage === 1}">
+                                                        <button (click)="setPageHead(pagerHead.currentPage - 1)"
+                                                            class="page-link" href="#" aria-label="Previous">
+                                                            <span aria-hidden="true">&lt;</span>
+                                                            <span class="sr-only">Previous</span>
+                                                        </button>
+                                                    </li>
+                                                    <li class="page-item" *ngFor="let page of pagerHead.pages"
+                                                        [ngClass]="{active:pagerHead.currentPage === page}">
+                                                        <button (click)="setPageHead(page)" class="page-link"
+                                                            href="#">{{page}}</button>
+                                                    </li>
+                                                    <li class="page-item"
+                                                        [ngClass]="{disabled:pagerHead.currentPage === pagerHead.totalPages}">
+                                                        <button (click)="setPageHead(pagerHead.currentPage + 1)"
+                                                            class="page-link" href="#" aria-label="Previous">
+                                                            <span aria-hidden="true">&gt;</span>
+                                                            <span class="sr-only">Next</span>
+                                                        </button>
+                                                    </li>
+                                                    <li class="page-item"
+                                                        [ngClass]="{disabled:pagerHead.currentPage === pagerHead.totalPages}">
+                                                        <button (click)="setPageHead(pagerHead.totalPages)"
+                                                            class="page-link" href="#" aria-label="Next">
+                                                            <span aria-hidden="true">&raquo;</span>
+                                                            <span class="sr-only">Last</span>
+                                                        </button>
+                                                    </li>
+                                                </ul>
+                                            </nav>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- :end section 2 -->
+
+                    <!-- :start section 3 -->
+                    <div class="m-accordion__item">
+                        <div class="m-accordion__item-head collapsed" role="tab" id="m_accordion_sec3_head"
+                            data-toggle="collapse" href="#m_accordion_sec3_body" aria-expanded="    false">
+                            <span class="m-accordion__item-mode"></span>
+                            <span class="m-accordion__item-title m-accordian__item-mode-title pl-2">
+                                {{sec3Title}}
+                            </span>
+                            <span class="m-accordion__item-icon">
+                                <i class="fa {{sec3Icon}}"></i>
+                            </span>
+                        </div>
+                        <div class="m-accordion__item-body collapse" id="m_accordion_sec3_body" role="tabpanel"
+                            aria-labelledby="m_accordion_sec3_head" data-parent="#m_accordion_1">
+                            <div class="m-accordion__item-content">
+                                <div class="col-lg-12 centred my-auto">
+                                    <!-- <ng-template #alertErrorSec2></ng-template> -->
+                                </div>
+
+                                <div *ngIf="loading3">
+                                    <span>Loading data. Please wait... </span>
+                                    <span>
+                                        <div class="m-loader m-loader--lg m-loader--success"
+                                            style="width: 30px; display: inline-block;"></div>
+                                    </span>
+                                </div>
+
+                                <div *ngIf="!loading3&&!err3">
+                                    <div class="row">
+                                        <div class="col-lg-12 text-right">
+                                            <button type="button" class="btn m-btn--pill btn-primary btn-sm"
+                                                data-toggle="modal" (click)="updateJobUser(3)"
+                                                data-target="#modal_new_job_user">
+                                                <i class="fa {{sec3Icon}}"></i> Add {{sec3Title}}
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div class="row table-responsive">
+                                        <div class="col-lg-12">
+                                            <table class="table table-striped table-hover m_datatable">
+                                                <thead class="thead-inverse">
+                                                    <tr>
+                                                        <th>Staff Id</th>
+                                                        <th>Name</th>
+                                                        <th>LOB</th>
+                                                        <th style="width:20px"></th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr *ngFor="let adv of pagedItemsAdv">
+                                                        <td>{{adv.Staff_No}}</td>
+                                                        <td>{{adv.Name}}</td>
+                                                        <td>{{adv.lob}}</td>
+                                                        <td class="d-flex flex-row">
+                                                            <button href="#"
+                                                                class="m-portlet__nav-link btn m-btn m-btn--hover-danger m-btn--icon m-btn--icon-only m-btn--pill"
+                                                                title="Delete" id="delJobUsr2"
+                                                                style="visibility: hidden" (click)="delJobUserSubmit()">
+                                                                <i class="la la-trash"></i>
+                                                            </button>
+                                                            <a href="#"
+                                                                class="m-portlet__nav-link btn m-btn m-btn--hover-danger m-btn--icon m-btn--icon-only m-btn--pill"
+                                                                title="Delete" id="delJobUsr"
+                                                                (click)="selectedUser(adv)">
+                                                                <i class="la la-trash"></i>
+                                                            </a>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <nav aria-label="Page navigation example">
+                                                <ul *ngIf="pagerAdv.pages && pagerAdv.pages.length"
+                                                    class="pagination justify-content-end">
+                                                    <li class="page-item"
+                                                        [ngClass]="{disabled:pagerAdv.currentPage === 1}">
+                                                        <button (click)="setPageAdv(1)" class="page-link" href="#"
+                                                            aria-label="Previous">
+                                                            <span aria-hidden="true">&laquo;</span>
+                                                            <span class="sr-only">First</span>
+                                                        </button>
+                                                    </li>
+                                                    <li class="page-item"
+                                                        [ngClass]="{disabled:pagerAdv.currentPage === 1}">
+                                                        <button (click)="setPageAdv(pagerAdv.currentPage - 1)"
+                                                            class="page-link" href="#" aria-label="Previous">
+                                                            <span aria-hidden="true">&lt;</span>
+                                                            <span class="sr-only">Previous</span>
+                                                        </button>
+                                                    </li>
+                                                    <li class="page-item" *ngFor="let page of pagerAdv.pages"
+                                                        [ngClass]="{active:pagerAdv.currentPage === page}">
+                                                        <button (click)="setPageAdv(page)" class="page-link"
+                                                            href="#">{{page}}</button>
+                                                    </li>
+                                                    <li class="page-item"
+                                                        [ngClass]="{disabled:pagerAdv.currentPage === pagerAdv.totalPages}">
+                                                        <button (click)="setPageAdv(pagerAdv.currentPage + 1)"
+                                                            class="page-link" href="#" aria-label="Previous">
+                                                            <span aria-hidden="true">&gt;</span>
+                                                            <span class="sr-only">Next</span>
+                                                        </button>
+                                                    </li>
+                                                    <li class="page-item"
+                                                        [ngClass]="{disabled:pagerAdv.currentPage === pagerAdv.totalPages}">
+                                                        <button (click)="setPageAdv(pagerAdv.totalPages)"
+                                                            class="page-link" href="#" aria-label="Next">
+                                                            <span aria-hidden="true">&raquo;</span>
+                                                            <span class="sr-only">Last</span>
+                                                        </button>
+                                                    </li>
+                                                </ul>
+                                            </nav>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- :end section 3 -->
+
+                    <!-- :start section 4 -->
+                    <div class="m-accordion__item">
+                        <div class="m-accordion__item-head collapsed" role="tab" id="m_accordion_sec4_head"
+                            data-toggle="collapse" href="#m_accordion_sec4_body" aria-expanded="    false">
+                            <span class="m-accordion__item-mode"></span>
+                            <span class="m-accordion__item-title m-accordian__item-mode-title pl-2">
+                                {{sec4Title}}
+                            </span>
+                            <span class="m-accordion__item-icon">
+                                <i class="fa {{sec4Icon}}"></i>
+                            </span>
+                        </div>
+                        <div class="m-accordion__item-body collapse" id="m_accordion_sec4_body" role="tabpanel"
+                            aria-labelledby="m_accordion_sec4_head" data-parent="#m_accordion_1">
+                            <div class="m-accordion__item-content">
+                                <div class="col-lg-12 centred my-auto">
+                                    <!-- <ng-template #alertErrorSec2></ng-template> -->
+                                </div>
+
+                                <div *ngIf="loading4">
+                                    <span>Loading data. Please wait... </span>
+                                    <span>
+                                        <div class="m-loader m-loader--lg m-loader--success"
+                                            style="width: 30px; display: inline-block;"></div>
+                                    </span>
+                                </div>
+
+                                <div *ngIf="!loading4&&!err4">
+                                    <div class="row">
+                                        <div class="col-lg-12 text-right">
+                                            <button type="button" class="btn m-btn--pill btn-primary btn-sm"
+                                                data-toggle="modal" (click)="updateJobUser(4)"
+                                                data-target="#modal_new_job_user">
+                                                <i class="fa {{sec4Icon}}"></i> Add {{sec4Title}}
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div class="row table-responsive">
+                                        <div class="col-lg-12">
+                                            <table class="table table-striped table-hover m_datatable">
+                                                <thead class="thead-inverse">
+                                                    <tr>
+                                                        <th>Staff Id</th>
+                                                        <th>Name</th>
+                                                        <th>LOB</th>
+                                                        <th style="width:20px"></th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr *ngFor="let edt of pagedItemsEdt">
+                                                        <td>{{edt.Staff_No}}</td>
+                                                        <td>{{edt.Name}}</td>
+                                                        <td>{{edt.lob}}</td>
+                                                        <td class="d-flex flex-row">
+                                                            <button href="#"
+                                                                class="m-portlet__nav-link btn m-btn m-btn--hover-danger m-btn--icon m-btn--icon-only m-btn--pill"
+                                                                title="Delete" id="delJobUsr2"
+                                                                style="visibility: hidden" (click)="delJobUserSubmit()">
+                                                                <i class="la la-trash"></i>
+                                                            </button>
+                                                            <a href="#"
+                                                                class="m-portlet__nav-link btn m-btn m-btn--hover-danger m-btn--icon m-btn--icon-only m-btn--pill"
+                                                                title="Delete" id="delJobUsr"
+                                                                (click)="selectedUser(edt)">
+                                                                <i class="la la-trash"></i>
+                                                            </a>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <nav aria-label="Page navigation example">
+                                                <ul *ngIf="pagerEdt.pages && pagerEdt.pages.length"
+                                                    class="pagination justify-content-end">
+                                                    <li class="page-item"
+                                                        [ngClass]="{disabled:pagerEdt.currentPage === 1}">
+                                                        <button (click)="setPageEdt(1)" class="page-link" href="#"
+                                                            aria-label="Previous">
+                                                            <span aria-hidden="true">&laquo;</span>
+                                                            <span class="sr-only">First</span>
+                                                        </button>
+                                                    </li>
+                                                    <li class="page-item"
+                                                        [ngClass]="{disabled:pagerEdt.currentPage === 1}">
+                                                        <button (click)="setPageEdt(pagerEdt.currentPage - 1)"
+                                                            class="page-link" href="#" aria-label="Previous">
+                                                            <span aria-hidden="true">&lt;</span>
+                                                            <span class="sr-only">Previous</span>
+                                                        </button>
+                                                    </li>
+                                                    <li class="page-item" *ngFor="let page of pagerEdt.pages"
+                                                        [ngClass]="{active:pagerEdt.currentPage === page}">
+                                                        <button (click)="setPageEdt(page)" class="page-link"
+                                                            href="#">{{page}}</button>
+                                                    </li>
+                                                    <li class="page-item"
+                                                        [ngClass]="{disabled:pagerEdt.currentPage === pagerEdt.totalPages}">
+                                                        <button (click)="setPageEdt(pagerEdt.currentPage + 1)"
+                                                            class="page-link" href="#" aria-label="Previous">
+                                                            <span aria-hidden="true">&gt;</span>
+                                                            <span class="sr-only">Next</span>
+                                                        </button>
+                                                    </li>
+                                                    <li class="page-item"
+                                                        [ngClass]="{disabled:pagerEdt.currentPage === pagerEdt.totalPages}">
+                                                        <button (click)="setPageEdt(pagerEdt.totalPages)"
+                                                            class="page-link" href="#" aria-label="Next">
+                                                            <span aria-hidden="true">&raquo;</span>
+                                                            <span class="sr-only">Last</span>
+                                                        </button>
+                                                    </li>
+                                                </ul>
+                                            </nav>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- :end section 4 -->
+
+                    <!-- :start section 5 -->
+                    <div class="m-accordion__item">
+                        <div class="m-accordion__item-head collapsed" role="tab" id="m_accordion_sec5_head"
+                            data-toggle="collapse" href="#m_accordion_sec5_body" aria-expanded="    false">
+                            <span class="m-accordion__item-mode"></span>
+                            <span class="m-accordion__item-title m-accordian__item-mode-title pl-2">
+                                {{sec5Title}}
+                            </span>
+                            <span class="m-accordion__item-icon">
+                                <i class="fa {{sec5Icon}}"></i>
+                            </span>
+                        </div>
+                        <div class="m-accordion__item-body collapse" id="m_accordion_sec5_body" role="tabpanel"
+                            aria-labelledby="m_accordion_sec5_head" data-parent="#m_accordion_1">
+                            <div class="m-accordion__item-content">
+                                <div class="col-lg-12 centred my-auto">
+                                    <!-- <ng-template #alertErrorSec2></ng-template> -->
+                                </div>
+
+                                <div *ngIf="loading2">
+                                    <span>Loading data. Please wait... </span>
+                                    <span>
+                                        <div class="m-loader m-loader--lg m-loader--success"
+                                            style="width: 30px; display: inline-block;"></div>
+                                    </span>
+                                </div>
+
+                                <div *ngIf="!loading2&&!err2">
+                                    <div class="row">
+                                        <div class="col-lg-12 text-right">
+                                            <button type="button" class="btn m-btn--pill btn-primary btn-sm"
+                                                data-toggle="modal" (click)="updateJobUser(5)"
+                                                data-target="#modal_new_job_user">
+                                                <i class="fa {{sec5Icon}}"></i> Add {{sec5Title}}
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div class="row table-responsive">
+                                        <div class="col-lg-12">
+                                            <table class="table table-striped table-hover m_datatable">
+                                                <thead class="thead-inverse">
+                                                    <tr>
+                                                        <th>Staff Id</th>
+                                                        <th>Name</th>
+                                                        <th>LOB</th>
+                                                        <th style="width:20px"></th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr *ngFor="let pro of pagedItemsPro">
+                                                        <td>{{pro.Staff_No}}</td>
+                                                        <td>{{pro.Name}}</td>
+                                                        <td>{{pro.lob}}</td>
+                                                        <td class="d-flex flex-row">
+                                                            <button href="#"
+                                                                class="m-portlet__nav-link btn m-btn m-btn--hover-danger m-btn--icon m-btn--icon-only m-btn--pill"
+                                                                title="Delete" id="delJobUsr2"
+                                                                style="visibility: hidden" (click)="delJobUserSubmit()">
+                                                                <i class="la la-trash"></i>
+                                                            </button>
+                                                            <a href="#"
+                                                                class="m-portlet__nav-link btn m-btn m-btn--hover-danger m-btn--icon m-btn--icon-only m-btn--pill"
+                                                                title="Delete" id="delJobUsr"
+                                                                (click)="selectedUser(pro)">
+                                                                <i class="la la-trash"></i>
+                                                            </a>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <nav aria-label="Page navigation example">
+                                                <ul *ngIf="pagerPro.pages && pagerPro.pages.length"
+                                                    class="pagination justify-content-end">
+                                                    <li class="page-item"
+                                                        [ngClass]="{disabled:pagerPro.currentPage === 1}">
+                                                        <button (click)="setPagePro(1)" class="page-link" href="#"
+                                                            aria-label="Previous">
+                                                            <span aria-hidden="true">&laquo;</span>
+                                                            <span class="sr-only">First</span>
+                                                        </button>
+                                                    </li>
+                                                    <li class="page-item"
+                                                        [ngClass]="{disabled:pagerPro.currentPage === 1}">
+                                                        <button (click)="setPagePro(pagerPro.currentPage - 1)"
+                                                            class="page-link" href="#" aria-label="Previous">
+                                                            <span aria-hidden="true">&lt;</span>
+                                                            <span class="sr-only">Previous</span>
+                                                        </button>
+                                                    </li>
+                                                    <li class="page-item" *ngFor="let page of pagerPro.pages"
+                                                        [ngClass]="{active:pagerPro.currentPage === page}">
+                                                        <button (click)="setPagePro(page)" class="page-link"
+                                                            href="#">{{page}}</button>
+                                                    </li>
+                                                    <li class="page-item"
+                                                        [ngClass]="{disabled:pagerPro.currentPage === pagerPro.totalPages}">
+                                                        <button (click)="setPagePro(pagerPro.currentPage + 1)"
+                                                            class="page-link" href="#" aria-label="Previous">
+                                                            <span aria-hidden="true">&gt;</span>
+                                                            <span class="sr-only">Next</span>
+                                                        </button>
+                                                    </li>
+                                                    <li class="page-item"
+                                                        [ngClass]="{disabled:pagerPro.currentPage === pagerPro.totalPages}">
+                                                        <button (click)="setPagePro(pagerPro.totalPages)"
+                                                            class="page-link" href="#" aria-label="Next">
+                                                            <span aria-hidden="true">&raquo;</span>
+                                                            <span class="sr-only">Last</span>
+                                                        </button>
+                                                    </li>
+                                                </ul>
+                                            </nav>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- :end section 5 -->
+
+
+                    <!-- :start section 6 -->
+
+                    <div class="m-accordion__item">
+                        <div class="m-accordion__item-head collapsed" role="tab" id="m_accordion_sec6_head"
+                            data-toggle="collapse" href="#m_accordion_sec6_body" aria-expanded="    false">
+                            <span class="m-accordion__item-mode"></span>
+                            <span class="m-accordion__item-title m-accordian__item-mode-title pl-2">
+                                {{sec6Title}}
+                            </span>
+                            <span class="m-accordion__item-icon">
+                                <i class="fa {{sec6Icon}}"></i>
+                            </span>
+                        </div>
+                        <div class="m-accordion__item-body collapse" id="m_accordion_sec6_body" role="tabpanel"
+                            aria-labelledby="m_accordion_sec6_head" data-parent="#m_accordion_1">
+                            <div class="m-accordion__item-content">
+                                <div class="col-lg-12 centred my-auto">
+                                    <!-- <ng-template #alertErrorSec2></ng-template> -->
+                                </div>
+
+                                <div *ngIf="loading3">
+                                    <span>Loading data. Please wait... </span>
+                                    <span>
+                                        <div class="m-loader m-loader--lg m-loader--success"
+                                            style="width: 30px; display: inline-block;"></div>
+                                    </span>
+                                </div>
+
+                                <div *ngIf="!loading3&&!err3">
+                                    <div class="row">
+                                        <div class="col-lg-12 text-right">
+                                            <button type="button" class="btn m-btn--pill btn-primary btn-sm"
+                                                data-toggle="modal" (click)="updateJobUser(6)"
+                                                data-target="#modal_new_job_user">
+                                                <i class="fa {{sec6Icon}}"></i> Add {{sec6Title}}
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div class="row table-responsive">
+                                        <div class="col-lg-12">
+                                            <table class="table table-striped table-hover m_datatable">
+                                                <thead class="thead-inverse">
+                                                    <tr>
+                                                        <th>Staff Id</th>
+                                                        <th>Name</th>
+                                                        <th>LOB</th>
+                                                        <th style="width:20px"></th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr *ngFor="let exp of pagedItemsExp">
+                                                        <td>{{exp.Staff_No}}</td>
+                                                        <td>{{exp.Name}}</td>
+                                                        <td>{{exp.lob}}</td>
+                                                        <td class="d-flex flex-row">
+                                                            <button href="#"
+                                                                class="m-portlet__nav-link btn m-btn m-btn--hover-danger m-btn--icon m-btn--icon-only m-btn--pill"
+                                                                title="Delete" id="delJobUsr2"
+                                                                style="visibility: hidden" (click)="delJobUserSubmit()">
+                                                                <i class="la la-trash"></i>
+                                                            </button>
+                                                            <a href="#"
+                                                                class="m-portlet__nav-link btn m-btn m-btn--hover-danger m-btn--icon m-btn--icon-only m-btn--pill"
+                                                                title="Delete" id="delJobUsr"
+                                                                (click)="selectedUser(exp)">
+                                                                <i class="la la-trash"></i>
+                                                            </a>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <nav aria-label="Page navigation example">
+                                                <ul *ngIf="pagerExp.pages && pagerExp.pages.length"
+                                                    class="pagination justify-content-end">
+                                                    <li class="page-item"
+                                                        [ngClass]="{disabled:pagerExp.currentPage === 1}">
+                                                        <button (click)="setPageExp(1)" class="page-link" href="#"
+                                                            aria-label="Previous">
+                                                            <span aria-hidden="true">&laquo;</span>
+                                                            <span class="sr-only">First</span>
+                                                        </button>
+                                                    </li>
+                                                    <li class="page-item"
+                                                        [ngClass]="{disabled:pagerExp.currentPage === 1}">
+                                                        <button (click)="setPageExp(pagerExp.currentPage - 1)"
+                                                            class="page-link" href="#" aria-label="Previous">
+                                                            <span aria-hidden="true">&lt;</span>
+                                                            <span class="sr-only">Previous</span>
+                                                        </button>
+                                                    </li>
+                                                    <li class="page-item" *ngFor="let page of pagerExp.pages"
+                                                        [ngClass]="{active:pagerExp.currentPage === page}">
+                                                        <button (click)="setPageExp(page)" class="page-link"
+                                                            href="#">{{page}}</button>
+                                                    </li>
+                                                    <li class="page-item"
+                                                        [ngClass]="{disabled:pagerExp.currentPage === pagerExp.totalPages}">
+                                                        <button (click)="setPageExp(pagerExp.currentPage + 1)"
+                                                            class="page-link" href="#" aria-label="Previous">
+                                                            <span aria-hidden="true">&gt;</span>
+                                                            <span class="sr-only">Next</span>
+                                                        </button>
+                                                    </li>
+                                                    <li class="page-item"
+                                                        [ngClass]="{disabled:pagerExp.currentPage === pagerExp.totalPages}">
+                                                        <button (click)="setPageExp(pagerExp.totalPages)"
+                                                            class="page-link" href="#" aria-label="Next">
+                                                            <span aria-hidden="true">&raquo;</span>
+                                                            <span class="sr-only">Last</span>
+                                                        </button>
+                                                    </li>
+                                                </ul>
+                                            </nav>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- :end section 6 -->
+
+
+
+
+                    <!-- :start section 7 -->
+
+                    <div class="m-accordion__item">
+                        <div class="m-accordion__item-head collapsed" role="tab" id="m_accordion_sec7_head"
+                            data-toggle="collapse" href="#m_accordion_sec7_body" aria-expanded="    false">
+                            <span class="m-accordion__item-mode"></span>
+                            <span class="m-accordion__item-title m-accordian__item-mode-title pl-2">
+                                {{sec7Title}}
+                            </span>
+                            <span class="m-accordion__item-icon">
+                                <i class="fa {{sec7Icon}}"></i>
+                            </span>
+                        </div>
+                        <div class="m-accordion__item-body collapse" id="m_accordion_sec7_body" role="tabpanel"
+                            aria-labelledby="m_accordion_sec7_head" data-parent="#m_accordion_1">
+                            <div class="m-accordion__item-content">
+                                <div class="col-lg-12 centred my-auto">
+                                    <!-- <ng-template #alertErrorSec2></ng-template> -->
+                                </div>
+
+                                <div *ngIf="loading3">
+                                    <span>Loading data. Please wait... </span>
+                                    <span>
+                                        <div class="m-loader m-loader--lg m-loader--success"
+                                            style="width: 30px; display: inline-block;"></div>
+                                    </span>
+                                </div>
+
+                                <div *ngIf="!loading3&&!err3">
+                                    
+                                    <div class="row">
+                                        <div class="col-lg-12 text-right">
+                                            <button type="button" class="btn m-btn--pill btn-primary btn-sm"
+                                                data-toggle="modal" (click)="updateJobUser(7)"
+                                                data-target="#modal_new_job_user">
+                                                <i class="fa {{sec7Icon}}"></i> Add {{sec7Title}}
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div class="row table-responsive">
+                                        <div class="col-lg-12">
+                                            <table class="table table-striped table-hover m_datatable">
+                                                <thead class="thead-inverse">
+                                                    <tr>
+                                                        <th>Staff Id</th>
+                                                        <th>Name</th>
+                                                        <th>LOB</th>
+                                                        <th style="width:20px"></th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr *ngFor="let exp of pagedItemsHCBD">
+                                                        <td>{{exp.Staff_No}}</td>
+                                                        <td>{{exp.Name}}</td>
+                                                        <td>{{exp.lob}}</td>
+                                                        <td class="d-flex flex-row">
+                                                            <button href="#"
+                                                                class="m-portlet__nav-link btn m-btn m-btn--hover-danger m-btn--icon m-btn--icon-only m-btn--pill"
+                                                                title="Delete" id="delJobUsr2"
+                                                                style="visibility: hidden" (click)="delJobUserSubmit()">
+                                                                <i class="la la-trash"></i>
+                                                            </button>
+                                                            <a href="#"
+                                                                class="m-portlet__nav-link btn m-btn m-btn--hover-danger m-btn--icon m-btn--icon-only m-btn--pill"
+                                                                title="Delete" id="delJobUsr"
+                                                                (click)="selectedUser(exp)">
+                                                                <i class="la la-trash"></i>
+                                                            </a>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <nav aria-label="Page navigation example">
+                                                <ul *ngIf="pagerHCBD.pages && pagerHCBD.pages.length"
+                                                    class="pagination justify-content-end">
+                                                    <li class="page-item"
+                                                        [ngClass]="{disabled:pagerHCBD.currentPage === 1}">
+                                                   
+                                                        <button (click)="setPageHCBD(1)" class="page-link" href="#"
+                                                            aria-label="Previous">
+                                                            <span aria-hidden="true">&laquo;</span>
+                                                            <span class="sr-only">First</span>
+                                                        </button>
+                                                    </li>
+                                                    <li class="page-item"
+                                                        [ngClass]="{disabled:pagerHCBD.currentPage === 1}">
+                                                        <button (click)="setPageHCBD(pagerHCBD.currentPage - 1)"
+                                                            class="page-link" href="#" aria-label="Previous">
+                                                            <span aria-hidden="true">&lt;</span>
+                                                            <span class="sr-only">Previous</span>
+                                                        </button>
+                                                    </li>
+                                                    <li class="page-item" *ngFor="let page of pagerHCBD.pages"
+                                                        [ngClass]="{active:pagerHCBD.currentPage === page}">
+                                                        <button (click)="setPageHCBD(page)" class="page-link"
+                                                            href="#">{{page}}</button>
+                                                    </li>
+                                                    <li class="page-item"
+                                                        [ngClass]="{disabled:pagerHCBD.currentPage === pagerHCBD.totalPages}">
+                                                        <button (click)="setPageHCBD(pagerHCBD.currentPage + 1)"
+                                                            class="page-link" href="#" aria-label="Previous">
+                                                            <span aria-hidden="true">&gt;</span>
+                                                            <span class="sr-only">Next</span>
+                                                        </button>
+                                                    </li>
+                                                    <li class="page-item"
+                                                        [ngClass]="{disabled:pagerHCBD.currentPage === pagerHCBD.totalPages}">
+                                                        <button (click)="setPageHCBD(pagerHCBD.totalPages)"
+                                                            class="page-link" href="#" aria-label="Next">
+                                                            <span aria-hidden="true">&raquo;</span>
+                                                            <span class="sr-only">Last</span>
+                                                        </button>
+                                                    </li>
+                                                </ul>
+                                            </nav>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- :end section 7 -->
+
+                    <!-- :start section 8 -->
+
+                    <!-- <div class="m-accordion__item" *ngIf="!env_prod"> -->
+                    <div class="m-accordion__item">
+                        <div class="m-accordion__item-head collapsed" role="tab" id="m_accordion_sec8_head"
+                            data-toggle="collapse" href="#m_accordion_sec8_body" aria-expanded="false">
+                            <span class="m-accordion__item-mode"></span>
+                            <span class="m-accordion__item-title m-accordian__item-mode-title pl-2">
+                                {{sec8Title}}
+                            </span>
+                            <span class="m-accordion__item-icon">
+                                <i class="fa {{sec8Icon}}"></i>
+                            </span>
+                        </div>
+                        <div class="m-accordion__item-body collapse" id="m_accordion_sec8_body" role="tabpanel"
+                            aria-labelledby="m_accordion_sec8_head" data-parent="#m_accordion_1">
+                            <div class="m-accordion__item-content">
+                                <div class="col-lg-12 centred my-auto">
+                                    <!-- <ng-template #alertErrorSec2></ng-template> -->
+                                </div>
+
+                                <div *ngIf="loading8">
+                                    <span>Loading data. Please wait... </span>
+                                    <span>
+                                        <div class="m-loader m-loader--lg m-loader--success"
+                                            style="width: 30px; display: inline-block;"></div>
+                                    </span>
+                                </div>
+
+                                <div *ngIf="!loading8&&!err8">
+                                    <div class="row">
+                                        <div class="col-lg-12 text-right">
+                                            <button type="button" class="btn m-btn--pill btn-primary btn-sm"
+                                                data-toggle="modal" (click)="updateJobUser(8)"
+                                                data-target="#modal_new_job_user_panelMgmt">
+                                                <i class="fa {{sec8Icon}}"></i> Add {{sec8Title}}
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div class="row table-responsive">
+                                        <div class="col-lg-12">
+                                            <table class="table table-striped table-hover m_datatable">
+                                                <thead class="thead-inverse">
+                                                    <tr>
+                                                        <th>Staff Id</th>
+                                                        <th>Name</th>
+                                                        <th>LOB</th>
+                                                        <th style="width:20px"></th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr *ngFor="let pm of pagedItemsPM">
+                                                        <td>{{pm.Staff_No}}</td>
+                                                        <td>{{pm.Name}}</td>
+                                                        <td>{{pm.lob}}</td>
+                                                        <td class="d-flex flex-row">                                                            
+                                                            <a href="#" class="m-portlet__nav-link btn m-btn m-btn--hover-danger m-btn--icon m-btn--icon-only m-btn--pill"
+                                                                   data-toggle="modal" 
+                                                                   (click)="delJobUserPanelSubmit(pm.id)">
+                                                                   <i class="la la-trash"></i>                                                                                          
+                                                            </a>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <nav aria-label="Page navigation example">
+                                                <ul *ngIf="pagerPM.pages && pagerPM.pages.length"
+                                                    class="pagination justify-content-end">
+                                                    <li class="page-item"
+                                                        [ngClass]="{disabled:pagerPM.currentPage === 1}">
+                                                        <button (click)="setPagePM(1)" class="page-link" href="#"
+                                                            aria-label="Previous">
+                                                            <span aria-hidden="true">&laquo;</span>
+                                                            <span class="sr-only">First</span>
+                                                        </button>
+                                                    </li>
+                                                    <li class="page-item"
+                                                        [ngClass]="{disabled:pagerPM.currentPage === 1}">
+                                                        <button (click)="setPagePM(pagerPM.currentPage - 1)"
+                                                            class="page-link" href="#" aria-label="Previous">
+                                                            <span aria-hidden="true">&lt;</span>
+                                                            <span class="sr-only">Previous</span>
+                                                        </button>
+                                                    </li>
+                                                    <li class="page-item" *ngFor="let page of pagerPM.pages"
+                                                        [ngClass]="{active:pagerPM.currentPage === page}">
+                                                        <button (click)="setPagePM(page)" class="page-link"
+                                                            href="#">{{page}}</button>
+                                                    </li>
+                                                    <li class="page-item"
+                                                        [ngClass]="{disabled:pagerPM.currentPage === pagerPM.totalPages}">
+                                                        <button (click)="setPagePM(pagerPM.currentPage + 1)"
+                                                            class="page-link" href="#" aria-label="Previous">
+                                                            <span aria-hidden="true">&gt;</span>
+                                                            <span class="sr-only">Next</span>
+                                                        </button>
+                                                    </li>
+                                                    <li class="page-item"
+                                                        [ngClass]="{disabled:pagerPM.currentPage === pagerPM.totalPages}">
+                                                        <button (click)="setPagePM(pagerPM.totalPages)"
+                                                            class="page-link" href="#" aria-label="Next">
+                                                            <span aria-hidden="true">&raquo;</span>
+                                                            <span class="sr-only">Last</span>
+                                                        </button>
+                                                    </li>
+                                                </ul>
+                                            </nav>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- :end section 8 -->
+                    <!-- :start section 9 -->
+
+                    <div class="m-accordion__item">
+                        <div class="m-accordion__item-head collapsed" role="tab" id="m_accordion_sec9_head"
+                            data-toggle="collapse" href="#m_accordion_sec9_body" aria-expanded="false">
+                            <span class="m-accordion__item-mode"></span>
+                            <span class="m-accordion__item-title m-accordian__item-mode-title pl-2">
+                                {{sec9Title}}
+                            </span>
+                            <span class="m-accordion__item-icon">
+                                <i class="fa {{sec9Icon}}"></i>
+                            </span>
+                        </div>
+                        <div class="m-accordion__item-body collapse" id="m_accordion_sec9_body" role="tabpanel"
+                            aria-labelledby="m_accordion_sec9_head" data-parent="#m_accordion_1">
+                            <div class="m-accordion__item-content">
+                                <div class="col-lg-12 centred my-auto">
+                                    <!-- <ng-template #alertErrorSec2></ng-template> -->
+                                </div>
+
+                                <div *ngIf="loading3">
+                                    <span>Loading data. Please wait... </span>
+                                    <span>
+                                        <div class="m-loader m-loader--lg m-loader--success"
+                                            style="width: 30px; display: inline-block;"></div>
+                                    </span>
+                                </div>
+
+                                <div *ngIf="!loading9&&!err9">
+                                    <div class="row">
+                                        <div class="col-lg-12 text-right">
+                                            <button type="button" class="btn m-btn--pill btn-primary btn-sm"
+                                                data-toggle="modal" (click)="updateJobUser(9)"
+                                                data-target="#modal_new_job_user">
+                                                <i class="fa {{sec9Icon}}"></i> Add {{sec9Title}}
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div class="row table-responsive">
+                                        <div class="col-lg-12">
+                                            <table class="table table-striped table-hover m_datatable">
+                                                <thead class="thead-inverse">
+                                                    <tr>
+                                                        <th>Staff Id</th>
+                                                        <th>Name</th>
+                                                        <th>LOB</th>
+                                                        <th style="width:20px"></th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr *ngFor="let rpm of pagedItemsRPM">
+                                                        <td>{{rpm.Staff_No}}</td>
+                                                        <td>{{rpm.Name}}</td>
+                                                        <td>{{rpm.lob}}</td>
+                                                        <td class="d-flex flex-row">
+                                                            <button href="#"
+                                                                class="m-portlet__nav-link btn m-btn m-btn--hover-danger m-btn--icon m-btn--icon-only m-btn--pill"
+                                                                title="Delete" id="delJobUsr2"
+                                                                style="visibility: hidden" (click)="delJobUserSubmit()">
+                                                                <i class="la la-trash"></i>
+                                                            </button>
+                                                            <a href="#"
+                                                                class="m-portlet__nav-link btn m-btn m-btn--hover-danger m-btn--icon m-btn--icon-only m-btn--pill"
+                                                                title="Delete" id="delJobUsr"
+                                                                (click)="selectedUser(rpm)">
+                                                                <i class="la la-trash"></i>
+                                                            </a>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <nav aria-label="Page navigation example">
+                                                <ul *ngIf="pagerRPM.pages && pagerRPM.pages.length"
+                                                    class="pagination justify-content-end">
+                                                    <li class="page-item"
+                                                        [ngClass]="{disabled:pagerRPM.currentPage === 1}">
+                                                        <button (click)="setPageRPM(1)" class="page-link" href="#"
+                                                            aria-label="Previous">
+                                                            <span aria-hidden="true">&laquo;</span>
+                                                            <span class="sr-only">First</span>
+                                                        </button>
+                                                    </li>
+                                                    <li class="page-item"
+                                                        [ngClass]="{disabled:pagerRPM.currentPage === 1}">
+                                                        <button (click)="setPageRPM(pagerRPM.currentPage - 1)"
+                                                            class="page-link" href="#" aria-label="Previous">
+                                                            <span aria-hidden="true">&lt;</span>
+                                                            <span class="sr-only">Previous</span>
+                                                        </button>
+                                                    </li>
+                                                    <li class="page-item" *ngFor="let page of pagerRPM.pages"
+                                                        [ngClass]="{active:pagerRPM.currentPage === page}">
+                                                        <button (click)="setPageRPM(page)" class="page-link"
+                                                            href="#">{{page}}</button>
+                                                    </li>
+                                                    <li class="page-item"
+                                                        [ngClass]="{disabled:pagerRPM.currentPage === pagerRPM.totalPages}">
+                                                        <button (click)="setPageRPM(pagerRPM.currentPage + 1)"
+                                                            class="page-link" href="#" aria-label="Previous">
+                                                            <span aria-hidden="true">&gt;</span>
+                                                            <span class="sr-only">Next</span>
+                                                        </button>
+                                                    </li>
+                                                    <li class="page-item"
+                                                        [ngClass]="{disabled:pagerRPM.currentPage === pagerRPM.totalPages}">
+                                                        <button (click)="setPageRPM(pagerRPM.totalPages)"
+                                                            class="page-link" href="#" aria-label="Next">
+                                                            <span aria-hidden="true">&raquo;</span>
+                                                            <span class="sr-only">Last</span>
+                                                        </button>
+                                                    </li>
+                                                </ul>
+                                            </nav>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- :end section 9 -->
+
+                    <!-- :start section 10 -->
+
+                    <div class="m-accordion__item">
+                    <div class="m-accordion__item-head collapsed" role="tab" id="m_accordion_sec10_head"
+                        data-toggle="collapse" href="#m_accordion_sec10_body" aria-expanded="false">
+                        <span class="m-accordion__item-mode"></span>
+                        <span class="m-accordion__item-title m-accordian__item-mode-title pl-2">
+                            {{sec10Title}}
+                        </span>
+                        <span class="m-accordion__item-icon">
+                            <i class="fa {{sec10Icon}}"></i>
+                        </span>
+                    </div>
+                    <div class="m-accordion__item-body collapse" id="m_accordion_sec10_body" role="tabpanel"
+                        aria-labelledby="m_accordion_sec10_head" data-parent="#m_accordion_1">
+                        <div class="m-accordion__item-content">
+                            <div class="col-lg-12 centred my-auto">
+                                <!-- <ng-template #alertErrorSec2></ng-template> -->
+                            </div>
+
+                            <div *ngIf="loading3">
+                                <span>Loading data. Please wait... </span>
+                                <span>
+                                    <div class="m-loader m-loader--lg m-loader--success"
+                                        style="width: 30px; display: inline-block;"></div>
+                                </span>
+                            </div>
+
+                            <div *ngIf="!loading10&&!err10">
+                                <div class="row">
+                                    <div class="col-lg-12 text-right">
+                                        <button type="button" class="btn m-btn--pill btn-primary btn-sm"
+                                            data-toggle="modal" (click)="updateJobUser(10)"
+                                            data-target="#modal_new_job_user">
+                                            <i class="fa {{sec10Icon}}"></i> Add {{sec10Title}}
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="row table-responsive">
+                                    <div class="col-lg-12">
+                                        <table class="table table-striped table-hover m_datatable">
+                                            <thead class="thead-inverse">
+                                                <tr>
+                                                    <th>Staff Id</th>
+                                                    <th>Name</th>
+                                                    <th>LOB</th>
+                                                    <th style="width:20px"></th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr *ngFor="let maps of pagedItemsMAPS">
+                                                    <td>{{maps.Staff_No}}</td>
+                                                    <td>{{maps.Name}}</td>
+                                                    <td>{{maps.lob}}</td>
+                                                    <td class="d-flex flex-row">
+                                                        <button href="#"
+                                                            class="m-portlet__nav-link btn m-btn m-btn--hover-danger m-btn--icon m-btn--icon-only m-btn--pill"
+                                                            title="Delete" id="delJobUsr2"
+                                                            style="visibility: hidden" (click)="delJobUserSubmit()">
+                                                            <i class="la la-trash"></i>
+                                                        </button>
+                                                        <a href="#"
+                                                            class="m-portlet__nav-link btn m-btn m-btn--hover-danger m-btn--icon m-btn--icon-only m-btn--pill"
+                                                            title="Delete" id="delJobUsr"
+                                                            (click)="selectedUser(maps)">
+                                                            <i class="la la-trash"></i>
+                                                        </a>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-12">
+                                        <nav aria-label="Page navigation example">
+                                            <ul *ngIf="pagerMAPS.pages && pagerMAPS.pages.length"
+                                                class="pagination justify-content-end">
+                                                <li class="page-item"
+                                                    [ngClass]="{disabled:pagerMAPS.currentPage === 1}">
+                                                    <button (click)="setPageMAPS(1)" class="page-link" href="#"
+                                                        aria-label="Previous">
+                                                        <span aria-hidden="true">&laquo;</span>
+                                                        <span class="sr-only">First</span>
+                                                    </button>
+                                                </li>
+                                                <li class="page-item"
+                                                    [ngClass]="{disabled:pagerMAPS.currentPage === 1}">
+                                                    <button (click)="setPageMAPS(pagerMAPS.currentPage - 1)"
+                                                        class="page-link" href="#" aria-label="Previous">
+                                                        <span aria-hidden="true">&lt;</span>
+                                                        <span class="sr-only">Previous</span>
+                                                    </button>
+                                                </li>
+                                                <li class="page-item" *ngFor="let page of pagerMAPS.pages"
+                                                    [ngClass]="{active:pagerMAPS.currentPage === page}">
+                                                    <button (click)="setPageMAPS(page)" class="page-link"
+                                                        href="#">{{page}}</button>
+                                                </li>
+                                                <li class="page-item"
+                                                    [ngClass]="{disabled:pagerMAPS.currentPage === pagerMAPS.totalPages}">
+                                                    <button (click)="setPageMAPS(pagerMAPS.currentPage + 1)"
+                                                        class="page-link" href="#" aria-label="Previous">
+                                                        <span aria-hidden="true">&gt;</span>
+                                                        <span class="sr-only">Next</span>
+                                                    </button>
+                                                </li>
+                                                <li class="page-item"
+                                                    [ngClass]="{disabled:pagerMAPS.currentPage === pagerMAPS.totalPages}">
+                                                    <button (click)="setPageMAPS(pagerMAPS.totalPages)"
+                                                        class="page-link" href="#" aria-label="Next">
+                                                        <span aria-hidden="true">&raquo;</span>
+                                                        <span class="sr-only">Last</span>
+                                                    </button>
+                                                </li>
+                                            </ul>
+                                        </nav>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    </div>
+                    <!-- :end section 10 -->
+
+                    <!-- :start section 11 -->
+
+                    <div class="m-accordion__item">
+                        <div class="m-accordion__item-head collapsed" role="tab" id="m_accordion_sec11_head"
+                            data-toggle="collapse" href="#m_accordion_sec11_body" aria-expanded="    false">
+                            <span class="m-accordion__item-mode"></span>
+                            <span class="m-accordion__item-title m-accordian__item-mode-title pl-2">
+                                {{sec11Title}}
+                            </span>
+                            <span class="m-accordion__item-icon">
+                                <i class="fa {{sec11Icon}}"></i>
+                            </span>
+                        </div>
+                        <div class="m-accordion__item-body collapse" id="m_accordion_sec11_body" role="tabpanel"
+                            aria-labelledby="m_accordion_sec11_head" data-parent="#m_accordion_1">
+                            <div class="m-accordion__item-content">
+                                <div class="col-lg-12 centred my-auto">
+                                    <!-- <ng-template #alertErrorsec11></ng-template> -->
+                                </div>
+
+                                <div *ngIf="loading11">
+                                    <span>Loading data. Please wait... </span>
+                                    <span>
+                                        <div class="m-loader m-loader--lg m-loader--success"
+                                            style="width: 30px; display: inline-block;"></div>
+                                    </span>
+                                </div>
+
+                                <div *ngIf="!loading11&&!err2">
+                                    <div class="row">
+                                        <div class="col-lg-12 text-right">
+                                            <button type="button" class="btn m-btn--pill btn-primary btn-sm"
+                                                data-toggle="modal" (click)="updateJobUserComp(11)"
+                                                data-target="#modal_new_job_user_comp">
+                                                <i class="fa {{sec11Icon}}">
+                                                </i> Add {{sec11Title}}
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div class="row table-responsive">
+                                        <div class="col-lg-12">
+                                            <table class="table table-striped table-hover m_datatable">
+                                                <thead class="thead-inverse">
+                                                    <tr>
+                                                        <th>Staff Id</th>
+                                                        <th>Name</th>
+                                                        <th>Company</th>
+                                                        <th style="width:20px"></th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr *ngFor="let vrp of pagedItemsVRP">
+                                                        <td>{{vrp.Staff_No}}</td>
+                                                        <td>{{vrp.Name}}</td>
+                                                        <td>{{vrp.division}}</td>
+                                                        <td class="d-flex flex-row">
+                                                            <button href="#"
+                                                                class="m-portlet__nav-link btn m-btn m-btn--hover-danger m-btn--icon m-btn--icon-only m-btn--pill"
+                                                                title="Delete" id="delJobUsr2"
+                                                                style="visibility: hidden" (click)="delJobUserSubmit()">
+                                                                <i class="la la-trash"></i>
+                                                            </button>
+                                                            <a href="#"
+                                                                class="m-portlet__nav-link btn m-btn m-btn--hover-danger m-btn--icon m-btn--icon-only m-btn--pill"
+                                                                title="Delete" id="delJobUsr"
+                                                                (click)="selectedUser(vrp)">
+                                                                <i class="la la-trash"></i>
+                                                            </a>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <nav aria-label="Page navigation example">
+                                                <ul *ngIf="pagerHead.pages && pagerHead.pages.length"
+                                                    class="pagination justify-content-end">
+                                                    <li class="page-item"
+                                                        [ngClass]="{disabled:pagerHead.currentPage === 1}">
+                                                        <button (click)="setPageHead(1)" class="page-link" href="#"
+                                                            aria-label="Previous">
+                                                            <span aria-hidden="true">&laquo;</span>
+                                                            <span class="sr-only">First</span>
+                                                        </button>
+                                                    </li>
+                                                    <li class="page-item"
+                                                        [ngClass]="{disabled:pagerHead.currentPage === 1}">
+                                                        <button (click)="setPageHead(pagerHead.currentPage - 1)"
+                                                            class="page-link" href="#" aria-label="Previous">
+                                                            <span aria-hidden="true">&lt;</span>
+                                                            <span class="sr-only">Previous</span>
+                                                        </button>
+                                                    </li>
+                                                    <li class="page-item" *ngFor="let page of pagerHead.pages"
+                                                        [ngClass]="{active:pagerHead.currentPage === page}">
+                                                        <button (click)="setPageHead(page)" class="page-link"
+                                                            href="#">{{page}}</button>
+                                                    </li>
+                                                    <li class="page-item"
+                                                        [ngClass]="{disabled:pagerHead.currentPage === pagerHead.totalPages}">
+                                                        <button (click)="setPageHead(pagerHead.currentPage + 1)"
+                                                            class="page-link" href="#" aria-label="Previous">
+                                                            <span aria-hidden="true">&gt;</span>
+                                                            <span class="sr-only">Next</span>
+                                                        </button>
+                                                    </li>
+                                                    <li class="page-item"
+                                                        [ngClass]="{disabled:pagerHead.currentPage === pagerHead.totalPages}">
+                                                        <button (click)="setPageHead(pagerHead.totalPages)"
+                                                            class="page-link" href="#" aria-label="Next">
+                                                            <span aria-hidden="true">&raquo;</span>
+                                                            <span class="sr-only">Last</span>
+                                                        </button>
+                                                    </li>
+                                                </ul>
+                                            </nav>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- :end section 10 -->
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<!-- :start Add/Update Modal -->
+<!-- Start Requirements Modal   -->
+<div class="modal fade" id="modal_new_job_user" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <form [formGroup]="addNewForm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">
+                        Add New {{addTitle}}
+                    </h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">
+                            &times;
+                        </span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="message-text" class="form-control-label">
+                            Search User:*
+                        </label>
+                        <br>
+                        <!-- <sui-multi-select class="form-control" [options]="options" [isSearchable]="true" #multiSelect
+                            [optionFormatter]="formatter" 
+                            (keyup)="onNameKeyUp($event)"
+                            (selectedOptionsChange)="multiSelectedUser($event)" formControlName="juUser"
+                            [maxSelected]="1">
+                            <sui-select-option *ngFor="let option of newData" [value]="option"></sui-select-option>
+                        </sui-multi-select> -->
+                    <input type="text" autocomplete="off" class="form-control search-input" placeholder="Enter name" (keyup)="searchUser(multiSelect2.value)" #multiSelect2>
+                        <div autocomplete="off">
+                            <select #multiSelectUser class="form-control m-input" *ngIf="newData.length > 0 && selectUser" formControlName="juUser"
+                                placeholder="Select " name="user2" id="user2" multiple >
+                                <option *ngFor="let option of newData" (click)="getRoute(option)" (click)="multiSelect2.value=searchUserList">{{option.search}}</option>
+                            </select>
+                        </div>
+                        <!-- <div autocomplete="off" >
+                            <select name="supervisor" id="supervisor" class="form-control m-input" *ngIf="getSupvRouteDataResults.length > 0 && selectRoute " multiple>
+                                <option *ngFor="let item of getSupvRouteDataResults" (click)="getRoute(item)" (click)="clrSupv.value=searchSVRoute">
+                                    {{item.search}}
+                                </option>
+                            </select> 
+                        </div> -->
+                    </div>
+                    <div *ngIf="disable">
+                        <span style="color:red">Please select 1 user only</span>
+                    </div>
+                    <div class="form-group">
+                        <label for="message-text" class="form-control-label">
+                            LOB:*
+                        </label>
+                        <select #searchLOB class="form-control m-input" [hidden]="loadingLob" formControlName="juLOB"
+                            placeholder="Select LOB">
+                            <option value="" disabled selected>Select Lob</option>
+                            <option *ngFor="let item of optLobList" value="{{item.lob}}">{{item.lob}}</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="resetForm()">
+                        Close
+                    </button>
+                    <button [disabled]="!addNewForm.valid || disable" type="submit" class="btn btn-primary"
+                        onclick="$('.modal').modal('hide')" (click)="addNewSubmit()">
+                        Save
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<!-- :end Add/Update Modal -->
+
+<!-- Start Add Job User Role by Company Modal   -->
+<div class="modal fade" id="modal_new_job_user_comp" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <form [formGroup]="addNewFormComp">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">
+                        Add New {{addTitle}}
+                    </h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">
+                            &times;
+                        </span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="message-text" class="form-control-label">
+                            Search User:*
+                        </label>
+                        <br>
+                        <sui-multi-select class="form-control" [options]="options" [isSearchable]="true" #multiSelect
+                            [optionFormatter]="formatter" (keyup)="onNameKeyUp($event)"
+                            (selectedOptionsChange)="multiSelectedUser($event)" formControlName="juUser"
+                            [maxSelected]="1">
+                            <sui-select-option *ngFor="let optionComp of newData" [value]="optionComp"></sui-select-option>
+                        </sui-multi-select>
+                    </div>
+                    <div *ngIf="disable">
+                        <span style="color:red">Please select 1 user only</span>
+                    </div>
+                    <div class="form-group">
+                        <label for="message-text" class="form-control-label">
+                            Company:*
+                        </label>
+                        <select #searchComp class="form-control m-input" [hidden]="loadingComp" formControlName="juCOMP"
+                            placeholder="Select Company">
+                            <option value="" disabled selected>Select Company</option>
+                            <option *ngFor="let itemComp of optCompList" value="{{itemComp.comp_code}}">{{itemComp.comp_code}} - {{itemComp.comp_desc}}</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="resetFormComp()">
+                        Close
+                    </button>
+                    <button [disabled]="!addNewFormComp.valid || disable" type="submit" class="btn btn-primary"
+                        onclick="$('.modal').modal('hide')" (click)="addNewSubmitComp()">
+                        Save
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<!-- :end Add/Update Modal -->
+
+<!-- Start Add Job User Role for Panel Management  (23/08/2021) -->
+<div class="modal fade" id="modal_new_job_user_panelMgmt" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <form [formGroup]="addNewFormPnl">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">
+                        Add New {{addTitle}}
+                    </h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">
+                            &times;
+                        </span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="message-text" class="form-control-label">
+                            Search User:*
+                        </label>
+                        <br>
+                        <input type="text" autocomplete="off" class="form-control search-input" placeholder="Enter name" (keyup)="searchUser(multiSelectPn2.value)" #multiSelectPn2>
+                            <div autocomplete="off">
+                                <select #multiSelectPn class="form-control m-input" *ngIf="newData.length > 0 && selectUser" formControlName="juUserPnl"
+                                    placeholder="Select " name="userPn" id="userPn" multiple >
+                                    <option *ngFor="let optionPn of newData" (click)="getRoute(optionPn)" (click)="multiSelectPn2.value=searchUserList">{{optionPn.search}}</option>
+                                </select>
+                            </div>
+                    </div>
+                    <div *ngIf="disable">
+                        <span style="color:red">Please select 1 user only</span>
+                    </div>
+                    <div class="form-group">
+                        <label for="message-text" class="form-control-label">
+                            LOB:*
+                        </label>
+                        <select #searchLOB class="form-control m-input" [hidden]="loadingLob" formControlName="juLOBPnl"
+                            placeholder="Select LOB">
+                            <option value="" disabled selected>Select Lob</option>
+                            <option *ngFor="let itemPn of optLobList" value="{{itemPn.lob}}">{{itemPn.lob}}</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                        Close
+                    </button>
+                    <button [disabled]="!addNewFormPnl.valid || disable" type="submit" class="btn btn-primary"
+                        onclick="$('.modal').modal('hide')" (click)="addPanelSubmit()">
+                        Save
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<!-- :end Add/Update Modal Role for Panel Management -->
+
+<button style="visibility: hidden" id="test"></button>
+<app-sticky-nav-component></app-sticky-nav-component>

@@ -1,0 +1,19 @@
+.extra-bg {
+    background-image: url(../../../../../assets/img/user/sea-portal/bg-extra.png) !important; 
+    position: relative;
+    height: 20rem; 
+    background-repeat: no-repeat;
+    background-position-y: 80%;
+    background-size: cover;
+}
+
+
+.hSummary{
+    color: #0FC2D0;
+}
+
+
+
+.tableHeader thead tr th {
+    color:#FFFFFF;background-color:#0FC2D0;
+}

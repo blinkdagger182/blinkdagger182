@@ -1,0 +1,212 @@
+.sea-bg {
+  background-repeat: no-repeat;
+  height: 100%;
+  position: relative;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-attachment: fixed;
+  background-position: center;
+}
+.mor-bg {
+  background-blend-mode: multiply;
+  background-color: rgba(0, 0, 0, 0.25);
+  background-image: url("../../../../../assets/img/user/sea-portal/morningBG.jpg");
+}
+.eve-bg {
+  background-image: url("../../../../../assets/img/user/sea-portal/nightBG.jpg");
+}
+.noon-bg {
+  background-image: url("../../../../../assets/img/user/sea-portal/noonBG.jpg");
+}
+
+
+@media (min-width: 992px) {
+  .home-container {
+    max-width: 900px;
+  }
+}
+
+@media (max-width: 576px) {
+  .home-container {
+    width: 85%;
+  }
+}
+
+@media (max-width: 992px) {
+  .eve-bg {
+    background-position: 95%;
+  }
+}
+
+.home-container {
+  /* max-width: 950px; */
+  margin-top: 4rem;
+  background: #00000059;
+  border-radius: 8px;
+}
+.idp-bg {
+    background-image: url(../../../../../assets/img/user/sea-portal/bg-idp.png) !important; 
+    position: relative;
+    height: 20rem; 
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.lg-badge {
+    margin-top: -10px;
+  }
+
+.bg-card-transparent {
+    /* max-width: 950px; */
+    background: #00000059;
+    border-radius: 8px;
+    color: white;
+}
+
+.ann-list {
+    height: 400px;
+    overflow: hidden;
+    color: black;
+  }
+  
+.ann-list:hover {
+    overflow-y: scroll;
+  }
+
+  /* width */
+.ann-list::-webkit-scrollbar {
+    width: 5px;
+  }
+  
+  /* Track */
+.ann-list::-webkit-scrollbar-track {
+    background: #00000059; 
+  }
+   
+  /* Handle */
+.ann-list::-webkit-scrollbar-thumb {
+    background: #888; 
+  }
+  
+  /* Handle on hover */
+.ann-list::-webkit-scrollbar-thumb:hover {
+    background: #555; 
+  }
+
+
+  .search-input {
+    display: inline-block;
+    height: 40px;
+    width: 100%;
+    font-size: 15px;
+    color: #666666;
+    text-indent: 8px;
+    border: 1px solid #2d2d2d;
+  }
+  
+  .text-field-position {
+  position: relative;
+  }
+  
+  .text-field-position button {
+  position: absolute;
+  right: 1em;
+  top: 0;
+  bottom: 0;
+  line-height: 40px;
+  border: 0;
+  }
+
+  .search-input:focus + #btnResetSearch {
+    display:block;
+  }
+
+/* MD *//* LG */
+@media (min-width: 768px) {
+  #view_news .modal-dialog {
+    max-width: 90vw;
+    max-height: 90vw;  
+  }
+}
+  
+  .annImgThumb {
+    min-width: 100% !important;
+    max-width: 100% !important;
+    min-height: 140px !important;
+    max-height: 140px !important;
+  }
+  
+  .annCommentdiv {
+    height:500px;
+    overflow-y: scroll;
+  }
+
+.alert.ann-alert-box {
+    /* padding: 1rem; */
+    border-radius: 0;
+    border-radius: 4px;
+}
+
+.text-box-subject {
+  font-size: 14px;
+  line-height: 14px;
+  height: 30px;
+  text-overflow: ellipsis;
+  overflow: auto;
+}
+
+  /* Track */
+  .text-box-subject::-webkit-scrollbar-track {
+    background: #00000059; 
+  }
+   
+  /* Handle */
+.text-box-subject::-webkit-scrollbar-thumb {
+    background: #888; 
+  }
+  
+  /* Handle on hover */
+.text-box-subject::-webkit-scrollbar-thumb:hover {
+    background: #555; 
+  }
+
+  textarea-announcement {
+    border-style:none;
+    background:transparent;
+    margin-top: 0px;
+    margin-bottom: 0px;
+    height: 100% !important;
+    width: 100%;
+    padding: 7px;
+    border-radius: 20px;
+    font-size: 1rem;
+    resize: none;
+    padding:7px;    
+  }
+
+  textarea-announcement:focus {
+    outline-width: 0;
+    border-style:none;
+    background:transparent;
+}
+
+ textarea-announcement::-webkit-scrollbar {
+  width: 12px;
+  background-color: #F5F5F5; 
+}
+  
+textarea-announcement::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.1);
+  box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.1);
+  background-color: #4285F4; 
+}
+
+  .liked {
+    color: red !important;
+  }
+
+  .la {
+    text-decoration: none;
+    font-size: 15px;
+  }

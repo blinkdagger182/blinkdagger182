@@ -1,0 +1,2170 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.13/semantic.min.css">
+
+<!-- START: Subheader -->
+<div class="m-subheader" appunwraptag="">
+    <div class="d-flex align-items-center">
+        <div class="mr-auto">
+            <h3 class="m-subheader__title m-subheader__title--separator" *ngIf="!canEditPage && typeJobPostAct != 'edit' && typeJobPostAct != 'post'">
+                {{title1}}
+            </h3>
+            <h3 class="m-subheader__title m-subheader__title--separator" *ngIf="typeJobPostAct == 'post'">
+                Post Career@TM Profile
+            </h3>
+            <h3 class="m-subheader__title m-subheader__title--separator" *ngIf="canEditPage && typeJobPostAct == 'edit'">
+                Edit Career@TM Profile
+            </h3>
+            <ul class="m-subheader__breadcrumbs m-nav m-nav--inline">
+                <li class="m-nav__item m-nav__item--home">
+                    <a routerLink="/admin/index" class="m-nav__link m-nav__link--icon">
+                        <i class="m-nav__link-icon la la-home"></i>
+                    </a>
+                </li>
+                <!-- <li class="m-nav__separator">
+                    -
+                </li>-->
+                <li class="m-nav__item">
+                    <a href="" class="m-nav__link">
+                        <span class="m-nav__link-text">
+                            <!-- Position -->
+                        </span>
+                    </a>
+                </li>
+                <!-- <li class="m-nav__separator">
+                        -
+                    </li> -->
+                <li class="m-nav__item">
+                    <a href="" class="m-nav__link">
+                        <span class="m-nav__link-text">
+                            <!-- # {{posId2}} -->
+                        </span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <div>
+            <div class="m-dropdown m-dropdown--inline m-dropdown--arrow m-dropdown--align-right m-dropdown--align-push"
+                m-dropdown-toggle="hover" aria-expanded="true">
+            </div>
+        </div>
+    </div>
+</div>
+<!-- END: Subheader -->
+
+<div class="m-content">
+    <div class="row">
+        <!-- begin::Page loader -->
+        <div class="col-lg-12 centred my-auto">
+            <ng-template #alertError></ng-template>
+        </div>
+
+        <div class="col-lg-12 centred my-auto" *ngIf="loading">
+            <div class="m-section__content">
+                <div class="m-demo" data-code-preview="true" data-code-html="true" data-code-js="false">
+                    <div class="m-demo__preview">
+                        <div class="m-stack m-stack--ver m-stack--general m-stack--demo">
+
+                            <div class="m-stack__item m-stack__item--center m-stack__item--middle">
+                                <span>
+                                    Loading data. Please wait...
+                                </span>
+                                <span>
+                                    <div class="m-loader m-loader--lg m-loader--success" style="width: 30px; display: inline-block;"></div>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- end::Page loader -->
+
+        <!-- :start go to adv page -->
+        <div class="col-lg-12" *ngIf="toAdvJob">
+            <div *ngIf="editedAdvPos" class="m-alert m-alert--icon m-alert--outline alert {{advPosStyle}} alert-dismissible fade show"
+                role="alert">
+                <div class="m-alert__icon">
+                    <i class="flaticon-exclamation-1"></i>
+                </div>
+                <div class="m-alert__text">
+                    {{advPosMsg}}
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-12" *ngIf="toAdvJob">
+            <div *ngIf="showAdvDisableMsg" class="m-alert m-alert--icon m-alert--outline alert alert-warning alert-dismissible fade show"
+                role="alert">
+                <div class="m-alert__icon">
+                    <i class="la la-warning"></i>
+                </div>
+                <div class="m-alert__text">{{advDisableMsg}}</div>
+            </div>
+        </div>
+        <!-- :end go to adv page -->
+
+        <div class="col-lg-12" *ngIf="!loading">
+            <div *ngIf="applyAdvPos" class="alert {{advPosStyle}} m-alert m-alert--default " role="alert">
+                <strong>{{advPosMsg}}</strong>
+            </div>
+            <div *ngIf="applyBtnDisplay" class="m-button-advert">
+                <!--begin::advertise buttons -->
+                <button id="advertise-job" type="button" class="btn m-btn--pill btn-primary btn-lg m-btn m-btn--custom"
+                    data-toggle="modal" data-target="#modal_to_apply">{{btnApply}}
+                </button>
+                <!--end::advertise buttons -->
+            </div>
+        </div>
+        <div class="col-lg-12" *ngIf="!loading">
+            <!--begin::Portlet-->
+            <div class="m-portlet m-portlet--full-height">
+                <!--begin::Section-->
+                <div class="m-accordion m-accordion--bordered" id="m_accordion_1" role="tablist">
+                    <!--begin::Item:info-->
+                    <div class="m-accordion__item" *ngIf="!canEditPage || data.profile[0].is_outdated === 0"><!-- *ngIf="!canEditPage" -->
+                        <div class="m-accordion__item-head" role="tab" id="m_accordion_1_item_1_head" data-toggle="collapse"
+                            href="#m_accordion_1_item_1_body" aria-expanded="    false">
+                            <span class="m-accordion__item-mode"></span>
+                            <span class="m-accordion__item-title m-accordian__item-mode-title">
+                                {{tab1Title}}
+                            </span>
+                            <span class="m-accordion__item-icon">
+                                <i class="fa flaticon-notes"></i>
+                            </span>
+                        </div>
+                        <div class="m-accordion__item-body show" id="m_accordion_1_item_1_body mb-5" role="tabpanel"
+                            aria-labelledby="m_accordion_1_item_1_head">
+                            <div class="m-accordion__item-content">
+                                <!-- start: JOB INFO -->
+
+                                <!-- <form [formGroup]="updPurposeForm" > -->
+                                <form class="m-form" #jobInfo [formGroup]="jobInfoCareerForm" (ngSubmit)="onInfoCareerFormSubmit()" autocomplete="off">
+                                    <table class="table table-bordered">
+                                        <tr *ngIf="typeJobPostAct == 'edit'">
+                                            <td style="width: 30%">
+                                                {{posId}}
+                                            </td>
+                                            <td>
+                                                {{ thisPodId}}
+                                                <!-- <span *ngIf="!data.profile||!data.profile[0].position_id">-</span>
+                                                <span *ngIf="data.profile &&data.profile[0]?.Occupied=='1'; else occVac" class="m-badge m-badge--success">
+                                                    Occupied
+                                                </span>
+                                                <ng-template #occVac>
+                                                    <span class="m-badge m-badge--warning">
+                                                        Vacant
+                                                    </span>
+                                                </ng-template> -->
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td style="width: 30%">
+                                                {{posName}}
+                                            </td>
+                                            <td>
+                                                <div class="form-group m-form__group row">
+                                                    <div class="col-lg-9 col-md-9 col-sm-12">
+                                                        <input required class="form-control m-input" formControlName="infoPosName" type="text"
+                                                            #infoPosName id="infoPosName" (keyup)="keyInfoPosName($event)" />
+                                                        <span class="m-form__help date_help m--hide errMsg" id="errInfoPosName">
+                                                            <p style="color:red!important">Please define position name.</p>
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td style="width: 30%">
+                                                Company
+                                            </td>
+                                            <td>
+                                                <div class="form-group m-form__group row">
+                                                    <div class="col-lg-9 col-md-9 col-sm-12">
+                                                        <input required type="text" ng-model="search" class="form-control m-input" list="companyData"
+                                                            required formControlName="infoCompany">
+                                                        <datalist id="companyData" [hidden]="true">
+                                                            <option value="Search Company" disabled selected>Select company</option>
+                                                            <option *ngFor="let item of companyDt" value="{{item.company}}"></option>
+                                                        </datalist>
+                                                        <span class="m-form__help date_help m--hide errMsg" id="errInfoCompany">
+                                                            <p style="color:red!important">Please define company.</p>
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td style="width: 30%">
+                                                LOB
+                                            </td>
+                                            <td>
+                                                <div class="form-group m-form__group row">
+                                                    <div class="col-lg-9 col-md-9 col-sm-12">
+                                                        <input required type="text" ng-model="search" class="form-control m-input" list="LOBData"
+                                                            required formControlName="infoLOB">
+                                                        <datalist id="LOBData" [hidden]="true">
+                                                            <option value="Search LOB" disabled selected>Select LOB</option>
+                                                            <option *ngFor="let item of lobDt" value="{{item.lob}}"></option>
+                                                        </datalist>
+                                                        <span class="m-form__help date_help m--hide errMsg" id="errInfoLOB">
+                                                            <p style="color:red!important">Please define LOB.</p>
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td style="width: 30%">
+                                                Division
+                                            </td>
+                                            <td>
+                                                <div class="form-group m-form__group row">
+                                                    <div class="col-lg-9 col-md-9 col-sm-12">
+                                                        <input required type="text" ng-model="search" class="form-control m-input" list="divisionData"
+                                                            required formControlName="infoDivision">
+                                                        <datalist id="divisionData" [hidden]="true">
+                                                            <option value="Search Division" disabled selected>Select division</option>
+                                                            <option *ngFor="let item of divisionDt" value="{{item.division}}"></option>
+                                                        </datalist>
+                                                        <span class="m-form__help date_help m--hide errMsg" id="errInfoDivision">
+                                                            <p style="color:red!important">Please define division.</p>
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td style="width: 30%">
+                                                Building
+                                            </td>
+                                            <td>
+                                                <div class="form-group m-form__group row">
+                                                    <div class="col-lg-9 col-md-9 col-sm-12">
+                                                        <input required type="text" ng-model="search" class="form-control m-input" list="buildingData"
+                                                            required formControlName="infoBuilding">
+                                                        <datalist id="buildingData" [hidden]="true">
+                                                            <option value="Search Building" disabled selected>Select building</option>
+                                                            <option *ngFor="let item of buildingDt" value="{{item.building}}"></option>
+                                                        </datalist>
+                                                        <span class="m-form__help date_help m--hide errMsg" id="errInfoBuilding">
+                                                            <p style="color:red!important">Please define building.</p>
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td style="width: 30%">
+                                                City
+                                            </td>
+                                            <td>
+                                                <div class="form-group m-form__group row">
+                                                    <div class="col-lg-9 col-md-9 col-sm-12">
+                                                        <input required type="text" ng-model="search" class="form-control m-input" list="cityData"
+                                                            required formControlName="infoCity"
+                                                            (keyup)= "cityEnter(jobInfoCareerForm.value)" 
+                                                            (keyup.enter)= "cityEnter(jobInfoCareerForm.value)" 
+                                                            (blur)="cityEnter(jobInfoCareerForm.value)" >
+                                                        <datalist id="cityData" [hidden]="true">
+                                                            <option value="Search City" disabled selected>Select city</option>
+                                                            <option *ngFor="let item of myCities" value="{{item.Post_Office}}"></option>
+                                                        </datalist>
+                                                        <span class="m-form__help date_help m--hide errMsg" id="errInfoCity">
+                                                            <p style="color:red!important">Please define city.</p>
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td style="width: 30%">
+                                                Region
+                                            </td>
+                                            <td>
+                                                <div class="form-group m-form__group row">
+                                                    <div class="col-lg-9 col-md-9 col-sm-12">
+                                                        <input required type="text" ng-model="search" class="form-control m-input"
+                                                            required formControlName="infoRegion" >
+                                                    <!--<datalist id="regionData" [hidden]="true">
+                                                            <option value="Search Region" disabled selected>Select region</option>
+                                                            <option *ngFor="let item of myPostCode | filterUnique : searchText : 'State'" value="{{item.State}}"></option>
+                                                        </datalist>-->
+                                                        <span class="m-form__help date_help m--hide errMsg" id="errInfoRegion">
+                                                            <p style="color:red!important">Please define region.</p>
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td style="width: 30%">
+                                                Band
+                                            </td>
+                                            <td>
+                                                <div class="form-group m-form__group row">
+                                                    <div class="col-lg-9 col-md-9 col-sm-12">
+                                                        <input required type="text" ng-model="search" class="form-control m-input" list="bandData"
+                                                            required formControlName="infoBand">
+                                                        <datalist id="bandData" [hidden]="true">
+                                                            <option value="Search Band" disabled selected>Select band</option>
+                                                            <option *ngFor="let item of bandDt" value="{{item.band}}"></option>
+                                                        </datalist>
+                                                        <span class="m-form__help date_help m--hide errMsg" id="errInfoBand">
+                                                            <p style="color:red!important">Please define band.</p>
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td style="width: 30%">
+                                                Job Cluster
+                                            </td>
+                                            <td>
+                                                <div class="form-group m-form__group row">
+                                                    <div class="col-lg-9 col-md-9 col-sm-12">
+                                                        <input required type="text" ng-model="search" class="form-control m-input" list="clusterData"
+                                                            required formControlName="infoCluster">
+                                                        <datalist id="clusterData" [hidden]="true">
+                                                            <option value="Search Cluster" disabled selected>Select cluster</option>
+                                                            <option *ngFor="let item of clusterDt" value="{{item.cluster}}"></option>
+                                                        </datalist>
+                                                        <span class="m-form__help date_help m--hide errMsg" id="errInfoCluster">
+                                                            <p style="color:red!important">Please define cluster.</p>
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <!-- <tr>
+                                            <td style="width: 30%">
+                                                Job Family
+                                            </td>
+                                            <td>
+                                                <div class="form-group m-form__group row">
+                                                    <div class="col-lg-9 col-md-9 col-sm-12">
+                                                        <input required type="text" ng-model="search" class="form-control m-input" list="familyData"
+                                                            required formControlName="infoFamily">
+                                                        <datalist id="familyData" [hidden]="true">
+                                                            <option value="Search Family" disabled selected>Select family</option>
+                                                            <option *ngFor="let item of familyDt" value="{{item.family}}"></option>
+                                                        </datalist>
+                                                        <span class="m-form__help date_help m--hide errMsg" id="errInfoFamily">
+                                                            <p style="color:red!important">Please define family.</p>
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr> -->
+                                        <tr>
+                                            <td style="width: 30%">
+                                                Employee Group
+                                            </td>
+                                            <td>
+                                                <div class="form-group m-form__group row">
+                                                    <div class="col-lg-9 col-md-9 col-sm-12">
+                                                        <!-- <input required type="text" ng-model="search" class="form-control m-input" list="groupData"
+                                                            required formControlName="infoEmployeeGroup">
+                                                        <datalist id="groupData" [hidden]="true">
+                                                            <option value="Search Employee Group" disabled selected>Select employee group</option>
+                                                            <option *ngFor="let item of groupDt" value="{{item.group}}"></option>
+                                                        </datalist> -->
+                                                       <select name="employee_group" id="employee_group" class="form-control m-input" formControlName="infoEmployeeGroup">
+                                                            <option value="">All</option>
+                                                            <option [value]="item.group" *ngFor="let item of groupDt">{{item.group}}</option>
+                                                        </select> 
+                                                        <span class="m-form__help date_help m--hide errMsg" id="errInfoEmployeeGroup">
+                                                            <p style="color:red!important">Please define employee group.</p>
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td style="width: 30%">
+                                                Employee Subgroup
+                                            </td>
+                                            <td>
+                                                <div class="form-group m-form__group row">
+                                                    <div class="col-lg-9 col-md-9 col-sm-12">
+                                                        <input required type="text" ng-model="search" class="form-control m-input" list="subgroupData"
+                                                            required formControlName="infoEmployeeSubgroup">
+                                                        <datalist id="subgroupData" [hidden]="true">
+                                                            <option value="Search Employee Subgroup" disabled selected>Select employee subgroup</option>
+                                                            <option *ngFor="let item of subgroupDt" value="{{item.sub_group}}"></option>
+                                                        </datalist>
+                                                        <span class="m-form__help date_help m--hide errMsg" id="errInfoEmployeeSubgroup">
+                                                            <p style="color:red!important">Please define employee subgroup.</p>
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td style="width: 30%">
+                                                Report To Name
+                                            </td>
+                                            <td>
+                                                <div class="form-group m-form__group row">
+                                                    <div class="col-lg-9 col-md-9 col-sm-12">
+                                                        <sui-select class="selection form-control m-input"
+                                                                    formControlName="infoReportToName"
+                                                                    [options]="options"
+                                                                    [isSearchable]="true"
+                                                                    #infoReportToName
+                                                                    (keydown) = "onNameKeyDownRTN($event)"
+                                                                    (selectedOptionChange)="selectedReportName($event)"
+                                                                    id="reportName"
+                                                                    placeholder="Search Report to Name">
+                                                            <sui-select-option *ngFor="let option of reportNameDt" [value]="option" ></sui-select-option>
+                                                        </sui-select>
+                                                        <span class="m-form__help date_help m--hide errMsg" id="errReportToName">
+                                                            <p style="color:red!important">Please define the person name that you will be reported.</p>
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td style="width: 30%">
+                                                &nbsp;
+                                            </td>
+                                            <td>
+                                                <div class="text-right" *ngIf="typeJobPostAct != 'edit' && typeJobPostAct != 'post'" style="margin-bottom: 23%!important">
+                                                    <button class="btn btn-default btn-sm" [routerLink]="['/admin/job/advertisement/new-career']" type="button">Back</button>
+                                                    <button class="btn btn-primary btn-sm" type="submit">Save</button>
+                                                </div>
+                                                <div class="text-right" *ngIf="typeJobPostAct == 'edit' || typeJobPostAct == 'post'">
+                                                    <button class="btn btn-default btn-sm" [routerLink]="['/admin/job/advertisement/new-career']" type="button">Back</button>
+                                                    <button class="btn btn-primary btn-sm" type="submit">Save</button>
+                                                </div>
+                                                <!-- <button class="btn m-btn--pill btn-outline-danger mt-3" id="go-to-advertise-job" type="button" [routerLink]="['/admin/job/advertisement/new-career']" style="margin-right: 3rem;"> -->
+                                                    <!-- <i class="flaticon-file-1"></i>  Cancel-->
+                                                <!-- </button> -->
+
+                                                <!-- <button class="btn m-btn--pill btn-outline-brand mt-3" type="submit"> -->
+                                                    <!-- <i class="flaticon-file-1"></i>  Save-->
+                                                <!-- </button> -->
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </form>
+                                <!-- end: JOB INFO -->
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="m-accordion__item" *ngIf="canEditPage && typeJobPostAct == 'post' && data.profile[0].is_outdated === 1">
+                        <div class="m-accordion__item-head" role="tab" id="m_accordion_1_item_1_head" data-toggle="collapse" href="#m_accordion_1_item_1_body"
+                            aria-expanded="    false">
+                            <span class="m-accordion__item-mode"></span>
+                            <span class="m-accordion__item-title m-accordian__item-mode-title">
+                                {{tab1Title}} 
+                            </span>
+                            <span class="m-accordion__item-icon">
+                                <i class="fa flaticon-notes"></i>
+                            </span>
+                        </div>
+                        <div class="m-accordion__item-body show" id="m_accordion_1_item_1_body" role="tabpanel" aria-labelledby="m_accordion_1_item_1_head">
+                            <div class="m-accordion__item-content">
+                                <table class="table table-bordered">
+                                    <tr>
+                                        <td style="width: 30%">
+                                            {{posId}}
+                                        </td>
+                                        <td>
+                                            {{ thisPodId}}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width: 30%">
+                                                {{posName}}
+                                        </td>
+                                        <td>
+                                            {{data.profile && data.profile[0].Positions}} <span *ngIf="!data.profile||!data.profile[0].Positions">-</span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width: 30%">
+                                            Company
+                                        </td>
+                                        <td>
+                                            {{data.profile && data.profile[0].Company}} <span *ngIf="!data.profile||!data.profile[0].Company">-</span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width: 30%">
+                                            LOB
+                                        </td>
+                                        <td>
+                                            {{data.profile && data.profile[0].LOB_Desc}} <span *ngIf="!data.profile||!data.profile[0].LOB_Desc">-</span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width: 30%">
+                                            Division
+                                        </td>
+                                        <td>
+                                            {{data.profile && data.profile[0].Org_Unit_Department}}<span *ngIf="!data.profile||!data.profile[0].Org_Unit_Department">-</span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width: 30%">
+                                            Building
+                                        </td>
+                                        <td>
+                                            {{data.profile && data.profile[0]?.Building}} <span *ngIf="!data.profile||!data.profile[0].Building">-</span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width: 30%">
+                                            City
+                                        </td>
+                                        <td>
+                                            {{data.profile && data.profile[0]?.City}} <span *ngIf="!data.profile||!data.profile[0].City">-</span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width: 30%">
+                                            Region
+                                        </td>
+                                        <td>
+                                            {{data.profile && data.profile[0]?.Region_Desc}} <span *ngIf="!data.profile||!data.profile[0].Region_Desc">-</span>
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td style="width: 30%">
+                                            Band
+                                        </td>
+                                        <td>
+                                            {{data.profile && data.profile[0].GrMin}}<span *ngIf="!data.profile||!data.profile[0].GrMin">-</span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width: 30%">
+                                            Job Cluster
+                                        </td>
+                                        <td>
+                                            {{data.profile && data.profile[0].Job_Abbr}} <span *ngIf="!data.profile||!data.profile[0].Job_Abbr">-</span>
+                                        </td>
+                                    </tr>
+                                    <!-- <tr>
+                                        <td style="width: 30%">
+                                            Job Family
+                                        </td>
+                                        <td>
+                                            {{data.profile && data.profile[0].Job_Abbr}} <span *ngIf="!data.profile||!data.profile[0].Job_Abbr">-</span>
+                                        </td>
+                                    </tr> -->
+                                    <tr>
+                                        <td style="width: 30%">
+                                            Employee Group
+                                        </td>
+                                        <td>
+                                            {{data.profile && data.profile[0]?.Employee_group}} <span *ngIf="!data.profile||!data.profile[0].Employee_group">-</span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width: 30%">
+                                            Employee Subgroup
+                                        </td>
+                                        <td>
+                                            {{data.profile && data.profile[0]?.Employee_subgroup}} <span *ngIf="!data.profile||!data.profile[0].Employee_subgroup">-</span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width: 30%">
+                                            Report To
+                                        </td>
+                                        <td>
+                                            {{data.profile && data.profile[0].Holder_Pernr}}<span *ngIf="!data.profile||!data.profile[0].Holder_Pernr">-</span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width: 30%">
+                                            Report To Name
+                                        </td>
+                                        <td>
+                                            {{data.profile && data.profile[0].Holder_Name}}<span *ngIf="!data.profile||!data.profile[0].Holder_Name">-</span>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <!--end::Item:info-->
+
+                    <!--begin::Item:purpose-->
+                    <div id="purpOn" #purpOn></div>
+                    <div class="m-accordion__item" style="overflow: visible!important;" *ngIf="canEditPage || typeJobPostAct == 'post'">
+                        <div class="m-accordion__item-head {{pnlHead}}" role="tab" id="m_accordion_1_item_2_head"
+                            data-toggle="collapse" href="#m_accordion_1_item_2_body" aria-expanded="    false">
+                            <span class="m-accordion__item-mode"></span>
+                            <span class="m-accordion__item-title m-accordian__item-mode-title">
+                                {{tab3Title}} 
+                                <span class="m-menu__link-badge">
+                                    <span *ngIf="!data.purpose || data.purpose[0]?.job_purpose.length<1; else purTrue"
+                                        class="m-badge m-badge--danger">
+                                        Empty
+                                    </span>
+                                    <ng-template #purTrue>
+                                        <span class="m-badge m-badge--success">
+                                            OK
+                                        </span>
+                                    </ng-template>
+                                </span>
+                            </span>
+                            <span class="m-accordion__item-icon">
+                                <i class="fa flaticon-list-1"></i>
+                            </span>
+                        </div>
+                        <div class="m-accordion__item-body {{pnlBody}}" id="m_accordion_1_item_2_body" role="tabpanel"
+                            aria-labelledby="m_accordion_1_item_2_head">
+                            <div class="m-accordion__item-content" *ngIf="!toUpdPurpose">
+                                <span *ngIf="!data.purpose||!data.purpose[0]||data.purpose[0]?.job_purpose<1;" [innerHTML]="noData">
+                                </span>
+                                <span *ngIf="data.profile && data.purpose[0]?.job_purpose;" [innerHTML]="data.purpose[0]?.job_purpose">
+                                </span>
+                            </div>
+                            <div class="m-accordion__item-content" *ngIf="toUpdPurpose">
+                                <div class="col-12" *ngIf="editedPurpose" class="alert {{updPurposeStyle}} m-alert m-alert--default "
+                                    role="alert">
+                                    <strong>{{updPorposeMsg}}</strong>
+                                </div>
+
+                                <!--JOB PROFILE DETAIL-->
+                                <form [formGroup]="updPurposeForm" (ngSubmit)="onPurposeFormSubmit()">
+                                    <div class="form-group m-form__group row" [style]="{height: '240px'}" style="width: 100%" >
+                                                <div class="col-12">
+                                                    <div class="input-group m-input-group m-input-group--pill" style="height: 200px; width: 100%; padding-left: 1px;" >
+                               
+                                                    <quill-editor [style]="{height: '165px', border: '1px solid #cccccc'}" style="width: 100%"
+                                                        maxlength="2500"  [modules]="modules" name="updPurpose" id= "updPurpose" formControlName = "updPurpose"  
+                                                        [(ngModel)]="jobPurpose"  >          
+                                                    </quill-editor>
+                                                    <p class="error_message" style="color:red" *ngIf="updPurposeForm.get('updPurpose').hasError('required') && (updPurposeForm.get('updPurpose').dirty)">Please
+                                                    define position description.</p>
+                                                    <p class="error_message" style="color:red" *ngIf="updPurposeForm.controls['updPurpose'].hasError('maxlength')">
+                                                        Maximum 2500 characters only.
+                                                    </p>
+                                                </div>
+                                            </div>
+                                    </div>
+
+                                    <!--*** hide this snippet code 1 Start with 43 line and consist 2 comment -->
+                                    <!-- <div class="row">
+                                        <div class="col-md-1 ml-2 mt-3 mb-2 text-left" *ngIf="!env_prod">
+                                            Tags
+                                        </div>     
+                                        <div class="col-md-12 text-left" style="position: initial!important;" *ngIf="!env_prod"> -->
+                                            <!-- this is comment --> <!-- <div class="col-md-10"></div> --> <!-- this is comment -->
+                                            <!-- <div class="form-group  m-form__group row " id="m_repeater_tag" >
+                                                <div class="m-input-icon m-input-icon--right ml-3 mr-3">
+                                                    <input type="text" formControlName="projSkill" class="form-control m-input" id="skillset" (keyup.enter)="!checkCanAddSkill() && addSkillset($event);" (keydown)="onSkillKeyDown($event)">
+                                                    <span class="m-input-icon__icon m-input-icon__icon--right" (click)="!checkCanAddSkill() && addSkillset();" [ngClass]="{disabled:checkCanAddSkill()}" style="cursor: pointer;"><span><i class="la la-plus"></i></span></span>
+                                                </div>
+                                                <div class="col-lg-8 pl-0 mr-2 skillDiv" [ngClass]="{skillBg : resSkill.length > 0}" *ngIf="resSkill">
+                                                    <div class="pt-1 pb-1 pl-3 skillDivItem" *ngFor="let option of resSkill" (click)="setTextInput(option.name)">
+                                                        <span>{{option.name}}</span>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-8" *ngIf="errAddSkill" style="margin-left: 2%!important">
+                                                    <span class="m-form__help">
+                                                        <p style="color:red">Fail to add duplicate skill set.</p>
+                                                    </span>
+                                                </div>
+                                                <div class="col-md-12" style="display:inline-block!important; width:100%!important;">
+                                                    <div class="mt-3 mr-2" style="float: left!important" *ngFor="let item of skillsets; let i=index;">
+                                                        <span class="btn-info btn m-btn--pill mr-1 skillset" id="skillsetItem">
+                                                            {{item}} <i class="fa fa-times pl-2" (click)="removeSkillset(i)"></i>
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </div> 
+                                        </div>   -->
+
+                                        <!-- this is comment>> --> <!-- <div class="text-right col-md-2" *ngIf="toUpdPurpose"> this is comment
+                                            <div class="btn btn-sm btn-brand m-btn m-btn--icon m-btn--pill m-btn--wide pull-right pt-2" (click)="!checkCanAddSkill() && addSkillset();" [ngClass]="{disabled:checkCanAddSkill()}">
+                                                <span>
+                                                    <i class="la la-plus"></i>
+                                                    <span>Add</span>
+                                                </span>
+                                            </div>
+                                        </div>   --> <!-- << this is comment --> 
+                                                                                
+                                    <!-- </div> -->
+                                    <!-- hide this snippet code 4 End ***-->
+
+                                    <div class="row" style= "margin-top: 3em;">
+                                        <div class="text-right col-md-12" *ngIf="toUpdPurpose">
+                                            <button type="submit" class="btn btn-primary btn-sm" [disabled]="!updPurposeForm.valid">Save</button>
+                                        </div>              
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <!--end::Item:purpose-->
+
+                    <!--begin::Item:aor-->
+                    <div class="m-accordion__item" *ngIf="canEditPage || typeJobPostAct == 'post'">
+                        <div class="m-accordion__item-head collapsed" role="tab" id="m_accordion_1_item_5_head"
+                             data-toggle="collapse" href="#m_accordion_1_item_5_body" aria-expanded="    false">
+                            <span class="m-accordion__item-mode"></span>
+                            <span class="m-accordion__item-title m-accordian__item-mode-title">
+                                {{tab6Title}}
+                                <span class="m-menu__link-badge">
+                                    <span *ngIf="!data.aor||data.aor.length<1; else aorTrue" class="m-badge m-badge--warning">
+                                        0
+                                    </span>
+                                    <ng-template #aorTrue>
+                                        <span class="m-badge m-badge--success">
+                                            {{data.aor.length}}
+                                        </span>
+                                    </ng-template>
+                                </span>
+                            </span>
+                            <span class="m-accordion__item-icon">
+                                <i class="fa flaticon-network"></i>
+                            </span>
+                        </div>
+                        <div class="m-accordion__item-body collapse" id="m_accordion_1_item_5_body" role="tabpanel"
+                             aria-labelledby="m_accordion_1_item_5_head">
+                            <div class="m-accordion__item-content">
+                                <!--start:aor table-->
+                                <div class="m-portlet__body">
+                                    <div class="form-group m-form__group row">
+                                        <div class="table-responsive">
+                                            <div *ngIf="editedAor" class="alert {{updAorStyle}} m-alert m-alert--default "
+                                                 role="alert">
+                                                <strong>{{addAorMsg}}</strong>
+                                            </div>
+                                            <div *ngIf="!data.aor||data.aor.length<1" [innerHTML]="noData"></div>
+                                            <!-- <div class="col-12 text-right" *ngIf="toUpdAOR"> -->
+                                            <div class="text-right" *ngIf="toUpdAOR">
+                                                <button type="button" class="btn btn-primary btn-sm" data-toggle="modal"
+                                                        data-target="#m_modal_aor_upd" (click)="updateAor(0, '', '')">Add</button>
+                                            </div>
+                                            <table class="table m-table" *ngIf="data.aor&&data.aor.length>0">
+                                                <thead>
+                                                <tr>
+                                                    <th>No</th>
+                                                    <th>RESPONSIBILITY</th>
+                                                    <th>KEY ACTIVITIES</th>
+                                                    <th *ngIf="toUpdAOR"></th>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+                                                <tr *ngFor="let a of data.aor;let ac = index">
+                                                    <td>{{ac+1}}</td>
+                                                    <td>{{a.AOR}} </td>
+                                                    <td>{{a.KEY_ACT}}</td>
+                                                    <td *ngIf="toUpdAOR">
+                                                        <ul class="list-inline">
+                                                            <li class="list-inline-item">
+                                                                <a href="#" class="btn btn-outline-warning m-btn m-btn--icon m-btn--icon-only m-btn--pill m-btn--air"
+                                                                   data-toggle="modal" data-target="#m_modal_aor_upd"
+                                                                   (click)="updateAor(a.NO, a.AOR, a.KEY_ACT)">
+                                                                    <i class="m-nav__link-icon la la-pencil"></i>
+                                                                </a>
+                                                            </li>
+                                                            <li class="list-inline-item">
+                                                                <a href="#" class="btn btn-outline-warning m-btn m-btn--icon m-btn--icon-only m-btn--pill m-btn--air"
+                                                                   data-toggle="modal" data-target="#modal_aor_delete"
+                                                                   (click)="delAor(a.NO)">
+                                                                    <i class="m-nav__link-icon fa fa-trash"></i>
+                                                                  
+                                                                    
+                                                                </a>
+                                                            </li>
+                                                        </ul>
+                                                    </td>
+                                                </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!--end:aor table-->
+                            </div>
+                        </div>
+                    </div>
+                    <!--end::Item:aor-->
+
+                    <!--begin::Item:qualification-->
+                    <div class="m-accordion__item" *ngIf="canEditPage || typeJobPostAct == 'post'">
+                        <div class="m-accordion__item-head collapsed" role="tab" id="m_accordion_1_item_3_head"
+                            data-toggle="collapse" href="#m_accordion_1_item_3_body" aria-expanded="    false">
+                            <span class="m-accordion__item-mode"></span>
+                            <span class="m-accordion__item-title m-accordian__item-mode-title">
+                                {{tab4Title}}
+                                <span class="m-menu__link-badge">
+                                    <span *ngIf="!data.qualification||data.qualification.length<1; else quaTrue" class="m-badge m-badge--warning">
+                                        0
+                                    </span>
+                                    <ng-template #quaTrue>
+                                        <span class="m-badge m-badge--success">
+                                            {{data.qualification.length}}
+                                        </span>
+                                    </ng-template>
+                                </span>
+                            </span>
+                            <span class="m-accordion__item-icon">
+                                <i class="fa flaticon-user-ok"></i>
+                            </span>
+                        </div>
+                        <div class="m-accordion__item-body collapse" id="m_accordion_1_item_3_body" role="tabpanel"
+                            aria-labelledby="m_accordion_1_item_3_head">
+                            <div class="m-accordion__item-content">
+                                <!--begin:job qualification table-->
+                                <div class="m-portlet__body">
+                                    <div *ngIf="editedQua" class="alert {{addQuaStyle}} m-alert m-alert--default " role="alert">
+                                        <strong>{{addQuaMsg}}</strong>
+                                    </div>
+                                    <div *ngIf="!data.qualification || data.qualification.length<1" [innerHTML]="noData"></div>
+                                    <div class="text-right" *ngIf="toUpdQua">
+                                        <button type="button" class="btn btn-primary btn-sm" data-toggle="modal"
+                                            data-target="#m_modal_qua_upd" (click)="updateQua(0, 1, '', '')">Add</button>
+                                    </div>
+                                    <!--begin:repeater form qualification-->
+                                    <table class="table m-table" *ngIf="data.qualification && data.qualification.length>0">
+                                        <thead>
+                                            <tr>
+                                                <th>No</th>
+                                                <th>Category</th>
+                                                <th>Area</th>
+                                                <th>Sub-Area</th>
+                                                <th *ngIf="toUpdQua"></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr *ngFor="let q of data.qualification;let qc = index">
+                                                <td>{{qc+1}}</td>
+                                                <td>{{findQuaName(q.QUAL)}}</td>
+                                                <td>{{q.AREA}} </td>
+                                                <td>{{q.SUB_AREA}}</td>
+                                                <td *ngIf="toUpdQua">
+                                                    <ul class="list-inline">
+                                                        <li class="list-inline-item">
+                                                            <a href="#" class="btn btn-outline-warning m-btn m-btn--icon m-btn--icon-only m-btn--pill m-btn--air"
+                                                                data-toggle="modal" data-target="#m_modal_qua_upd"
+                                                                (click)="updateQua(q.NO, q.QUAL, q.AREA, q.SUB_AREA)">
+                                                                <i class="m-nav__link-icon la la-pencil"></i>
+                                                            </a>
+                                                        </li>
+                                                        <li class="list-inline-item">
+                                                            <a href="#" class="btn btn-outline-warning m-btn m-btn--icon m-btn--icon-only m-btn--pill m-btn--air"
+                                                                data-toggle="modal" data-target="#modal_qua_delete"
+                                                                (click)="delQua(q.NO)">
+                                                                
+                                                                <!-- <i class="m-nav__link-icon la la-minus-square"></i> -->
+                                                                <i class="m-nav__link-icon fa fa-trash"></i>
+                                                               
+                                                            </a>
+                                                        </li>
+                                                    </ul>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    <!--end:repeater form qualification-->
+                                </div>
+                                <!--end:job qualification table-->
+                            </div>
+                        </div>
+                    </div>
+                    <!--end::Item:qualification-->
+
+                    <!--begin::Item:experiences-->
+                    <div class="m-accordion__item" *ngIf="canEditPage || typeJobPostAct == 'post'">
+                        <div class="m-accordion__item-head collapsed" role="tab" id="m_accordion_1_item_6_head"
+                             data-toggle="collapse" href="#m_accordion_1_item_6_body" aria-expanded="    false">
+                            <span class="m-accordion__item-mode"></span>
+                            <span class="m-accordion__item-title m-accordian__item-mode-title">
+                                {{tab7Title}}
+                                <span class="m-menu__link-badge">
+                                    <span class="m-badge m-badge--warning" *ngIf="!data.requirements||data.requirements.length<1; else reqTrue">
+                                        0
+                                    </span>
+                                    <ng-template #reqTrue>
+                                        <span class="m-badge m-badge--success">
+                                            {{data.requirements.length}}
+                                        </span>
+                                    </ng-template>
+                                </span>
+                            </span>
+
+                            <span class="m-accordion__item-icon">
+                                <i class="fa flaticon-profile-1"></i>
+                            </span>
+                        </div>
+                        <div class="m-accordion__item-body collapse" id="m_accordion_1_item_6_body" role="tabpanel"
+                             aria-labelledby="m_accordion_1_item_6_head">
+                            <div class="m-accordion__item-content">
+                                <!--start:experiences table-->
+                                <div class="m-portlet__body">
+                                    <div class="form-group m-form__group row">
+                                        <div class="table-responsive">
+
+                                            <div *ngIf="editedReq" class="alert {{updReqStyle}} m-alert m-alert--default "
+                                                 role="alert">
+                                                <strong>{{addReqMsg}}</strong>
+                                            </div>
+                                            <div *ngIf="!data.requirements||data.requirements.length<1" [innerHTML]="noData"></div>
+                                            <div class="col-12 text-right" *ngIf="toUpdExp">
+                                                <button type="button" class="btn btn-primary btn-sm" data-toggle="modal"
+                                                        data-target="#m_modal_req_upd" (click)="updateReq(0, '', '')">Add</button>
+                                            </div>
+                                            <table class="table m-table" *ngIf="data.requirements&&data.requirements.length>0">
+                                                <thead>
+                                                <tr>
+                                                    <th>No</th>
+                                                    <th>AREA</th>
+                                                    <th>YEARS</th>
+                                                    <th *ngIf="toUpdExp"></th>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+                                                <tr *ngFor="let r of data.requirements;let rc = index">
+                                                    <td>{{rc+1}}</td>
+                                                    <td>{{r.AREA}} </td>
+                                                    <td>{{r.YEARS}}</td>
+                                                    <td *ngIf="toUpdExp">
+                                                        <ul class="list-inline">
+                                                            <li class="list-inline-item">
+                                                                <a href="#" class="btn btn-outline-warning m-btn m-btn--icon m-btn--icon-only m-btn--pill m-btn--air"
+                                                                   data-toggle="modal" data-target="#m_modal_req_upd"
+                                                                   (click)="updateReq(r.expNo, r.AREA, r.YEARS)">
+                                                                    <i class="m-nav__link-icon la la-pencil"></i>
+                                                                </a>
+                                                            </li>
+                                                            <li class="list-inline-item">
+                                                                <a href="#" class="btn btn-outline-warning m-btn m-btn--icon m-btn--icon-only m-btn--pill m-btn--air"
+                                                                   data-toggle="modal" data-target="#modal_req_delete"
+                                                                   (click)="delReq(r.expNo)">
+                                                                    <i class="m-nav__link-icon fa fa-trash"></i>
+                                                                </a>
+                                                            </li>
+                                                        </ul>
+                                                    </td>
+                                                </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!--end:experiences table-->
+                            </div>
+                        </div>
+                    </div>
+                    <!--end::Item:experiences-->
+
+                    <!--begin::Item:Digital Panel -->
+                    <div class="m-accordion__item" *ngIf="canEditPage || typeJobPostAct == 'post'">
+                        <div class="m-accordion__item-head collapsed" role="tab" id="m_accordion_digital_head"
+                             data-toggle="collapse" href="#m_accordion_digital_body" aria-expanded="false">
+                            <span class="m-accordion__item-mode"></span>
+                            <span class="m-accordion__item-title m-accordian__item-mode-title">
+                                {{tab9Title}}
+                                <span class="m-menu__link-badge">
+                                    <span class="m-badge m-badge--warning" *ngIf="!data.digital||data.digital.length<1; else digitalTrue">
+                                        0
+                                    </span>
+                                    <ng-template #digitalTrue>
+                                        <span class="m-badge m-badge--success">
+                                            {{data.digital.length}}
+                                        </span>
+                                    </ng-template>
+                                </span>
+                            </span>
+
+                            <span class="m-accordion__item-icon">
+                                <i class="fa flaticon-confetti"></i>
+                            </span>
+                        </div>
+                        <div class="m-accordion__item-body collapse" id="m_accordion_digital_body" role="tabpanel"
+                             aria-labelledby="m_accordion_digital_head">
+                            <div class="m-accordion__item-content">
+                                <div class="m-portlet__body">
+                                    <div class="form-group m-form__group row">
+                                        <div class="table-responsive">
+                                            <div *ngIf="!data.digital||data.digital.length<1" [innerHTML]="noData"></div>
+                                            <table class="table m-table" *ngIf="data.digital&&data.digital.length>0">
+                                                <thead>
+                                                <tr>
+                                                    <th>No</th>
+                                                    <th>Name</th>
+                                                    <th>Definition</th>
+                                                    <th>Level</th>
+                                                    <th>Details</th>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+                                                <tr *ngFor="let d of data.digital;let dc = index">
+                                                    <td>{{dc+1}}</td>
+                                                    <td>{{d.name}} </td>
+                                                    <td>{{d.definition}}</td>
+                                                    <td>{{d.level}}</td>
+                                                    <td [innerHTML]="d.details"></td>
+                                                </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- end::Item:Digital Panel-->
+
+                    <!--begin::Item:SUCCESS-->
+                    <div class="m-accordion__item" *ngIf="canEditPage || typeJobPostAct == 'post'">
+                        <div class="m-accordion__item-head collapsed" role="tab" id="m_accordion_success_head"
+                             data-toggle="collapse" href="#m_accordion_success_body" aria-expanded="false">
+                            <span class="m-accordion__item-mode"></span>
+                            <span class="m-accordion__item-title m-accordian__item-mode-title">
+                                {{tab2Title}}
+                                <span class="m-menu__link-badge">
+                                    <span class="m-badge m-badge--warning" *ngIf="!data.success||data.success.length<1; else succTrue">
+                                        0
+                                    </span>
+                                    <ng-template #succTrue>
+                                        <span class="m-badge m-badge--success">
+                                            {{data.success.length}}
+                                        </span>
+                                    </ng-template>
+                                </span>
+                            </span>
+
+                            <span class="m-accordion__item-icon">
+                                <i class="fa flaticon-lifebuoy"></i>
+                            </span>
+                        </div>
+                        <div class="m-accordion__item-body collapse" id="m_accordion_success_body" role="tabpanel"
+                             aria-labelledby="m_accordion_success_head">
+                            <div class="m-accordion__item-content">
+                                <!--start:SUCCESS table-->
+                                <div class="m-portlet__body">
+                                    <div class="form-group m-form__group row">
+                                        <div class="table-responsive">
+                                            <div *ngIf="editedReq" class="alert {{updReqStyle}} m-alert m-alert--default "
+                                                 role="alert">
+                                                <strong>{{addReqMsg}}</strong>
+                                            </div>
+                                            <div *ngIf="!data.success||data.success.length<1" [innerHTML]="noData"></div>
+                                            <table class="table m-table" *ngIf="data.success&&data.success.length>0">
+                                                <thead>
+                                                <tr>
+                                                    <th>No</th>
+                                                    <th>Name</th>
+                                                    <th>Description</th>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+                                                <tr *ngFor="let s of data.success;let sc = index">
+                                                    <td>{{sc+1}}</td>
+                                                    <td>{{s.SUC_DESC}} </td>
+                                                    <td>{{s.SUC_NAME}}</td>
+                                                </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!--end:SUCCESS table-->
+                            </div>
+                        </div>
+                    </div>
+                    <!--end::Item:SUCCESS-->
+
+                    <!--begin::Item:functional-->
+                    <div class="m-accordion__item" *ngIf="canEditPage || typeJobPostAct == 'post'">
+                        <div class="m-accordion__item-head collapsed" role="tab" id="m_accordion_1_item_8_head"
+                            data-toggle="collapse" href="#m_accordion_1_item_8_body" aria-expanded="    false">
+                            <span class="m-accordion__item-mode"></span>
+                            <span class="m-accordion__item-title m-accordian__item-mode-title">
+                                {{tab8Title}}
+                                <span class="m-menu__link-badge">
+                                    <span *ngIf="!data.functional||data.functional.length<1; else funcTrue" class="m-badge m-badge--warning">
+                                        0
+                                    </span>
+                                    <ng-template #funcTrue>
+                                        <span class="m-badge m-badge--success">
+                                            {{data.functional.length}}
+                                        </span>
+                                    </ng-template>
+                                </span>
+                            </span>
+                            <span class="m-accordion__item-icon">
+                                <i class="fa flaticon-grid-menu-v2"></i>
+                            </span>
+                        </div>
+                        <div class="m-accordion__item-body collapse" id="m_accordion_1_item_8_body" role="tabpanel"
+                            aria-labelledby="m_accordion_1_item_8_head">
+                            <div class="m-accordion__item-content">
+                                <!--begin:job qualification table-->
+                                <div class="m-portlet__body" #funcCompetency>
+                                    <div *ngIf="updFuncCom" class="alert {{addFuncComStyle}} m-alert m-alert--default " role="alert">
+                                        <strong>{{addFuncComMsg}}</strong>
+                                    </div>
+                                    <div *ngIf="!data.functional||data.functional.length<1" [innerHTML]="noData"></div>
+                                    <div class="col-12 text-right" *ngIf="toUpdFunc">
+                                        <button type="button" class="btn btn-primary btn-sm" data-toggle="modal"
+                                            data-target="#m_modal_func_com_upd" (click)="updateFuncCom(0, '', '', '')" >Add</button>
+                                    </div>
+                                    <!--begin:repeater form qualification-->
+                                    <table class="table m-table" *ngIf="data.functional&&data.functional.length>0">
+                                        <thead>
+                                            <tr>
+                                                <th>No</th>
+                                                <th>Name</th>
+                                                <th>Definition</th>
+                                                <th></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <!-- <tr *ngFor="let func of data.functional"> -->
+                                            <tr *ngFor="let func of data.functional;let sc = index">
+                                                <td>{{sc+1}}</td>
+                                                <td>{{func.FC_NAME}}</td>
+                                                <td [innerHTML]="func.details"></td>
+                                                <td *ngIf = "func.id == 0"></td>
+                                                <td *ngIf = "func.id > 0"> <!--*ngIf="toDelFunc"-->
+                                                    <ul class="list-inline">
+                                                        <li class="list-inline-item">
+                                                            <a href="#" class="btn btn-outline-warning m-btn m-btn--icon m-btn--icon-only m-btn--pill m-btn--air"
+                                                                data-toggle="modal" data-target="#modal_func_com_delete"
+                                                                (click)="delFuncCom(func.id, func.FC_NAME)">
+                                                                <i class="m-nav__link-icon fa fa-trash"></i>
+                                                            </a>
+                                                        </li>
+                                                    </ul>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    <!--end:repeater form qualification-->
+                                </div>
+                                <!--end:job qualification table-->
+                            </div>
+                        </div>
+                    </div>
+                    <!--end::Item:functional -->
+
+                    <!--begin::Item:Technical competencies-->
+                    <div class="m-accordion__item" *ngIf="canEditPage || typeJobPostAct == 'post'">
+                        <div class="m-accordion__item-head collapsed" role="tab" id="m_accordion_1_item_4_head"
+                            data-toggle="collapse" href="#m_accordion_1_item_4_body" aria-expanded="    false">
+                            <span class="m-accordion__item-mode"></span>
+                            <span class="m-accordion__item-title m-accordian__item-mode-title">
+                                {{tab5Title}}
+                                <span class="m-menu__link-badge">
+                                    <span *ngIf="!data.technical||data.technical.length<1; else techTrue" class="m-badge m-badge--warning">
+                                        0
+                                    </span>
+                                    <ng-template #techTrue>
+                                        <span class="m-badge m-badge--success">
+                                            {{data.technical.length}}
+                                        </span>
+                                    </ng-template>
+                                </span>
+                            </span>
+                            <span class="m-accordion__item-icon">
+                                <i class="fa flaticon-puzzle"></i>
+                            </span>
+                        </div>
+                        <div class="m-accordion__item-body collapse" id="m_accordion_1_item_4_body" role="tabpanel"
+                            aria-labelledby="m_accordion_1_item_4_head">
+                            <div class="m-accordion__item-content">
+                                <!--start:competencies table-->
+                                <div class="m-portlet__body">
+                                    <div class="form-group m-form__group row">
+                                        <div class="table-responsive">
+
+                                            <div *ngIf="editedTechCom" class="alert {{addTechComStyle}} m-alert m-alert--default "
+                                                role="alert">
+                                                <strong>{{addTechComMsg}}</strong>
+                                            </div>
+                                            <div *ngIf="!data.technical||data.technical.length<1" [innerHTML]="noData"></div>
+                                            <div class="col-12 text-right" *ngIf="toUpdTech">
+                                                <button type="button" class="btn btn-primary btn-sm" data-toggle="modal"
+                                                    data-target="#m_modal_tech_com_upd" (click)="updateTechCom(0, '', '', '', '', '')">Add</button>
+                                            </div>
+                                            <table class="table m-table" *ngIf="data.technical&&data.technical.length>0">
+                                                <thead>
+                                                    <tr>
+                                                        <th>No</th>
+                                                        <th>Cluster</th>
+                                                        <th>Category</th>
+                                                        <th>Competency</th>
+                                                        <th>Definition</th>
+                                                        <th>Level</th>
+                                                        <th *ngIf="toUpdTech"></th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr *ngFor="let t of data.technical;let tc = index">
+                                                        <td>{{tc+1}}</td>
+                                                        <td>{{t.CLUSTER_ID}} </td>
+                                                        <td>{{findTecComCat(t.CATEGORY)}}</td>
+                                                        <td>{{t.COMP_NAME}}</td>
+                                                        <td>{{t.COMP_DEF}}</td>
+                                                        <td>{{t.LEVEL}}</td>
+                                                        <td *ngIf="toUpdTech">
+                                                            <ul class="list-inline">
+                                                                <li class="list-inline-item">
+                                                                    <a href="#" class="btn btn-outline-warning m-btn m-btn--icon m-btn--icon-only m-btn--pill m-btn--air"
+                                                                        data-toggle="modal" data-target="#modal_tech_com_delete"
+                                                                        (click)="delTechCom(t.NO)">
+                                                                        <i class="m-nav__link-icon fa fa-trash"></i>
+                                                                    </a>
+                                                                </li>
+                                                            </ul>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!--end:competencies table-->
+                                <!--    End Job Tech Com Modal -->
+                            </div>
+                        </div>
+                    </div>
+                    <!--end::Item:Technical competencies-->
+
+                </div>
+                <!--end::Section-->
+            </div>
+            <!--end::Portlet-->
+
+        </div>
+        <div class="col-lg-12" *ngIf="toAdvJob">
+            <!--
+                <div *ngIf="editedAdvPos" class="alert {{advPosStyle}} m-alert m-alert--default " role="alert">
+                    <strong>{{advPosMsg}}</strong>
+                </div>-->
+
+            <div *ngIf="editedAdvPos" class="m-alert m-alert--icon m-alert--outline alert {{advPosStyle}} alert-dismissible fade show"
+                role="alert">
+                <div class="m-alert__icon">
+                    <i class="{{advPosIcon}}"></i>  
+                </div>
+                <div class="m-alert__text">
+                    {{advPosMsg}}
+                </div>
+                <!-- <div class="m-alert__close"> <button type="button" class="close" data-dismiss="alert" aria-label="Close"></button> </div> -->
+            </div>
+
+            <!-- <div *ngIf="showAdvDisableMsg" class="alert m-alert m-alert--primary " role="alert">
+                <strong>{{advDisableMsg}}</strong>
+            </div> -->
+
+            <div *ngIf="advBtnDisplay" class="m-button-advert">
+
+                <!--begin::advertise preview buttons -->
+                <button id="advertise-prv-job" type="button" class="btn m-btn--pill btn-primary btn-lg m-btn m-btn--custom" data-toggle="modal"
+                    data-target="#m_modal_previw_advert" [disabled]="advDisabled" (click)="checkOccupied(data.profile[0].Occupied); ">{{btnPrvAdvertise}}
+                </button>
+                <!--end::advertise preview buttons -->
+
+                <!--begin::advertise buttons -->
+                <button id="advertise-job" type="button" class="btn m-btn--pill btn-primary btn-lg m-btn m-btn--custom" data-toggle="modal"
+                    data-target="#m_modal_advert" [disabled]="advDisabled" (click)="checkOccupied(data.profile[0].Occupied); ">{{btnAdvertise}}
+                </button>
+                <!--end::advertise buttons -->
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+<!-- Start Job Qualification Modal -->
+<div class="modal fade" id="m_modal_qua_upd" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true" *ngIf="canEditPage">
+    <div class="modal-dialog modal-lg" role="document">
+        <form [formGroup]="updQualificationForm" (ngSubmit)="onQualificationFormSubmit()">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">
+                        {{this.updFormQuaTitle}} {{tab4Title}}
+                    </h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">
+                            &times;
+                        </span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="recipient-name" class="form-control-label">
+                            Category:
+                        </label>
+                        <select class="form-control m-input" formControlName="updQuaCat" required>
+                            <option *ngFor="let x of quaList" [value]="x.id" [selected]="qualification.qua.id == x.id">{{x.name}}</option>
+                        </select>
+                        <input type="hidden" formControlName="updQuaIdx" required>
+                        <!-- <input class="form-control m-input" formControlName="updQuaPosId" required> -->
+                    </div>
+                    <div class="form-group">
+                        <label for="message-text" class="form-control-label">
+                            Area:*
+                        </label>
+                        <input class="form-control m-input" formControlName="updQuaArea" required>
+                        <p class="error_message" style="color:red" *ngIf="updQualificationForm.get('updQuaArea').hasError('required') && (updQualificationForm.get('updQuaArea').dirty)">Please
+                            define area.</p>
+                    </div>
+                    <div class="form-group">
+                        <label for="message-text" class="form-control-label" required>
+                            Sub-Area:*
+                        </label>
+                        <input class="form-control m-input" formControlName="updQuaSubArea" required>
+                        <p class="error_message" style="color:red" *ngIf="updQualificationForm.get('updQuaSubArea').hasError('required') && (updQualificationForm.get('updQuaSubArea').dirty)">Please
+                            define sub-area.</p>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                        Close
+                    </button>
+                    <button type="submit" class="btn btn-primary" [disabled]="!updQualificationForm.valid" onclick="$('.modal').modal('hide')">
+                        Save
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<div class="modal fade" id="modal_qua_delete" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true" *ngIf="canEditPage">
+    <div class="modal-dialog modal-dialog-centered " role="document">
+        <form [formGroup]="delQualificationForm" (ngSubmit)="onDelQualificationFormSubmit()">
+            <div class="modal-content m-alert m-alert--icon alert alert-danger">
+                <div class="modal-body">
+                    <p>Are you sure to delete this item?</p>
+                    <input type="hidden" formControlName="delQuaIdx" required>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-light btn-sm m-btn m-btn--hover-brand" data-dismiss="modal">
+                        No
+                    </button>
+                    <button type="submit" class="btn btn-outline-light btn-sm m-btn m-btn--hover-brand" [disabled]="!delQualificationForm.valid"
+                        onclick="$('.modal').modal('hide')">
+                        Yes
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<!-- End Job Qualification Modal -->
+
+<!-- Start AOR Modal -->
+<div class="modal fade" id="m_modal_aor_upd" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true" *ngIf="canEditPage">
+    <div class="modal-dialog modal-lg" role="document">
+        <form [formGroup]="updAorForm" (ngSubmit)="onAorFormSubmit()">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">
+                        {{this.updFormAorTitle}} {{tab6Title}}
+                    </h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">
+                            &times;
+                        </span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="message-text" class="form-control-label">
+                            Area of Responsibilities:*
+                        </label>
+                        <input type="hidden" formControlName="updAorIdx" required>
+                        <input class="form-control m-input" formControlName="updAor" required>
+                        <p class="error_message" style="color:red" *ngIf="updAorForm.get('updAor').hasError('required') && (updAorForm.get('updAor').dirty)">Please
+                            define area of responsibility.</p>
+                    </div>
+                    <div class="form-group">
+                        <label for="message-text" class="form-control-label">
+                            Key Activities:*
+                        </label>
+                        <textarea class="form-control m-input" formControlName="updKeyAct" required rows="7"></textarea>
+                        <p class="error_message" style="color:red" *ngIf="updAorForm.get('updKeyAct').hasError('required') && (updAorForm.get('updKeyAct').dirty)">Please
+                            define key activities.</p>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                        Close
+                    </button>
+                    <button type="submit" class="btn btn-primary" [disabled]="!updAorForm.valid" onclick="$('.modal').modal('hide')">
+                        Save
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<div class="modal fade" id="modal_aor_delete" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true" *ngIf="canEditPage">
+    <div class="modal-dialog modal-dialog-centered " role="document">
+        <form [formGroup]="delAorForm" (ngSubmit)="onDelAorFormSubmit()">
+            <div class="modal-content m-alert m-alert--icon alert alert-danger">
+                <div class="modal-body">
+                    <p>Are you sure to delete this item?</p>
+                    <input type="hidden" formControlName="delAorIdx" required>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-light btn-sm m-btn m-btn--hover-brand" data-dismiss="modal">
+                        No
+                    </button>
+                    <button type="submit" class="btn btn-outline-light btn-sm m-btn m-btn--hover-brand" [disabled]="!delAorForm.valid"
+                        onclick="$('.modal').modal('hide')">
+                        Yes
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<!-- End AOR Modal -->
+
+<!-- Start Requirements Modal   -->
+<div class="modal fade" id="m_modal_req_upd" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true" *ngIf="canEditPage">
+    <div class="modal-dialog modal-lg" role="document">
+        <form [formGroup]="updReqForm" (ngSubmit)="onReqFormSubmit()">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">
+                        {{this.updFormReqTitle}} {{tab7Title}}
+                    </h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">
+                            &times;
+                        </span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="message-text" class="form-control-label">
+                            Area:*
+                        </label>
+                        <input type="hidden" formControlName="updReqIdx" required>
+                        <input class="form-control m-input" formControlName="updReqArea" required>
+                        <p class="error_message" style="color:red" *ngIf="updReqForm.get('updReqArea').hasError('required') && (updReqForm.get('updReqArea').dirty)">Please
+                            define area.</p>
+                    </div>
+                    <div class="form-group">
+                        <label for="message-text" class="form-control-label">
+                            Years:*
+                        </label>
+                        <input class="form-control m-input" formControlName="updReqYear" required type="number" min="0">
+                        <p class="error_message" style="color:red" *ngIf="updReqForm.get('updReqYear').hasError('required') && (updReqForm.get('updReqYear').dirty)">Please
+                            define year.</p>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                        Close
+                    </button>
+                    <button type="submit" class="btn btn-primary" [disabled]="!updReqForm.valid" onclick="$('.modal').modal('hide')">
+                        Save
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<div class="modal fade" id="modal_req_delete" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true" *ngIf="canEditPage">
+    <div class="modal-dialog modal-dialog-centered " role="document">
+        <form [formGroup]="delReqForm" (ngSubmit)="onDelReqFormSubmit()">
+            <div class="modal-content m-alert m-alert--icon alert alert-danger">
+                <div class="modal-body">
+                    <p>Are you sure to delete this item?</p>
+                    <input type="hidden" formControlName="delReqIdx" required>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-light btn-sm m-btn m-btn--hover-brand" data-dismiss="modal">
+                        No
+                    </button>
+                    <button type="submit" class="btn btn-outline-light btn-sm m-btn m-btn--hover-brand" [disabled]="!delReqForm.valid"
+                        onclick="$('.modal').modal('hide')">
+                        Yes
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<!-- End Requirements Model -->
+
+<!-- Start Functional Comp Modal-->
+<div class="modal fade" id="m_modal_func_com_upd" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true" *ngIf="canEditPage">
+    <div class="modal-dialog modal-lg" role="document">
+        <form [formGroup]="updFuncComForm" (ngSubmit)="onFuncComFormSubmit()">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">
+                        {{tab8Title}}
+                    </h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">
+                            &times;
+                        </span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="recipient-name" class="form-control-label m--font-boldest">
+                            Job Cluster:
+                        </label>
+                        <!--  [selected]="('Business Strategy'.match(x.name)!== null)" >> {{('comCluster.comClus.name'.match(x.name)=== null)}}  >> {{comCluster.comClus.name}} -->
+                        <select class="form-control m-input" formControlName="updFuncComClusIdOpt" (change)="funcChangeUpdCat()"
+                            required>
+                            <option *ngFor="let x of funcClusterList" [value]="x.name" [selected]="funcCluster.funcClus.name===x.name">{{x.name}}</option>
+                        </select>
+                        <input type="hidden" formControlName="updFuncComIdx" required>
+                    </div>
+                    <div class="form-group" *ngIf="tglFuncComFam">
+                        <label for="recipient-name" class="form-control-label m--font-boldest">
+                            Job Family:
+                        </label>
+                        <!-- {{comCat.comCat.name.match(x.name)!==null}} -->
+                        <select class="form-control m-input" formControlName="updFuncComFamOpt" (change)="funcChangeFamily()">
+                            <option *ngFor="let x of funcFamList" [value]="x.name">{{x.name}} </option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="recipient-name" class="form-control-label m--font-boldest">
+                            <span *ngIf="tglFuncComDesc">Competency:</span>
+                            <span *ngIf="!tglFuncComDesc && noDescData" style="color:red">
+                                No Functional Competency Available
+                            </span>
+                        </label>
+                        <!-- {{comCat.comCat.name.match(x.name)!==null}} -->
+                        <select *ngIf="tglFuncComDesc" class="form-control m-input" formControlName="updFuncComDescOpt" (change)="funcChangeFamilyDesc()">
+                            <option *ngFor="let x of funcFamDescList" [value]="x.name">{{x.name}} </option>
+                        </select>
+                    </div>
+                    <div class="form-group" *ngIf="descSelected">
+                        <label for="recipient-name" class="form-control-label m--font-boldest">
+                            Description:
+                        </label> <br>
+                        <span>
+                            {{discription}}
+                        </span>
+                        
+                    </div>
+                    
+                   
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                        Close
+                    </button>
+                    <button type="submit" class="btn btn-primary" [disabled]="!updFuncComForm.valid||errLevel2" onclick="$('.modal').modal('hide')">
+                        Save
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<div class="modal fade" id="modal_func_com_delete" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true" *ngIf="canEditPage">
+    <div class="modal-dialog modal-dialog-centered " role="document">
+        <form [formGroup]="delFuncComForm" (ngSubmit)="onDelFuncComFormSubmit()">
+            <div class="modal-content m-alert m-alert--icon alert alert-danger">
+                <div class="modal-body">
+                    <p>Are you sure to delete this Competency - {{delFuncComType}}?</p>
+                    <input type="hidden" formControlName="delFuncComIdx" required>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-light btn-sm m-btn m-btn--hover-brand" data-dismiss="modal">
+                        No
+                    </button>
+                    <button type="submit" class="btn btn-outline-light btn-sm m-btn m-btn--hover-brand" [disabled]="!delFuncComForm.valid"
+                        onclick="$('.modal').modal('hide')" >
+                        Yes
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<!-- End Function Comp modal-->
+
+<!-- Start Job Tech Com Modal -->
+<div class="modal fade" id="m_modal_tech_com_upd" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true" *ngIf="canEditPage">
+    <div class="modal-dialog modal-lg" role="document">
+        <form [formGroup]="updTechComForm" (ngSubmit)="onTechComFormSubmit()">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">
+                        {{this.updFormTechComTitle}} {{tab5Title}}
+                    </h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">
+                            &times;
+                        </span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="recipient-name" class="form-control-label">
+                            Job Cluster:
+                        </label>
+                        <!--  [selected]="('Business Strategy'.match(x.name)!== null)" >> {{('comCluster.comClus.name'.match(x.name)=== null)}}  >> {{comCluster.comClus.name}} -->
+                        <select class="form-control m-input" formControlName="updTechComClusIdOpt" (change)="clusChangedUpdCat()"
+                            required>
+                            <option *ngFor="let x of comClusterList" [value]="x.name" [selected]="comCluster.comClus.name===x.name">{{x.name}}</option>
+                        </select>
+                        <input type="hidden" formControlName="updTechComIdx" required>
+                    </div>
+                    <div class="form-group" *ngIf="tglTectComCat">
+                        <label for="recipient-name" class="form-control-label">
+                            Job Category:
+                        </label>
+                        <!-- {{comCat.comCat.name.match(x.name)!==null}} -->
+                        <select class="form-control m-input" formControlName="updTechComCatOpt" (change)="catChangedUpdCom($event.target.value)">
+                            <option *ngFor="let x of comCatList" [value]="x.name">{{x.name}} </option>
+                        </select>
+                    </div>
+                    <div class="form-group" *ngIf="tglTectComCom">
+                        <label for="message-text" class="form-control-label">
+                            Competency:*
+                        </label>
+                        <select class="form-control m-input" formControlName="updTechComComOpt" (change)="comChangedUpdDef($event.target.value)"
+                            required>
+                            <option *ngFor="let x of comComList" [value]="x.name" [selected]="( ( ('comCom.comCom.name'.match(x.name) !== null) )  )">{{x.name}}</option>
+                        </select>
+                    </div>
+                    <div class="form-group" *ngIf="tglTectComComDef">
+                        <label for="message-text" class="form-control-label">
+                            Competency Definition:
+                        </label>
+                        <textarea class="form-control m-input" formControlName="updTechComDef" required disabled></textarea>
+                    </div>
+                    <div class="form-group" *ngIf="tglTectComComDef">
+                        <label for="message-text" class="form-control-label">
+                            Level:*
+                            <input type="hidden" formControlName="updTechComLvlHidden" required value='-- Select Level --'>
+                        </label>
+                        <select class="form-control m-input" formControlName="updTechComLvl" required (change)="lvlChangedUpdLvlHidden($event.target.value)">
+                            <option *ngFor="let x of comLvlList" [value]="x.name">{{x.name}}</option>
+                        </select>
+                        <p class="error_message" style="color:red" *ngIf="errLevel">Please define level</p>
+                        <!-- <p class="error_message" style="color:red" *ngIf="updTechComForm.get('updTechComLvlHidden').hasError('required') && (updTechComForm.get('updTechComLvlHidden').dirty || updTechComForm.get('updTechComLvl').value.match('-- Select Level --')!==null)">Please define level.</p> -->
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                        Close
+                    </button>
+                    <button type="submit" class="btn btn-primary" [disabled]="!updTechComForm.valid||errLevel" onclick="$('.modal').modal('hide')">
+                        Save
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<div class="modal fade" id="modal_tech_com_delete" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true" *ngIf="canEditPage">
+    <div class="modal-dialog modal-dialog-centered " role="document">
+        <form [formGroup]="delTechComForm" (ngSubmit)="onDelTechComFormSubmit()">
+            <div class="modal-content m-alert m-alert--icon alert alert-danger">
+                <div class="modal-body">
+                    <p>Are you sure to delete this item?</p>
+                    <input type="hidden" formControlName="delTechComIdx" required>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-light btn-sm m-btn m-btn--hover-brand" data-dismiss="modal">
+                        No
+                    </button>
+                    <button type="submit" class="btn btn-outline-light btn-sm m-btn m-btn--hover-brand" [disabled]="!delTechComForm.valid"
+                        onclick="$('.modal').modal('hide')">
+                        Yes
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<!-- End Job Tech Com Modal -->
+
+
+<!--begin::preview advertise modal-->
+
+<div class="modal fade show" id="m_modal_previw_advert" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" style="display: none;">
+    <div class="modal-dialog" role="document" style="max-width: 1000px;">
+        <div class="modal-content">
+             <div class="modal-header">
+
+               <!-- <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">
+                        ×
+                    </span>
+                </button> -->
+                <div class="m-portlet__body">
+                    <h3 class="modal-title theme_color m-portlet__head-text" style="font-size: 24px">
+                        {{data.profile && data.profile[0].Positions}} <span *ngIf="!data.profile||!data.profile[0].Positions">-</span>
+                    </h3>
+                    <h5 class="m-portlet__head-text">{{data.profile && data.profile[0].Company}} <span *ngIf="!data.profile||!data.profile[0].Company">-</span></h5>
+                    <h6 class="m-portlet__head-text">{{data.profile && data.profile[0].Org_Unit_Department}}<span *ngIf="!data.profile||!data.profile[0].Org_Unit_Department">-</span></h6>
+                    <h6 class="m-portlet__head-text">
+                        {{data.profile && data.profile[0]?.City}} <span *ngIf="!data.profile||!data.profile[0].City">-</span>
+                        {{data.profile && data.profile[0]?.Region_Desc}} <span *ngIf="!data.profile||!data.profile[0].Region_Desc">-</span>
+                    </h6>
+                </div>
+            </div>
+            <div class="modal-body">
+                <div class="m-portlet m-portlet--full-height">
+                <!--<div class="m-portlet__head">
+                        <div class="m-portlet__head-caption">
+                            <br>
+                            <div class="m--space-10"></div>
+                            <h3 class="theme_color m-portlet__head-text" style="font-size: 24px">
+                                {{data.profile && data.profile[0].Positions}} <span *ngIf="!data.profile||!data.profile[0].Positions">-</span>
+                            </h3><br>
+                        </div>
+                    </div>
+                    <div class="m-portlet__body">
+                            <h5 class="m-portlet__head-text">{{data.profile && data.profile[0].Company}} <span *ngIf="!data.profile||!data.profile[0].Company">-</span></h5>
+                            <h6 class="m-portlet__head-text">{{data.profile && data.profile[0].Org_Unit_Department}}<span *ngIf="!data.profile||!data.profile[0].Org_Unit_Department">-</span></h6>
+                            <h6 class="m-portlet__head-text">
+                                {{data.profile && data.profile[0]?.City}} <span *ngIf="!data.profile||!data.profile[0].City">-</span>
+                                {{data.profile && data.profile[0]?.Region_Desc}} <span *ngIf="!data.profile||!data.profile[0].Region_Desc">-</span>
+                            </h6>
+                    </div>-->
+
+                    <div class="jobInfo_content m-portlet" *ngIf="data.purpose?.length > 0">
+                        <div class="m-portlet__head">
+                            <div class="m-portlet__head-caption">
+                                <div class="m-portlet__head-title">
+                                    <h3 class="theme_color m-portlet__head-text">
+                                        Job Description 
+                                    </h3>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="m-portlet__body">
+                            <div class="m-section m-section--last">
+                                <span class="m-section__sub" [innerHTML] = "data.purpose[0].job_purpose | stringBreak">
+    
+                                </span><br>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="jobInfo_content m-portlet" *ngIf="data.aor?.length > 0">
+                        <div class="m-portlet__head">
+                            <div class="m-portlet__head-caption">
+                                <div class="m-portlet__head-title">
+                                    <h3 class="theme_color m-portlet__head-text">
+                                        Area of Responsibilities   
+                                    </h3>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="m-portlet__body">
+                            <div class="m-section m-section--last" *ngFor = "let jaor of data.aor" >
+                                <span class="m-section__sub">
+                                    <i style="font-weight: bold; padding-right:12px;" class="theme_color fa fa-angle-double-right"></i>
+                                    <span [innerHTML] = "jaor.AOR"></span><br>
+                                    <span [innerHTML] = "jaor.KEY_ACT | stringBreak"></span>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="jobInfo_content m-portlet" *ngIf="data.requirements?.length > 0">
+                        <div class="m-portlet__head">
+                            <div class="m-portlet__head-caption">
+                                <div class="m-portlet__head-title">
+                                    <h3 class="theme_color m-portlet__head-text">
+                                        Job Requirements
+                                    </h3>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="m-portlet__body">
+                            <div class="m-section m-section--last" *ngFor = "let req of data.requirements" >
+                                <span class="m-section__sub">
+                                    <i style="font-weight: bold; padding-right:12px; " class="theme_color fa fa-angle-double-right"></i> 
+                                        Minimum {{req.YEARS}} years in {{req.AREA}}
+                                    <br>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="jobInfo_content m-portlet" *ngIf="data.success?.length > 0">
+                        <div class="m-portlet__head">
+                            <div class="m-portlet__head-caption">
+                                <div class="m-portlet__head-title">
+                                    <h3 class="theme_color m-portlet__head-text">
+                                        Success Competency Requirements  
+                                    </h3>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="m-portlet__body">
+                            <div class="m-section m-section--last" *ngFor = "let suc of data.success" >
+                                <span class="m-section__sub">
+                                    <i style="font-weight: bold; padding-right:12px; " class="theme_color fa fa-angle-double-right"></i> 
+                                        {{suc.SUC_DESC}}<br>
+                                        <span style="padding-left:8%">{{suc.SUC_NAME}}</span>
+                                    <br>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="jobInfo_content m-portlet" *ngIf="data.digital?.length > 0">
+                        <div class="m-portlet__head">
+                            <div class="m-portlet__head-caption">
+                                <div class="m-portlet__head-title">
+                                    <h3 class="theme_color m-portlet__head-text">
+                                        Digital Competency Requirements 
+                                    </h3>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="m-portlet__body">
+                            <span>
+                                <b><span *ngIf="leadLevel; else support">Lead</span>
+                                    <ng-template #support>Support</ng-template>
+                                    <span> Support the following :</span>
+                                </b>
+                            </span>
+                            <br><br>
+                            <div style="padding-left:3%; "class="m-section m-section--last" *ngFor = "let digi of data.digital" >
+                                <span class="m-section__sub">
+                                    <i style="font-weight: bold; padding-right:12px; " class="theme_color fa fa-angle-double-right"></i> 
+                                        <b>{{digi.name}}</b><br>
+                                        <span [innerHTML]="digi.details | stringBreak"></span>
+                                    <br>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="jobInfo_content m-portlet" *ngIf="data.functional?.length > 0">
+                        <div class="m-portlet__head">
+                            <div class="m-portlet__head-caption">
+                                <div class="m-portlet__head-title">
+                                    <h3 class="theme_color m-portlet__head-text">
+                                        Functional Competency Requirements
+                                    </h3>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="m-portlet__body">
+                            <div class="m-section m-section--last" *ngFor = "let func of data.functional" >
+                                <span class="m-section__sub">
+                                    <i style="font-weight: bold; padding-right:12px; " class="theme_color fa fa-angle-double-right"></i> 
+                                        {{func.FC_NAME}}<br>
+                                        <span style="padding-left:8%">{{func.FC_DEF}}</span>
+                                    <br>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="jobInfo_content m-portlet" *ngIf="data.technical?.length > 0">
+                        <div class="m-portlet__head">
+                            <div class="m-portlet__head-caption">
+                                <div class="m-portlet__head-title">
+                                    <h3 class="theme_color m-portlet__head-text">
+                                        Technical Competency Requirements
+                                    </h3>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="m-portlet__body">
+                            <div class="m-section m-section--last" *ngFor = "let tech of data.technical" >
+                                <span class="m-section__sub">
+                                    <i style="font-weight: bold; padding-right:12px; " class="theme_color fa fa-angle-double-right"></i> 
+                                        {{tech.LEVEL}} level in {{tech.COMP_DEF}} 
+                                    <br>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="jobInfo_content m-portlet" *ngIf="data.qualification?.length > 0">
+                        <div class="m-portlet__head">
+                            <div class="m-portlet__head-caption">
+                                <div class="m-portlet__head-title">
+                                    <h3 class="theme_color m-portlet__head-text">
+                                        Qualification Requirements
+                                    </h3>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="m-portlet__body">
+                            <div class="m-section m-section--last" *ngFor = "let qual of data.qualification" >
+                                <span class="m-section__sub">
+                                    <i style="font-weight: bold; padding-right:12px; " class="theme_color fa fa-angle-double-right"></i> 
+                                        {{qual.text}} in {{qual.AREA}} ({{qual.SUB_AREA}})
+                                    <br>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="m-portlet__body">
+                        <div class="m-section m-section--last" >
+                            <span class="m-section__sub">
+                                <i style="font-weight: bold; padding-right:12px; " 
+                                    class="theme_color fa fa-angle-double-right"></i> 
+                                    <b>Company :</b> {{data.profile && data.profile[0].Company_Desc}}
+                                <br><br>
+                                <i style="font-weight: bold; padding-right:12px; " 
+                                    class="theme_color fa fa-angle-double-right"></i> 
+                                    <b>Division :</b> {{data.profile && data.profile[0].division}}
+                                <br><br>
+                                <i style="font-weight: bold; padding-right:12px; " 
+                                    class="theme_color fa fa-angle-double-right"></i> 
+                                    <b>Region :</b> {{data.profile && data.profile[0].region}}
+                                <br><br>
+                                <i style="font-weight: bold; padding-right:12px; " 
+                                    class="theme_color fa fa-angle-double-right"></i> 
+                                    <b>Band :</b> {{data.profile && data.profile[0].band}}
+                                <br><br>
+                                <i style="font-weight: bold; padding-right:12px; " 
+                                    class="theme_color fa fa-angle-double-right"></i> 
+                                    <b>Employment  :</b> {{data.profile && data.profile[0].Employee_group}}
+                                <br><br>
+                                <i style="font-weight: bold; padding-right:12px; " 
+                                    class="theme_color fa fa-angle-double-right"></i> 
+                                    <b>Type :</b> {{data.profile && data.profile[0].type_desc}}
+                                <br><br>
+                                <i style="font-weight: bold; padding-right:12px; " 
+                                    class="theme_color fa fa-angle-double-right"></i> 
+                                    <b>Advertisement  ID :</b> {{data.profile && data.profile[0].id}}
+                                <br><br>
+                            </span>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+            <!-- <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                    Close
+                </button>
+                <button type="button" class="btn btn-primary">
+                    Save changes
+                </button>
+            </div> -->
+        </div>
+    </div>
+</div>
+
+<!--end::preview advertise modal-->
+
+
+<!--begin::advertise modal-->
+<div class="modal fade" id="m_modal_advert" tabindex="-1" role="dialog" aria-labelledby="advertiseModalCenterTitle"
+    aria-hidden="true" style="display: none;" *ngIf="canEditPage">
+    <div class="modal-dialog modal-lg" role="document">
+        <form [formGroup]="advPosForm">
+            <!--(ngSubmit)="onadvPosFormSubmit()"-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">
+                        Advertise Position #{{posId2}}
+                    </h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">
+                            ×
+                        </span>
+                    </button>
+                </div>
+
+                <div class="modal-body">
+                    <div class="alert alert-{{advMsgStyle}}" role="alert">
+                        <p>{{msgDefault}}</p>
+                        <!-- <strong></strong> -->
+                        <label class="m-checkbox m-checkbox--square" *ngIf="showOccMsg">
+                            <!-- m-checkbox m-checkbox--state-success (change)="onCheckboxChange(profile[0]?.Occupied,$event)"-->
+                            <input type="checkbox" [required]="apprRemark" formControlName="advPosRemarkCheckBox" value="1">
+                            {{msgOccupied}}
+                            <span></span>
+                        </label>
+                    </div>
+
+                    <div class="m-form__section m-form__section--first">
+
+                        <!-- start total vacancy -->
+                        <div class="form-group m-form__group row">
+                            <label for="example-text-input" class="col-2 col-form-label">Total Vacancy *</label>
+                            <div class="col-3">
+                                <input type="number" min="1" required class="form-control m-input" formControlName="advPosVacancy" required>
+                            </div>
+                        </div>
+                        <!-- end total vacancy -->
+                        
+                        <!-- start requestor -->
+                        <div class="form-group m-form__group row">
+                            <label for="example-text-input" class="col-2 col-form-label">Requester *</label>
+                            <div class="col-10">
+                                <input type="text" ng-model="search" class="form-control m-input" list="requesterList"
+                                    required formControlName="advPosRequestor">
+                                <datalist id="requesterList" [hidden]="true">
+                                    <option value="Search Requester" disabled selected>Select a Requester</option>
+                                    <option *ngFor="let item of optReqList" value="{{item.Staff_No}} - {{item.Pernr_Name}}"></option>
+                                </datalist>
+                            </div>
+                        </div>
+                        <!-- end requestor -->
+
+                        <!-- start approver -->
+                        <div class="form-group m-form__group row">
+                            <label for="example-text-input" class="col-2 col-form-label">Approver *</label>
+                            <div class="col-10">
+                                <input #selectedApprover placeholder="Select Approver" type="text" ng-model="search" class="form-control m-input" list="approverList" required formControlName="advPosApprover">
+                                <p class="error_message" style="color:red" [ngStyle]="{'color': ((selectedApprover.value.trim()) == '')? 'black' : 'red'}"
+                                *ngIf="(optAppList2.indexOf(selectedApprover.value.trim()) !== -1) == false">
+                                Select approver from the list only
+                            </p>
+                            <datalist id="approverList" [hidden]="true">
+                                    <option value="" disabled selected>Select a Approver</option>
+                                    <option *ngFor="let item of optAppList2" value="{{item}}"></option>
+                                </datalist>
+                            </div>
+                        </div>
+                        <!-- end approver -->
+                        <div class="form-group m-form__group row">
+                            <label for="example-text-input" class="col-2 col-form-label">Remarks *
+                                <!-- <span *ngIf="apprRemark">*</span> -->
+                            </label>
+                            <div class="col-10">
+                                <textarea formControlName="advPosRemark" id="advertise_remarks" class="form-control m-input m-input--air m-input--pill"
+                                    required rows="8"></textarea>
+                            </div>
+                            <input type="hidden" formControlName="advPosIdx2" required value="{{data.profile && data.profile[0]?.position_id}}">
+                        </div>
+                        <div class="form-group m-form__group row" *ngIf="!env_prod">
+                            <label for="example-text-input" class="col-2 col-form-label">Advertise As *</label>
+                            <div class="col-10">
+                                <select name="selectedJobAdsType" id="selectedJobAdsType" #selectedJobAdsType  class="form-control m-input" formControlName="advPosJobType">
+                                    <!-- <option [value]="opt" *ngFor="let opt of optAppList3">
+                                        {{opt}}
+                                    </option> -->
+                                    <option [value]=0 selected>External (Career@TM)</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="m-form__seperator m-form__seperator--dashed"></div>
+                    <div class="m-form__section m-form__section--last">
+                        <div class="form-group m-form__group row">
+                            <label for="example-text-input" class="col-2 col-form-label">Adv Period*</label>
+                            <div class="col-8">
+                                <!-- START DATE RANGE PICKER -->
+                                <div class='input-group' id='m_daterangepicker_2' (click)="disableSubmit()" required>
+                                    <input type='text' id="advPosDtRange" formControlName="advPosDtRange" class="form-control m-input"
+                                        readonly />
+                                    <!-- placeholder="Select date range" -->
+                                    <div class="input-group-append">
+                                        <span class="input-group-text">
+                                            <i class="la la-calendar-check-o"></i>
+                                        </span>
+                                    </div>
+                                </div>
+                                <!-- END DATE RANGE PICKER -->
+
+                                <div *ngIf="false" class="input-daterange input-group" id="advertise_daterangepicker">
+                                    <input type="text" class="form-control m-input m-input--air m-input--pill"
+                                        formControlName="advPosStartDt" name="start" id="advPosStartDt" (click)="disableSubmit()" />
+                                    <div class="input-group-append">
+                                        <span class="input-group-text">
+                                            <i class="la la-ellipsis-h"></i>
+                                        </span>
+                                    </div>
+                                    <input type="text" class="form-control" formControlName="advPosEndDt" name="end" id="advPosEndDt" />
+                                    <input type="hidden" formControlName="advPosStartDt2" name="start2" id="advPosStartDt2" />
+                                    <input type="hidden" formControlName="advPosEndDt2" name="end2" id="advPosEndDt2" />
+                                    <p class="error_message" style="color:red" *ngIf="(advPosForm.get('advPosStartDt').hasError('required') && (advPosForm.get('advPosStartDt').dirty)||advPosForm.get('advPosEndDt').hasError('required') && (advPosForm.get('advPosEndDt').dirty))">Please
+                                        define advertisement period.</p>
+                                    <p class="error_message" style="color:red" *ngIf="errAdvPeriod">Please define
+                                        advertisement period.</p>
+                                </div>
+
+                                <span class="m-form__help">
+                                    {{msgAdvPeriod}}
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+
+                    <button id="sendForAdvertisement2" style="visibility: hidden" (click)="onadvPosFormSubmit()"
+                        [disabled]="disableSubmitAdv||!advPosForm.valid" type="button" class="btn btn-primary" onclick="$('.modal').modal('hide')">
+                        Confirm 2
+                    </button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                        Close
+                    </button>
+                    <!-- type="submit" onclick="$('.modal').modal('hide')" -->
+                    <button id="sendForAdvertisement" [disabled]="disableSubmitAdv||!advPosForm.valid" type="button"
+                        class="btn btn-primary">
+                        Confirm
+                    </button>
+
+                </div>
+            </div>
+        </form>
+
+    </div>
+</div>
+<!--end::advertise modal-->
+<style>
+    .m-accordian__item-mode-title {
+        padding-left: 1.5rem;
+    }
+
+    .m-button-advert {
+        float: right;
+        padding-bottom: 1rem;
+    }
+
+    .m-repeater-edit-delete {
+        margin-top: 1.8rem;
+    }
+
+    .m-repeater-edit-delete .btn {
+        width: 6.2rem;
+    }
+
+    .m-dropzone {
+        min-height: 160px;
+        border-radius: 18px;
+        box-shadow: 0 3px 20px 0 rgba(113, 106, 202, .11);
+    }
+
+    .dropzone .dz-preview {
+        margin: 0;
+    }
+
+    .dropzone .dz-preview.dz-file-preview .dz-image,
+    .m-dropzone .dz-preview .dz-image {
+        border-radius: 0;
+    }
+
+    [hidden] {
+        display: none !important;
+    }
+</style>

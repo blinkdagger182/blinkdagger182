@@ -1,0 +1,26 @@
+.idp-bg {
+    background-image: url(../../../../../../assets/img/user/sea-portal/bg-idp.png) !important; 
+    position: relative;
+    height: 20rem; 
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.ipt-border {
+    border: 1px solid #0FC2D0;
+}
+
+.btn-form {
+    color: #fff;
+    background-color: #0FC2D0 !important;
+    border-color: #0FC2D0 !important;
+}
+
+.btn-form:disabled {
+    opacity: 0.65 !important;
+    cursor: not-allowed !important;
+}
+
+.btn-cancel {
+    color: #000;
+}

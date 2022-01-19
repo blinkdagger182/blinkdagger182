@@ -1,0 +1,23 @@
+
+.star-icon2:hover{
+    cursor: pointer;
+}
+.star-icon{
+    font-size: 18px !important;
+    /* padding-left: 18px !important;
+    padding-right: 18px !important; */
+}
+.star-icon2{
+    font-size: 3rem !important;
+    padding-left: 18px !important;
+    padding-right: 18px !important;
+    
+}
+.star_color {
+    color: #ffcc00 !important;
+}
+.btn:disabled {
+    /* color: black; */
+    /* opacity: 100%; */
+    cursor: not-allowed !important;
+}

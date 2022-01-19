@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="22" height="22" viewBox="0 0 22 22">
+  <defs>
+    <clipPath id="clip-Custom_Size_4">
+      <rect width="22" height="22"/>
+    </clipPath>
+  </defs>
+  <g id="Custom_Size_4" data-name="Custom Size – 4" clip-path="url(#clip-Custom_Size_4)">
+    <rect width="22" height="22" fill="#fff"/>
+    <path id="Path_5967" data-name="Path 5967" d="M11,0A11,11,0,1,1,0,11,11,11,0,0,1,11,0Z" fill="#fc0202"/>
+    <text id="_" data-name="+" transform="translate(4.868 10.561) rotate(45)" fill="#fff" font-size="16" font-family="HelveticaNeue-Bold, Helvetica Neue" font-weight="700"><tspan x="0" y="0">+</tspan></text>
+  </g>
+</svg>

@@ -1,0 +1,1049 @@
+<div class="m-subheader">
+    <div class="d-flex align-items-center">
+        <div class="mr-auto">
+            <h3 class="m-subheader__title m-subheader__title--separator">
+                IDP Tracking
+            </h3>
+            <ul class="m-subheader__breadcrumbs m-nav m-nav--inline">
+                <li class="m-nav__item m-nav__item--home">
+                    <a routerLink="/admin/index" class="m-nav__link m-nav__link--icon">
+                        <i class="m-nav__link-icon la la-home"></i>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div class="m-content">
+    <div class="row">
+
+        <!-- <div class="col-lg-12 centred my-auto">
+            <ng-template #alertError></ng-template>
+        </div> -->
+
+        <div class="col-lg-12 centred my-auto" *ngIf="loading">
+            <div class="m-section__content">
+                <div class="m-demo" data-code-preview="true" data-code-html="true" data-code-js="false">
+                    <div class="m-demo__preview">
+                        <div class="m-stack m-stack--ver m-stack--general m-stack--demo">
+
+                            <div class="m-stack__item m-stack__item--center m-stack__item--middle">
+                                <span>
+                                    Loading data. Please wait...
+                                </span>
+                                <span>
+                                    <div class="m-loader m-loader--lg m-loader--success"
+                                        style="width: 30px; display: inline-block;"></div>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-12" *ngIf="!loading">
+            <div class="m-portlet m-portlet--rounded">
+                <div class="m-portlet__head m--bg-focus" style="background: #FF5A00!important">
+                    <div class="m-portlet__head-caption">
+                        <div class="m-portlet__head-title">
+                            <h3 class="m-portlet__head-text  m--font-inverse-primary">
+                                IDP
+                                <small>
+                                    <!--portlet sub title-->
+                                </small>
+                            </h3>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="m-portlet__body">
+                    <div class="m-section container" style="max-width: 100% !important;">
+
+                        <form [formGroup]="filterForm" autocomplete="off">
+                            <div class="m-accordion m-accordion--default" id="m_accordion_1" role="tablist">
+                                <div class="m-accordion__item">
+                                    <div class="m-accordion__item-head collapsed" role="tab"
+                                        id="m_accordion_1_item_1_head" data-toggle="collapse"
+                                        href="#m_accordion_1_item_1_body" aria-expanded="    false">
+                                        <span class="m-accordion__item-icon">
+                                            <i class="fa fa-filter" style="font-size:25px;"></i>
+                                        </span>
+                                        <span class="m-accordion__item-title" style="font-size:1rem;">
+                                            Filter By
+                                        </span>
+                                        <span class="m-accordion__item-mode"></span>
+                                    </div>
+                                    <div class="m-accordion__item-body collapse show" id="m_accordion_1_item_1_body">
+                                        <div class="m-accordion__item-content">
+
+                                            <div class="row">
+                                                <div class="col-md-4">
+                                                    <div class="row">
+                                                        <div class="col-md-4">
+                                                            <label style="margin-top:9px;">IDP Year: </label>
+                                                        </div>
+                                                        <div class="col-md-8">
+                                                            <select name="idp_year" id="idp_year"
+                                                                class="form-control m-input" formControlName="idp_year">                                         
+                                                                <option [value]="item.idp_year"
+                                                                    *ngFor="let item of batchInfo" >{{item.idp_year}} 
+                                                                </option>            
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div class="row">
+                                                        <div class="col-md-4">
+                                                            <label style="margin-top:9px;">Status: </label>
+                                                        </div>
+                                                        <div class="col-md-8">
+                                                            <select name="status" id="status"
+                                                                class="form-control m-input" formControlName="status">
+                                                                <option value="">All</option>
+                                                                <option [value]="item.id"
+                                                                    *ngFor="let item of statusInfo">{{item.status}}
+                                                                </option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+
+                                            <div class="row mt-3">
+                                                <div class="col-md-4">
+                                                    <div class="row">
+                                                        <div class="col-md-4">
+                                                            <label style="margin-top:9px;">Persno: </label>
+                                                        </div>
+                                                        <div class="col-md-8">
+                                                            <input [value]="" id="persno" #pos_id
+                                                                class="form-control form-control- m-input" type="search"
+                                                                placeholder="Persno" formControlName="persno">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div class="row">
+                                                        <div class="col-md-4">
+                                                            <label style="margin-top:9px;">Rept To: </label>
+                                                        </div>
+                                                        <div class="col-md-8">
+                                                            <input [value]="" id="reptto" #pos_id
+                                                                class="form-control form-control- m-input" type="search"
+                                                                placeholder="Rept To" formControlName="reptto">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                
+                                            </div>
+                                            
+                                            <div class="row mt-3">
+                                                <div class="col-md-4">
+                                                    <div class="row">
+                                                        <div class="col-md-4">
+                                                            <label style="margin-top:9px;">Employment Status: </label>
+                                                        </div>
+                                                        <div class="col-md-8">
+                                                            <select name="empstatus" id="empstatus"
+                                                                class="form-control m-input" formControlName="empstatus">                                       
+                                                                <option [value]="0">Active</option>            
+                                                                <option [value]="1">Inactive</option>            
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div class="row">
+                                                        <div class="col-md-4">
+                                                            <label style="margin-top:9px;">Lob: </label>
+                                                        </div>
+                                                        <div class="col-md-8">
+                                                            <select name="lob" id="lob"
+                                                                class="form-control m-input" formControlName="lob">
+                                                                <option *ngIf="showAllLob" value="">All</option>
+                                                                <option [value]="item.lob"
+                                                                    *ngFor="let item of lobInfo">{{item.lob_desc}}
+                                                                </option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4 text-right">
+                                                    <button
+                                                        class="btn m-btn m-btn--gradient-from-primary m-btn--gradient-to-info"
+                                                        type="button" (click)="submitFilter(1)"
+                                                        style="background: #FF5A00; background-color: #FF5A00; border-color: #FF5A00;">Submit</button>
+                                                    <button
+                                                        class="btn m-btn m-btn--gradient-from-danger m-btn--gradient-to-warning ml-3"
+                                                        type="button" (click)="submitFilter(2)"
+                                                        style="background: darkgrey; background-color: darkgrey; border-color: darkgrey;">Reset</button>
+                                                </div>
+
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <!--end::Item-->
+                            </div>
+                        </form>
+
+                        <!-- :start no data -->
+                        <div class="col-lg-12 centred my-auto" *ngIf="!loading&&pagedItems.length<1">
+                            <div class="m-demo__preview" style="padding-top:20px">
+                                <div class="m-stack m-stack--ver m-stack--general m-stack--demo">
+                                    <div class="m-stack__item m-stack__item--center m-stack__item--middle">
+                                        <span>
+                                            <br><br>
+                                            {{descEmptyData}}
+                                            <br><br><br>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- :end no data -->
+
+                        <div class="table-responsive" *ngIf="!loading&&pagedItems.length>0">
+
+                            <table class="table table-striped  table-hover">
+                                <thead class="thead-inverse">
+                                    <tr>
+                                        <th><span title=" ID">ID</span></th>
+                                        <th>Name</th>
+                                        <th>IDP Year</th>
+                                        <th>Start Date</th>
+                                        <th>Due Date</th>
+                                        <th>Action/Percentage</th>
+                                        <th>Status</th>
+                                        <th></th>
+                                    </tr>
+                                    <tr>
+                                        <th>
+                                            <input class="form-control form-control-sm" name="id" [(ngModel)]="id">
+                                        </th>
+                                        <th>
+                                            <input class="form-control form-control-sm" name="name" [(ngModel)]="name">
+                                        </th>
+                                        <th>
+                                            <input class="form-control form-control-sm" name="idp_year"
+                                                [(ngModel)]="idp_year">
+                                        </th>
+                                        <th>
+                                            <input style="visibility:hidden" class="form-control form-control-sm"
+                                                name="idp_start" [(ngModel)]="idp_start">
+                                        </th>
+                                        <th>
+                                            <input style="visibility:hidden" class="form-control form-control-sm"
+                                                name="idp_due" [(ngModel)]="idp_due">
+                                        </th>
+                                        <th>
+                                            <input style="visibility:hidden" class="form-control form-control-sm"
+                                                name="action/percentage" >
+                                        </th>
+                                        <th>
+                                            <input class="form-control form-control-sm" name="status"
+                                                [(ngModel)]="status">
+                                        </th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+
+                                <tbody>
+                                    <!-- if all, data2 -->
+                                    <tr
+                                        *ngFor="let item of pagedItems | filter : id : name: status : idp_year ; let i = index">
+                                        <td>
+                                            <span>{{item.id}}</span>
+                                            <!-- <ng-template #empIdx>-</ng-template> -->
+                                        </td>
+                                        <td>
+                                            <span>{{item.name}}</span>
+                                            <!-- <ng-template #empName>-</ng-template> -->
+                                        </td>
+
+                                        <td>
+                                            <span>{{item.idp_year}}</span>
+                                            <!-- <ng-template #noidp_year>-</ng-template> -->
+                                        </td>
+                                        <td>
+                                            <span>{{item.idp_start | date:'dd MMM yyyy'}}</span>
+                                            <!-- <ng-template #empStDate>-</ng-template> -->
+                                        </td>
+                                        <td>
+                                            <span>{{item.idp_due | date:'dd MMM yyyy'}}</span>
+                                            <!-- <ng-template #empEdDate>-</ng-template> -->
+                                        </td>
+                                        <td *ngIf="item.action_count > 0">
+                                                <span style=" display: inline-block;" >{{((item.action_complete/item.action_count)*100).toFixed()}}%&nbsp;({{item.action_complete}}/{{item.action_count}}&nbsp;Complete)</span>
+                                            </td>
+                                        <td *ngIf="item.action_count == 0">
+                                                <span >0% (0/0 Complete)</span>
+                                        </td>
+                                        <td>
+                                            <span>{{item.text_en}}</span>
+                                            <!-- <ng-template #noStatus>-</ng-template> -->
+                                        </td>
+                                        <td>
+                                            <span class="btn-group" title="Revert IDP Details " *ngIf="item.text_en === 'Supervisor Acknowledgement' || item.text_en === 'IDP Action Plan In Progress' || item.text_en === 'IDP Completion'">
+                                                <a href="javascript:;" class="btn btn-xs" data-toggle="modal"
+                                                data-target="#modalReverting2" (click)="openidpDetails(item)" >
+                                                    <!-- openidpDetails(item) -->
+                                                    <i class="fa fa-reply" aria-hidden="true"></i>
+                                                </a>
+                                                
+                                            </span>
+                                            <span class="btn-group" title="IDP Details">
+                                                
+                                                <a href="javascript:;" class="btn btn-xs" data-toggle="modal"
+                                                    data-target="#idp_detail" (click)="openidpDetails(item)">
+                                                    <!-- openidpDetails(item) -->
+                                                    <i class="flaticon-information"></i>
+                                                </a>
+                                            </span>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-12">
+                                <nav aria-label="Page navigation example">
+                                    <ul *ngIf="pager.pages && pager.pages.length"
+                                        class="pagination justify-content-end">
+                                        <li class="page-item" [ngClass]="{disabled:pager.currentPage === 1}">
+                                            <button (click)="setPage(1)" class="page-link" aria-label="Previous">
+                                                <span aria-hidden="true">&laquo;</span>
+                                                <span class="sr-only">First</span>
+                                            </button>
+                                        </li>
+                                        <li class="page-item" [ngClass]="{disabled:pager.currentPage === 1}">
+                                            <button (click)="setPage(pager.currentPage - 1)" class="page-link"
+                                                aria-label="Previous">
+                                                <span aria-hidden="true">&lt;</span>
+                                                <span class="sr-only">Previous</span>
+                                            </button>
+                                        </li>
+                                        <li class="page-item" *ngFor="let page of pager.pages"
+                                            [ngClass]="{active:pager.currentPage === page}">
+                                            <button (click)="setPage(page)" class="page-link">{{page}}</button>
+                                        </li>
+                                        <li class="page-item"
+                                            [ngClass]="{disabled:pager.currentPage === pager.totalPages}">
+                                            <button (click)="setPage(pager.currentPage + 1)" class="page-link"
+                                                aria-label="Previous">
+                                                <span aria-hidden="true">&gt;</span>
+                                                <span class="sr-only">Next</span>
+                                            </button>
+                                        </li>
+                                        <li class="page-item"
+                                            [ngClass]="{disabled:pager.currentPage === pager.totalPages}">
+                                            <button (click)="setPage(pager.totalPages)" class="page-link"
+                                                aria-label="Next">
+                                                <span aria-hidden="true">&raquo;</span>
+                                                <span class="sr-only">Last</span>
+                                            </button>
+                                        </li>
+                                    </ul>
+                                </nav>
+                            </div>
+                        </div>
+
+                        <div class="row" *ngIf="downloadCSV&&pagedItems.length>0">
+                            <div class="col-12" style="text-align: right; margin-top:20px">
+                                <div class="m-demo__preview m-demo__preview--btn">
+                                    <button href="#" class="btn btn-primary m-btn m-btn--icon" (click)="download()" [disabled]="downloading" >
+                                        <span>
+                                            <i class="la la-download"></i>
+                                            <span>Download All</span>
+                                        </span>
+                                    </button>
+                                    <button href="#" class="btn btn-primary m-btn m-btn--icon" (click)="download2()" [disabled]="downloading2" >
+                                        <span>
+                                            <i class="la la-download"></i>
+                                            <span>IDP Not Started</span>
+                                        </span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- modal for revert button at search page -->
+    <div class="modal" id="modalReverting2">
+        <div class="modal-dialog">
+          <div class="modal-content">
+          
+            <!-- Modal Header -->
+            <div class="modal-header">
+              <h4 class="modal-title">Revert ?</h4>
+              <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            
+            <!-- Modal body -->
+            <div class="modal-body">
+                <p *ngIf="myidp_text_en === 'Supervisor Acknowledgement'">Are you sure to revert the IDP form of {{myidp_ownerName}} back to IDP Setting ?</p>
+                <p *ngIf="myidp_text_en === 'IDP Action Plan In Progress'">Are you sure to revert the IDP form of {{myidp_ownerName}} back to Supervisor Acknowledgement ?</p>
+                <p *ngIf="myidp_text_en === 'IDP Completion'">Are you sure to revert the IDP form of {{myidp_ownerName}} back to IDP Action Plan In Progress ?</p>
+            </div>
+            
+            <!-- Modal footer -->
+            <div class="modal-footer">
+                <button type="button" class="btn add-modal-btn" style="margin: 0rem 1rem;" 
+                [ngClass]="{'m-loader m-loader--right m-loader--light': reverting}"
+                (click)="supRevert()">
+                Yes
+                </button>
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                <button type="button" [hidden]="true" id="closeReverting" class="btn btn-danger" data-dismiss="modal">Close</button>
+            </div>
+            
+          </div>
+        </div>
+      </div>
+
+    <!--begin::Modal IDP INFO -->
+    <div class="modal fade" id="idp_detail" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true" style="display: none;" data-keyboard="false" data-backdrop="static" >
+        <div class="modal-dialog modal-lg modal-dialog-scrollable" role="document" *ngIf="idpDetails">
+            <div class="modal-content">
+                <div class="modal-header">
+
+                    <h5 class="m-subheader__title m-subheader__title--separator">
+                        {{myidp_idp_name}}
+                    </h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">
+                            &times;
+                        </span>
+                    </button>
+                </div>
+
+               
+                <!-- start modal body -->
+                <div class="modal-body height-modal-idp">
+                    <div class="row">
+                        <label class="col-md-2 col-form-label label-title" style="font-size: 1.0rem;">Created by</label>
+                        <label class="col-md-10 col-form-label label-data" style="font-size: 1.0rem;">:
+                            {{myidp_ownerName}}</label>
+                        <br />
+                        <label class="col-md-2 col-form-label label-title" style="font-size: 1.0rem;">Report To</label>
+                        <label class="col-md-10 col-form-label label-data" style="font-size: 1.0rem;">:
+                            <span *ngIf="myidp_reptToName; else noReptto">
+                                {{myidp_reptToName}} </span>
+                            <ng-template #noReptto>-</ng-template>
+                            <span >
+                                <img src="../../../../../../assets/img/rerouteicon 37x42.png" style="cursor: pointer" alt="" height="20" width="25" aria-hidden="true"
+                                 data-toggle="tooltip" data-placement="bottom" title="Route to New Supervisor" data-toggle="modal" data-target="#routeNewSp" >
+                                 <!-- (click)="editSp(item)" > -->
+                                 <!-- <button [hidden]="true" id="route-to-new-Sp" data-toggle="modal" data-target="#routeNewSp">x</button> -->
+                             </span> 
+                        </label>
+                        
+                        <br />
+                        <label class="col-md-2 col-form-label label-title" style="font-size: 1.0rem;">Status</label>
+                        <label class="col-md-10 col-form-label label-data" style="font-size: 1.0rem;">:
+                            {{myidp_text_en}}
+                            <button type="button" *ngIf="myIDPStatus > 1"
+                            class="btn btn-danger" style="margin: 0.2rem 1rem; height: 1.5rem; width: 6rem; padding: 0rem "
+                            data-toggle="modal"  data-target="#modalReverting">
+                            Revert
+                        </button>
+                        </label>
+                            
+                            <br />
+                        <label class="col-md-2 col-form-label label-title" style="font-size: 1.0rem;"></label>
+                        
+                        <label class="col-md-10 col-form-label label-data" style="font-size: 1.0rem;">
+                            <button type="button" class="btn m-btn--pill btn-outline-success" height="10px;"  (click)="onClickDownloadBtn()" [disabled]="downloading3">
+                                <span class="fa fa-download"> IDP Form</span>
+                            </button>
+                            
+                        </label>            
+                    </div>
+                    <!-- <button [hidden]="true" id="myModal" data-toggle="modal" data-target="#modalReverting"></button> -->
+                    
+
+                      <!-- Edit Reporting line -->
+                      
+
+                      <!-- Success after route -->
+                    <div class="modal fade" id="successRoute" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLongTitle">Reroute Supervisor</h5>
+                                </div>
+                                <div class="modal-body">				
+                                    <b>{{nameSVRoute}}</b> has been assigned as <b>{{routeStaffName}}'s</b> new Supervisor
+                                </div>
+                                <div class="modal-footer">
+                                    <!-- <button type="button" class="btn btn-secondary" data-dismiss="modal" *ngIf="!showTC" (click)="submitFilter(0, 'hcbd')">Close</button>
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal" *ngIf="showTC" (click)="submitFilter(0, 'tcm')">Close</button> -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="m-portlet m-portlet--creative m-portlet--bordered-semi idp_portlet">
+                        <div class="m-portlet__head">
+                            <div class="m-portlet__head-caption">
+                                <h2 class="m-portlet__head-label  idp_head-label">
+                                    <span>
+                                        Career Aspiration&nbsp;&nbsp;
+                                        <a class="btn btn-info m-btn m-btn--icon btn-sm m-btn--icon-only  m-btn--pill info-btn"
+                                            title data-toggle="m-popover" data-original-title="Popover title"
+                                            data-content="And here's some amazing content. It's very engaging. Right?">
+                                            <i class="la la-info"></i>
+                                        </a>
+                                    </span>
+                                </h2>
+                            </div>
+                        </div>
+                        <div class="m-portlet__body idp_portlet_body_moveup">
+                            <div class="m-portlet__head portlet-item-head">
+                                <div class="m-portlet__head-caption">
+                                    <div class="m-portlet__head-title">
+                                        <span class="m-portlet__head-icon m--hide">
+                                            <i class="flaticon-statistics"></i>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="m-portlet__body portlet-item-body">
+                                <div class="m-list-search" style="margin-top: 2rem;"
+                                    *ngIf="myidp_aspiration; else noAspiration">
+                                    {{myidp_aspiration}}
+                                </div>
+                                <ng-template #noAspiration>
+                                    <div style="margin-top: 2rem; text-align: left;">
+                                        No aspiration listed.</div>
+                                </ng-template>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="m-portlet m-portlet--creative m-portlet--bordered-semi idp_portlet">
+                                <div class="m-portlet__head">
+                                    <div class="m-portlet__head-caption">
+                                        <h2 class="m-portlet__head-label  idp_head-label">
+                                            <span>
+                                                Strength (Min 3 - Max 5)
+                                                &nbsp;&nbsp;
+                                                <a class="btn btn-info m-btn m-btn--icon btn-sm m-btn--icon-only  m-btn--pill info-btn"
+                                                    title data-toggle="m-popover" data-original-title="Popover title"
+                                                    data-content="And here's some amazing content. It's very engaging. Right?">
+                                                    <i class="la la-info"></i>
+                                                </a>
+                                            </span>
+                                        </h2>
+                                    </div>
+                                </div>
+                                <div class="m-portlet__body idp_portlet_body_moveup">
+                                    <div class="m-portlet__head portlet-item-head">
+                                        <div class="m-portlet__head-caption">
+                                            <div class="m-portlet__head-title">
+                                                <span class="m-portlet__head-icon m--hide">
+                                                    <i class="flaticon-statistics"></i>
+                                                </span>
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                    <div class="m-portlet__body portlet-item-body">
+                                        <div class="m-list-search" style="margin-top: 2rem;"
+                                            *ngIf="idpStrengths?.length > 0; else noStrength">
+
+                                            <div class="m-list-search__results">
+                                                <p class="m-list-search__result-item"
+                                                    *ngFor="let stren of idpStrengths; let i=index">
+                                                    <span class="m-list-search__result-item-icon"
+                                                        style="vertical-align:top;">
+                                                        {{i+1}}.
+                                                    </span>
+                                                    <span class="m-list-search__result-item-text" style="color: black;">
+                                                        {{stren.strength}}
+                                                    </span>
+                                                </p>
+                                            </div>
+
+                                        </div>
+                                        <ng-template #noStrength>
+                                            <div style="margin-top: 2rem; text-align: left;">
+                                                No strengths listed.</div>
+                                        </ng-template>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-6">
+                            <div class="m-portlet m-portlet--creative m-portlet--bordered-semi idp_portlet">
+                                <div class="m-portlet__head">
+                                    <div class="m-portlet__head-caption">
+                                        <h2 class="m-portlet__head-label  idp_head-label">
+                                            <span>
+                                                Area of Development (Min 1 - Max 2)
+                                                &nbsp;&nbsp;
+                                                <a class="btn btn-info m-btn m-btn--icon btn-sm m-btn--icon-only  m-btn--pill info-btn"
+                                                    title data-toggle="m-popover" data-original-title="Popover title"
+                                                    data-content="And here's some amazing content. It's very engaging. Right?">
+                                                    <i class="la la-info"></i>
+                                                </a>
+                                            </span>
+                                        </h2>
+                                    </div>
+                                </div>
+                                <div class="m-portlet__body idp_portlet_body_moveup">
+
+                                    <div class="m-portlet__head portlet-item-head">
+                                        <div class="m-portlet__head-caption">
+                                            <div class="m-portlet__head-title">
+                                                <span class="m-portlet__head-icon m--hide">
+                                                    <i class="flaticon-statistics"></i>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="m-portlet__body portlet-item-body">
+                                        <div class="m-list-search" style="margin-top: 2rem;"
+                                            *ngIf="idpArea?.length > 0; else noAreaDev">
+                                            <div class="m-list-search__results">
+                                                <p class="m-list-search__result-item"
+                                                    *ngFor="let area of idpArea; let i=index">
+                                                    <span class="m-list-search__result-item-icon"
+                                                        style="vertical-align:top;">
+                                                        {{i+1}}.
+                                                    </span>
+                                                    <span class="m-list-search__result-item-text" style="color: black;">
+                                                        {{area.descr}}
+                                                    </span>
+                                                </p>
+                                            </div>
+                                        </div>
+                                        <ng-template #noAreaDev>
+                                            <div style="margin-top: 2rem; text-align: left;">
+                                                No area of development listed.</div>
+                                        </ng-template>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="m-portlet m-portlet--creative m-portlet--bordered-semi idp_portlet">
+                                <div class="m-portlet__head">
+                                    <div class="m-portlet__head-caption">
+                                        <h2 class="m-portlet__head-label  idp_head-label">
+                                            <span>
+                                                Action Plan (3 Required)
+                                                &nbsp;&nbsp;
+                                                <a class="btn btn-info m-btn m-btn--icon btn-sm m-btn--icon-only  m-btn--pill info-btn"
+                                                    title data-toggle="m-popover" data-original-title="Popover title"
+                                                    data-content="And here's some amazing content. It's very engaging. Right?">
+                                                    <i class="la la-info"></i>
+                                                </a>
+                                            </span>
+                                        </h2>
+                                    </div>
+                                </div>
+                                <div class="m-portlet__body idp_portlet_body_moveup">
+                                    <div class="m-portlet__head portlet-item-head">
+                                        <div class="m-portlet__head-caption">
+                                            <div class="m-portlet__head-title">
+                                                <span class="m-portlet__head-icon m--hide">
+                                                    <i class="flaticon-statistics"></i>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="m-portlet__body portlet-item-body">
+                                        <div class="m-list-search" style="margin-top: 2rem;"
+                                            *ngIf="idpActionPlans?.length>0; else noActionPlans">
+
+
+                                            <div class="m-list-search" style="margin-top: 2rem;"
+                                                *ngFor="let plan of idpActionPlans; let i = index">
+
+                                                <div class="row">
+                                                    <div class="col-md-1">
+                                                        <label class="col-md-12 col-form-label label-data"
+                                                            style="font-size: 1.0rem;font-weight: normal;">
+                                                            {{i+1}}.</label>
+                                                    </div>
+                                                    <div class="col-md-11">
+                                                        <label class="col-md-12 col-form-label label-data"
+                                                            style="font-size: 1.0rem;font-weight: lighter;">
+                                                            Description :
+                                                            <span *ngIf="plan.descr; else noPlandesc"
+                                                                style="font-weight: bold;">
+                                                                {{plan.descr}}</span>
+                                                            <ng-template #noPlandesc>-</ng-template>
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-md-1">&nbsp;</div>
+                                                    <div class="col-md-4">
+                                                        <label class="col-md-12 col-form-label label-data"
+                                                            style="font-size: 1.0rem;font-weight: lighter;">
+                                                            Start Date :
+                                                            <span *ngIf="plan.start; else noPlanStart"
+                                                                style="font-weight: bold;">
+                                                                {{plan.start| date:'dd MMM yyyy'}}</span>
+                                                            <ng-template #noPlanStart>-</ng-template>
+                                                        </label>
+                                                    </div>
+                                                    <div class="col-md-7">
+                                                        <label class="col-md-12 col-form-label label-data"
+                                                            style="font-size: 1.0rem;font-weight:lighter;">
+                                                            Due Date :
+                                                            <span *ngIf="plan.due; else noPlanDue"
+                                                                style="font-weight: bold;">
+                                                                {{plan.due| date:'dd MMM yyyy'}}</span>
+                                                            <ng-template #noPlanDue>-</ng-template>
+                                                        </label>
+                                                    </div>
+
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-md-1"></div>
+                                                    <div class="col-md-4">
+                                                        <label class="col-md-12 col-form-label label-data"
+                                                            style="font-size: 1.0rem;font-weight: lighter;">
+                                                            Competency :
+                                                            <span *ngIf="plan.competency; else noPlanCompe"
+                                                                style="font-weight: bold;">
+                                                                {{plan.competency}}</span>
+                                                            <ng-template #noPlanCompe>-</ng-template>
+                                                        </label>
+                                                    </div>
+                                                    <div class="col-md-7">
+                                                        <label class="col-md-12 col-form-label label-data"
+                                                            style="font-size: 1.0rem;font-weight: lighter;">
+                                                            How :
+                                                            <span *ngIf="plan.how_en; else noPlanhow"
+                                                                style="font-weight: bold;">
+                                                                {{plan.how_en}}</span>
+                                                            <ng-template #noPlanhow>-</ng-template>
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-md-1"></div>
+                                                    <div class="col-md-11">
+                                                        <label class="col-md-12 col-form-label label-data"
+                                                            style="font-size: 1.0rem;font-weight: lighter;">
+                                                            Training Details :
+                                                            <span *ngIf="plan.training_details; else noPlanTraining"
+                                                                style="font-weight: bold;">
+                                                                {{plan.training_details}}</span>
+                                                            <ng-template #noPlanTraining>-</ng-template>
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-md-1"></div>
+                                                    <div class="col-md-11">
+                                                        <label class="col-md-12 col-form-label label-data"
+                                                            style="font-size: 1.0rem;font-weight: lighter;">
+                                                            Mentor Name :
+                                                            <span *ngIf="plan.mentor_name; else noPlanMentor"
+                                                                style="font-weight: bold;">
+                                                                {{plan.mentor_name}}</span>
+                                                            <ng-template #noPlanMentor>-</ng-template>
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-md-1"></div>
+                                                    <div class="col-md-11">
+                                                        <label class="col-md-12 col-form-label label-data"
+                                                            style="font-size: 1.0rem;font-weight: lighter;">
+                                                            Status :
+                                                            <span *ngIf="plan.action_status; else noPlanActStatus"
+                                                                style="font-weight: bold;">
+                                                                {{plan.action_status}}</span>
+                                                            <ng-template #noPlanActStatus>-</ng-template>
+                                                        </label>
+                                                    </div>
+                                                </div>
+
+
+
+
+                                            </div>
+
+                                        </div>
+                                        <ng-template #noActionPlans>
+                                            <div style="margin-top: 2rem; text-align: left;">
+                                                No action plans listed.</div>
+                                        </ng-template>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row" *ngIf="myidp_mobility === 1">
+                        <div class="col-lg-12">
+                            <div class="m-portlet m-portlet--creative m-portlet--bordered-semi idp_portlet">
+                                <div class="m-portlet__head">
+                                    <div class="m-portlet__head-caption">
+                                        <h2 class="m-portlet__head-label  idp_head-label">
+                                            <span>
+                                                Mobility Assessment&nbsp;&nbsp;
+                                                <a class="btn btn-info m-btn m-btn--icon btn-sm m-btn--icon-only  m-btn--pill info-btn"
+                                                    title data-toggle="m-popover" data-original-title="Popover title"
+                                                    data-content="And here's some amazing content. It's very engaging. Right?">
+                                                    <i class="la la-info"></i>
+                                                </a>
+                                            </span>
+                                        </h2>
+                                    </div>
+                                </div>
+                                <div class="m-portlet__body idp_portlet_body_moveup">
+                                    <div class="m-portlet__head portlet-item-head">
+                                        <div class="m-portlet__head-caption">
+                                            <div class="m-portlet__head-title">
+                                                <span class="m-portlet__head-icon m--hide">
+                                                    <i class="flaticon-statistics"></i>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="m-portlet__body portlet-item-body">
+                                        <div class="m-list-search" style="margin-top: 2rem;">
+                                            <div class="m-list-search" style="margin-top: 2rem;"
+                                                *ngIf="myidp_mobility === 1 && flexible === 1 && !mobilityErr">
+                                                <label class="col-lg-12 col-form-label">
+                                                    {{mobilityQFlex}}
+                                                </label>
+                                                <div class="col-lg-12" style="margin-left: 30px;font-weight: bold;">
+                                                    <span *ngIf="flexible === 1">Yes</span>
+                                                </div>
+                                                <label class="col-lg-12 col-form-label">
+                                                    {{mobilityQLoc}}
+                                                </label>
+                                                <div class="col-lg-12" style="margin-left: 30px;font-weight: bold;">
+                                                    <span *ngIf="location?.length > 0; else nolocation">
+                                                        {{location}}</span>
+                                                    <ng-template #nolocation>
+                                                        -
+                                                    </ng-template>
+                                                </div>
+                                                <label class="col-lg-12 col-form-label">
+                                                    {{mobilityQFunc}}
+                                                </label>
+                                                <div class="col-lg-12" style="margin-left: 30px;font-weight: bold;">
+                                                    <span *ngIf="funct?.length > 0; else nofunction">
+                                                        <input type="checkbox"
+                                                            [checked]="checkSelectedFunc('Technical')" value="Technical"
+                                                            [disabled]="1">Technical
+                                                        <input type="checkbox" [checked]="checkSelectedFunc('Sales')"
+                                                            value="Sales" [disabled]="1"
+                                                            style="margin-left: 2rem;margin-right: 2px;">Sales
+                                                        <input type="checkbox" [checked]="checkSelectedFunc('Support')"
+                                                            value="Support" [disabled]="1"
+                                                            style="margin-left: 2rem;margin-right: 2px;">Support
+                                                    </span>
+
+                                                    <ng-template #nofunction>
+                                                        -
+                                                    </ng-template>
+                                                </div>
+                                            </div>
+                                            <div class="m-list-search" style="margin-top: 2rem;"
+                                                *ngIf="myidp_mobility === 1 && flexible === 0 && !mobilityErr">
+                                                <label class="col-lg-12 col-form-label">
+                                                    {{mobilityQFlex}}
+                                                </label>
+                                                <div class="col-lg-12" style="margin-left: 30px;font-weight: bold;">
+                                                    <span *ngIf="flexible === 0">No</span>
+                                                </div>
+                                                <label class="col-lg-12 col-form-label">
+                                                    {{mobilityQReason}}
+                                                </label>
+                                                <div class="col-lg-12" style="margin-left: 30px;font-weight: bold;">
+                                                    <span *ngIf="reason?.length > 0; else noreason">
+                                                        {{reason}}</span>
+                                                    <ng-template #noreason>
+                                                        -
+                                                    </ng-template>
+                                                </div>
+                                                <label class="col-lg-12 col-form-label">
+                                                    {{mobilityQDue}}
+                                                </label>
+                                                <div class="col-lg-12" style="margin-left: 30px;font-weight: bold;">
+                                                    <span *ngIf="due?.length > 0; else nodue">
+                                                        {{due | date: 'dd-MM-yyyy'}}</span>
+                                                    <ng-template #nodue>
+                                                        -
+                                                    </ng-template>
+                                                </div>
+                                            </div>
+                                            <div class="m-list-search" style="margin-top: 2rem;" *ngIf="mobilityErr">
+                                                <label class="col-lg-12 col-form-label">
+                                                    {{mobilityQFlex}}
+                                                </label>
+                                                <div class="col-lg-12" style="margin-left: 30px;font-weight: bold;">
+                                                    n/a
+                                                </div>
+
+                                            </div>
+
+                                        </div>
+
+                                        <!-- <ng-template #nomobil>
+                                            <div style="margin-top: 2rem; text-align: left;">
+                                                <label class="col-lg-12 col-form-label">
+                                                    Are you flexible to be mobile?
+                                                </label>
+                                                <div class="col-lg-12" style="margin-left: 30px;font-weight: bold;">
+                                                    n/a
+                                                </div>                            
+                                            </div>
+                                        </ng-template> -->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <!-- <div class="row"></div> -->
+
+                    <!-- <div class="row" style="margin-top: 20px;"> -->
+                        <div class="row" >
+                        <label class="col-md-2 col-form-label label-title" style="font-size: 1.0rem;">Date
+                            Submit</label>
+                        <label class="col-md-4 col-form-label label-data" style="font-size: 1.0rem;">:
+                            <span *ngIf="submit_on; else noSubmitDt">
+                                {{ submit_on | date:'dd MMM yyyy' }}</span>
+                            <ng-template #noSubmitDt>-</ng-template>
+                        </label>
+                        <br />
+                        <label class="col-md-2 col-form-label label-title" style="font-size: 1.0rem;">Date
+                            Approve</label>
+                        <label class="col-md-4 col-form-label label-data" style="font-size: 1.0rem;">:
+                            <span *ngIf="approve_on; else noApproveDt">
+                                {{ approve_on | date:'dd MMM yyyy' }}</span>
+                            <ng-template #noApproveDt>-</ng-template>
+                        </label>
+                        <br />
+                        <label class="col-md-2 col-form-label label-title" style="font-size: 1.0rem;">Date
+                            Completed</label>
+                        <label class="col-md-4 col-form-label label-data" style="font-size: 1.0rem;">:
+                            <span *ngIf="complete_on; else noCompleteDt">
+                                {{ complete_on | date:'dd MMM yyyy' }}</span>
+                            <ng-template #noCompleteDt>-</ng-template>
+                        </label>
+
+                        <br />
+                        <label class="col-md-2 col-form-label label-title" style="font-size: 1.0rem;">Date
+                            Review</label>
+                        <label class="col-md-4 col-form-label label-data" style="font-size: 1.0rem;">:
+                            <span *ngIf="review_on; else noReviewDt">
+                                {{ review_on | date:'dd MMM yyyy' }}</span>
+                            <ng-template #noReviewDt>-</ng-template>
+                        </label>
+                    </div>
+
+                    
+                    <!-- end modal body -->
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <!--end::Modal APPLICANT INFO -->
+    <!-- Begin Modal reverting -->
+    <div class="modal" id="modalReverting">
+        <div class="modal-dialog">
+          <div class="modal-content">
+          
+            <!-- Modal Header -->
+            <div class="modal-header">
+              <h4 class="modal-title">Revert ?</h4>
+              <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            
+            <!-- Modal body -->
+            <div class="modal-body">
+                <p *ngIf="myidp_text_en === 'Supervisor Acknowledgement'">Are you sure to revert the IDP form of {{myidp_ownerName}} back to IDP Setting ?</p>
+                <p *ngIf="myidp_text_en === 'IDP Action Plan In Progress'">Are you sure to revert the IDP form of {{myidp_ownerName}} back to Supervisor Acknowledgement ?</p>
+                <p *ngIf="myidp_text_en === 'IDP Completion'">Are you sure to revert the IDP form of {{myidp_ownerName}} back to IDP Action Plan In Progress ?</p>
+            </div>
+            
+            <!-- Modal footer -->
+            <div class="modal-footer">
+                <button type="button" class="btn add-modal-btn" style="margin: 0rem 1rem;" 
+                [ngClass]="{'m-loader m-loader--right m-loader--light': reverting}"
+                (click)="supRevert()">
+                Yes
+                </button>
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                <button type="button" [hidden]="true" id="closeReverting2" class="btn btn-danger" data-dismiss="modal">Close</button>
+            </div>
+            
+          </div>
+        </div>
+      </div>
+      <!-- Begin Modal reroute -->
+      <div class="modal" id="routeNewSp">
+        <div class="modal-dialog">
+          <div class="modal-content">
+          
+            <!-- Modal Header -->
+            <div class="modal-header">
+              <h4 class="modal-title">Route To New Supervisor</h4>
+              <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            
+            <!-- Modal body -->
+            <div class="modal-body">
+                <div class="form-group">
+                    <label style="margin-top:9px;">
+                        Search Name:*
+                    </label>
+                    <input type="text" autocomplete="off" class="form-control search-input" placeholder="Enter name" (keyup)="getSupvforRoute(clrSupv.value)" #clrSupv>
+                    <div autocomplete="off" >
+                        <select name="supervisor" id="supervisor" class="form-control m-input" *ngIf="getSupvRouteDataResults.length > 0 && selectRoute " multiple>
+                            
+                            <option *ngFor="let item of getSupvRouteDataResults" (click)="getRoute(item)" (click)="clrSupv.value=searchSVRoute">
+                                {{item.search}}</option>
+                           
+                        </select> 
+                    </div> 
+                </div>
+                </div>
+            
+            <!-- Modal footer -->
+            <div class="modal-footer">
+                <button type="button" class="btn m-btn m-btn--gradient-from-primary m-btn--gradient-to-info btn-orange" data-dismiss="modal" 
+                (click)="submitRoute()">Yes</button>
+                <button type="button" class="btn btn-danger" data-dismiss="modal" (click)="selectRoute=false" (click)="searchSVRoute=''"> No</button>
+                <!-- <button [hidden]="true" id="success-route" data-toggle="modal" data-target="#successRoute">x</button> -->
+            </div>
+            
+          </div>
+        </div>
+      </div>
+    

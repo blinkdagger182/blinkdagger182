@@ -1,0 +1,69 @@
+<!--component html goes here -->
+<!--- MAPS NE Dashboard --->
+<div class="m-portlet m-portlet--rounded">
+    <div class="m-portlet__head">
+        <div class="m-portlet__head-caption">
+            <div class="m-portlet__head-title">
+                <h3 class="m-portlet__head-text">
+                    Dashboard
+                </h3>
+            </div>
+        </div>
+    </div>
+
+    
+
+    <div class="m-portlet__body" *ngIf="!loading">
+        <div class="m-section container" style="max-width: 100% !important;">
+
+
+                <div class="m-accordion m-accordion--default" id="m_accordion_1" role="tablist">
+                    <div class="m-accordion__item">
+                        <div class="m-accordion__item-head collapsed" role="tab"
+                            id="m_accordion_1_item_1_head" data-toggle="collapse"
+                            href="#m_accordion_1_item_1_body" aria-expanded="false">
+                            <span class="m-accordion__item-icon">
+                                <i class="fa fa-filter" style="font-size:25px;"></i>
+                            </span>
+                            <span class="m-accordion__item-title" style="font-size:1rem;">
+                                Goal Setting
+                            </span>
+                            <span class="m-accordion__item-mode"></span>
+                        </div>
+                        <div class="m-accordion__item-body collapse show" id="m_accordion_1_item_1_body">
+                            <div class="m-accordion__item-content">
+
+                                <div class="row">
+                                        <ng-container *ngFor="let x of [].constructor(num), let i = index">
+                                        <div class="col-sm-3 pb-1">
+                                            <div class="m-portlet m-portlet--rounded mb-0 grid-enlarge">
+                                                <div class="m-portlet__body text-center responsive-grid">
+                                                    <div class="m--font-bolder text-adapt">{{countList[i].LOB}}</div>
+                                                    <div class="row">
+                                                        <div class="col-md-6" style="margin:auto; text-align: center" >
+                                                            <img src="../../../../../../assets/blank/images/icon/right.png"
+                                                                class="pt-1 responsive-img-2"><br>
+                                                            <div class="text-center value-adapt-2">{{countList[i].GoalApproval}}</div>
+                                                        </div>
+                                                        <div class="col-md-6" style="margin:auto; text-align: center">
+                                                            <img src="../../../../../../assets/blank/images/icon/wrong.png"
+                                                                class="pt-1 responsive-img-2"><br>
+                                                            <div class="text-center value-adapt-2">{{countList[i].GoalSetting}} </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </ng-container>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            
+                
+        </div>
+    </div>
+
+</div>

@@ -1,0 +1,42 @@
+export const CLTVars = Object.freeze({
+   
+    // cal level 2
+    title1: 'Talent Calibration',
+    title2: 'Employee Talent Calibration',
+    postCalibrateListFiltersfrmHCBD: '/tc/calibrate/get_calibrate_list_by_filters',
+    postCalibrateListFiltersfrmTCM: '/tc/classify/get_calibrate_list_by_filters',
+    postGetNineGridBoxFilterfrmHCBD: '/tc/calibrate/get_box_matrix_by_filter',
+    postGetNineGridBoxFilterfrmTCM: '/tc/classify/get_box_matrix_by_filter',
+    getInfoEmployeeForCalibration: '/tc/calibrate/get_cal_det_by_box_chg_id',
+    postGetDetailBasicInfo: '/tc/basicInfo',
+    getUserProfile: '/user/getProfile',
+    getImg: '/get/image',
+    postCalibrateGm: '/tc/calibrate/save_calibrate',
+    getNineBoxList: '/tc/get_box_matrix',
+    postSubmitCalibrateGmEvp: '/tc/calibrate/submit',
+    getHistoryAfterCalibrate: '/tc/calibrate/get_calibrate_sole',
+    getFilterByState: '/tc/calibrate/get_cal_list_fl_state',
+    getFilterByLob: '/tc/calibrate/get_cal_list_fl_lob',
+    getFilterByDepartment: '/tc/calibrate/get_cal_list_fl_dept',
+    getFilterByUnit: '/tc/calibrate/get_cal_list_fl_unit',
+    getFilterBySupervisor: '/tc/calibrate/get_cal_list_fl_supv',
+    getFilterByStaffId: '/tc/calibrate/get_cal_list_fl_stf_id',
+    getFilterByBand: '/tc/calibrate/get_cal_list_fl_band',
+    getFilterByNGridBox: '/tc/calibrate/get_cal_list_fl_n_grid_box',
+    postRevertFromMgr: '/tc/calibrate/revert_calibration_single',
+    postRevertFromGM:'/tc/classify/revert_calibration_single',
+    postRevertFromEvp:'/tc/admin/revert_calibration_single',
+    getIdpDetails: '/idp/user/get',
+    // getCareerProfile: '/api/user/career/profile',
+    postCareerProfile : '/tc/career_profile',
+    postSearchSp: '/tc/search_supervisors',
+    postRerouteSp: '/tc/assign_supervisor',
+    postGetSupervisor: '/tc/search_staff',
+    postGetStaffId: '/tc/search_staff',
+    postDownloadReport: '/tc/calibrate/download_calibrate_list_by_filters',
+
+    // view team
+    vttitle2: 'View Team',
+    postGetParticularCellNGridBoxfrmHCBD: '/tc/calibrate/get_employee_list_by_fcell',
+    postGetParticularCellNGridBoxfrmTCM: '/tc/classify/get_employee_list_by_fcell'
+}); 

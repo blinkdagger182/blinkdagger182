@@ -1,0 +1,85 @@
+.idp-bg {
+    background-image: url(../../../../../assets/img/user/sea-portal/bg-idp.png) !important; 
+    position: relative;
+    height: 20rem; 
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.form-group.required .control-label:after {
+    content:"*";
+    color:red;
+  }
+ .pad-top-5px {
+     padding-top: 5px;
+ }
+.form-header-bg {
+    background-color:#0EC7D4;
+}
+
+.btn-apply {
+    color:#ffffff;
+    background-color: #00b3b3;
+    min-width: 120px;
+}
+
+.btn-not-interest {
+    color:#ffffff;
+    background-color: #848585;
+    min-width: 120px;
+}
+
+.btn-agree {
+    background-color: #00b3b3;
+}
+
+button:disabled {
+    cursor: not-allowed;
+    pointer-events: all !important;
+    background-color: #848585;
+}
+
+.card-offer1-bg {
+    background-color: #BEF4F8 !important;
+    min-height: 275px !important;
+}
+
+.card-offer2-bg {
+    background-color: #97EDF2 !important
+}
+
+.card-offer3-bg {
+    background-color: #63E4EE !important;
+    min-height: 275px !important;
+}
+
+.border-success {
+    border-width:3px !important;
+}
+
+.btn-group.special {
+    display: flex;
+  }
+  
+  .special .btn {
+    flex: 1
+  }
+
+  /* MD *//* LG */
+@media (min-width: 576px) and (max-width: 992px) {
+    #vsp-form-apply .modal-dialog {
+      max-width: 90vw;
+      max-height: 90vw;  
+    }
+}
+.m-content > * {
+    font-size: 1.1rem;
+}
+.modal-dialog > * {
+    font-size: 1.1rem;
+}
+
+.label-form {
+    text-overflow: initial !important;
+    overflow: visible !important;
+}

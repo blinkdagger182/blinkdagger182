@@ -1,0 +1,90 @@
+<div>
+    <div class="page-bg faq-bg">
+        <h2 class="head-sub-title">FAQs</h2>
+    </div>
+    <div class="pg-title-div">
+        <h3 class="pg-title">Frequently Ask Question</h3>
+    </div>
+</div>
+
+<div class="m-content">
+    
+    <!-- begin::Page loader -->
+    <div class="col-lg-12 centred my-auto">
+        <ng-template #alertError></ng-template>
+    </div>
+    <div class="col-lg-12 centred my-auto" *ngIf="loading">
+        <app-user-loading></app-user-loading>
+    </div>
+    <!-- end::Page loader -->
+
+    <div class="row mt-3" *ngIf="!loading">
+        <div class="col-lg-12">
+            <div class="m-portlet m-portlet--full-height">
+                <ul class="nav nav-tabs" role="tablist" style="background-color:#f4f5f8">
+                    <!-- <li class="nav-item">
+                        <a class="nav-link active show" data-toggle="tab" href="#extraordinaire">5G Academy</a>
+                    </li> -->
+                    <li class="nav-item">
+                        <a class="nav-link active show" data-toggle="tab" href="#web_era">Web ERA</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link " data-toggle="tab" href="#app_era">App ERA</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link " data-toggle="tab" href="#TmMove">TM Mobility Centre</a>
+                    </li>
+                </ul>
+                <div class="tab-content">
+                    <!-- <div class="tab-pane active show mb-5 pt-2 pb-3" id="extraordinaire" role="tabpanel">
+                        <div class="container pr-6 pl-0" style="margin-top:20px" *ngFor="let item of data2">
+                            <div class="row"> 
+                                <div class="col-md-1 pl-0  text-right align-middle faqQ">Q</div>
+                                <div class="col-md-11 faqQText">{{item.q}}</div>
+                            </div>
+                            <div class="row" style="margin-top:-10px;">
+                                <div class="col-md-1  text-right align-middle faqA">A</div>
+                                <div class="col-md-11 faqAText" [innerHTML]="item.a"></div>
+                            </div>
+                        </div>
+                    </div> -->
+                    <div class="tab-pane active show mb-5 mt-3 pt-2 pb-3" id="web_era" role="tabpanel">
+                        <div class="container pr-6 pl-0" style="margin-top:20px" *ngFor="let item of data">
+                            <div class="row"> 
+                                <div class="col-md-1 pl-0  text-right align-middle faqQ">Q</div>
+                                <div class="col-md-11 faqQText">{{item.q}}</div>
+                            </div>
+                            <div class="row" style="margin-top:-10px;">
+                                <div class="col-md-1  text-right align-middle faqA">A</div>
+                                <div class="col-md-11 faqAText" [innerHTML]="item.a"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane mb-5 mt-3 pt-2 pb-3" id="app_era" role="tabpanel">
+                        <div class="container pr-6 pl-0" style="margin-top:20px" *ngFor="let item of data3">
+                            <div class="row"> 
+                                <div class="col-md-1 pl-0  text-right align-middle faqQ">Q</div>
+                                <div class="col-md-11 faqQText">{{item.q}}</div>
+                            </div>
+                            <div class="row" style="margin-top:-10px;">
+                                <div class="col-md-1  text-right align-middle faqA">A</div>
+                                <div class="col-md-11 faqAText" [innerHTML]="item.a"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane mb-5 mt-3 pt-2 pb-3" id="TmMove" role="tabpanel">
+                        <div class="container pr-6 pl-0" style="margin-top:20px" *ngFor="let item of data5">
+                            <div class="row"> 
+                                <div class="col-md-1 pl-0  text-right align-middle faqQ">Q</div>
+                                <div class="col-md-11 faqQText">{{item.q}}</div>
+                            </div>
+                            <div class="row" style="margin-top:-10px;">
+                                <div class="col-md-1  text-right align-middle faqA">A</div>
+                                <div class="col-md-11 faqAText" [innerHTML]="item.a"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>

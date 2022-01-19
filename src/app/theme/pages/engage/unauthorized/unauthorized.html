@@ -1,0 +1,29 @@
+<div class="m-content">
+    <div class="row">
+        <!-- begin:: Page -->
+		<div class="m-grid m-grid--hor m-grid--root ">
+            <div class="m-grid__item m-grid__item--fluid m-grid m-error-4" 
+            style="background-image: url(../../../../../assets/app/media/img/error/bg1.jpg);">
+                <div class="m-error_container" style="min-height:600px">
+                    <h1 class="m-error_number">
+                        <!-- 404 -->
+                    </h1>
+                    <p class="m-error_title" style="margin-bottom: 0px;">
+                        Oops
+                    </p>
+                    <p *ngIf="engage2Admin" style="margin-left: 15rem; color: #CC6622; font-size: 2rem; font-weight: 600">This is an Engagement Portal. If you wish to proceed to Admin Portal 
+                        <button type="button" class="btn m-btn--pill m-btn m-btn--gradient-from-danger m-btn--gradient-to-warning" (click)="redirectToAdmin()">
+                            Click here
+                        </button>
+                    </p>
+                    <p *ngIf="engage2User" style="margin-left: 15rem; color: #CC6622; font-size: 2rem; font-weight: 600">This is an Engagement Portal. If you wish to proceed to User Portal 
+                        <button type="button" class="btn m-btn--pill m-btn m-btn--gradient-from-danger m-btn--gradient-to-warning" (click)="redirectToUser()">
+                            Click here
+                        </button>
+                    </p>
+                </div>
+            </div>
+        </div>
+        <!-- end:: Page -->
+    </div>
+</div> 

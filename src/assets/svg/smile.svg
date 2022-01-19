@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="86" height="86" viewBox="0 0 86 86">
+  <defs>
+    <clipPath id="clip-path">
+      <rect id="Rectangle_224" data-name="Rectangle 224" width="44.697" height="54.781" fill="none"/>
+    </clipPath>
+    <clipPath id="clip-Smile">
+      <rect width="86" height="86"/>
+    </clipPath>
+  </defs>
+  <g id="Smile" clip-path="url(#clip-Smile)">
+    <rect width="86" height="86" fill="#fff"/>
+    <circle id="Ellipse_121" data-name="Ellipse 121" cx="43" cy="43" r="43" fill="#fff" opacity="0.8"/>
+    <g id="Group_14433" data-name="Group 14433" transform="translate(19.594 16.297)">
+      <g id="Group_1152" data-name="Group 1152" transform="translate(0 0)" clip-path="url(#clip-path)">
+        <path id="Path_4964" data-name="Path 4964" d="M42.817,37.488V1.873A1.8,1.8,0,0,0,41.106,0H1.711A1.8,1.8,0,0,0,0,1.873V46.119a1.8,1.8,0,0,0,1.711,1.873H36.718L44.7,54.781ZM3.968,41.671V6.321A1.8,1.8,0,0,1,5.679,4.448H37.138a1.8,1.8,0,0,1,1.711,1.873v35.35a1.8,1.8,0,0,1-1.711,1.873H5.679a1.8,1.8,0,0,1-1.711-1.873" transform="translate(0 0)" fill="#05bdce"/>
+        <path id="Path_4965" data-name="Path 4965" d="M115.371,123.558c.771,3.117-.127,6.1-2.007,6.653s-4.028-1.519-4.8-4.636.127-6.1,2.006-6.653,4.028,1.519,4.8,4.636" transform="translate(-97.908 -106.36)"/>
+        <path id="Path_4966" data-name="Path 4966" d="M240.9,140.874s-.428-11.471,11.121-7.491c0,0-4.491,1.4-4.491,2.809a4.314,4.314,0,0,1,2.78,1.873s-5.774-1.4-9.41,2.809" transform="translate(-217.807 -118.634)"/>
+        <path id="Path_4967" data-name="Path 4967" d="M92.624,256.177c.3.455,3.66,5.289,9.41,5.15a11.4,11.4,0,0,0,9.838-6.789l-1.283-.936a.711.711,0,0,1,0-.936.571.571,0,0,1,.855,0l2.566,1.873a.765.765,0,0,1,0,.7.642.642,0,0,1-.856.234l-.641-.468c-1.395,5.251-5.657,8.933-10.479,9.13a11.326,11.326,0,0,1-10.479-6.789l-1.069.468a.771.771,0,0,1-.855-.234.979.979,0,0,1,0-1.171l2.353-1.639c.427-.534,1.049-.528,1.283-.234a.948.948,0,0,1,0,.937Z" transform="translate(-80.862 -225.977)"/>
+      </g>
+    </g>
+  </g>
+</svg>

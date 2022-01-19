@@ -1,0 +1,47 @@
+stages:
+  - prod_build
+  - prod_publish
+
+prod_build_image:
+  stage: prod_build
+  only:
+    - master
+  tags:
+    - ghcm
+  before_script:
+    - export VERSION=$(cat package.json | jq -r .version)
+  script:
+    - npm install
+    - npm rebuild node-sass
+    #- rm node_modules/@types/pdfjs-dist/index.d.ts
+    #- rm -rfv node_modules/ngx-device-detector/lib
+    - node --max_old_space_size=8192 node_modules/@angular/cli/bin/ng build --prod
+    - cp .htaccess dist/
+    - docker build -t $HARBOR_IMAGE .
+    #- docker image save -o /tmp/ghcm-portal.tar $HARBOR_IMAGE
+    #- rsync -azvh /tmp/ghcm-portal.tar ghcm@10.44.39.80:~/
+  cache:
+    paths:
+      - node_modules
+  artifacts:
+    paths:
+      - dist
+
+prod_publish_image:
+  stage: prod_publish
+  only:
+    - master
+  tags:
+    - ghcm
+  before_script:
+    - export VERSION=$(cat package.json | jq -r .version)
+    - docker login -u 'robot$era_harborcicd' -p $HARBOR_PASS $HARBOR_URL
+  script:
+    - docker tag $HARBOR_IMAGE $HARBOR_URL/$HARBOR_IMAGE
+    - docker tag $HARBOR_IMAGE $HARBOR_URL/$HARBOR_IMAGE:$VERSION
+    - docker push $HARBOR_URL/$HARBOR_IMAGE
+    - docker rmi $HARBOR_IMAGE
+    - docker rmi $HARBOR_URL/$HARBOR_IMAGE
+    - docker rmi -f $HARBOR_URL/$HARBOR_IMAGE:$VERSION
+  after_script:
+    - docker logout $HARBOR_URL

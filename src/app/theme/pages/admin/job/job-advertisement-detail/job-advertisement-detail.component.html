@@ -1,0 +1,2600 @@
+<notifier-container></notifier-container>
+<!-- START: Subheader -->
+<div class="m-subheader" appunwraptag="">
+	
+	<div class="d-flex align-items-center">
+		<div class="mr-auto">
+			<h3 class="m-subheader__title m-subheader__title--separator">
+				{{title1}}
+			</h3>
+			<ul class="m-subheader__breadcrumbs m-nav m-nav--inline">
+				<li class="m-nav__item m-nav__item--home">
+                    <a routerLink="/admin/index" class="m-nav__link m-nav__link--icon">
+						<i class="m-nav__link-icon la la-home"></i>
+					</a>
+				</li>
+				<li class="m-nav__separator">
+					-
+				</li>
+				<li class="m-nav__item">
+					<a href="" class="m-nav__link">
+						<span class="m-nav__link-text">
+							{{title2}}
+						</span>
+					</a>
+				</li>
+				<!-- <li class="m-nav__separator">
+					-
+				</li>
+				<li class="m-nav__item">
+					<a href="" class="m-nav__link">
+						<span class="m-nav__link-text">
+							Position
+						</span>
+					</a>
+				</li> -->
+				<li class="m-nav__separator">
+					-
+				</li>
+				<li class="m-nav__item">
+					<a href="" class="m-nav__link">
+						<span class="m-nav__link-text">
+							{{idx}}
+							<!--
+							{{info && info[0] && info[0]?.position_id}}
+							<span *ngIf="info=='err'">{{errNoData}}</span>-->
+						</span>
+					</a>
+				</li>
+			</ul>
+		</div>
+		<div>
+			<div class="m-dropdown m-dropdown--inline m-dropdown--arrow m-dropdown--align-right m-dropdown--align-push"
+			 m-dropdown-toggle="hover" aria-expanded="true">
+			</div>
+		</div>
+	</div>
+</div>
+<!-- END: Subheader --> 
+
+<div class="m-content">
+	<div class="row">
+		<!-- :start back to profile page -->
+		<div class="col-lg-12" *ngIf="!loading">
+			<div class="m-button-advert">
+				<button id="go-to-advertise-job" type="button" class="btn m-btn--pill btn-outline-brand" [routerLink]="[rJobProfDetails,info[0]?.position_id]">
+					<i class="la la-mail-reply-all"></i> {{ sourceIntExt == 'Internal (ERA)' ? btnGotoJobProfile : btnGotoCareerProfile}}
+				</button>
+			</div>
+		</div>
+		<!-- :end back to profile page -->
+
+		<!-- :start resubmit -->
+		<div class="col-lg-12">
+			<!-- *ngIf="resubmitAdv" -->
+			<div *ngIf="resubmitReq" class="m-alert m-alert--icon m-alert--outline alert {{resubmitStyle}} alert-dismissible fade show"
+			 role="alert">
+				<div class="m-alert__icon">
+					<i class="flaticon-exclamation-1"></i>
+				</div>
+				<div class="m-alert__text">
+					{{resubmitPosMsg}}
+				</div>
+			</div>
+			<div class="m-button-advert" *ngIf="resubmitButton">
+				<button *ngIf="withdrawAdv" id="resubmit-job-0" type="button" class="btn m-btn--pill btn-danger btn-lg m-btn m-btn--custom"
+				 data-toggle="modal" data-target="#m_modal_resubmit" (click)="setResubmit('0')">{{btnWithDraw}}
+				</button>
+				<button *ngIf="closeAdv" id="resubmit-job-0" type="button" class="btn m-btn--pill btn-danger btn-lg m-btn m-btn--custom"
+				 data-toggle="modal" data-target="#m_modal_resubmit" (click)="setResubmit('2')">{{btnClose}}
+				</button>
+				<button *ngIf="resubmitAdv" id="resubmit-job-1" type="button" class="btn m-btn--pill btn-warning btn-lg m-btn m-btn--custom"
+				 data-toggle="modal" data-target="#m_modal_resubmit" (click)="setResubmit('1')">{{btnReSubmit}}
+				</button>
+			</div>
+		</div>
+		<!-- :end resubmit -->
+
+		<!-- :start button approve/decline -->
+		<div class="col-lg-12">
+			<div *ngIf="apprReq" class="m-alert m-alert--icon m-alert--outline alert {{apprStyle}} alert-dismissible fade show"
+			 role="alert">
+				<div class="m-alert__icon">
+					<i class="flaticon-exclamation-1"></i>
+				</div>
+				<div class="m-alert__text">
+					{{apprPosMsg}}
+				</div>
+				<!-- <div class="m-alert__close">
+						<button type="button" class="close" data-dismiss="alert" aria-label="Close"></button>
+					</div> -->
+			</div>
+
+			<div class="m-button-advert">
+				<button *ngIf="btnReject" id="advertise-job-0" type="button" class="btn m-btn--pill btn-danger m-btn m-btn--custom"
+				 data-toggle="modal" data-target="#m_modal_approve_decline" (click)="setApprove('2')">Reject
+				</button>
+				<button *ngIf="btnRevert" id="advertise-job-0" type="button" class="btn m-btn--pill btn-warning m-btn m-btn--custom"
+				 data-toggle="modal" data-target="#m_modal_approve_decline" (click)="setApprove('3')">Revert
+				</button>
+				<button *ngIf="btnApprove" id="advertise-job-1" type="button" style="background-color: #0066ff!important; border-color: #0066ff!important;" class="btn m-btn--pill btn-success m-btn m-btn--custom"
+				 data-toggle="modal" data-target="#m_modal_approve_decline" (click)="setApprove('1')">Approve
+				</button>
+				<button *ngIf="btnCloseAds" id="advertise-job-1" type="button" class="btn m-btn--pill btn-danger btn-lg m-btn m-btn--custom"
+				 data-toggle="modal" data-target="#m_modal_resubmit" (click)="setResubmit('2')">{{btnClose}}
+				</button>
+			</div>
+		</div>
+		<!-- :end button approve/decline -->
+
+		<!-- begin::Page loader -->
+		<div class="col-lg-12 centred my-auto">
+			<ng-template #alertError></ng-template>
+		</div>
+
+		<div class="col-lg-12 centred my-auto" *ngIf="loading">
+			<div class="m-section__content">
+				<div class="m-demo" data-code-preview="true" data-code-html="true" data-code-js="false">
+					<div class="m-demo__preview">
+						<div class="m-stack m-stack--ver m-stack--general m-stack--demo">
+
+							<div class="m-stack__item m-stack__item--center m-stack__item--middle">
+								<span>
+									Loading data. Please wait...
+								</span>
+								<span>
+									<div class="m-loader m-loader--lg m-loader--success" style="width: 30px; display: inline-block;"></div>
+								</span>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- end::Page loader -->
+	
+		<div class="col-lg-12" *ngIf="!loading">
+			<!--begin::Portlet-->
+			<div class="m-portlet m-portlet--full-height">
+				<!--begin::Section-->
+				<div class="m-accordion m-accordion--bordered" id="m_accordion_1" role="tablist">
+					<!-- :start advertisement info -->
+					<div class="m-accordion__item">
+						<div class="m-accordion__item-head" role="tab" id="m_accordion_adv_info_head" data-toggle="collapse" href="#m_accordion_adv_info_body"
+						 aria-expanded="    false">
+							<span class="m-accordion__item-mode"></span>
+							<span class="m-accordion__item-title m-accordian__item-mode-title">
+								{{title3}}
+							</span>
+							
+							<span class="m-accordion__item-icon">
+						    	<i class="fa flaticon-clipboard"></i>
+							</span>
+						</div>
+						<div class="m-accordion__item-body  show" id="m_accordion_adv_info_body" role="tabpanel" aria-labelledby="m_accordion_adv_info_head">
+							<div class="m-accordion__item-content">
+								<table class="table table-bordered" *ngIf="info!='err'">
+									<tr>
+										<td style="width: 30%">
+											Created By
+										</td>
+										<td>
+											{{info && info[0] && info[0]?.create_by}} on {{info && info[0] && info[0]?.create_on | date:'dd MMM yyyy'}}
+										</td>
+									</tr>
+									<tr>
+										<td style="width: 30%">
+											Ads Position Name
+										</td>
+										<td>
+											{{info && info[0] && info[0]?.job_title}}
+										</td>
+									</tr>
+									<tr>
+										<td style="width: 30%">
+											Company
+										</td>
+										<td>
+											{{data.profile && data.profile[0]?.Company_Desc}}<span *ngIf="!data.profile||!data.profile[0].Company_Desc">-</span>
+										</td>
+									</tr>
+
+									<tr>
+										<td style="width: 30%">
+											Division
+										</td>
+										<td>
+											{{info && info[0] && info[0]?.division}}
+										</td>
+									</tr>
+									<tr>
+										<td style="width: 30%">
+											Organizational Unit
+										</td>
+										<td>
+											{{data.profile && data.profile[0]?.Organizational_unit}}
+										</td>
+									</tr>
+									<tr>
+										<td style="width: 30%">
+											LOB
+										</td>
+										<td>
+											{{info && info[0] && info[0]?.lob}}
+										</td>
+									</tr>
+									<tr>
+										<td style="width: 30%">
+											Position
+										</td>
+										<td>
+											{{info && info[0] && info[0]?.position_id }} - {{info && info[0] && info[0]?.position }}
+										</td>
+									</tr>
+									<tr>
+										<td style="width: 30%">
+											Employee Group
+										</td>
+										<td>
+											{{profile && profile[0] && profile[0]?.Employee_group }}
+										</td>
+									</tr>
+									<tr>
+										<td style="width: 30%">
+											Employee Subgroup
+										</td>
+										<td>
+											{{profile && profile[0] && profile[0]?.Employee_subgroup }}
+										</td>
+									</tr>
+									<tr>
+										<td style="width: 30%">
+											Location
+										</td>
+										<td>
+											{{info && info[0] && info[0]?.location}}
+										</td>
+									</tr>
+									<tr>
+										<td style="width: 30%">
+											Adv Period
+										</td>
+										<td>
+											{{info && info[0] && info[0]?.start| date:'dd MMM yyyy'}} - {{info && info[0] && info[0]?.close| date:'dd
+											MMM yyyy'}}
+										</td>
+									</tr>
+									<tr>
+										<td style="width: 30%">
+											Adv Type
+										</td>
+										<td>
+											{{info && info[0] && sourceIntExt}}
+										</td>
+									</tr>
+									<tr>
+										<td style="width: 30%">
+											Job Type
+										</td>
+										<td>
+											{{info && info[0] && info[0]?.type_desc}}
+										</td>
+									</tr>
+									<tr>
+										<td style="width: 30%">
+											Remarks
+										</td>
+										<td>
+											{{info && info[0] && info[0]?.remark}}
+										</td>
+									</tr>
+
+									<tr>
+										<td style="width: 30%">
+											Status
+										</td>
+										<td>
+											{{info && info[0] && info[0]?.status_text}}
+										</td>
+									</tr>
+
+									<tr>
+										<td style="width: 30%">
+											Requester
+										</td>
+										<td>
+											{{profile && profile[0] && profile[0]?.requester}}
+											<p *ngIf="!profile || !profile[0] || !profile[0]?.requester || profile[0].requester==null ">-</p>
+										</td>
+									</tr>
+
+									<tr *ngIf="profile && profile[0] && profile[0]?.type !== 3">
+										<td style="width: 30%">
+											Approver
+										</td>
+										<td>
+											{{info && info[0] && info[0]?.approval}}
+											<p *ngIf="!info || !info[0] || !info[0]?.approval || info[0].approval==null ">-</p>
+										</td>
+									</tr>
+								</table>
+							</div>
+						</div>
+					</div>
+					<!-- :end advertisement info -->
+
+					<!--begin::Item:info-->
+					<div class="m-accordion__item" style="display:none">
+						<div class="m-accordion__item-head collapsed" role="tab" id="m_accordion_1_item_1_head" data-toggle="collapse"
+						 href="#m_accordion_1_item_1_body" aria-expanded="    false">
+							<span class="m-accordion__item-mode"></span>
+							<span class="m-accordion__item-title m-accordian__item-mode-title">
+								{{title8}}
+							</span>
+							<span class="m-accordion__item-icon">
+								<i class="fa flaticon-notes"></i>
+							</span>
+						</div>
+						<div class="m-accordion__item-body  collapse" id="m_accordion_1_item_1_body" role="tabpanel" aria-labelledby="m_accordion_1_item_1_head">
+							<div class="m-accordion__item-content">
+								<!-- start: JOB INFO -->
+								<h5>Position Info</h5>
+								<p *ngIf="profile=='err'" [innerHTML]="noData"></p>
+								<table class="table table-bordered" *ngIf="profile!='err'">
+									<tr>
+										<td style="width: 30%">
+											{{ads}} Position Name
+										</td>
+										<td>
+											{{profile && profile[0] && profile[0]?.job_title}}
+										</td>
+									</tr>
+									<tr>
+										<td style="width: 30%">
+											Position 
+										</td> 
+										<td>
+											{{profile && profile[0] && profile[0]?.position}}
+										</td>
+									</tr>
+									<tr>
+										<td style="width: 30%">
+											Location
+										</td>
+										<td>
+											{{profile && profile[0] && profile[0]?.location}}
+										</td>
+									</tr>
+									<tr>
+										<td style="width: 30%">
+											LOB
+										</td>
+										<td>
+											{{profile && profile[0] && profile[0]?.company}}
+										</td>
+									</tr>
+								</table>
+								<!--  end: JOB INFO -->
+
+								<!-- : start job purpose -->
+								<h5>Job Purpose</h5>
+								<p *ngIf="purpose=='err'" [innerHTML]="noData"></p>
+								<p *ngIf="purpose!='err'">{{purpose}}</p>
+								<!-- :end job purpose -->
+
+								<!-- start: Qualification -->
+								<h5>Qualification</h5>
+								<p *ngIf="qualification=='err'" [innerHTML]="noData"></p>
+								<table class="table table-bordered" *ngIf="qualification!='err'">
+									<thead>
+										<tr>
+											<th>Category</th>
+											<th>Area</th>
+											<th>Sub-Area</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr *ngFor="let q of qualification;let qc = index">
+											<td>{{q.text}}</td>
+											<td>{{q.AREA}} </td>
+											<td>{{q.SUB_AREA}}</td>
+										</tr>
+									</tbody>
+								</table>
+								<!-- end: Qualification -->
+
+								<!-- :start functional com -->
+								<h5>Functional Competencies</h5>
+								<p *ngIf="functional=='err'" [innerHTML]="noData"></p>
+								<table class="table table-border" *ngIf="functional!='err'">
+									<thead>
+										<tr>
+											<th>Competency</th>
+											<th>Definition</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr *ngFor="let f of functional;let fc = index">
+											<td>{{f.FC_NAME}}</td>
+											<td>{{f.FC_DEF}}</td>
+										</tr>
+									</tbody>
+								</table>
+								<!-- :end functional com -->
+
+								<!-- start: Tech Com -->
+								<h5>Technical Competencies</h5>
+								<p *ngIf="technical=='err'" [innerHTML]="noData"></p>
+								<table class="table table-border" *ngIf="technical!='err'">
+									<thead>
+										<tr>
+											<th>Cluster</th>
+											<th>Category</th>
+											<th>Competency</th>
+											<th>Definition</th>
+											<th>Level</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr *ngFor="let t of technical;let tc = index">
+											<td>{{t.CLUSTER_ID}}</td>
+											<td>
+												<span *ngIf="t.CATEGORY!='0'; else empCat">{{t.CATEGORY}}</span>
+												<ng-template #empCat>N/A</ng-template>
+											</td>
+											<td>{{t.COMP_NAME}}</td>
+											<td>{{t.COMP_DEF}}</td>
+											<td>{{t.LEVEL}}</td>
+										</tr>
+									</tbody>
+								</table>
+								<!-- end: Tech Com -->
+
+								<!-- start: AOR -->
+								<h5>Area of Responsibilities</h5>
+								<p *ngIf="aor=='err'" [innerHTML]="noData"></p>
+								<table class="table table-border" *ngIf="aor!='err'">
+									<thead>
+										<tr>
+											<th>RESPONSIBILITY</th>
+											<th>KEY ACTIVITIES</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr *ngFor="let a of aor;let ac = index">
+											<td>{{a.AOR}} </td>
+											<td>{{a.KEY_ACT}}</td>
+										</tr>
+									</tbody>
+								</table>
+								<!-- end: AOR -->
+
+								<!-- start: Experience -->
+								<h5>Experience</h5>
+								<p *ngIf="requirements=='err'" [innerHTML]="noData"></p>
+								<table class="table table-border " *ngIf="requirements!='err'">
+									<thead>
+										<tr>
+											<th>AREA</th>
+											<th>YEARS</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr *ngFor="let r of requirements;let rc = index">
+											<td>{{r.AREA}} </td>
+											<td>{{r.YEARS}}</td>
+										</tr>
+									</tbody>
+								</table>
+								<!-- end: Experience -->
+
+								<!-- start: Success -->
+								<h5>S.U.C.C.E.S.S</h5>
+								<div *ngIf="success=='err'" [innerHTML]="noData"></div>
+								<table class="table table-border " *ngIf="success!='err'">
+									<thead>
+										<tr>
+											<th>No</th>
+											<th>Name</th>
+											<th>Description</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr *ngFor="let s of data.success;let sc = index">
+											<td>{{sc+1}}</td>
+											<td>{{s.SUC_DESC}} </td>
+											<td>{{s.SUC_NAME}}</td>
+										</tr>
+									</tbody>
+								</table>
+								<!-- end: Success -->
+
+								<!-- start: Digital -->
+								<h5>Digital </h5>
+								<p *ngIf="digital=='err'" [innerHTML]="noData"></p>
+								<table class="table table-border " *ngIf="digital!='err'">
+									<thead>
+										<tr>
+											<th>No</th>
+											<th>Name</th>
+											<th>Definition</th>
+											<th>Level</th>
+											<th>Details</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr *ngFor="let d of data.digital;let dc = index">
+											<td>{{dc+1}}</td>
+											<td>{{d.name}} </td>
+											<td>{{d.definition}}</td>
+											<td>{{d.level}}</td>
+											<td [innerHTML]="d.details"></td>
+										</tr>
+									</tbody>
+								</table>
+								<!-- end: Digital -->
+
+							</div>
+						</div>
+					</div>
+					<!--end::Item:info-->
+
+					<!--begin::Item:Applicant List   (Exec, NE and NE Promo)-->
+					<div class="m-accordion__item" *ngIf="showPanelApplList">
+						<div class="m-accordion__item-head" role="tab" id="m_accordion_1_item_2_head" data-toggle="collapse" href="#m_accordion_1_item_2_body"
+						 aria-expanded="    false">
+							<span class="m-accordion__item-mode"></span>
+							<span class="m-accordion__item-title m-accordian__item-mode-title">
+								{{title4}}
+							</span>
+							<span class="m-accordion__item-icon">
+								<i class="fa flaticon-list-1"></i>
+							</span>
+						</div>
+
+						<div class="m-accordion__item-body show" id="m_accordion_1_item_2_body" role="tabpanel" aria-labelledby="m_accordion_1_item_2_head">
+							<div class="m-accordion__item-content">
+								<!--begin: choose for interview -->
+								<div *ngIf="selApplReq" class="m-alert m-alert--icon m-alert--outline alert {{apprStyle}} alert-dismissible fade show"
+								 role="alert">
+									<div class="m-alert__icon">
+										<i class="flaticon-exclamation-1"></i>
+									</div>
+									<div class="m-alert__text">
+										{{apprPosMsg}}
+									</div>
+								</div>
+
+								<p *ngIf="applicant=='err'">{{errNoApplicant}}</p>
+							
+								<form *ngIf="applicant!='err'" [formGroup]="formSelAppl" id="selectApplicant">
+									<table class="table table-sm m-table m-table--head-bg-brand">
+										<thead class="thead-inverse">
+											<tr>												
+												<th>Staff ID</th>
+												<th>Staff Name</th>
+												<th>LOB</th>
+												<th>Apply Date</th>
+												<th *ngIf="info && info[0] && info[0]?.type != 3" >Skillset Rank</th>
+												<th *ngIf="info && info[0] && info[0]?.type == 3" >Assessment</th>
+												<th *ngIf="info && info[0] && info[0]?.type != 3">Criteria</th>
+												<th>Status</th>
+												<th>Details</th>								
+												<th></th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr class="checkbox" *ngFor="let app of applicant; let i = index">											
+												<td>{{app.applicant}}</td>
+												<td>{{app.name}}</td>
+												<td>{{app.lob}}</td>
+												<td>{{app.apply_on| date:'dd MMM yyyy'}}</td>
+												<td *ngIf="info && info[0] && info[0]?.type != 3">{{app.skillMatchPerctg}}%</td>
+												<td *ngIf="info && info[0] && info[0]?.type == 3">{{app.assessmentResults}}</td>
+												<td class="text-center pt-3" *ngIf="info && info[0] && info[0]?.type != 3">
+													<i *ngIf="app.criteria == null" class="fa fa-question m--font-info" ngbTooltip="Still In-Progress"></i>
+													<i *ngIf="app.criteria == 0" class="fa fa-minus m--font-warning" ngbTooltip="Lateral"></i>
+													<i *ngIf="app.criteria == 1" [hidden]="(app.status==10||app.status==11)||(app.status==4||app.status==5)" class="fa fa-check m--font-success" ngbTooltip="Meet Promotion Criteria" style="cursor: pointer;"></i>
+													<i *ngIf="app.criteria == 1" [hidden]="app.status!=10&&app.status!=11&&app.status!=4&&app.status!=5" (click)="initModal(app.id)" data-toggle="modal" data-target="#request_applicant" class="fa fa-check m--font-success" ngbTooltip="Meet Promotion Criteria (Click to Request Assessment)" style="cursor: pointer;"></i>
+													<i *ngIf="app.criteria == 2" class="fa fa-remove m--font-danger" ngbTooltip="Does Not Meet Promotion Criteria"></i>
+												</td>
+												<td>{{app.status_text}} </td>
+												<td>
+													<div class="btn-group" title="View Applicant Info">
+														<a href="javascript:;" class="btn btn-xs" data-toggle="modal" data-target="#appl_profile" (click)="openApplicantInfo('forInterview',app.id, i,app.status)">
+															<i class="flaticon-information"></i>
+														</a>
+													</div>
+												</td>	
+												<td>
+													<label class="m-checkbox m-checkbox--state-success" title="Select this Applicant to Call for Interview" 
+													*ngIf="aplcAct && info && info[0] && info[0]?.type != 3" [hidden]="app.status!=10">
+														<input [checked]="checkedList.includes(app.id)" formControlName="appl" type="checkbox" value="{{app.id}}"
+														 (change)="onCheckboxChange(app,$event)">
+														<span></span>
+													</label>
+													<label class="m-checkbox m-checkbox--state-success" title="Select this Applicant to Call for Interview" 
+														*ngIf="(info && info[0] && info[0]?.type == 3) && (app.assessmentResults == 'Passed') && (info && info[0] && info[0]?.status!=3)"
+														 [hidden]="app.status!=10">
+														<input [checked]="checkedList.includes(app.id)" type="checkbox" 
+														value="{{app.id}}" (change)="onCheckboxChange(app,$event)">
+														<span></span>
+													</label>
+												</td>
+											</tr>
+										</tbody>
+									</table> 
+																	
+										<button id="chooseApp" [disabled]="!aplcSubmit" type="button" class="btn m-btn--pill btn-primary btn-sm pull-right"
+										*ngIf="aplcAct && info && info[0] && info[0]?.type != 3">
+										Call for Interview
+										</button>
+										<button style="visibility: hidden" id="chooseApp2" (click)="selectApplicant(formSelAppl)" [disabled]="!aplcSubmit"
+										type="button" *ngIf="aplcAct && info && info[0] && info[0]?.type != 3">
+											{{btnCallIview}}
+										</button>
+
+										<!-- buttons download and Call for Interview for NE Promo -->
+										<div *ngIf="(info && info[0] && info[0]?.type == 3)">
+											<div class="text-right">
+            									<button *ngIf="downloadCSVNE&&applicant!='err'" class="btn btn-primary m-btn m-btn--icon" (click)="downloadNEPromo()" [disabled]="dwNEDisabled">
+													<span>
+														<i class="la la-download"></i>
+														<span>Download NE Applicant Details</span>
+													</span>
+												</button>	
+												<button id="chooseApp" [disabled]="!aplcSubmit" type="button" class="btn m-btn--pill btn-primary pull-right"
+												*ngIf="aplcAct"> Call for Interview
+												</button>
+												<button id="chooseApp2" style="visibility: hidden" (click)="selectApplicant(formSelAppl)" type="button" class="btn m-btn--pill btn-primary pull-right"
+												*ngIf="aplcAct"> 
+												</button>
+											</div>
+										</div>
+								</form>
+
+								<div class="modal fade" id="request_applicant"  tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" style="z-index: 1051;" aria-hidden="true">
+                                    <div class="modal-dialog msg-dialog modal-dialog-centered" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h4 class="modal-title" id="exampleModalLongTitle">Applicant Assessment Request</h4>
+                                            </div>
+                                            <div class="modal-body">
+												<div class="centred my-auto" *ngIf="bufferApprove">
+													<job-loading></job-loading>
+												</div>
+                                                <p *ngIf="!bufferApprove&&data.profile[0]?.fc_count==0"> This job does not have any Functional Competencies do you still want to request applicant.<br>Send Request to the Applicant?</p>
+                                                <p *ngIf="!bufferApprove&&!bufferError&&data.profile[0]?.fc_count!=0"> Send Request to the Applicant?</p>
+                                                <p *ngIf="!bufferApprove&&bufferError"> {{notifyMsg}}</p>
+                                                <br>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button *ngIf="bufferApprove||bufferError" type="button" id="close_btn" data-dismiss="modal" class="job-btn btn m-btn--pill btn-secondary m-btn m-btn--custom">
+                                                	Close
+                                                </button>
+                                                <button *ngIf="!bufferApprove&&!bufferError"  type="button" id="close_btn" data-dismiss="modal" class="job-btn btn m-btn--pill btn-secondary m-btn m-btn--custom">
+                                                    Cancel
+                                                </button>
+                                                <button *ngIf="!bufferApprove&&!bufferError" type="button" (click)="approveClicked1()" class="act-btn act-btn-primary btn m-btn--pill btn-primary m-btn m-btn--custom">
+                                                    Confirm
+                                                </button>                     
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+								<!--end: choose for interview -->
+								<!--Download Applicant for Executive & NE -->
+								<div class="row" *ngIf="downloadCSV&&applicant!='err' && info && info[0] && info[0]?.type != 3">
+									<div class="col-12" style="text-align: right; margin-top:20px">
+										<div class="m-demo__preview m-demo__preview--btn">
+											<button class="btn btn-primary m-btn m-btn--icon" (click)="download()" [disabled]="dwApplDisabled">
+												<span>
+													<i class="la la-download"></i>
+													<span>Download Applicant Details</span>
+												</span>
+											</button>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<!--end::Item:applicant list-->
+
+					<!--begin::NE Promo- Interview List-->
+					<div class="m-accordion__item" *ngIf="showPanelIviewList && (info && info[0] && info[0]?.type == 3)">
+						<div class="m-accordion__item-head {{icoPanelIview}}" role="tab" id="m_accordion_1_item_3_head" data-toggle="collapse"
+						 href="#m_accordion_1_item_3_body" aria-expanded="false">
+							<span class="m-accordion__item-mode"></span>
+							<span class="m-accordion__item-title m-accordian__item-mode-title">
+								{{title5}} 
+							</span>
+							<span class="m-accordion__item-icon">
+								<i class="fa flaticon-user-ok"></i>
+							</span>
+						</div>
+						<div class="m-accordion__item-body  {{openPanelIview}}" id="m_accordion_1_item_3_body" role="tabpanel" aria-labelledby="m_accordion_1_item_3_head">
+							<div class="m-accordion__item-content">
+								<!--begin: success interview -->
+								<div *ngIf="selIviewReq" class="m-alert m-alert--icon m-alert--outline alert {{apprStyle}} alert-dismissible fade show"
+								 role="alert">
+									<div class="m-alert__icon">
+										<i class="flaticon-exclamation-1"></i>
+									</div>
+									<div class="m-alert__text">
+										{{apprPosMsg}}
+									</div>
+								</div>
+
+							<p *ngIf="interviewee=='err'">{{errNoIview}}</p>
+								<form *ngIf="interviewee!='err'" [formGroup]="formSelIviewNE" id="selectIviewNE">
+									<table class="table table-sm m-table m-table--head-bg-brand">
+										<thead class="thead-inverse">
+											<tr>
+												<th>Staff ID</th>
+												<th>Staff Name</th>
+												<th>LOB</th>
+												<th>Apply Date</th>
+												<th>Assessment</th>
+												<th>Status</th>
+											   	<th>Interview Result</th>
+												<th>Details</th>
+												<th>
+													<!-- <span *ngIf="showViewOffer">  -->
+													View Offer
+													<!-- </span> -->
+												</th>
+												<th></th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr class="checkbox" *ngFor="let iviewNE of interviewee; let i = index">
+												<td>{{iviewNE.applicant}}</td>
+												<td>{{iviewNE.NAME}}</td>
+												<td>{{iviewNE.lob}}</td>
+												<td>{{iviewNE.apply_on| date:'dd MMM yyyy'}}</td>
+												<td>{{iviewNE.assessmentResults}}</td>
+												<td>{{iviewNE.status_text}}
+													<br> 
+													{{iviewNE.accept_reject_on | date:'dd MMM yyyy'}}
+												</td>
+												<td>{{iviewNE.intvwFnlResult}}</td>
+												<td>
+													<div class="btn-group" title="View Interview List Info">
+														<a href="javascript:;" class="btn btn-xs" data-toggle="modal" data-target="#appl_profile" (click)="openApplicantInfo('forSuccess',iviewNE.id, i,iviewNE.status)">
+															<i class="flaticon-information"></i>
+														</a>
+													</div>
+												</td>
+												<td style="text-align: center;">
+													<span *ngIf="((iviewNE.intvwFnlResult == 'Recommended') 
+														|| (iviewNE.intvwFnlResult == 'Reserved')) && (iviewNE.canFinalize == 1)
+														&& ((iviewNE.Comp == 1000) || (iviewNE.Comp == 1071))">
+														<label class="btn ">
+															<i class="fa flaticon-visible" title="View Offer Letter with Salary" 
+															(click)="selectCandInfo(iviewNE.id,  applicant && applicant[0] && applicant[0]?.adv_id)" data-toggle="modal" data-target="#show_offerLetter"></i>
+														</label>
+													</span>
+													<!-- <span *ngIf="showViewOffer">
+														<label class="btn ">
+															<i class="fa flaticon-visible" title="View Offer Letter with Salary" 
+															(click)="selectCandInfo(iviewNE.id,  applicant && applicant[0] && applicant[0]?.adv_id)" data-toggle="modal" data-target="#show_offerLetter"></i>
+														</label>
+													</span> -->
+												</td>
+												<td>
+													<label class="m-radio m-radio--solid m-radio--success" 
+														*ngIf="iviewAct && ((iviewNE.intvwFnlResult == 'Recommended') 
+														|| (iviewNE.intvwFnlResult == 'Reserved')) && (iviewNE.employee != 'N') 
+														&& (info && info[0] && info[0]?.canViewOffer == 1)">
+														<input type="radio" [checked]="selRadioSucc==iviewNE.id" 
+														formControlName="iviewNE" value="{{iviewNE.id}}"
+														(change)="onRadioSelect(iviewNE,$event)">  
+														<span></span>
+													</label>
+												</td>
+											</tr>
+										</tbody>
+									</table>
+									<div style="text-align: right;">
+										<button type="button" (click)="navToCreateSession(info && info[0] && info[0]?.id)" class="btn m-btn--pill btn-primary btn-sm"
+											*ngIf="showCallIv && (!headHCBDView || advertView || careerView) " title="Allow only for Advertiser & Career Mgmt" 
+											style="padding-right: 10px;" >
+											<span>Schedule Interview</span>
+										</button>&nbsp; 
+									
+										<button id="chooseIview" [disabled]="!iviewSubmit" type="button" class="btn m-btn--pill btn-primary btn-sm pull-right"
+										*ngIf="(info && info[0] && info[0]?.canViewOffer == 1) && iviewFinal">
+										  Finalize Applicant
+									</button> &nbsp; 
+									<button style="visibility: hidden" id="chooseIview2"(click)="postSendToSuccessList()" [disabled]="!iviewSubmit"
+										type="button" *ngIf="(info && info[0] && info[0]?.canViewOffer == 1) && iviewFinal">
+									</button>
+									</div>			
+								</form>
+								<!--end: success interview -->
+							</div>
+						</div>
+					</div>
+					<!--end::Item:Interview List for NE Promo-->
+				<br>
+
+				<!--begin:: NE Promo - Accepted/Rejected List-->
+				<div class="m-accordion__item" *ngIf="showFinalList && (info && info[0] && info[0]?.type == 3)">
+					<div class="m-accordion__item-head {{icoPanelIview}}" role="tab" id="m_accordion_1_item_4_head" data-toggle="collapse"
+					 href="#m_accordion_1_item_4_body" aria-expanded="false">
+						<span class="m-accordion__item-mode"></span>
+						<span class="m-accordion__item-title m-accordian__item-mode-title">
+							{{title10}} 
+						</span>
+						<span class="m-accordion__item-icon">
+							<i class="fa flaticon-user-ok"></i>
+						</span>
+					</div>
+					<div class="m-accordion__item-body  {{openPanelIview}}" id="m_accordion_1_item_3_body" role="tabpanel" aria-labelledby="m_accordion_1_item_3_head">
+						<div class="m-accordion__item-content">
+							<!--begin: success Accepted/Rejected -->
+							<div *ngIf="selIviewReq" class="m-alert m-alert--icon m-alert--outline alert {{apprStyle}} alert-dismissible fade show"
+							 role="alert">
+								<div class="m-alert__icon">
+									<i class="flaticon-exclamation-1"></i>
+								</div>
+								<div class="m-alert__text">
+									{{apprPosMsg}}
+								</div>
+							</div>
+
+						<p *ngIf="accept=='err'">{{errNoIview}}</p>
+							<form *ngIf="accept!='err'" [formGroup]="formSelAccNE" id="selectReject">
+								<table class="table table-sm m-table m-table--head-bg-brand">
+									<thead class="thead-inverse">
+										<tr>
+											<th>Staff ID</th>
+											<th>Staff Name</th>
+											<th>LOB</th>
+											<th>Apply Date</th>
+											<th>Promotion</th>
+											<th>Details</th>
+											<th>
+												<span *ngIf = "((info && info[0] && info[0]?.canDownload == 1) || (info && info[0] && info[0]?.canViewOffer == 1))">
+													Offer Letter
+												</span>
+											</th>
+											<th><span *ngIf = "showActionNe">Action</span>
+											</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr *ngFor="let accNE of accept; let i = index" [hidden]="accNE.admstatus!=0">
+											<td>{{accNE.applicant}}</td>
+											<td>{{accNE.NAME}}</td>
+											<td>{{accNE.lob}}</td>
+											<td>{{accNE.apply_on| date:'dd MMM yyyy'}}</td>
+											<td>{{accNE.employee}}
+												<br> 
+												{{accNE.accept_reject_on | date:'dd MMM yyyy'}}
+											</td>
+											<td>
+												<div class="btn-group" title="View Applicant Accepted Info">
+													<a href="javascript:;" class="btn btn-xs" data-toggle="modal" data-target="#appl_profile" (click)="openApplicantInfo('forSuccess',accNE.id, i,accNE.status)">
+														<i class="flaticon-information"></i>
+													</a>
+												</div>
+											</td>
+											<td>
+												<span *ngIf="(accNE.employee == 'Accepted') && (accNE.canFinalize == 1) 
+													&& ((accNE.Comp == 1000) || (accNE.Comp == 1071))">
+													<button id="chooseDownload" type="button" class="btn m-btn--pill btn-warning btn-sm"
+													(click)="downloadOFLApp(accNE.id,  applicant && applicant[0] && applicant[0]?.adv_id)" title="Offer Letter with Salary" >
+													<span><i class="fa fa-download"></i> Download</span>
+													</button>
+												</span>
+												<span *ngIf="(accNE.employee == 'Accepted') && (accNE.canDownload == 1) 
+													&& ((accNE.Comp == 1000) || (accNE.Comp == 1071))">
+													<button id="chooseDownload" type="button" class="btn m-btn--pill btn-success btn-sm"
+													(click)="downloadOFLAppNoSal(accNE.id,  applicant && applicant[0] && applicant[0]?.adv_id)" title="Offer Letter without Salary">
+													<span><i class="fa fa-download"></i> Download</span>
+													</button>
+												</span>
+											</td>
+											<td>
+												<span style="text-align: center;">
+													<button id="chooseRevert" type="button" *ngIf = "iviewReject && (accNE.employee == 'Rejected') && (accNE.canFinalize == 1)" (click)="postRevertOffer(accNE.id)" class="btn m-btn--pill btn-primary btn-sm">
+														Revert
+													</button> &nbsp; 
+												</span>
+												<span style="text-align: center;">
+													<button id="chooseDone" *ngIf = "iviewDone && (accNE.employee == 'Accepted') && (accNE.canFinalize == 1)" 
+													type="button" class="btn m-btn--pill btn-primary btn-sm" (click) = "selectApplicantDone(accNE.id)">
+														Done
+													</button> 
+												</span>
+											</td>
+										</tr>
+									</tbody>
+								</table>
+							</form>
+						</div>
+					</div>
+				</div>
+				<!--end::Item:Accepted/Rejected List-->	
+
+				<!--begin::Success List for Executive and NE-->
+				<div class="m-accordion__item" *ngIf="showSuccessList && (info && info[0] && info[0]?.type != 3)">
+					<div class="m-accordion__item-head {{icoPanelIview}}" role="tab" id="m_accordion_1_item_4_head" data-toggle="collapse"
+					 href="#m_accordion_1_item_4_body" aria-expanded="false">
+						<span class="m-accordion__item-mode"></span>
+						<span class="m-accordion__item-title m-accordian__item-mode-title">
+							{{title10}} 
+						</span>
+						<span class="m-accordion__item-icon">
+							<i class="fa flaticon-user-ok"></i>
+						</span>
+					</div>
+					<div class="m-accordion__item-body  {{openPanelIview}}" id="m_accordion_1_item_3_body" role="tabpanel" aria-labelledby="m_accordion_1_item_3_head">
+						<div class="m-accordion__item-content">
+							<!--begin: success interview -->
+							<div *ngIf="selIviewReq" class="m-alert m-alert--icon m-alert--outline alert {{apprStyle}} alert-dismissible fade show"
+							 role="alert">
+								<div class="m-alert__icon">
+									<i class="flaticon-exclamation-1"></i>
+								</div>
+								<div class="m-alert__text">
+									{{apprPosMsg}}
+								</div>
+							</div>
+
+						<p *ngIf="interviewee=='err'">{{errNoIview}}</p>
+							<form *ngIf="interviewee!='err'" [formGroup]="formSelIview" id="selectIview">
+								<table class="table table-sm m-table m-table--head-bg-brand">
+									<thead class="thead-inverse">
+										<tr>
+											<th>Staff ID</th>
+											<th>Staff Name</th>
+											<th>LOB</th>
+											<th>Apply Date</th>
+											<th>Status</th>
+											<th></th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr class="checkbox" *ngFor="let iview of interviewee; let i = index">
+											<td>{{iview.applicant}}</td>
+											<td>{{iview.NAME}}</td>
+											<td>{{iview.lob}}</td>
+											<td>{{iview.apply_on| date:'dd MMM yyyy'}}</td>
+											<td>{{iview.status_text}}</td>
+											<td>
+												<div class="btn-group" title="View Applicant Info">
+													<a href="javascript:;" class="btn btn-xs" data-toggle="modal" data-target="#appl_profile" (click)="openApplicantInfo('forSuccess',iview.id, i,iview.status)">
+														<i class="flaticon-information"></i>
+													</a>
+												</div>
+												<label class="m-radio m-radio--solid m-radio--success" *ngIf="iviewAct" [hidden]="iview.status!=11" >
+													<input type="radio" [checked]="selRadioSucc==iview.id" formControlName="iview" value="{{iview.id}}"
+													 (change)="onRadioSelect(iview,$event)">  
+													<span></span>
+												</label>
+											</td>
+										</tr>
+									</tbody>
+								</table>
+													   
+								<button id="chooseIview" [disabled]="!iviewSubmit" type="button" class="btn m-btn--pill btn-primary btn-sm pull-right"
+								*ngIf="iviewAct">
+								   {{btnAcceptForPosition}}
+							   </button> &nbsp; 
+							   <button style="visibility: hidden" id="chooseIview2"(click)="selectSuccessIview(formSelIview)" [disabled]="!iviewSubmit"
+								type="button" *ngIf="iviewAct">
+								{{btnAcceptForPosition}}
+							   </button>
+							</form>
+							<!--end: success interview -->
+						</div>
+					</div>
+				</div>
+				<!--end::Item:Success List-->	
+
+					<!--begin::Comment List-->
+					<div class="m-accordion__item" *ngIf="showPanelApplList">
+						<div class="m-accordion__item-head collapsed" role="tab" id="m_accordion_1_item_5_head" data-toggle="collapse"
+						 href="#m_accordion_1_item_5_body" aria-expanded="false">
+							<span class="m-accordion__item-mode"></span>
+							<span class="m-accordion__item-title m-accordian__item-mode-title">
+								{{title9}}
+							</span>
+							<span class="m-accordion__item-icon">
+								<i class="la la-comment"></i>
+							</span>
+						</div>
+						<div class="m-accordion__item-body  collapse" id="m_accordion_1_item_5_body" role="tabpanel" aria-labelledby="m_accordion_1_item_4_head">
+							<div class="m-accordion__item-content">
+								<div class="m-portlet m-portlet--full-height" style="margin-top : 2rem !important">
+								
+									<div class="m-portlet__body">
+										<div class="centred my-auto" *ngIf="commentLoading2">
+											<job-loading></job-loading>
+										</div>
+										<div class="m-widget3" *ngIf="!commentLoading2">
+											
+											<div class="m-widget3__item" *ngFor="let com of sortCommentsData; let i=index">
+												<div class="m-widget3__header">
+													<div class="m-widget3__user-img">
+														<img class="m-widget3__img" src="{{com.img}}" alt="">
+													</div>
+													<div class="m-widget3__info">
+														<span class="m-widget3__username">
+															{{com.name}}
+														</span>
+														<br>
+														<span class="m-widget3__time">
+															<span *ngIf="older_24Hrs(com.date); else ago">{{com.date | date:'dd / MM / yyyy'}}</span><ng-template #ago>{{com.date | timeAgo}}</ng-template>
+														</span>
+														<span class="m-widget3__status m--font-info" *ngIf="checkSameUser(com.staff_no)">
+															<div class="edit-delete-btn m-dropdown m-dropdown--inline m-dropdown--arrow m-dropdown--align-right m-dropdown--align-push" aria-expanded="true" m-dropdown-toggle="click" aria-expanded="true">
+																<span class="edit-delete-btn m-portlet__nav-link btn btn-lg btn-secondary  m-btn m-btn--outline-2x m-btn--air m-btn--icon m-btn--icon-only m-btn--pill  m-dropdown__toggle">
+																	<i class="la la-plus m--hide"></i>
+																	<i class="la la-ellipsis-h"></i>
+																</span>
+																<div class="m-dropdown__wrapper edit-delete-wrap">
+																	<span class="m-dropdown__arrow m-dropdown__arrow--right m-dropdown__arrow--adjust"></span>
+																	<div class="m-dropdown__inner">
+																		<div class="m-dropdown__body">
+																			<div class="m-dropdown__content">
+																				<ul class="m-nav">
+																					<li class="m-nav__item ed_delBtn" (click)="editModeClicked(i, com.comId)">
+																						<span class="m-nav__link">
+																							<i class="icon-size m-nav__link-icon 	fa flaticon-edit-1"></i>
+																							<span class="m-nav__link-text">
+																								Edit
+																							</span>
+																						</span>
+																					</li>
+																					<li class="m-nav__item ed_delBtn" (click)="deleteCommentModal(i, com.comId)" data-toggle="modal" data-target="#m_modal_6">
+																						<span class="m-nav__link">
+																							<i class="icon-size m-nav__link-icon 	fa flaticon-delete-1"></i>
+																							<span class="m-nav__link-text">
+																								Delete
+																							</span>
+																						</span>
+																					</li>
+																				</ul>
+																			</div>
+																		</div>
+																	</div>
+																</div>
+															</div>
+														</span>
+													</div>
+												</div>
+												<div class="m-widget3__body">
+													<p class="m-widget3__text" id="edit_{{com.comId}}" style="margin-left: 4.1rem !important;">
+														{{com.comment}}
+													</p>
+													<a class="btn m-btn m-btn--icon" (click)="likeClicked(i,com.comId)" style="margin-left: 3rem !important">
+														<span> 
+															<i *ngIf="com.isLiked" [class.liked]="com.isLiked" style="font-size: 1.6rem" class="la la-heart"></i>
+															<i *ngIf="!com.isLiked" style="font-size: 1.6rem" class="la la-heart-o"></i>
+															<span [class.liked]="com.isLiked" > Like </span>
+														</span>
+													</a>
+													<a *ngIf="com.likeCount > 0" class="btn m-btn m-btn--icon" data-toggle="modal" data-target="#likes" 
+														(click)="totalLikeClicked(i,com.comId)" style="margin-left: 3rem !important">
+														<span> 
+															<b>{{com.likeCount}}</b>&nbsp; Like<span *ngIf="com.likeCount > 1">s</span>
+														</span>
+													</a>
+											
+													<div class="m-form m--hide" style="margin-left: 4rem" id="edit2_{{com.comId}}">
+														<textarea class="form-control" rows="5" id="updComnt_{{com.comId}}"
+															style="overflow-y: scroll;" [ngModel] = "com.comment"
+															placeholder="Write a comment...">
+														</textarea>
+													
+														<br>
+														<button type="button" class="btn btn-brand" (click)="updateComnt(i, com.comId)">
+															Update
+														</button>
+														<button type="button" class="btn btn-secondary" (click)="cancelUpdComnt(com.comId)" >
+															Cancel
+														</button>
+														
+													</div>
+														
+												</div>
+											</div>
+											<div class="m-widget3__item" style="border-bottom: none !important">
+												<div class="m-widget3__header">
+													<div class="m-widget3__user-img">
+														<img class="m-widget3__img" src="{{currUserImgSrc}}" alt="">
+													</div>
+													<div class="m-widget3__info">
+														<span class="m-widget3__username">
+															{{currUserName}}
+														</span>
+														<br>
+													</div>
+												</div>
+												<div class="m-widget3__body">
+													<form class="m-form" #addComnt (ngSubmit)="addComment()" [formGroup]="addComntForm">
+											
+														<div style="margin-left: 4rem">
+															<textarea formControlName="newComnt" class="form-control" rows="5" required 
+																style="overflow-y: scroll;"
+																placeholder="Write a comment...">
+															</textarea>
+															<br>
+															<button type="submit" class="btn btn-brand" [disabled]="!addComntForm.valid">
+																Post
+															</button>
+															<button id="reset-btn" [hidden]="true" type="reset" class="btn btn-success">Cancel</button>
+														</div>
+													</form>
+												</div>
+											</div>
+			
+											<div class="modal fade" id="likes" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" style="display: none;" aria-hidden="true">
+												<div class="modal-dialog modal-dialog-centered" role="document">
+													<div class="modal-content like-modal-content">
+														<div class="modal-header">
+															<h5 class="modal-title" id="exampleModalLabel">
+																<i style="font-size: 1.6rem" class="liked la la-heart-o"></i> &nbsp; {{totalLikes}}
+															</h5>
+															<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+																<span aria-hidden="true">
+																	×
+																</span>
+															</button>
+														</div>
+														<div class="modal-body">
+															<div class="m-scrollable like-body" data-scrollbar-shown="true" data-scrollable="true" data-max-height="200" style="max-height: 200px; overflow: auto;">
+																<div class="centred my-auto" *ngIf="likeLoading">
+																	<job-loading></job-loading>
+																</div>
+																<div class="m-widget3" *ngIf="!likeLoading"> 
+																	<div class="m-widget3__item" *ngFor="let lk of likedList;">
+																		<div class="m-widget3__header">
+																			<div class="m-widget3__user-img">
+																				<img class="m-widget3__img" src="{{lk.img}}" alt="">
+																			</div>
+																			<div class="m-widget3__info">
+																				<span class="m-widget3__username">
+																					{{lk.name}}
+																				</span>
+																				<br>
+																				<span class="m-widget3__time">
+																					{{lk.pos}}
+																				</span>
+																				<br>
+																				<span *ngIf="!lk.currUser" class="m-widget3__time">
+																					status : {{lk.isCircle}}
+																				</span>
+																			</div>
+																		</div>
+																	</div>
+																</div>
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+			
+											<div class="modal fade" id="m_modal_6" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" style="display: none;" aria-hidden="true">
+												<div class="modal-dialog modal-dialog-centered" role="document">
+													<div class="modal-content">
+														<div class="modal-header" style="padding:20px !important">
+															<h5 class="modal-title" id="exampleModalLongTitle">
+																{{modalTitle}}
+															</h5>
+															<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+																<span aria-hidden="true">
+																	×
+																</span>
+															</button>
+														</div>
+														<div class="modal-body">
+															<p style="margin-top:1rem !important"> {{modalBody}}</p>
+														</div>
+														<div class="modal-footer">
+															<button id="close_btn" type="button" class="btn btn-secondary" data-dismiss="modal">
+																Cancel
+															</button>
+															<button *ngIf="delBtn" type="button" class="btn btn-primary" (click)="deleteComment()">
+																Delete
+															</button>
+														</div>
+													</div>
+												</div>
+											</div>
+			
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<!--end::Item:Comment List-->
+
+					<!--begin::History List-->
+					<div class="m-accordion__item">
+						<div class="m-accordion__item-head collapsed" role="tab" id="m_accordion_1_item_6_head" data-toggle="collapse"
+						 href="#m_accordion_1_item_6_body" aria-expanded="false">
+							<span class="m-accordion__item-mode"></span>
+							<span class="m-accordion__item-title m-accordian__item-mode-title">
+								{{title6}}
+							</span>
+							<span class="m-accordion__item-icon">
+								<i class="fa flaticon-puzzle"></i>
+							</span>
+						</div>
+						<div class="m-accordion__item-body  collapse" id="m_accordion_1_item_6_body" role="tabpanel" aria-labelledby="m_accordion_1_item_5_head">
+							<div class="m-accordion__item-content">
+								<!-- start: History -->
+								<p *ngIf="history=='err'" [innerHTML]="noData"></p>
+								
+								<!-- OLD HISTORY -->
+								<table class="table table-border " *ngIf="history!='err'">
+									<thead>
+										<tr>
+											<th>Personnel</th>
+											<th>Date</th>
+											<th>Text</th>
+											<th>Details</th>
+											<th>Remark</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr *ngFor="let h of history;let hc = index">
+											<td>{{h.update_by}} </td>
+											<td>{{h.update_on| date:'dd MMM yyyy'}}</td>
+											<td>{{h.status_text}} </td>
+											<td>{{h.status_details}}</td>
+											<td>
+												<span *ngIf="h.remark.length<1; else histTrue">
+													-
+												</span>
+												<ng-template #histTrue>
+													{{h.remark}}
+												</ng-template>
+											</td>
+										</tr>
+									</tbody>
+								</table>
+								<!-- OLD HISTORY -->
+								<!-- end: History -->
+							</div>
+						</div>
+					</div>
+					<!--end::Item:History List-->
+				</div>
+				<!--end::Section-->
+			</div>
+			<!--end::Portlet-->
+		</div>
+	</div>
+</div>
+
+<!--begin::approve/decline modal-->
+<div class="modal fade" id="m_modal_approve_decline" tabindex="-1" role="dialog" aria-labelledby="advertiseModalCenterTitle"
+ aria-hidden="true" style="display: none;">
+	<div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+		<form [formGroup]="pendApprForm">
+			<!-- (ngSubmit)="pendApprFormFormSubmit()"-->
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="exampleModalLongTitle">
+						Are you sure to {{clickAct}} this advertisement?
+					</h5>
+					<button type="button" class="close" id="appr_close_modal" #appr_close_modal data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">
+							×
+						</span>
+					</button>
+				</div>
+
+				<div class="modal-body">
+					
+					<!-- :start NOTIFICATION V2  -->
+					<div class="m-alert m-alert--icon m-alert--outline alert alert-warning alert-dismissible fade show" role="alert"
+					 *ngIf="showErrMsg&&(showErrMsg||advErrMsg2)">
+						<div class="m-alert__icon">
+							<i class="la la-warning"></i>
+						</div>
+						<div class="m-alert__text">
+							{{advErrMsg}}
+							<div *ngIf="advErrMsg2" [innerHTML]="advErrMsg2"> </div>
+						</div>
+					</div>
+					<!-- :end NOTIFICATION V2 -->
+
+					<div class="m-form__section m-form__section--first">
+						<div class="form-group m-form__group row">
+							<label for="example-text-input" class="col-3 col-form-label">Remarks *
+								<!-- <span *ngIf="apprRemark">*</span> -->
+							</label>
+							<div class="col-9">
+								<textarea formControlName="advRemark" id="advertise_remarks" class="form-control m-input m-input--air m-input--pill"
+								 required rows="8" [required]="apprRemark"></textarea>
+								<p class="error_message" style="color:red" *ngIf="apprRemark && (pendApprForm.get('advRemark').value=='')">Required.
+									<span class="error_message" style="color:red" *ngIf="(pendApprForm.get('advRemark').hasError('required') && (pendApprForm.get('advRemark').dirty))">Please
+										add some remarks.</span>
+								</p>
+							</div>
+							<input type="hidden" formControlName="advId" required>
+							<input type="hidden" id="advApproveVal" formControlName="advApprove" required>
+						</div>
+					</div>
+					<div class="m-form__seperator m-form__seperator--dashed"></div>
+					<div class="m-form__section m-form__section--last" [hidden]="apprRemark">
+						<div class="form-group m-form__group row">
+							<label for="example-text-input" class="col-3 col-form-label">Advertisement
+								<br />Period*</label>
+							<div class="col-9">
+							<!-- START DATE RANGE PICKER  - V2 -->
+								<div class="input-daterange input-group" id="m_datepicker_5">
+									<input type="text" class="form-control m-input" name="start" id="st" readonly value="{{myStartDt | date: 'dd-MM-yyyy'}}" />
+									<div class="input-group-append">
+										<span class="input-group-text">
+											<i class="la la-ellipsis-h"></i>
+										</span>
+									</div>
+									<input type="text" class="form-control" name="end" id="et" readonly value="{{myEndDt | date: 'dd-MM-yyyy'}}" />
+									<!-- value="{{advEndDate | date: 'dd-MM-yyyy'}}" -->
+								</div>
+							</div>
+						</div>
+					</div>
+
+                    <div class="col-12" [hidden]="!advDateError.isError" class="alert {{advApprDateStyle}} m-alert m-alert--default "
+                        role="alert">
+                        <strong>{{advApprDateMsg}}</strong>
+                    </div>
+				</div>
+				<div class="modal-footer">
+					<input type="text" required class="form-control m-input hide-adv-date" name="start" id="startDate2"
+					 formControlName="dtStart" (focus)="compareTwoDates()" />
+					<input type="text" required class="form-control hide-adv-date" name="end" id="endDate2" formControlName="dtEnd"
+					 (focus)="compareTwoDates()" />
+					<button style="visibility:hidden" id="btnApprRevDec2" [disabled]="!pendApprForm.valid||advDateError.isError"
+					 type="submit" class="btn btn-primary" onclick="$('.modal').modal('hide')" (click)="pendApprFormFormSubmit()">
+						Confirm
+					</button>
+					<!-- Eiz - Check date, if valid then trigger the sweet alert -->
+					<button style="visibility:hidden" id="btnApprRevDec" #btnApprRevDec type="submit" class="btn btn-primary">
+						Confirm
+					</button>
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">
+						Close
+					</button>
+
+					<!--disableSubmitAdv || 
+					{{!pendApprForm.valid}} - {{!advPeriod}}-->
+					<button [hidden]="apprRemark" [ngClass]="{disabled:!pendApprForm.valid||advDateError.isError}" (click)="pendApprFormTriggerSubmit()" [disabled]="!pendApprForm.valid||advDateError.isError" type="submit" class="btn btn-primary">
+						Confirm
+					</button>
+					<button [hidden]="!apprRemark" (click)="pendApprFormTriggerSubmit()" type="submit" class="btn btn-primary">
+						Confirm
+					</button>
+				</div>
+			</div>
+		</form>
+	</div>
+</div>
+<!--end::approve/decline modal-->
+
+<!--begin::resubmit/withdraw modal-->
+<div class="modal fade" id="m_modal_resubmit" tabindex="-1" role="dialog" aria-labelledby="advertiseModalCenterTitle"
+ aria-hidden="true" style="display: none;">
+	<div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+		<form [formGroup]="resubmitForm">
+			<!--(ngSubmit)="resubmitFormSubmit()"-->
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="exampleModalLongTitle">
+						Are you sure to {{clickResubmit}} this advertisement?
+					</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">
+							×
+						</span>
+					</button>
+				</div>
+
+				<div class="modal-body">
+				
+					<!-- :start NOTIFICATION V2  -->
+					<div class="m-alert m-alert--icon m-alert--outline alert alert-warning alert-dismissible fade show" role="alert"
+					 *ngIf="showErrMsg&&(showErrMsg||advErrMsg2)&&advDateError.isError">
+						<div class="m-alert__icon">
+							<i class="la la-warning"></i>
+						</div>
+						<div class="m-alert__text">
+							{{advErrMsg}}
+							<div *ngIf="advErrMsg2" [innerHTML]="advErrMsg2"> </div>
+						</div>
+					</div>
+					<!-- :end NOTIFICATION V2 -->
+
+					<div class="m-form__section m-form__section--first">
+						<div class="form-group m-form__group row">
+							<label for="example-text-input" class="col-3 col-form-label">Remarks * 
+								<!-- <span *ngIf="resubmitRemark">*</span> -->
+							</label>
+							<div class="col-9">
+								<textarea formControlName="advRemark" id="advertise_remarks1" class="form-control m-input m-input--air m-input--pill"
+								 required rows="8" [required]="resubmitRemark"></textarea>
+								<p class="error_message" style="color:red" *ngIf="resubmitRemark && (resubmitForm.get('advRemark').value=='')">Required.
+									<span class="error_message" style="color:red" *ngIf="(resubmitForm.get('advRemark').hasError('required') && (resubmitForm.get('advRemark').dirty))">Please
+										add some remarks.</span>
+								</p>
+							</div>
+							<input type="hidden" formControlName="advId" required>
+							<input type="hidden" formControlName="advResubmit" required id="resubmitVal">
+						</div>
+					</div>
+					<div class="m-form__seperator m-form__seperator--dashed"></div>
+					<div class="m-form__section m-form__section--last" [hidden]="resubmitRemark">
+						<div class="form-group m-form__group row">
+							<label for="example-text-input" class="col-3 col-form-label">Advertisement Period*</label>
+							<div class="col-9">
+								
+								<!-- START DATE RANGE PICKER  - V2 -->
+								<div class="input-daterange input-group" id="m_datepicker_5">
+									<input type="text" class="form-control m-input" name="start" id="stResubmit" readonly value="{{myStartDt | date: 'dd-MM-yyyy'}}" />
+									<div class="input-group-append">
+										<span class="input-group-text">
+											<i class="la la-ellipsis-h"></i>
+										</span>
+									</div>
+									<input type="text" class="form-control" name="end" id="etResubmit" readonly value="{{myEndDt | date: 'dd-MM-yyyy'}}" />
+									<!-- value="{{advEndDate | date: 'dd-MM-yyyy'}}" -->
+								</div>
+								<p class="error_message" style="color:red" *ngIf="advDateError.isError">{{advDateError.errorMessage}}</p>
+								<!-- END DATE RANGE PICKER - V2 -->
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<input type="text" required class="form-control m-input hide-adv-date" name="start" id="startDate2Resubmit"
+					 formControlName="dtStart" (focus)="compareTwoDatesResubmit()" />
+					<input type="text" class="form-control hide-adv-date" name="end" id="endDate2Resubmit" formControlName="dtEnd"
+					 (focus)="compareTwoDatesResubmit()" />
+
+					<button [disabled]="!resubmitForm.valid || advDateError.isError" type="button" class="btn btn-primary" style="visibility: hidden"
+					 id="advResubmit2" (click)="resubmitFormSubmit()">
+						Confirm
+					</button>
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">
+						Close
+					</button>
+					<!--disableSubmitAdv || -->
+					<button [disabled]="!resubmitForm.valid || advDateError.isError" type="button" class="btn btn-primary" onclick="$('.modal').modal('hide')"
+					 id="advResubmit">
+						Confirm
+					</button>
+				</div>
+			</div>
+		</form>
+	</div>
+</div>
+<!--end::resubmit/withdraw modal-->
+
+
+<style>
+	.m-accordian__item-mode-title {
+		padding-left: 1.5rem;
+	}
+
+	.m-button-advert {
+		float: right;
+		padding-bottom: 1rem;
+	}
+
+	.m-repeater-edit-delete {
+		margin-top: 1.8rem;
+	}
+
+	.m-repeater-edit-delete .btn {
+		width: 6.2rem;
+	}
+
+	.m-dropzone {
+		min-height: 160px;
+		border-radius: 18px;
+		box-shadow: 0 3px 20px 0 rgba(113, 106, 202, .11);
+	}
+
+	.dropzone .dz-preview {
+		margin: 0;
+	}
+
+	.dropzone .dz-preview.dz-file-preview .dz-image,
+	.m-dropzone .dz-preview .dz-image {
+		border-radius: 0;
+	}
+
+	[hidden] {
+		display: none !important;
+	}
+</style>
+
+<!--begin::Modal APPLICANT INFO -->
+<div class="modal fade" id="appl_profile" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<form [formGroup]="applInfoForm" (ngSubmit)="applInfoFormSubmit()">
+		<div class="modal-dialog modal-lg" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="exampleModalLabel">
+						{{applName}}
+					</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">
+							&times;
+						</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<div class="m-scrollable" data-scrollbar-shown="true" data-scrollable="true" data-max-height="400">
+						<div *ngIf="applLoading">
+							<div class="m-section__content">
+								<div class="m-demo" data-code-preview="true" data-code-html="true" data-code-js="false">
+									<div class="m-demo__preview">
+										<div class="m-stack m-stack--ver m-stack--general m-stack--demo">
+
+											<div class="m-stack__item m-stack__item--center m-stack__item--middle">
+												<span>
+													Loading data. Please wait...
+												</span>
+												<span>
+													<div class="m-loader m-loader--lg m-loader--success" style="width: 30px; display: inline-block;"></div>
+												</span>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="m-portlet" *ngIf="!applLoading">
+							<div class="m-portlet__body" style="padding: 0!important">
+								<ul class="nav nav-tabs nav-fill" role="tablist">
+									<li class="nav-item" style="width: 120px;">
+										<a class="nav-link active" data-toggle="tab" href="#m_tabs_1_1">Personal Information</a>
+									</li>
+									<li class="nav-item" style="width: 120px;">
+										<a class="nav-link" data-toggle="tab" href="#m_tabs_1_2">Promotion Criteria</a>
+									</li>
+									<li class="nav-item" style="width: 120px;">
+										<a class="nav-link" data-toggle="tab" href="#m_tabs_1_3">Assessment</a>
+									</li>
+									<li class="nav-item" style="width: 120px;">
+										<a class="nav-link" data-toggle="tab" href="#m_tabs_1_4">Application History</a>
+									</li>
+									<li class="nav-item" style="width: 120px;">
+										<a class="nav-link" data-toggle="tab" href="#m_tabs_1_5">Jobs Applied</a>
+									</li>
+									<li class="nav-item" *ngIf = "(info && info[0] && info[0]?.type == 3) && (info && info[0] && info[0]?.status == 6)" style="width: 120px;">
+										<a class="nav-link" data-toggle="tab" href="#m_tabs_1_6">Interview Report</a>
+									</li>
+								</ul>
+								<div class="tab-content">
+									<!-- Personal Information Tab -->
+									<div class="tab-pane active" style="overflow-y:scroll;max-height:320px;" id="m_tabs_1_1" role="tabpanel">
+										<table class="table table-bordered" *ngIf="applProfile">
+											<tr>
+												<th style="width: 30%">Name</th>
+												<td>{{applProfile.Name}}</td>
+											</tr>
+											<tr>
+												<th>Employee Number</th>
+												<td>{{applProfile.Staff_No}}</td>
+											</tr>
+											<tr>
+												<th>Employee Group</th>
+												<td>{{applProfile.EmpGroup}}</td>
+											</tr>
+											<tr>
+												<th>Employee Sub-Group</th>
+												<td>{{applProfile.EmpSGroup}}</td>
+											</tr>
+											<tr>
+												<th>Position</th>
+												<td>{{applProfile.Post_Desc}}</td>
+											</tr>
+											<tr>
+												<th>Position ID</th>
+												<td>{{applProfile.Position}}</td>
+											</tr>
+											<tr>
+												<th>Unit</th>
+												<td>{{applProfile.Sub_Org_Unit_Desc}}</td>
+											</tr>
+											<tr>
+												<th>Division</th>
+												<td>{{applProfile.Org_Unit_Desc}}</td>
+											</tr>
+											<tr>
+												<th>Company</th>
+												<td>{{applProfile.Company_Desc}}</td>
+											</tr>
+											<tr>
+												<th>YTM scholar</th>
+												<td>{{applProfile.YTM_Scholar}}</td>
+											</tr>
+											<tr>
+												<th>Talent</th>
+												<td>{{applProfile.Talent}}</td>
+											</tr>
+											<tr>
+												<th>Superior</th>
+												<td>{{applProfile.Rept_To_Name}}</td>
+											</tr>
+											<tr>
+											<th>Flight Risk</th>
+												<td><span style="  min-width:76px; min-height: 10px; font-weight: bold; color: white; padding: 3px!important; margin: 3px!important;" [ngStyle]="{'background-color': getFlightRiskColor(applProfile.flight_risk_value)}">{{applProfile.flight_risk}}</span></td>
+											</tr>
+										</table>
+									</div>
+									<!-- Promotion Tab -->
+									<div class="tab-pane" id="m_tabs_1_2" *ngIf = "info && info[0] && info[0]?.type != 3" style="overflow-y:scroll;max-height:320px;" role="tabpanel">
+										<div *ngIf="applCriteriaPromo">
+											<div *ngIf="applCriteriaPromo[0].result == 1">
+												<table class="table table-striped table-hover m_datatable">
+			                                        <thead class="thead-inverse">
+			                                            <tr>
+			                                                <th>No.</th>
+			                                                <th>Criteria</th>
+			                                                <th>Min Requirement</th>
+			                                                <th>Candidate</th>
+			                                                <th style="max-width: 30px;">Remark</th>
+			                                            </tr>
+			                                        </thead>
+			                                        <tbody>
+			                                            <tr *ngFor="let h of applCriteriaPromo | slice:1:(applCriteriaPromo.length-2); let i=index;">
+			                                                <td class="font_12px">{{i+1}}</td>
+			                                                <td class="font_12px">{{h.criteria}}</td>
+			                                                <td class="font_12px">{{h.target}}</td>
+			                                                <td class="font_12px">{{h.candinate}}</td>
+			                                                <td class="font_12px">{{h.remark}}</td>
+			                                            </tr>
+			                                        </tbody>
+			                                    </table>
+
+			                                    <table>
+			                                    	<tr>
+			                                    		<td style="width: 50px;"><b>Result</b> :</td>
+			                                    		<td>
+			                                    			{{applCriteriaPromo[applCriteriaPromo.length-2].remark}}&nbsp;
+			                                    			<span *ngIf="applCriteriaPromo[applCriteriaPromo.length-1].result == 1">
+			                                    				({{applCriteriaPromo[applCriteriaPromo.length-1].remark}})
+			                                    			</span>
+			                                    		</td>
+													</tr>
+													<!-- Correction did Below -->
+			                                    	<tr *ngIf= "(jobsApply[0].job_status_code==3||jobsApply[0].job_status_code==4||jobsApply[0].job_status_code==5)&&(jobsApply[0].apply_status_code==10||jobsApply[0].apply_status_code==11)" class="mt-3">
+			                                    		<td colspan="2">
+															<button type="button" class="btn m-btn--pill btn-outline-brand" data-toggle="modal" data-target="#request_applicant" (click)="initModal(applId);">
+																<span class="fa fa-check"></span> Request Assessment
+															</button>
+														</td>
+			                                    	</tr>
+			                                    </table>
+			                                </div>
+			                                <div *ngIf="applCriteriaPromo[0].result == 0" class="text-center">
+			                                	No Promotion Criteria
+			                                </div>
+		                                </div>
+									</div>
+									<!-- Promotion Tab for NE Promo -->
+									<div class="tab-pane" id="m_tabs_1_2" *ngIf = "info && info[0] && info[0]?.type == 3" style="overflow-y:scroll;max-height:320px;" role="tabpanel">
+										<div *ngIf="applCriteriaNEPromo">
+											<!-- <div *ngIf="applCriteriaNEPromo[0].result == 1"> -->
+												<table class="table table-striped table-hover m_datatable">
+			                                        <thead class="thead-inverse">
+			                                            <tr>
+			                                                <th>No.</th>
+			                                                <th>Criteria</th>
+			                                                <th>Min Requirement</th>
+			                                                <th>Candidate</th>
+			                                                <th style="max-width: 30px;">Remark</th>
+			                                            </tr>
+			                                        </thead>
+			                                        <tbody>
+			                                            <tr *ngFor="let h of applCriteriaNEPromo; let i=index;">
+			                                                <td class="font_12px">{{i+1}}</td>
+			                                                <td class="font_12px">{{h.criteria}}</td>
+			                                                <td class="font_12px">{{h.target}}</td>
+			                                                <td class="font_12px">{{h.candinate}}</td>
+			                                                <td class="font_12px">{{h.remark}}</td>
+			                                            </tr>
+			                                        </tbody>
+			                                    </table>
+			                                <div *ngIf="applCriteriaNEPromo.length == 0" class="text-center">
+			                                	No Promotion Criteria
+			                                </div>
+										</div>
+									</div>
+									<!-- Assessment Tab -->
+									<div class="tab-pane" id="m_tabs_1_3" role="tabpanel">
+										<div *ngIf="applAssessment && info && info[0] && info[0]?.type != 3">
+											<div>
+												<table class="table table-striped table-hover m_datatable">
+			                                        <thead class="thead-inverse">
+			                                            <tr>
+			                                                <th>No.</th>
+			                                                <th>Assessment</th>
+			                                                <th>Status</th>
+			                                                <th class="text-center">Results</th>
+			                                                <th class="text-center">Detail</th>
+			                                            </tr>
+			                                        </thead>
+			                                        <tbody>
+			                                            <tr *ngFor="let h of applAssessment; let i=index;">
+			                                                <td class="font_12px">{{i+1}}</td>
+			                                                <td class="font_12px">{{h.assessment}}</td>
+			                                                <td class="font_12px">{{h.status}}</td>
+			                                                <td class="font_12px text-center">
+																<div *ngIf="i == 0" class="row">
+																	<div *ngIf="h.results == 'N/A'" class="col-md-2">&nbsp;</div>
+			                                                        <div *ngIf="h.results == 'N/A'" class="col-md-8">
+			                                                            <input [value]="" id="harrison_score" class="form-control form-control- m-input" type="text" placeholder="Score"> 
+			                                                        </div>
+		                                                            <i *ngIf="h.results == 'N/A'" class="fa fa-check-circle-o m--font-success" ngbTooltip="Submit Harrison Score" style="cursor: pointer;padding-top: 5px;font-size: 2rem!important;" (click)="updateHarrison(applId)"></i>
+																</div>
+																<div *ngIf="i != 0">
+				                                                	{{h.results}}
+				                                                </div>
+																<div *ngIf="h.results != 'N/A' && i == 0">
+				                                                	{{h.results}}
+				                                                </div>
+			                                                </td>
+			                                                <td class="font_12px text-center">
+																<div *ngIf="i != 0">
+				                                                	<div *ngIf="h.status != 'Pending'">
+				                                                		<div *ngIf="i == 1">
+																			<button type="button" class="btn m-btn--pill btn-outline-brand" (click)="onClickAssessmentDLBtn(i)" [disabled]="applDownloadFlag2">
+																				<span class="fa fa-download"></span>
+																			</button>
+																		</div>
+				                                                		<div *ngIf="i == 2">
+																			<button type="button" class="btn m-btn--pill btn-outline-brand" (click)="onClickAssessmentDLBtn(i)" [disabled]="applDownloadFlag2">
+																				<span class="fa fa-download"></span>
+																			</button>
+																		</div>
+																	</div>
+																	<div *ngIf="h.status == 'Pending'">
+																		N/A
+																	</div>
+																</div>
+																<div *ngIf="i == 0">
+																	N/A
+																</div>
+			                                                </td>
+			                                            </tr>
+			                                        </tbody>
+			                                    </table>
+			                                </div>
+			                                <div *ngIf="applAssessment.length < 1" class="text-center">
+			                                	No Assessment
+			                                </div>
+		                                </div>
+										<!-- Assessment Tab for NE PROMO -->
+										<div *ngIf="applAssessmentNE && info && info[0] && info[0]?.type == 3">
+											<div>
+												<table class="table table-striped table-hover m_datatable">
+			                                        <thead class="thead-inverse">
+			                                            <tr>
+			                                                <th>No.</th>
+			                                                <th>Assessment</th>
+			                                                <th>Status</th>
+			                                                <th class="text-center">Results</th>
+			                                                <th class="text-center">Detail</th>
+			                                            </tr>
+			                                        </thead>
+			                                        <tbody>
+			                                            <tr *ngFor="let h of applAssessmentNE; let i=index;">
+			                                                <td class="font_12px">{{i+1}}</td>
+			                                                <td class="font_12px">{{h.assessment}}</td>
+			                                                <td class="font_12px">{{h.status}}</td>
+			                                                <td class="font_12px text-center">
+																<div *ngIf="i == 0">
+																	<div *ngIf="h.results == 'N/A'">N/A</div>
+			                                                    </div>
+																<div *ngIf="i != 0">
+				                                                	{{h.results}}
+				                                                </div>
+																<div *ngIf="h.results != 'N/A' && i == 0">
+				                                                	{{h.results}}
+				                                                </div>
+			                                                </td>
+			                                                <td class="font_12px text-center">
+																<div *ngIf="i != 0">
+				                                                	<div *ngIf="h.status != 'Pending'">
+				                                                		<div *ngIf="i == 1"> N/A																		
+																		</div>
+																		<div *ngIf="i == 2 && applAssessmentNE[3].results != 'Passed'">
+																			N/A
+																		</div>
+																		<div *ngIf="i == 2 && applAssessmentNE[3].results == 'Passed'">
+																			<button type="button" class="btn m-btn--pill btn-outline-brand" (click)="getAssessmentLeadReport()" >
+																				<span class="fa fa-download"></span>
+																			</button>
+																		</div>
+																	</div>
+																	<div *ngIf="h.status == 'Pending'">
+																		N/A
+																	</div>
+																</div>
+																<div *ngIf="i == 0">
+																	N/A
+																</div>
+			                                                </td>
+															<td></td>
+			                                            </tr>
+			                                        </tbody>
+			                                    </table>
+			                                </div>
+			                                <div *ngIf="applAssessmentNE.length < 1" class="text-center">
+			                                	No Assessment
+			                                </div>
+		                                </div>
+									</div>
+									<!-- Application History Tab -->
+									<div class="tab-pane" id="m_tabs_1_4" role="tabpanel">
+										<table class="table table-striped table-hover m_datatable">
+	                                        <thead class="thead-inverse">
+	                                            <tr>
+	                                                <th>No.</th>
+	                                                <th>Date</th>
+	                                                <th *ngIf = "info && info[0] && info[0]?.type != 3">Applicant</th>
+													<th *ngIf = "info && info[0] && info[0]?.type == 3">Update by</th>
+	                                                <th *ngIf = "info && info[0] && info[0]?.type != 3">Remark</th>
+													<th *ngIf = "info && info[0] && info[0]?.type == 3">Status</th>
+	                                            </tr>
+	                                        </thead>
+	                                        <tbody>
+	                                            <tr *ngFor="let h of applHistory; let i=index;">
+	                                                <td class="font_12px">{{i+1}}</td>
+	                                                <td class="font_12px">{{h.update_on| date:'dd MMM yyyy'}}</td>
+	                                                <td class="font_12px">{{h.update_by}}</td>
+	                                                <td *ngIf = "info && info[0] && info[0]?.type != 3" class="font_12px">{{h.remark}}</td>
+													<th *ngIf = "info && info[0] && info[0]?.type == 3">{{h.log_desc}}</th>
+												</tr>
+	                                        </tbody>
+	                                    </table>
+										<br>
+										<div *ngIf = "info && info[0] && info[0]?.type == 3 && jobsApply && (applHistory[2]?.admstatus == 0)" 
+										style = "width: 300px; height: 70px; border: 1px solid #ffa600;
+										box-sizing: border-box; font-weight: bold;">
+											<p>&nbsp;Reference Number:</p>
+											<p>&nbsp;{{jobsApply && jobsApply[0] && jobsApply[0]?.ref_no}}</p>
+										</div>
+										<br>
+									</div>
+									<!-- Jobs Applied tab -->
+									<div class="tab-pane" id="m_tabs_1_5" role="tabpanel" *ngIf="(info && info[0] && info[0]?.type != 3)">
+										<div class="dataTables_wrapper dt-bootstrap4 no-footer">
+											<div class="row">
+												<div class="col-sm-12">
+													<table class="table table-striped- table-bordered table-hover 
+															table-checkable dataTable no-footer dtr-inline collapsed" 
+															role="grid" aria-describedby="m_table_1_info" style="width: 700px;">
+
+															<thead class="thead-inverse">
+																<tr>
+																	<th style="width: 6%" >
+																		No.
+																	</th>
+																	<th>
+																		Position
+																	</th>
+																	<th>
+																		ID
+																	</th>
+																	<th>
+																		Appl. Status
+																	</th>
+																	<th>
+																		Close Date
+																	</th>
+																	<th>
+																		Applied On
+																	</th>
+																	<th>
+																		Job Status
+																	</th>
+																</tr>
+															</thead>
+
+															<tbody>
+																<tr role="row" *ngFor = "let job of jobsApply; let rowIndex = index">
+																	<td>{{rowIndex+1}}</td>
+																	<td>{{job.position}}</td>
+																	<td>{{job.id}}</td>
+																	<td>{{job.apply_status}}</td>
+																	<td>{{job.close | date:'d/M/yyyy'}}</td>
+																	<td>{{job.apply_on | date:'d/M/yyyy'}}</td>
+																	<td>{{job.job_status}}</td>
+																</tr>
+															</tbody>
+													</table>
+												</div>
+											</div>
+
+										</div>
+									</div>
+									<!-- Jobs Applied tab for NE Promo-->
+									<div class="tab-pane" id="m_tabs_1_5" role="tabpanel" style="overflow-y:scroll;max-height:320px;" 
+									*ngIf="(info && info[0] && info[0]?.type == 3)">
+										<div class="dataTables_wrapper dt-bootstrap4 no-footer">
+											<div class="row">
+												<div class="col-sm-12">
+													<table class="table table-striped- table-bordered table-hover 
+															table-checkable dataTable no-footer dtr-inline collapsed" 
+															role="grid" aria-describedby="m_table_1_info" style="width: 700px;">
+
+															<thead class="thead-inverse">
+																<tr>
+																	<th style="width: 6%" >
+																		No.
+																	</th>
+																	<th>
+																		Position
+																	</th>
+																	<th>
+																		ID
+																	</th>
+																	<th>
+																		Appl. Type
+																	</th>
+																	<th>
+																		Appl. Status
+																	</th>
+																	<th>
+																		Close Date
+																	</th>
+																	<th>
+																		Applied On
+																	</th>
+																	<th>
+																		Job Status
+																	</th>
+																	<th>
+																		Interview Score
+																	</th>
+																	<th>
+																		Offer Status
+																	</th>
+																	<th>
+																		Advertiser
+																	</th>
+																</tr>
+															</thead>
+
+															<tbody>
+																<tr role="row" *ngFor = "let job of applJobApply; let rowIndex = index">
+																	<td>{{rowIndex+1}}</td>
+																	<td>{{job.position}}</td>
+																	<td>{{job.id}}</td>
+																	<td>
+																		{{job.Application_type}}
+																	</td>
+																	<td>{{job.apply_status}}</td>
+																	<td>{{job.close | date:'d/M/yyyy'}}</td>
+																	<td>{{job.apply_on | date:'d/M/yyyy'}}</td>
+																	<td>{{job.job_status}}
+																		<br>
+																		Date:
+																		{{job.Interview_Date | date:'d/M/yyyy mm:ss'}}
+																	</td>
+																	<td>
+																		{{job.intvwFnlScore}}
+																	</td>
+																	<td>
+																		{{job.offer_status}}
+																		<br>
+																		{{job.reject_remark}}
+																	</td>
+																	<td>
+																		{{job.Advertiser}}
+																	</td>
+																</tr>
+															</tbody>
+													</table>
+												</div>
+											</div>
+
+										</div>
+									</div>
+									<!-- Interview Report tab for NE Promo-->
+									<div class="tab-pane" style="overflow-y:scroll;max-height:320px;" id="m_tabs_1_6" role="tabpanel">
+										<div class="form-group m-form__group" style="padding: 30px;">
+											<div class="row">
+											   <div class="col-md-3" style="width: 100px;text-align: center;">
+												   <img style="max-width: 100px; height: 100px !important;" 
+												   src="{{profileImg}}" 
+												   class="m--img-rounded m--marginless m--img-centered userd-image" 
+												   alt=""/> 
+											   </div>
+											   <div class="col-md-9" style="font-family: Verdana, Geneva, Tahoma, sans-serif;">
+												 <table *ngIf= "appfinalResultNe">
+													 <tr style= "font-size: 20px; color: rgb(86, 86, 180)">
+														  <span style="font-weight: bold;">{{appfinalResultNe[0]?.candidateName}}</span>
+													      <span> ({{appfinalResultNe[0]?.position_id}})</span>
+													 </tr>
+													 <tr>&nbsp;</tr>
+													 <tr style= "color:grey; font-size: 18px; font-weight: bold;">{{appfinalResultNe[0]?.Position_Title}}</tr>
+													 <tr style= "font-size: 18px; color:grey;text-decoration-line: underline; text-transform: lowercase">{{appfinalResultNe[0]?.Email}}</tr> 
+													 <tr style="font-size: 18px; font-weight: bold; font-style: italic;">
+														{{appfinalResultNe[0]?.result}} 
+													 </tr>
+													 <!-- <tr style="font-size: 20px;color:red; font-style: italic;font-weight: bold;">{{appfinalResultNe[0]?.result}}</tr> -->
+													 <tr>&nbsp;</tr>
+												</table>
+											 </div>
+										   </div>
+										   <br>
+										   <div class="row">
+											 <div class="col-md-6">
+												 <div class="row" *ngIf="applAssessmentNE" style="display: flex;justify-content: left;align-items: left; font-family: Verdana, Geneva, Tahoma, sans-serif;">
+													 <div class="col-md-10">&nbsp;&nbsp;</div>
+													 <div class="col-md-10">&nbsp;&nbsp;</div>
+													 <div class="col-md-11"
+														 style=" background: rgb(179, 213, 243);height: 5px;">
+													 </div>
+													 <div class="col-md-11">
+													   <table style="width: 100%; text-align: left;">
+														   <tr>
+															 <td>&nbsp;</td>
+														   </tr>
+														   <tr>
+															   <td class="col-md-9">Organizational Knowledge Assessment</td>
+															   <td class="col-md-2">:{{applAssessmentNE[0]?.results}}</td>
+														   </tr>
+														   <tr>
+															   <td class="col-md-9">Behavioral Assessment</td>
+															   <td class="col-md-2">:{{applAssessmentNE[1]?.results}}</td>
+														   </tr>
+														   <tr>
+															 <td class="col-md-9">Leadership Assessment</td>
+															 <td class="col-md-2">:{{applAssessmentNE[2]?.results}}</td>
+														   </tr>
+														   <tr>
+															   <td>&nbsp;</td>
+														   </tr>  
+														   <tr style = "color: rgb(8, 85, 153); font-weight: bold;">
+															 <td class="col-md-9">Assessment Result</td>
+															 <td class="col-md-2">:{{applAssessmentNE[3]?.results}}</td>
+														   </tr>
+													   </table>
+													 </div>
+												   </div>
+												 <div class="row" style="display: flex;justify-content: left;align-items: left; font-family: Verdana, Geneva, Tahoma, sans-serif;">
+													   <div class="col-md-10">&nbsp;&nbsp;</div>
+													   <div class="col-md-11"
+														   style=" background: rgb(179, 213, 243);height: 5px;">
+													   </div>
+													   <div class="col-md-11" *ngFor="let finalitem of appfinalResultNe">
+														 <table style="width: 100%;">
+															 <tr>
+																 <td>&nbsp;</td>
+															 </tr>
+															 <tr>
+																 <td class="col-md-9">Part A </td>
+																 <td class="col-md-2">:{{finalitem.successne}}%</td>
+															 </tr>
+															 <tr>
+																 <td class="col-md-9">Part B </td>
+																 <td class="col-md-2">:{{finalitem.functionalne}}%</td>
+															 </tr>
+															 <tr>
+																 <td>&nbsp;</td>
+															 </tr>
+															 <tr style = "color: rgb(8, 85, 153);  font-weight: bold;">
+																 <td class="col-md-9">INTERVIEW SCORE</td>
+																 <td class="col-md-2">:{{finalitem.ivtotalmark_ne}}%</td>
+															 </tr>
+															 <tr>
+																 <td>&nbsp;</td>
+															 </tr>
+														</table>
+													   </div>
+						
+														<div class="col-md-11"
+															 style=" background: rgb(179, 213, 243);height: 5px;">
+														</div>
+													</div>
+											   </div>
+											   <div class="col-md-6">
+												   <div class="row" style="display: flex;justify-content: justify;align-items: left; font-family: Verdana, Geneva, Tahoma, sans-serif;">
+													   <div class="col-md-12" style="font-weight: bold;">&nbsp;<b>Overall Remarks:</b></div>
+													   <br><br>
+													   <div class="card" style="width: 45rem; text-align: justify;">
+														 <div class="card-body">
+															<div><b>Head Panel</b></div>
+															 <div *ngFor="let itmRemark of applOverallRemarks">
+																 <div *ngIf="itmRemark.roleName === 'Head Interview Panel'">
+																	 <span>{{itmRemark.panelName}}:</span>
+																	 <span> {{itmRemark.remarks}}</span>
+																 </div>
+																<div *ngIf="itmRemark.roleName === 'Interview Panel'">
+																	<div><b>Panel</b></div>
+																	 <span>{{itmRemark.panelName}}:</span>
+																	 <span> {{itmRemark.remarks}}</span> 
+																 </div>
+																 &nbsp; 
+															 </div>
+															 <br>
+															 <!-- <div *ngIf = "itmRemark.result == 'Reserved'" style="font-style: italic;">
+																 (<span style="font-weight: bold; color: blue;">Notes</span>: Reserved is a second option if the recommended candidate is unable to fulfill the position)
+															 </div> -->
+														 </div>
+												   </div>
+											   </div>   
+										   </div>
+									   </div>
+									  </div>
+									  <div class = "text-center">
+										<label class=" col-form-label label-data"
+											style="font-size: 1.0rem;">
+											
+											<!-- <button type="button" class="btn m-btn--gradient btn-outline-primary" (click)= "getCandidateReport(applicant && applicant[0] && applicant[0]?.id)">                                           
+												<span class="fa fa-download"> Download PDF</span>
+											</button>				 -->
+											<!-- <button type="button" class="btn m-btn--gradient btn-outline-primary">                                           
+												<span class="fa fa-download"> Download PDF</span>
+											</button>	 -->
+										</label>
+									</div>
+								  </div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<input type="hidden" formControlName="applId" />
+					<input type="hidden" formControlName="applIndex" />
+					<input type="hidden" formControlName="applType" />
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn m-btn--pill btn-outline-brand" [disabled]="applResumeFlag" (click)="onClickResumeBtn()">
+						<span class="fa fa-download"></span> <span *ngIf="applResumeFlag">No </span>Resume
+					</button>
+					<button type="button" class="btn m-btn--pill btn-outline-success" [disabled]="applDownloadFlag" (click)="onClickDownloadBtn()">
+						<span class="fa fa-download"></span> Career Profile
+					</button>
+			   		<button type="submit" [disabled]="applLoading" class="btn btn-primary" onclick="$('.modal').modal('hide')" 
+					   *ngIf="((iviewAct&&applStatus=='11'&&opnApplType=='forSuccess')||(aplcAct&&applStatus=='10'&&opnApplType=='forInterview')) && (info && info[0] && info[0]?.type != 3)">
+						Select this Applicant 
+					</button>
+				</div>
+			</div>
+		</div>
+	</form>
+</div>
+<!--end::Modal APPLICANT INFO -->
+
+<!-- show offer letter modal -->
+<div class="modal fade" id="show_offerLetter" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+aria-hidden="true">
+<div class="modal-dialog modal-lg" role="document">
+	<div class="modal-content">
+		 <div class="modal-header">
+			<h5 class="modal-title" id="exampleModalLabel" style="margin-left: 0;">
+				Review Offer Letter
+			</h5>
+			 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+				 <span aria-hidden="true">
+					 &times;
+				 </span>
+			 </button>
+		 </div>
+		 <div class="col-lg-12 centred my-auto" *ngIf="offerLoading">
+            <div class="m-section__content">
+                <div class="m-card-user m-card-user--skin-dark" align="center" style="height: 400px;" class="m-portlet__body">
+                    <span>
+                        <img src="../assets/img/user/ERA-loading.gif" alt="" style="width:auto;height:100px;position: initial; margin:10%">
+                    </span>
+                </div>    
+            </div>
+         </div>
+		 <div class="modal-body">
+			<form [formGroup]="generateOFLForm" *ngFor="let itmJob of appApplyDetail"> 
+				<div class="form-group m-form__group">
+					<div class="col-md-12">
+						<header style="color:grey; text-align:left">
+							&nbsp;&nbsp; Human Capital Business Operations
+							<label class="control-label col-md-12">
+								<img src="../assets/img/user/TM_LOGO.png" alt="" style="width:auto;height:60px; float: right">
+							</label>
+						</header>
+						<div class="row">	
+							<div class="col-md-9" style="text-align:left; font-weight: bold;"> 
+								<label class="control-label col-md-10">Ruj. Kami :
+									&nbsp;{{itmJob.ref_no}}
+								</label>
+							</div>
+							<div class="col-md-3" style="text-align:center; font-weight: bold;">
+								{{app_offer_on}}
+							</div>
+						</div>
+						<br>
+						<br>
+						 <div class="row" style="text-align:left; font-weight: bold; font-size: medium;">
+							<div class="col-md-3"> 
+								<label class="control-label col-md-6">NAMA</label>
+							</div>
+							<div class="col-md-1"> 
+								<label>:</label>
+							</div>
+							<div class="col-md-6">
+								<div class="input-group">
+									{{itmJob.Name}}
+								</div>
+							</div>
+						</div>
+						<div class="row" style="text-align:left; font-weight: bold; font-size: medium;">
+							<div class="col-md-3"> 
+							   <label class="control-label col-md-6">NO K/P</label>
+							 </div>
+							 <div class="col-md-1"> 
+								<label>:</label>
+							</div>
+							<div class="col-md-6">
+								<div class="input-group">
+									{{itmJob.New_IC_No}}
+								</div>
+							</div>
+						</div>
+						<div class="row" style="text-align:left; font-weight: bold; font-size: medium;">
+							<div class="col-md-3"> 
+								<label class="control-label col-md-6">PERS.NO</label>
+							</div>
+							<div class="col-md-1"> 
+								<label>:</label>
+							</div>
+							<div class="col-md-6">
+							<div class="input-group">
+								{{itmJob.Pers_No}}
+							</div>
+						</div>
+						</div>
+						<br>
+						<div>
+						<div class="row">
+							<div class="col-md-3" style="text-align:left; font-size: medium;"> 
+								<div>
+									<label class="control-label col-md-4">Melalui</label>
+								</div>
+								<div>
+									<label class="control-label col-md-4">Dan</label>
+								</div>
+								<div>
+									<label class="control-label col-md-4">Salinan</label>
+								</div>
+							</div>
+							<div class="col-md-1"> 
+								<label>:</label>
+							</div>
+							<div class="col-md-6">
+								<div style="font-weight: bold; font-size: medium;">
+									{{itmJob.name_currrentReporting}}
+								</div>
+								<div>
+									{{itmJob.postDesc_currentReporting}}
+								</div>
+								<div>
+									{{itmJob.div_currentReporting}}
+								</div>
+							</div>
+						</div>
+						<br>
+						<div class="row">
+							<div class="col-md-5" style="text-align:left;"> 
+								<label class="control-label col-md-4">Tuan,</label>
+							</div>
+						</div>
+						<div class="row" >
+							<div class="col-md-12" style="text-align:left; font-weight: bold; text-transform: uppercase; font-size: medium;" > 
+								<label class="control-label col-md-12">TAWARAN KENAIKAN PANGKAT JAWATAN {{itmJob.position}} (BAND {{itmJob.band}})</label>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-md-12" style="text-align:justify;"> 
+								<label class="control-label col-md-12">Syarikat mengucapkan setinggi-tinggi tahniah kerana anda telah lulus <span style= "font-weight: bold;">temuduga</span> 
+									bagi Kenaikan Pangkat yang telah diadakan baru-baru ini. Dengan keputusan tersebut, anda dengan ini ditawarkan kenaikan pangkat sebagai 
+									<strong>{{itmJob.position}} (Band {{itmJob.band}})</strong> secara lantikan tetap mulai 
+									<strong>{{app_report_date}}</strong>. 
+								</label>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-md-12" style="text-align:justify;"> 
+								<label class="control-label col-md-12">Tawaran ini adalah tertakluk kepada syarat-syarat seperti berikut:
+								</label>
+							</div>
+						</div>
+						<div class="row" style="text-align:justify;" class="col-md-12">
+							<ol style="list-style-type: lower-alpha">
+								<li>Anda dikehendaki menjalani tempoh percubaan selama enam (6) bulan dengan 
+									prestasi kerja yang memuaskan sebelum dipertimbangkan untuk disahkan dalam jawatan.</li>
+									<br>
+								<li>Sekiranya anda tidak disahkan dalam jawatan, gaji 
+									anda akan diturunkan dan dikembalikan ke gred asal atau mana-mana jawatan yang setaraf dengan gred asal
+									tanpa menjejaskan peluang kenaikan pangkat pada masa hadapan.</li>
+									<br>
+								<li>Syarat-syarat Perkhidmatan yang lain seperti mana yang terkandung dalam 
+									<strong>Terma dan Syarat Perkhidmatan mengikut Perjanjian Bersama</strong> 
+									untuk kakitangan Bukan Eksekutif termasuk pindaan-pindaannya serta peraturan-peraturan yang dikeluarkan 
+									dari masa ke semasa hendaklah dipatuhi.</li>
+									<br>
+								<li>Sekiranya didapati bahawa maklumat-maklumat yang diberikan oleh anda 
+									adalah <strong>PALSU, TELEKOM MALAYSIA BHD </strong> 
+									berhak membatalkan tawaran ini.</li>
+							</ol>
+							<p>
+								<label class="control-label col-md-12">Sehubungan itu, mulai <strong>{{app_report_date}}</strong>, 
+									anda ditempatkan sebagai <strong>{{itmJob.position}} (Position ID : {{itmJob.promo_jobId}}) 
+									di {{itmJob.promotion_org_unit}}</strong>. Sila lapor diri kepada pegawai seperti di bawah:
+								</label>
+							</p> 
+						</div>	
+						<div class="row">
+							<div class="col-md-4"  style="padding-left: 50px; text-align:right"> 
+								<label>Nama</label>
+							</div>
+							<div class="col-md-1"> 
+								 <label>:</label>
+							 </div>
+							<div class="col-md-5" style="font-weight: bold; text-align:left">
+								<div class="input-group">
+									{{itmJob.name_newReporting}}
+								</div>
+							</div>
+						 </div>
+						 <div class="row">
+							<div class="col-md-4"  style="padding-left: 50px; text-align:right"> 
+								<label>Jawatan</label>
+							</div>
+							<div class="col-md-1"> 
+								 <label>:</label>
+							 </div>
+							<div class="col-md-5" style="font-weight: bold; text-align:left">
+								<div class="input-group">
+									{{itmJob.postDesc_newReporting}}
+								</div>
+								<div class="input-group">
+									{{itmJob.div_newReporting}}
+								</div>
+							</div>
+						 </div>
+						 <br>
+						 <div class="row" class="col-md-12" style="text-align:justify;">
+							<p>
+								<label class="control-label col-md-12">
+									Anda adalah dikehendaki membuat pilihan samada menerima atau menolak tawaran ini melalui portal ERA 
+									<span style= "font-weight: bold;">dalam tempoh tujuh (7) hari dari tarikh surat tawaran diterima</span>. 
+									Tawaran ini akan terbatal dengan sendirinya sekiranya pihak kami tidak menerima jawapan anda dalam tempoh yang telah ditetapkan.
+								</label>
+							</p>
+							<p>
+								<label class="control-label col-md-12">
+									Bagi pihak pengurusan, saya mengucapkan tahniah di atas tawaran ini dan diharap ianya dapat memberikan motivasi untuk berkhidmat dengan lebih cemerlang 
+									demi kemajuan syarikat dan kerjaya anda.
+								</label>
+							</p>
+							<p>
+								<label class="control-label col-md-12">
+									Sebarang pertanyaan lanjut, sila hubungi Pengurus Human Capital Business Driver anda.
+								</label>
+							</p>
+						</div>
+						<div class="row" class="col-md-12">
+							<div class="control-label col-md-12"> 
+								<label>Sekian, terima kasih.</label>
+							</div>
+						</div>
+						<br><br><br>
+						<div class="row" class="col-md-12" style="font-size: medium;">
+							<div class="control-label col-md-12"> 
+								<label style="font-weight: bold;">V. NELFI ZULFIKA SIMANJUNTAK</label>
+							</div>
+							<div class="control-label col-md-12"> 
+								<label>Ketua Human Capital Business Operations</label>
+							</div>
+							<div class="control-label col-md-12"> 
+								<label>Pengurusan Modal Insan Kumpulan</label>
+							</div>
+						</div>
+						<br><br>
+						<div class="row" class="col-md-12" style="font-size: medium;">
+							<div> 
+								<label class="control-label col-md-12">sk:
+									<span style="padding-left: 20px; font-weight: bold;">{{itmJob.name_cc1}}</span>
+								</label>
+							</div>
+							<div style="padding-left: 40px;"> 
+								<label class="control-label col-md-12">{{itmJob.post_desc_cc1}}</label>
+							</div>
+							<div style="padding-left: 40px;"> 
+								<label class="control-label col-md-12">{{itmJob.div_cc1}}</label>
+							</div>
+							<br>
+							<div style="padding-left: 40px; font-weight: bold;"> 
+								<label class="control-label col-md-12">{{itmJob.name_cc2}}</label>
+							</div>
+							<div style="padding-left: 40px;"> 
+								<label class="control-label col-md-12">{{itmJob.post_desc_cc2}}</label>
+							</div>
+							<div style="padding-left: 40px;"> 
+								<label class="control-label col-md-12">{{itmJob.div_cc2}}</label>
+							</div>
+							<br>
+							<div style="padding-left: 40px; font-weight: bold;"> 
+								<label class="control-label col-md-12">{{itmJob.name_cc3}}</label>
+							</div>
+							<div style="padding-left: 40px;"> 
+								<label class="control-label col-md-12">{{itmJob.post_desc_cc3}}</label>
+							</div>
+							<div style="padding-left: 40px;"> 
+								<label class="control-label col-md-12">{{itmJob.div_cc3}}</label>
+							</div>
+							<br>
+							<div style="padding-left: 40px; font-weight: bold;"> 
+								<label class="control-label col-md-12">{{itmJob.name_cc4}}</label>
+							</div>
+							<div style="padding-left: 40px;"> 
+								<label class="control-label col-md-12">{{itmJob.post_desc_cc4}}</label>
+							</div>
+							<div style="padding-left: 40px;"> 
+								<label class="control-label col-md-12">{{itmJob.div_cc4}}</label>
+							</div>
+						</div>
+						<br>
+						<div class="row" class="col-md-12">
+							<div style="padding-left: 40px; font-weight: bold;"> 
+								<label class="control-label col-md-12">Fail Peribadi</label>
+							</div>
+						</div>
+					</div>
+				</div>
+				<br>
+		        <!-- Page 2	 -->
+				<div class= "col-12">
+					<p style="page-break-after: always;">&nbsp;</p>
+					<hr style="height:2px; border-width:0;color:gray;background-color:gray">
+					<br>
+				  	<div class="row" style="text-align:left; font-weight: bold; font-size: medium;">
+						<div class="col-md-3"> 
+							<label class="control-label col-md-6">NAMA</label>
+						</div>
+						<div class="col-md-1"> 
+							<label>:</label>
+						</div>
+						<div class="col-md-6">
+							<div class="input-group">
+								{{itmJob.Name}} 
+							</div>
+						</div>
+				   </div>
+					<div class="row" style="text-align:left; font-weight: bold; font-size: medium;">
+						<div class="col-md-3"> 
+							<label class="control-label col-md-6">NO K/P</label>
+						  </div>
+						  <div class="col-md-1"> 
+							 <label>:</label>
+						 </div>
+						 <div class="col-md-6">
+							 <div class="input-group">
+								{{itmJob.New_IC_No}}
+							 </div>
+						 </div>	
+					</div>
+					<div class="row" style="text-align:left; font-weight: bold; font-size: medium;">
+						<div class="col-md-3"> 
+							<label class="control-label col-md-6">PERS.NO</label>
+						</div>
+						<div class="col-md-1"> 
+							<label>:</label>
+						</div>
+						<div class="col-md-6">
+							<div class="input-group">
+								{{itmJob.Pers_No}}
+							</div>	
+						</div>
+					</div>
+					<br><br>
+					<div class="row">
+						<div class="col-md-12" style="text-align:left; font-weight: bold; font-size: medium;"> 
+							<label class="control-label col-md-12">MAKLUMAT TAMBAHAN</label>
+						</div>
+					</div>
+					<div class="row" >
+						<div class="col-md-12" style="text-align:left;"> 
+							<label class="control-label col-md-12">Tahniah atas tawaran ini. Dengan surat tawaran ini, berikut adalah gaji anda selepas kenaikan.</label>
+						</div>
+					</div>
+					<br>
+					<div class="row">
+						<div class="col-md-12" style="text-align:left;"> 
+							<label class="control-label col-md-4" style="font-weight: bold; font-size: medium;">GAJI SELEPAS TAWARAN</label>
+						</div>
+					</div>
+					<div class="row" *ngIf = "dataInfo.jobsApply.length > 0">
+						<div class="col-md-12" style="text-align:justify;"> 
+							<label class="control-label col-md-12">Gaji anda ialah <span style="font-weight: bold;">RM{{itmJob.salary}}</span> 
+								berdasarkan skala gaji Band {{itmJob.band}} <span style="font-weight: bold;">({{itmJob.salaray_range}}).</span></label>
+						</div>
+					</div>
+					<br><br><br>
+					<footer class="row" style="text-align:left;">
+						<p class="col-md-10" style="color:grey">
+							Telekom Malaysia Berhad (128740-P)
+							<br>Human Capital Business Operations, Group Human Capital Management
+							<br>Level 10 North Wing, Menara TM, Jalan Pantai Baharu, 50672 Kuala Lumpur, Malaysia.</p>
+						<p style="color:grey; float: right;"><br><br>www.tm.com.my</p>
+					</footer>
+					<div style="text-align:right">
+					   <button data-dismiss="modal" class="btn m-btn m-btn--gradient-from-danger m-btn--gradient-to-warning" style="background: darkgrey; background-color: darkgrey; border-color: darkgrey; cursor: pointer;">
+						  Cancel
+					  </button>
+					</div>
+				</div>
+               </div>
+			  <br>
+			</form>
+		  </div>
+		</div> 
+	</div>
+</div>
+<!-- End Offer Letter -->
+
+ <!-- Button for target modal-->
+ <button [hidden]="true" id="acceptModal" data-toggle="modal" data-target="#accept_modal">x</button>
+
+<!-- START: Accept Dialog -->
+<div class="modal fade" id="accept_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+aria-hidden="true">
+<div class="modal-dialog modal-lg" role="document">
+	<form [formGroup]="acceptForm">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">
+						&times;
+					</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				 <div class="form-group m-form__group" style="padding: 30px;">
+					<div class="row">
+						<label class="col-md-10" style ="font-size: medium;">
+							<b>Accept selected Applicant?</b>
+							<p>Please ensure the details are accurate before continuing</p>
+							<br>
+							<p style="font-weight: bold;">Notes: Your decision is final. Changes are not available after clicking on Done button.</p>
+							<p style="font-weight: bold;">All other candidates will receive unsuccessful notification from ERA. Proceed? </p>
+						</label>
+					</div>
+					<br><br>
+					<div class="row">
+						<div class="col-md-12" style="text-align: right;">
+							<button type="button" class="btn btn-secondary" data-dismiss="modal">
+								Cancel
+							</button>
+							&nbsp;
+							<button [disabled]="!acceptForm.valid" type="submit" class="btn m-btn m-btn--gradient-from-primary m-btn--gradient-to-info"
+								onclick="$('.modal').modal('hide')" (click)="selectSuccessIviewNE()">
+								OK
+							</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</form>
+</div>
+</div>
+<!-- END: End Accept Dialog -->
+
+
+

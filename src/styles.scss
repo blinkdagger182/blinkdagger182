@@ -1,0 +1,24 @@
+/* You can add global styles to this file, and also import other style files */
+@import "~@angular/material/prebuilt-themes/indigo-pink.css";
+@import "~angular-notifier/styles";
+@import "~ng-pick-datetime/assets/style/picker.min.css";
+
+
+$theme-color: #0FC2D0;
+$theme-btn-hov-color: #1BA4BE;
+
+.era-color {
+    color: $theme-color !important;
+}
+.era-color-bk {
+    background-color: $theme-color !important;
+}
+
+.era-btn {
+    background-color: $theme-color !important;
+    color: #FFF;
+}
+
+.era-btn:hover {
+    background-color: $theme-btn-hov-color !important;
+}

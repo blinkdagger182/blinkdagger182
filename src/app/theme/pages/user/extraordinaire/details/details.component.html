@@ -1,0 +1,1076 @@
+<notifier-container></notifier-container>
+<!-- START: Subheader -->
+<div class="m-subheader" appunwraptag="">
+    <div class="d-flex align-items-center">
+        <div class="mr-auto">
+            <h3 class="m-subheader__title m-subheader__title--separator">
+                {{title1}}
+            </h3>
+            <ul class="m-subheader__breadcrumbs m-nav m-nav--inline" *ngIf="!loading">
+                <li class="m-nav__item m-nav__item--home">
+                    <a routerLink="/index" class="m-nav__link m-nav__link--icon">
+                        <i class="m-nav__link-icon la la-home"></i>
+                    </a>
+                </li>
+                <!-- <li class="m-nav__separator">
+                    -
+                </li>
+                <li class="m-nav__item">
+                    <a href="" class="m-nav__link">
+                        <span class="m-nav__link-text" *ngIf="data.details&&data.details[0]?.ref">
+                            {{data.details[0]?.ref}}
+                        </span>
+                    </a>
+                </li> -->
+            </ul>
+        </div>
+        <div>
+            <div class="m-dropdown m-dropdown--inline m-dropdown--arrow m-dropdown--align-right m-dropdown--align-push"
+                m-dropdown-toggle="hover" aria-expanded="true">
+            </div>
+        </div>
+    </div>
+</div>
+<!-- END: Subheader -->
+
+<!-- :start Unauthorized Section  
+<div class="m-content" *ngIf="unauthorize">
+    <div class="row"> 
+        <div class="col-lg-12 centred my-auto">
+            <div class="m-section__content">
+                <div class="row" style="margin-top:5px">
+                    <div class="m-alert m-alert--icon alert alert-danger" role="alert">
+                        <div class="m-alert__icon">
+                            <i class="la la-times-circle-o"></i>
+                        </div>
+                        <div class="m-alert__text">
+                            {{unauthorizeMsg}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div> 
+    </div>
+</div>
+  :end Unauthorized Section -->
+
+<div class="m-content" *ngIf="!unauthorize">
+    <div class="row">
+        <!-- begin::Page loader -->
+        <app-user-loading class="col-lg-12 centred my-auto" *ngIf="loading"></app-user-loading>
+        <!-- end::Page loader -->
+
+        <!-- begin: Loading Error -->
+        <!-- begin: Loading Error -->
+
+        <!-- ::start process form submit -->
+        <div class="col-lg-12" *ngIf="formMsg">
+            <div *ngIf="processingReq" class="m-alert m-alert--icon m-alert--outline alert alert-primary alert-dismissible fade show"
+                role="alert">
+                <div class="m-alert__icon">
+                    <div class="m-loader m-loader--primary" style="width: 30px; display: inline-block;">
+                    </div> Processing Request ...
+                </div>
+            </div>
+            <!-- ::start form message -->
+            <div *ngIf="showFormMsg" class="m-alert m-alert--icon m-alert--outline alert alert-{{formMsgColor}} alert-dismissible fade show"
+                role="alert">
+                <div class="m-alert__icon">
+                    <i class="la {{formMsgIcon}}"></i>
+                </div>
+                <div class="m-alert__text">
+                    {{advErrMsg}}
+                </div>
+            </div>
+            <!-- ::end form message -->
+        </div>
+        <!-- ::start process form submit -->
+
+
+
+        <!-- :start Buttons -->
+        <div class="col-lg-3" *ngIf="!loading" style="padding-bottom: 1rem;">
+            <button title="Back" class="btn m-btn--pill btn-outline-info pt-1 pb-1 pr-3 pl-3" [disabled]="processingReq"
+                (click)="btnActClick('extraordinaire')">
+                <div class="m-demo-icon__preview" style="display: flex; align-items: center;">
+                    <!-- <i class="flaticon-rocket"></i> -->
+                    <img style="width:2rem !important" src="../../../../../../assets/img/user/back_icon.svg">
+                    <span>Back</span>
+                </div>
+                <!--<div class="m-demo-icon__class">
+                    Back to Extraordinaire
+                </div>-->
+            </button>
+        </div>
+        <div class="col-lg-9  pull-right" *ngIf="!loading">
+            <div class="m-button-advert" *ngIf="btnAdvertise">
+                <button id="exorAdvertise" type="button" class="btn m-btn--pill btn-outline-brand" data-toggle="modal"
+                    data-target="#m_modal_action" (click)="btnActClick('advertise')" [disabled]="processingReq">
+                    <i class="la la-bullhorn"></i> Advertise
+                </button>
+            </div>
+
+            <div class="m-button-advert" *ngIf="btnCancel">
+                <button id="exorCancel" type="button" class="btn m-btn--pill btn-outline-danger" data-toggle="modal"
+                    data-target="#m_modal_action" (click)="btnActClick('cancel')" [disabled]="processingReq">
+                    <i class="la la-close"></i> Cancel
+                </button>
+            </div>
+
+            <div class="m-button-advert" *ngIf="btnClose">
+                <button id="exorClose" type="button" class="btn m-btn--pill btn-outline-danger" data-toggle="modal"
+                    data-target="#m_modal_action" (click)="btnActClick('close')" [disabled]="processingReq">
+                    <i class="la la-exclamation-triangle"></i> Close
+                </button>
+            </div>
+
+            <div class="m-button-advert" *ngIf="btnDelete">
+                <button id="exorClose" type="button" class="btn m-btn--pill btn-outline-danger">
+                    <i class="la 	la-trash-o"></i> Delete
+                </button>
+            </div>
+
+            <div class="m-button-advert" *ngIf="btnApprove">
+                <button id="exorApprove" type="button" class="btn m-btn--pill btn-outline-success" data-toggle="modal"
+                    data-target="#m_modal_action" (click)="btnActClick('approve')">
+                    <i class="la la-calendar-check-o"></i> Approve
+                </button>
+            </div>
+
+            <div class="m-button-advert" *ngIf="btnRevert">
+                <button id="exorRevert" type="button" class="btn m-btn--pill btn-outline-warning" data-toggle="modal"
+                    data-target="#m_modal_action" (click)="btnActClick('revert')">
+                    <i class="la la-exclamation-triangle"></i> Revert
+                </button>
+            </div>
+        </div>
+        <!-- :end Buttons -->
+
+        <!--<div class="col-lg-12" *ngIf="!loading">
+            <div *ngIf="applyAdvPos" class="alert {{advPosStyle}} m-alert m-alert--default " role="alert">
+                <strong>{{advPosMsg}}</strong>
+            </div>
+            <div *ngIf="applyBtnDisplay" class="m-button-advert"> 
+                <button id="advertise-job" type="button" class="btn m-btn--pill btn-primary btn-lg m-btn m-btn--custom" data-toggle="modal"
+                    data-target="#modal_to_apply">{{btnApply}}
+                </button> 
+            </div>
+        </div> -->
+
+        <!-- :start back to profile page 
+        <div class="col-lg-12" *ngIf="toAdvJob">
+            <div *ngIf="editedAdvPos" class="m-alert m-alert--icon m-alert--outline alert {{advPosStyle}} alert-dismissible fade show"
+                role="alert">
+                <div class="m-alert__icon">
+                    <i class="flaticon-exclamation-1"></i>
+                </div>
+                <div class="m-alert__text">
+                    {{advPosMsg}}
+                </div>
+            </div>
+            <div *ngIf="advBtnDisplay" class="m-button-advert">
+                <button *ngIf="isAdv" id="advertise-job" type="button" class="btn m-btn--pill btn-primary btn-lg m-btn m-btn--custom" data-toggle="modal"
+                    data-target="#m_modal_advert" [disabled]="advDisabled" (click)="checkOccupied(data.profile[0].Occupied); ">{{btnAdvertise}}
+                </button>
+                <button *ngIf="!isAdv" id="go-to-advertise-job" type="button" class="btn m-btn--pill btn-outline-brand" [routerLink]="[rJobDetails,data.profile[0]?.position_id]">
+                    <i class="la la-mail-reply-all"></i> {{btnGotoJobProfile}}
+                </button> 
+            </div>
+        </div>
+        <div class="col-lg-12" *ngIf="toAdvJob">
+            <div *ngIf="showAdvDisableMsg" class="m-alert m-alert--icon m-alert--outline alert alert-warning alert-dismissible fade show"
+                role="alert">
+                <div class="m-alert__icon">
+                    <i class="la la-warning"></i>
+                </div>
+                <div class="m-alert__text">{{advDisableMsg}}</div>
+            </div>
+        </div>
+          :end back to profile page -->
+
+        <div class="col-lg-12" *ngIf="!loading">
+            <!--begin::Portlet-->
+            <div class="m-portlet m-portlet--full-height">
+                <!--begin::Section-->
+                <div class="m-accordion m-accordion--bordered" id="m_accordion_1" role="tablist">
+                    <!--begin::Item:info-->
+                    <div class="m-accordion__item">
+                        <div class="m-accordion__item-head" role="tab" id="m_accordion_1_item_1_head" data-toggle="collapse"
+                            href="#m_accordion_1_item_1_body" aria-expanded="    false">
+                            <span class="m-accordion__item-mode"></span>
+                            <span class="m-accordion__item-title m-accordian__item-mode-title">
+                                {{tab1Title}} <span class="ml-3">- {{data.details[0]?.ref}}</span>
+                            </span>
+                            <span class="m-accordion__item-icon">
+                                <i class="fa flaticon-notes"></i>
+                            </span>
+                        </div>
+                        <div class="m-accordion__item-body show" id="m_accordion_1_item_1_body" role="tabpanel"
+                            aria-labelledby="m_accordion_1_item_1_head">
+                            <div class="m-accordion__item-content">
+
+                                <h5 class="title-case">Adv Info</h5>
+
+                                <table class="table table-bordered">
+                                    <tr>
+                                        <td style="width: 30%">Advertisement Name</td>
+                                        <td><span *ngIf="data.details && data.details[0]?.name; else errName">{{
+                                                data.details[0]?.name}} </span>
+                                            <ng-template #errName> - </ng-template>
+                                        </td>
+                                        </tr>
+                                    <tr>
+                                        <td style="width: 30%">Created By</td>
+                                        <td>
+                                            <span *ngIf="data.details && data.details[0]?.create_by; else errCreate">{{
+                                                data.details[0]?.create_by}} </span>
+                                            <ng-template #errCreate> Unknown </ng-template> -
+                                            <span *ngIf="data.details && data.details[0]?.creator_name; else errCreatorName">
+                                                {{data.details[0]?.creator_name}} </span>
+                                            <ng-template #errCreatorName> Unknown </ng-template>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width: 30%">Reference Number</td>
+                                        <td><span *ngIf="data.details && data.details[0]?.ref; else errRefNum">{{
+                                                data.details[0]?.ref}} </span>
+                                            <ng-template #errRefNum> - </ng-template>
+
+                                            <span *ngIf="data.details &&data.details[0]?.status" class="m-badge m-badge--{{getStatusColor(data.details[0]?.status)}}">
+                                                {{ data.details[0]?.status_text}}
+                                            </span>
+                                        </td>
+                                    </tr>
+                                    <!-- <tr>
+                                        <td style="width: 30%">Project Timeline</td>
+                                        <td><span *ngIf="data.details && data.details[0]?.project_start; else errTimeline1">{{
+                                                data.details[0]?.project_start | date:'dd MMM yyyy'}} </span>
+                                            <ng-template #errTimeline1> - </ng-template> -
+
+                                            <span *ngIf="data.details && data.details[0]?.project_close; else errTimeline2">
+                                                {{
+                                                data.details[0]?.project_close | date:'dd MMM yyyy' }}</span>
+                                            <ng-template #errTimeline2> - </ng-template>
+                                        </td>
+                                    </tr> -->
+                                    <tr>
+                                        <td style="width: 30%">Approver</td>
+                                        <td>
+                                            <span *ngIf="data.details && data.details[0]?.approval; else errAppr">{{
+                                                data.details[0]?.approval}} </span>
+                                            <ng-template #errAppr> Unknown </ng-template> -
+                                            <span *ngIf="data.details && data.details[0]?.approval_name; else errApprName">
+                                                {{data.details[0]?.approval_name}} </span>
+                                            <ng-template #errApprName> Unknown </ng-template>
+                                        </td>
+                                    </tr>
+                                    <!-- <tr>
+                                        <td style="width: 30%">Project Leader</td>
+                                        <td>
+                                            <span *ngIf="data.details && data.details[0]?.leader; else errLead">{{
+                                                data.details[0]?.leader}} </span>
+                                            <ng-template #errLead> Unknown </ng-template> -
+                                            <span *ngIf="data.details && data.details[0]?.leader_name; else errLeadName">
+                                                {{data.details[0]?.leader_name}} </span>
+                                            <ng-template #errLeadName> Unknown </ng-template>
+                                        </td>
+                                    </tr> -->
+                                    <!-- <tr>
+                                        <td style="width: 30%">Contact Name </td>
+                                        <td>
+                                            <span *ngIf="data.details && data.details[0]?.contact; else errContact">{{
+                                                data.details[0]?.contact}} </span>
+                                            <ng-template #errContact> Unknown </ng-template> -
+                                            <span *ngIf="data.details && data.details[0]?.contact_name; else errContactName">
+                                                {{data.details[0]?.contact_name}} </span>
+                                            <ng-template #errContactName> Unknown </ng-template>
+                                        </td>
+                                    </tr> -->
+                                    <tr>
+                                        <td style="width: 30%">LOB</td>
+                                        <td><span *ngIf="data.details && data.details[0]?.lob; else errLob">{{
+                                                data.details[0]?.lob}} </span>
+                                            <ng-template #errLob> - </ng-template>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width: 30%">Location</td>
+                                        <td><span *ngIf="data.details && data.details[0]?.location; else errLoc">{{
+                                                data.details[0]?.location}} </span>
+                                            <ng-template #errLoc> - </ng-template>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width: 30%">Ads Start</td>
+                                        <td>
+                                            <span *ngIf="data.details && data.details[0]?.start; else errstart">
+                                                {{ data.details[0]?.start | date:'dd-MM-yyyy'}} 
+                                            </span>
+                                            <ng-template #errstart> - </ng-template>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width: 30%">Ads Close</td>
+                                        <td>
+                                            <span *ngIf="data.details && data.details[0]?.close; else errClose">
+                                                {{ data.details[0]?.close | date:'dd-MM-yyyy'}} 
+                                            </span>
+                                            <ng-template #errClose> - </ng-template>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width: 30%">Skill Set</td>
+                                        <td>
+                                            <div *ngIf="data.tag&&data.tag.length>0; else errTag">
+                                                <span class="badge badge-pill badge-info" *ngFor="let t of data.tag">{{t.tag}}</span>
+                                            </div>
+                                            <ng-template #errTag> - </ng-template>
+                                        </td>
+                                    </tr>
+                                </table>
+
+                                <h5 class="title-case">Adv Objective</h5>
+                                <div class="m-portlet  m-portlet--full-height ">
+                                    <div class="m-portlet__body">
+                                        <span *ngIf="data.details&&data.details[0]?.objective ; else errerrObjRmk">{{data.details[0]?.objective}}</span>
+                                        <ng-template #errObj> <span [innerHTML]="noDataHTML"></span> </ng-template>
+                                    </div>
+                                </div>
+                                <ng-template #errObj> <span [innerHTML]="noDataHTML"></span> </ng-template>
+
+                                <h5 class="title-case">Adv Summary</h5>
+                                <div class="m-portlet  m-portlet--full-height ">
+                                    <div class="m-portlet__body">
+                                        <span *ngIf="data.details && data.details[0]?.summary; else errSumm">{{
+                                            data.details[0]?.summary}} </span>
+                                    </div>
+                                </div>
+                                <ng-template #errSumm> <span [innerHTML]="noDataHTML"></span> </ng-template>
+
+                                <!-- <h5 class="title-case">Key Milestones</h5>
+                                <div class="m-portlet  m-portlet--full-height ">
+                                    <div class="m-portlet__body">
+                                        <div *ngIf="data.milestone&&data.milestone.length>0 ; else errMs">
+                                            <ul class="timeline" style="z-index: 1 !important;">
+                                                <li *ngFor="let ms of data.milestone" style="z-index: 1 !important;">
+                                                    <span>{{ms.date | date:'dd MMM yyyy' }} </span>
+                                                    <p>{{ms.milestone}}</p>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div> -->
+                                <!-- 
+                                    <table class="table table-bordered" *ngIf="data.milestone; else errMs">
+                                    <thead>
+                                        <tr>
+                                            <th>Target Date</th>
+                                            <th>Key Activity</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr *ngFor="let ms of data.milestone">
+                                            <td>{{ms.date | date:'dd MMM yyyy' }}</td>
+                                            <td>{{ms.milestone}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="2" *ngIf="data.milestone.length<1" align="Center"> No Data
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>-->
+                                <ng-template #errMs> <span [innerHTML]="noDataHTML"></span> </ng-template>
+
+                                <h5 class="title-case">Vacancies</h5>
+                                <!--Begin::Portlet-->
+                                <div class="m-portlet  m-portlet--full-height ">
+                                    <div class="m-portlet__body">
+                                        <div *ngIf="data.position&&data.position.length>0 ; else errVac">
+                                            <!-- class="m-scrollable mCustomScrollbar _mCS_5 mCS-autoHide"
+                                            data-scrollbar-shown="true" data-scrollable="true" data-max-height="380"
+                                            style="overflow: visible; height: 380px; max-height: 380px; position: relative;"-->
+                                            <!--Begin::Timeline 2 -->
+                                            <div class="table-responsive">
+                                                <table class="table m-table">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Position</th>
+                                                            <th>Target</th>
+                                                            <th>Number of Vacancy</th>
+                                                            <th>Role and Responsibilities</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr *ngFor="let pos of data.position">
+                                                            <td>{{pos.position}}</td>
+                                                            <td>{{getPosTarget(pos.target)}}</td>
+                                                            <td>{{pos.vacancies}}</td>
+                                                            <td [innerHTML]="pos.description"></td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                            <!--End::Timeline 2 -->
+                                        </div>
+                                    </div>
+                                </div>
+                                <ng-template #errVac> <span [innerHTML]="noDataHTML"></span> </ng-template>
+
+
+                                <h5 class="title-case">Remark</h5>
+                                <div class="m-portlet  m-portlet--full-height ">
+                                    <div class="m-portlet__body">
+                                        <span *ngIf="data.details ; else errRmk">{{data.details[0].remark}}</span>
+                                    </div>
+                                </div>
+                                <ng-template #errRmk> - </ng-template>
+
+                                <h5 class="title-case">Adv Icon</h5>
+                                <div class="m-portlet  m-portlet--full-height ">
+                                    <div class="row justify-content-center">
+                                        <div class="col-lg-5 m-portlet__body">
+                                            <img src="{{getImageIcon()}}" style="width:100%; border-radius:15px;" title="Adv Icon" alt="Adv Icon" *ngIf="data.details[0]&&data.details[0].image_url ; else errIcon" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <ng-template #errIcon> <span [innerHTML]="noDataHTML"></span> </ng-template>
+
+                            </div>
+                        </div>
+                    </div>
+                    <!--end::Item:info-->
+
+                    <!--begin::Item:Applicant List-->
+                    <div class="m-accordion__item">
+                        <div class="m-accordion__item-head" role="tab" id="m_accordion_1_item_3_head" data-toggle="collapse"
+                            href="#m_accordion_1_item_3_body" aria-expanded="    false">
+                            <span class="m-accordion__item-mode"></span>
+                            <span class="m-accordion__item-title m-accordian__item-mode-title">
+                                History
+                            </span>
+                            <span class="m-accordion__item-icon">
+                                <i class="fa flaticon-puzzle"></i>
+                            </span>
+                        </div>
+
+                        <div class="m-accordion__item-body show" id="m_accordion_1_item_3_body" role="tabpanel"
+                            aria-labelledby="m_accordion_1_item_3_head">
+                            <div class="m-accordion__item-content">
+                                <!--begin:: Widgets/Support Tickets -->
+                                <div class="m-portlet m-portlet--full-height ">
+                                    <ng-template #errHistory> <span [innerHTML]="noDataHTML"></span>
+                                    </ng-template>
+                                    <div class="m-portlet__body" *ngIf="data.history&&data.history.length>0 ; else errHistory">
+                                        <div class="m-widget3">
+                                            <div class="m-widget3__item" *ngFor="let h of data.history">
+                                                <div class="m-widget3__header">
+                                                    <div class="m-widget3__info">
+                                                        <span class="m-widget3__username">
+                                                            {{h.update_by}}
+                                                        </span>
+                                                        <br>
+                                                        <span class="m-widget3__time">
+                                                            {{h.update_on | date:'EEEE, dd MMM yyyy' }}
+                                                        </span>
+                                                    </div>
+                                                    <span class="m-widget3__status m--font-info">
+                                                        <span class="m-badge m-badge--{{getStatusColor(h.status)}} m-badge--wide" style="width:9rem !important"
+                                                            title="{{h.status_details}}">
+                                                            {{ h.status_text}}
+                                                        </span>
+                                                    </span>
+                                                </div>
+                                                <div class="m-widget3__body">
+                                                    <p class="m-widget3__text">
+                                                        <span *ngIf="h.remark!=null ; else errRmkEmpty" style="margin-left:14px;">
+                                                            {{h.remark}}</span>
+                                                        <ng-template #errRmkEmpty> -No Remark- </ng-template>
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!--end:: Widgets/Support Tickets -->
+                            </div>
+                        </div>
+                    </div>
+                    <!--end::Item:applicant list-->
+
+
+                    <!--begin::Item:Applicant List --> 
+                    <div class="m-accordion__item" *ngIf="data.details[0].status==4|| data.details[0].status==5||data.details[0].status==6||data.details[0].status==7||data.details[0].status==8">
+                        <div class="m-accordion__item-head" role="tab" id="m_accordion_1_item_2_head" data-toggle="collapse"
+                            href="#m_accordion_1_item_2_body" aria-expanded="    false">
+                            <span class="m-accordion__item-mode"></span>
+                            <span class="m-accordion__item-title m-accordian__item-mode-title">
+                                Applicants
+                                <!-- TODO if status ==5 sahaja bleh select. others cannot -->
+                            </span>
+                            <span class="m-accordion__item-icon">
+                                <i class="fa flaticon-list-1"></i>
+                            </span>
+                        </div>
+
+                        <div class="m-accordion__item-body show" id="m_accordion_1_item_2_body" role="tabpanel"
+                            aria-labelledby="m_accordion_1_item_2_head">
+                            <div class="m-accordion__item-content">
+                                <ng-template #errAdvpos> <span [innerHTML]="noDataHTML"></span> </ng-template>
+                                <div class="m-portlet__body" *ngIf="data.position&&data.position.length>0 ; else errAdvPos">
+                                    <div id="form_sel_appl_msg_act">
+                                        <div *ngIf="selApplReq" class="m-alert m-alert--icon m-alert--outline alert {{apprStyle}} alert-dismissible fade show"
+                                            role="alert">
+                                            <div class="m-alert__icon">
+                                                <i class="{{advPosIcon}}"></i>
+                                            </div>
+                                            <div class="m-alert__text">
+                                                {{apprPosMsg}}
+                                            </div>
+                                        </div>
+                                        <div *ngIf="bcShowSubmitting" class="m-alert m-alert--icon m-alert--outline alert alert-primary alert-dismissible fade show"
+                                            role="alert">
+                                            <div class="m-alert__icon">
+                                                <div class="m-loader m-loader--primary" style=" display: inline-block;">
+                                                </div>
+                                            </div>
+                                            <div class="m-alert__text">
+                                                Submitting form
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <form [formGroup]="formSelAppl" id="selectApplicant">
+                                        <!--begin::Portlet-->
+                                        <div class="m-portlet m-portlet--tabs" *ngFor="let pos of data.position">
+                                            <div class="m-portlet__head">
+                                                <div class="m-portlet__head-caption">
+                                                    <div class="m-portlet__head-title">
+                                                        <h3 class="m-portlet__head-text">
+                                                            {{pos.position}}
+                                                        </h3>
+                                                    </div>
+                                                </div>
+                                                <div class="m-portlet__head-tools">
+                                                    <ul class="nav nav-tabs m-tabs-line m-tabs-line--right" role="tablist">
+                                                        <li class="nav-item m-tabs__item">
+                                                            <span class="nav-link m-tabs__link ">
+                                                                <i class="flaticon-multimedia"></i>
+                                                                {{pos.vacancies}} <span *ngIf="pos.vacancies>1; else vac">vacancies</span>
+                                                                <ng-template #vac> vacancy</ng-template>
+                                                            </span>
+                                                        </li>
+                                                        <li class="nav-item m-tabs__item">
+                                                            <span class="nav-link m-tabs__link ">
+                                                                <i class="flaticon-user"></i>
+                                                                {{pos.name}}
+                                                            </span>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                            <div class="m-portlet__body">
+                                                <div class="tab-content">
+                                                    <div class="tab-pane active" id="m_tabs_6_1" role="tabpanel">
+                                                        <!-- <div style="margin-bottom:10px">{{pos.description}}</div> -->
+                                                        <ng-template #errAppl> <span [innerHTML]="noApplHTML"></span>
+                                                        </ng-template>
+                                                        <table class="table table-sm m-table m-table--head-bg-brand"
+                                                            *ngIf="pos.applicant.length>0; else errAppl">
+                                                            <thead class="thead-inverse">
+                                                                <tr>
+                                                                    <th>Staff ID</th>
+                                                                    <th width="30%">Staff Name</th>
+                                                                    <th>LOB</th>
+                                                                    <th>Apply Date</th>
+                                                                    <th>Status</th>
+                                                                    <th></th>
+                                                                    <th></th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr class="checkbox" *ngFor="let app of pos.applicant; let i = index">
+                                                                    <td>{{app.applicant}}</td>
+                                                                    <td>{{app.name}}</td>
+                                                                    <td>{{app.lob}}</td>
+                                                                    <td>{{app.apply_on| date:'dd MMM yyyy h:mm:ss a'}}</td>
+                                                                    <td>{{app.status_text}} </td>
+                                                                    <td>
+                                                                        <button title="View Applicant Info" class="m-portlet__nav-link btn m-btn m-btn--hover-primary m-btn--icon m-btn--icon-only m-btn--pill"
+                                                                            (click)="openApplicantInfo('forInterview',app.id, i,app.status)"
+                                                                            data-toggle="modal" data-target="#appl_profile">
+                                                                            <i class="la la-file-text-o"></i>
+                                                                        </button>
+                                                                    </td>
+                                                                    <td *ngIf="data.details[0].isOwner==1&&data.details[0].status==5&&app.status==12">
+                                                                        <label class="m-checkbox m-checkbox--state-success"
+                                                                            title="Select this Applicant" [hidden]="checkMe(app.applicant,app.id)" > <!--[hidden]="app.status!=12||checkMe(app.applicant,app.id)"-->
+                                                                            <!--*ngIf="aplcAct" -->
+                                                                            <input [checked]="checkedList.includes(app.id)"
+                                                                                formControlName="appl" type="checkbox"
+                                                                                value="{{app.id}}" (change)="onCheckboxChange(app,$event)">
+                                                                            <span></span>
+                                                                        </label>
+                                                                    </td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="row pull-right">
+                                            <div class="col-lg-12">
+                                                <button style="visibility:hidden" type="button" id="chooseApp2" class="btn btn-md btn-accent m-btn m-btn--pill"
+                                                    [disabled]="checkedList.length<1" (click)="selectApplicant(formSelAppl)">
+                                                    Proceed [Hidden]
+                                                </button>
+                                                <button type="button" id="chooseApp" class="btn btn-md btn-accent m-btn m-btn--pill"
+                                                    [disabled]="checkedList.length<1" *ngIf="data.details[0].isOwner==1&&data.details[0].status==5">
+                                                    Proceed
+                                                </button>
+                                            </div>
+                                        </div>
+                                        <!--end::Portlet-->
+
+
+                                        <!-- <button id="chooseApp2" (click)="selectApplicant(formSelAppl)" [disabled]="checkedList.length < 1"
+                                            type="button">
+                                            Select this Applicants
+                                        </button>-->
+                                        <!-- style="visibility: hidden" [disabled]="!aplcSubmit" *ngIf="aplcAct" -->
+
+
+                                        <!--<button id="chooseApp" [disabled]="!aplcSubmit" type="button" class="btn m-btn--pill btn-primary btn-sm pull-right"
+                                        *ngIf="aplcAct">
+                                        {{btnCallIview}}
+                                    </button>
+                                    <button style="visibility: hidden" id="chooseApp2" (click)="selectApplicant(formSelAppl)"
+                                        [disabled]="!aplcSubmit" type="button" *ngIf="aplcAct">
+                                        {{btnCallIview}}
+                                    </button>-->
+                                    </form>
+
+                                    <div class="row" *ngIf="downloadCSV&&applicant!='err'">
+                                        <div class="col-12" style="text-align: right;">
+                                            <div class="m-demo__preview m-demo__preview--btn">
+                                                <button class="btn btn-primary m-btn m-btn--icon" (click)="download()" [disabled]="dwApplDisabled">
+                                                    <span>
+                                                        <i class="la la-download"></i>
+                                                        <span>Download Applicant Details</span>
+                                                    </span>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--end::Item:applicant list-->
+                </div>
+                <!--end::Section-->
+            </div>
+            <!--end::Portlet-->
+        </div>
+    </div>
+</div>
+
+<!--begin::resubmit/withdraw modal-->
+<div class="modal fade" id="m_modal_action" tabindex="-1" role="dialog" aria-labelledby="advertiseModalCenterTitle"
+    aria-hidden="true" style="display: none;">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <form [formGroup]="actionForm" style="width:100% !important">
+            <div class="modal-content" style="border-radius: 20px !important;">
+                <div class="modal-header">
+                    <h5 *ngIf = "!sureRevertTitle" class="modal-title" id="exampleModalLongTitle">
+                        Are you sure to {{clickAct}} this Advertisement?
+                    </h5>
+                    <h5 *ngIf = "sureRevertTitle" class="modal-title" id="exampleModalLongTitle">
+                        Revert this back to the Advertisement Owner?
+                    </h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">
+                            ×
+                        </span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <!-- :start NOTIFICATION V2  
+                    <div class="m-alert m-alert--icon m-alert--outline alert alert-warning alert-dismissible fade show"
+                        role="alert" *ngIf="showFormErr"> 
+                        <div class="m-alert__icon">
+                            <i class="la la-thumbs-o-up"></i>  
+                        </div>
+                        <div class="m-alert__text">
+                            ::advErrMsg:: 
+                        </div>
+                    </div>
+                     :end NOTIFICATION V2 -->
+                     
+                    <div  [hidden]="!apprRemark">
+                        <h5 class="modal-title"><small class="text-muted">Remarks<span *ngIf="apprRemark">*</span></small></h5>
+                        <br>
+                        <div style="margin-top: -1rem !important">
+                            <textarea id="remarks" #rmk class="form-control m-input m-input--air m-input--pill"
+                                formControlName="projRemark" [required]="apprRemark" rows="8"></textarea>
+                            <!--
+                            <p class="error_message" style="color:red" *ngIf="apprRemark && (actionForm.get('projRemark').value=='')">Required.
+                                <span class="error_message" style="color:red" *ngIf="(actionForm.get('projRemark').hasError('required') && (actionForm.get('projRemark').dirty))">Please
+                                    add some remarks.</span>
+                            </p> -->
+                            <br><span class="m-form__help error_message" style="color:red" [ngStyle]="{'color': (actionForm.get('projRemark').hasError('required') && (actionForm.get('projRemark').dirty))? 'red' : 'black'}"
+                                *ngIf="apprRemark">
+                                Required. Please add some remarks.
+                            </span>
+                            <input type="hidden" formControlName="projId" required>
+                            <input type="hidden" formControlName="projActTaken" required value="{{projActTaken}}">
+                        </div>
+                    </div>
+
+                    <!-- ::start adv period -->
+                    <div class="m-form__seperator m-form__seperator--dashed"></div>
+                    <!-- <div class="m-form__section m-form__section--last" *ngIf="!apprRemark"> -->
+                    <div class="m-form__section m-form__section--last" [hidden]="!apprDate">
+                        <div class="form-group m-form__group row">
+                            <label for="example-text-input" class="col-3 col-form-label">Advertisement
+                                <br />Period*</label>
+                            <div class="col-9">
+                                <div class="input-daterange input-group  m-input-group  m-input-group--pill" id="m_datepicker_5">
+                                    <input type="text" class="form-control m-input" name="start" id="st" readonly
+                                        value="{{myStartDt | date: 'dd-MM-yyyy'}}" />
+                                    <div class="input-group-append">
+                                        <span class="input-group-text">
+                                            <i class="la la-ellipsis-h"></i>
+                                        </span>
+                                    </div>
+                                    <input type="text" class="form-control" name="end" id="et" readonly value="{{myEndDt | date: 'dd-MM-yyyy'}}" />
+                                </div>
+                                <p class="error_message" style="color:red" *ngIf="advDateError.isError">{{advDateError.errorMessage}}</p>
+                                <span class="m-form__help">
+                                    {{msgAdvPeriod}}
+                                </span>
+                            </div>
+                        </div>
+                        <!-- ::end adv period -->
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <input type="hidden" required class="form-control m-input hide-adv-date" name="start" id="startDate2"
+                        (focus)="compareTwoDates()" />
+                    <!--formControlName="dtStart"-->
+                    <input type="hidden" required class="form-control hide-adv-date" name="end" id="endDate2" (focus)="compareTwoDates()" />
+                    <!--formControlName="dtEnd"-->
+                    <button (click)="actionFormSubmit()" style="visibility:hidden" id="btnMyAction2" [disabled]="(apprRemark&&(rmk.value.trim()) == '')||(advDateError.isError)"
+                        type="submit">
+                        Confirm Hidden
+                    </button>
+                    <button type="button" class="btn btn-sm btn-secondary m-btn m-btn--icon m-btn--pill m-btn--wide pull-right"
+                        data-dismiss="modal">
+                        Close
+                    </button>
+                    <button id="btnMyAction" type="submit" class="btn btn-sm btn-brand m-btn m-btn--icon m-btn--pill m-btn--wide pull-right"
+                        onclick="$('.modal').modal('hide')" [disabled]="(apprRemark&&(rmk.value.trim()) == '')||(advDateError.isError&&apprDate)">
+                        Confirm
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<!--end::resubmit/withdraw modal-->
+
+
+<style>
+    .m-accordian__item-mode-title {
+        padding-left: 1.5rem;
+    }
+
+    .m-button-advert {
+        float: right;
+        padding-bottom: 1rem;
+    }
+
+    .m-repeater-edit-delete {
+        margin-top: 1.8rem;
+    }
+
+    .m-repeater-edit-delete .btn {
+        width: 6.2rem;
+    }
+
+    .m-dropzone {
+        min-height: 160px;
+        border-radius: 18px;
+        box-shadow: 0 3px 20px 0 rgba(113, 106, 202, .11);
+    }
+
+    .dropzone .dz-preview {
+        margin: 0;
+    }
+
+    .dropzone .dz-preview.dz-file-preview .dz-image,
+    .m-dropzone .dz-preview .dz-image {
+        border-radius: 0;
+    }
+
+    [hidden] {
+        display: none !important;
+    }
+</style>
+
+
+<!--begin::Modal APPLICANT INFO -->
+<div class="modal fade" id="appl_profile" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <form [formGroup]="applInfoForm" ><!--(ngSubmit)="applInfoFormSubmit()"-->
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">
+                        {{applName}}
+                    </h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">
+                            &times;
+                        </span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="m-scrollable" data-scrollbar-shown="true" data-scrollable="true" data-max-height="400">
+                        <div *ngIf="applLoading">
+                            <div class="m-section__content">
+                                <div class="m-demo" data-code-preview="true" data-code-html="true" data-code-js="false">
+                                    <div class="m-demo__preview">
+                                        <div class="m-stack m-stack--ver m-stack--general m-stack--demo">
+
+                                            <div class="m-stack__item m-stack__item--center m-stack__item--middle">
+                                                <span>
+                                                    Loading data. Please wait...
+                                                </span>
+                                                <span>
+                                                    <div class="m-loader m-loader--lg m-loader--success" style="width: 30px; display: inline-block;"></div>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="m-portlet" *ngIf="!applLoading">
+                            <div class="m-portlet__body">
+                                <ul class="nav nav-tabs nav-fill" role="tablist">
+                                    <li class="nav-item">
+                                        <a class="nav-link active" data-toggle="tab" href="#m_tabs_1_1">Personal
+                                            Information</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" data-toggle="tab" href="#m_tabs_1_2">Skill Sets & Endorsements</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" data-toggle="tab" href="#m_tabs_1_3">History</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" data-toggle="tab" href="#m_tabs_1_4">Advertisements Applied</a>
+                                    </li>
+                                </ul>
+                                <div class="tab-content">
+                                    <div class="tab-pane active" id="m_tabs_1_1" role="tabpanel">
+                                        <table class="table table-bordered" *ngIf="applProfile">
+                                            <tr>
+                                                <th style="width: 30%">Name</th>
+                                                <td>{{applProfile.Name}}</td>
+                                            </tr>
+                                            <tr>
+                                                <th>About</th>
+                                                <td>
+                                                    {{applProfile.about_me}}
+                                                    <span *ngIf="!applProfile.about_me"> - </span>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <th>Email</th>
+                                                <td>
+                                                    {{applProfile.Email | lowercase}}
+                                                    <span *ngIf="!applProfile.Email"> - </span>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <th>Office No</th>
+                                                <td>
+                                                    {{applProfile.Office_No}}
+                                                    <span *ngIf="!applProfile.Office_No"> - </span>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <th>Mobile No</th>
+                                                <td>
+                                                    {{applProfile.Cell_No}}
+                                                    <span *ngIf="!applProfile.Cell_No"> - </span>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <th>Employee Number</th>
+                                                <td>{{applProfile.Staff_No}}</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Employee Group</th>
+                                                <td>{{applProfile.EmpGroup}}</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Employee Sub-Group</th>
+                                                <td>{{applProfile.EmpSGroup}}</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Position</th>
+                                                <td>{{applProfile.Post_Desc}}</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Position ID</th>
+                                                <td>{{applProfile.Position}}</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Unit</th>
+                                                <td>{{applProfile.Sub_Org_Unit_Desc}}</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Division</th>
+                                                <td>{{applProfile.Org_Unit_Desc}}</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Company</th>
+                                                <td>{{applProfile.Company_Desc}}</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Superior</th>
+                                                <td>{{applProfile.Rept_To_Name}}</td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                    <div class="tab-pane" id="m_tabs_1_2" role="tabpanel">
+                                        <h5 class="skillHeader">Skillsets </h5>
+                                        <table class="table table-bordered" *ngIf="applSkillset && applSkillset.length > 0; else noSkill ">
+                                            <tr>
+                                                <th style="width: 45%">Skill</th>
+                                                <th style="width: 45%">Level</th>
+                                                <th>Endorsement</th>
+                                            </tr>                            
+                                            <tr *ngFor="let skill of applSkillset">
+                                                <td>{{skill.skillset}}</td>
+                                                <td>{{skill.skill_level}}</td>
+                                                <td>{{skill.skill_endorsement}}</td>
+                                            </tr>
+                                            
+                                        </table>
+                                        <ng-template #noSkill> 
+                                            <h6 style="text-align: center"class="m--font-danger" >No skill sets available for the applicant.</h6> 
+                                        </ng-template>
+
+                                        <h5 class="skillHeader">Interests </h5>
+                                        <div *ngIf="applInterest && applInterest.length > 0; else noInterest" >
+                                            <span *ngFor="let int of applInterest">
+                                                <span class="m-badge m-badge--success m-badge--wide">
+                                                    {{int.interest}}  
+                                                </span> &nbsp;
+                                            </span>
+                                        </div>
+                                        <ng-template #noInterest> 
+                                            <h6 style="text-align: center"class="m--font-danger" >No interests available for the applicant.</h6> 
+                                        </ng-template>
+
+                                        
+                                    </div>
+                                    <div class="tab-pane" id="m_tabs_1_3" role="tabpanel">
+                                        <div *ngIf="applProfile">
+                                            <!--begin:: Widgets/Latest Updates-->
+                                            <div class="m-portlet m-portlet--full-height m-portlet--fit ">
+                                                <div class="m-portlet__body">
+                                                    <div class="m-widget4 m-widget4--chart-bottom" style="min-height: 350px">
+                                                        <div class="m-widget4__item" *ngFor="let h of applHistory">
+                                                            <div class="m-widget4__info">
+                                                                <span class="m-widget4__number m--font-accent">
+                                                                    <p style="font-size:1.2rem; font-weight:600">{{h.log_desc}}</p>
+                                                                </span>
+                                                                <span class="m-widget4__text">                                 
+                                                                    <p>By {{h.update_by}}</p>
+                                                                    <p>On {{h.update_on| date:'dd MMM yyyy'}}</p>
+                                                                    <p>{{h.remark}}</p>
+                                                                </span>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="m-widget4__chart m-portlet-fit--sides m--margin-top-20 m-portlet-fit--bottom1"
+                                                            style="height:120px;">
+                                                            <canvas id="m_chart_latest_updates"></canvas>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>                                        
+                                    </div>
+
+                                    <div class="tab-pane" id="m_tabs_1_4" role="tabpanel">
+                                        <div *ngIf="projApplied && projApplied.length > 0 ">
+                                            <div class="m-portlet m-portlet--full-height m-portlet--fit ">
+                                                <div class="m-portlet__body">
+                                                    <div *ngFor="let proj of projApplied; index as i">
+                                                        <table class="table">
+                                                            <tr class="applied">
+                                                                <td rowspan="0" width="2%"><span class="m-badge m-badge--brand">{{i+1}}</span></td>
+                                                            </tr>
+                                                            <tr class="applied">
+                                                                <td width="25%">Adv Name</td>
+                                                                <td width="5%">:</td>
+                                                                <td>{{proj.name}}</td>
+                                                            </tr>
+                                                            <tr class="applied">
+                                                                <td>Position</td>
+                                                                <td>:</td>
+                                                                <td>{{proj.position}}</td>
+                                                            </tr>
+                                                            <tr class="applied">
+                                                                <td>Status</td>
+                                                                <td>:</td>
+                                                                <td>{{proj.desc}}</td>
+                                                            </tr>
+                                                            <!-- <tr class="applied">
+                                                                <td>Timeline</td>
+                                                                <td>:</td>
+                                                                <td>{{proj.project_start | date:'dd MMM yyyy'}} - {{proj.project_close | date:'dd MMM yyyy'}}</td>
+                                                            </tr> -->
+                                                            <tr class="applied" style="border-bottom: 0.1rem dashed #313131;">
+                                                                <td colspan="4"></td>
+                                                            </tr>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>                                       
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <input type="hidden" formControlName="applId" />
+                    <input type="hidden" formControlName="applIndex" />
+                    <input type="hidden" formControlName="applType" />
+                </div>
+                <div class="modal-footer">
+                    <!--Hide for Now with *ngIf="hideForNow" -->
+                    <button type="button" *ngIf="hideForNow" class="btn btn-success btn-md btn-accent m-btn m-btn--pill" [disabled]="applDownloadFlag" (click)="onClickDownloadBtn()">
+                        Download
+                    </button>
+                    <button type="button" class="btn btn-secondary btn-md btn-accent m-btn m-btn--pill" data-dismiss="modal" style="color:black">
+                        Close
+                    </button>
+                    <button type="submit" [disabled]="applLoading" class="btn btn-primary  btn-md btn-accent m-btn m-btn--pill" onclick="$('.modal').modal('hide')"
+                        *ngIf="details_status==5 && applStatus=='12'" (click)="onSelectFromModel(applId, applProfile.Staff_No)" >
+                        <!--*ngIf="(iviewAct||aplcAct) *ngIf="((iviewAct&&applStatus=='11'&&opnApplType=='forSuccess')||(aplcAct&&applStatus=='10'&&opnApplType=='forInterview'))"-->
+                        Select this Applicant
+                    </button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+<!--end::Modal APPLICANT INFO -->

@@ -1,0 +1,191 @@
+.talent-bg {
+  background-image: url(../../../../../assets/img/user/sea-portal/bg-talent.png) !important; 
+  position: relative;
+  height: 20rem; 
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+@media (max-width: 575px) {
+  .col-xs-1 {
+    flex: 0 0 8.33333%;
+    max-width: 8.33333%; 
+  }
+  .col-xs-2 {
+    flex: 0 0 16.66667%;
+    max-width: 16.66667%; 
+  }
+  .col-xs-3 {
+    flex: 0 0 25%;
+    max-width: 25%; 
+  }
+  .col-xs-4 {
+    flex: 0 0 33.33333%;
+    max-width: 33.33333%; 
+  }
+  .col-xs-5 {
+    flex: 0 0 41.66667%;
+    max-width: 41.66667%; 
+  }
+  .col-xs-6 {
+    flex: 0 0 50%;
+    max-width: 50%; 
+  }
+  .col-xs-7 {
+    flex: 0 0 58.33333%;
+    max-width: 58.33333%; 
+  }
+  .col-xs-8 {
+    flex: 0 0 66.66667%;
+    max-width: 66.66667%; 
+  }
+  .col-xs-9 {
+    flex: 0 0 75%;
+    max-width: 75%; 
+  }
+  .col-xs-10 {
+    flex: 0 0 83.33333%;
+    max-width: 83.33333%; 
+  }
+  .col-xs-11 {
+    flex: 0 0 91.66667%;
+    max-width: 91.66667%; 
+  }
+  .col-xs-12 {
+    flex: 0 0 100%;
+    max-width: 100%; 
+  }
+  .xs-tc-font {
+    font-size: 10px;
+  }
+}
+
+h3.m-subheader__title {
+  border-right: 1px solid #e2e5ec;
+}
+
+.card-assessment {
+    padding: 10px;
+    border:rgba(33, 30, 30, 0.4) 1px solid;
+    margin: 5px;
+    background-color: rgb(247, 247, 247);
+}
+    
+  
+.star {
+  font-size: 1.5rem;
+  color: #d5dfeb;
+}
+
+.filled {
+  color: #eecf22;
+}
+
+ngb-rating:focus {
+  outline: none !important;
+}
+
+.grid-img-div {
+  position: relative;
+  top: 30%;
+}
+
+.user-grid-img {
+  width: 45px;
+  height: 45px;
+}
+
+.employee-cell-link {
+  color: white;
+  font-size: 5vw;
+  font-weight: 200;
+  cursor: pointer;
+}
+
+span.employee-cell-link:hover {
+font-weight: 400;
+text-decoration: underline;
+}
+.alert-btn {
+  background-color: #ff8000; 
+  color: white; 
+  border: solid 2px white; 
+  border-radius: 50px;
+  cursor: pointer;
+  -webkit-border-radius: 10px;
+  display: inline-block;
+  -webkit-animation: glowing 400ms infinite;
+  -moz-animation: glowing 400ms infinite;
+  -o-animation: glowing 400ms infinite;
+  animation: glowing 400ms infinite;
+}
+
+.search-input:focus {
+  border-color: #ff8000 !important;
+}
+
+@-webkit-keyframes glowing {
+  0% { background-color: #ff8000; -webkit-box-shadow: 0 0 3px #ff8000; }
+  50% { background-color: #FF0000; -webkit-box-shadow: 0 0 40px #FF0000; }
+  100% { background-color: #ff8000; -webkit-box-shadow: 0 0 3px #ff8000; }
+}
+
+@-moz-keyframes glowing {
+  0% { background-color: #ff8000; -moz-box-shadow: 0 0 3px #ff8000; }
+  50% { background-color: #FF0000; -moz-box-shadow: 0 0 40px #FF0000; }
+  100% { background-color: #ff8000; -moz-box-shadow: 0 0 3px #ff8000; }
+}
+
+@-o-keyframes glowing {
+  0% { background-color: #ff8000; box-shadow: 0 0 3px #ff8000; }
+  50% { background-color: #FF0000; box-shadow: 0 0 40px #FF0000; }
+  100% { background-color: #ff8000; box-shadow: 0 0 3px #ff8000; }
+}
+
+@keyframes glowing {
+  0% { background-color: #ff8000; box-shadow: 0 0 3px #ff8000; }
+  50% { background-color: #FF0000; box-shadow: 0 0 40px #FF0000; }
+  100% { background-color: #ff8000; box-shadow: 0 0 3px #ff8000; }
+}
+
+
+.onfocus:hover {
+  background-color: #c4c5d694;
+} 
+
+.selectedUser {
+  background: #c4c5d694;
+}
+
+.error-msg {
+  color: red;
+  font-size: 12px;
+}
+
+.btn-primary.disabled, .btn-primary:disabled {
+  color: #fff;
+  background-color: #ff8000!important;
+  border-color: #ff8000!important;
+}
+
+.green-status {
+  color:#fff; 
+  background-color:#14861c !important; 
+  border-color: #14861c !important; 
+  border-radius: 50px; 
+  padding: 3px 8px;
+}
+.green-status:hover {
+  box-shadow: 0 .5rem 1rem rgba(0,0,0,.15)!important;
+}
+
+.blue-status {
+  color:#fff; 
+  background-color: #303f9f !important; 
+  border-color: #303f9f !important; 
+  border-radius: 50px; 
+  padding: 3px 8px;
+}
+.blue-status:hover {
+  box-shadow: 0 .5rem 1rem rgba(0,0,0,.15)!important;
+}

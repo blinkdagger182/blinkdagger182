@@ -1,0 +1,67 @@
+
+<div class="m-content">
+    <div class="d-flex justify-content-center">
+
+        <div class="col-xl-12" style="margin-top: 1rem;">
+            <div class="col-lg-12 centred my-auto" *ngIf="loading">
+                <app-admin-loading></app-admin-loading>
+            </div>
+
+            <div class="m-portlet m-portlet--full-height" *ngIf="!loading">
+                <div class="m-portlet__head">
+                    <div class="m-portlet__head-caption">
+                        <div class="m-portlet__head-title">
+                            <h2 class="m-portlet__head-text" style="font-size: 24px">
+                                Your Notifications
+                            </h2>
+                        </div>
+                    </div>
+                </div>
+                <div class="m-portlet__body">
+                    <div class="tab-content">
+                        <div class="tab-pane active">
+                            
+                            <div class="m-list-timeline m-list-timeline--skin-light">
+                                <div class="m-timeline-3">
+                                    <div class="m-timeline-3__items" *ngFor="let noti of data">
+                                        <div [class.unReadNoti]="noti.click === 0"
+                                            class="m-timeline-3__item m-timeline-3__item--info m-section__content">
+                                            <div class="m-timeline-3__item-time " style="width: 4.0rem !important; height: 4rem !important; " >
+                                                <div *ngIf="checkType(noti.type) else other">
+                                                    <img *ngIf="noti.img_exist" style="width: 48px; height: 48px; border-radius: 50%"
+                                                        src="{{noti.image_src}}">
+                                                    <img *ngIf="!noti.img_exist" style="width: 48px; height: 48px; border-radius: 50%"
+                                                        src="../../../../assets/app/media/img/users/ghcm-user-default.jpg">
+                                                </div>
+                                                <ng-template #other>
+                                                    <span *ngIf="noti.type == 'like'"><i style="font-size: 3.5rem; color:#fd5806" class="la la-heart-o"></i></span>
+                                                    <span *ngIf="noti.type == 'job'"><i style="font-size: 3.5rem; color:#fd5806" class="la la-briefcase"></i></span>                                                    
+                                                </ng-template>
+                                            </div>
+                                            <div class="m-timeline-3__item-desc" >
+                                                <span class="m--font-bolder">
+                                                    {{ noti.title }} 
+                                                </span>
+                                                <br>
+                                                <span class="m-timeline-3__item-text" style="font-size: 1.0rem;"> 
+                                                    {{ noti.description}}
+                                                </span>
+                                                <br>
+                                                <span class="m-timeline-3__item-text" style="font-size: 0.9rem;">  
+                                                    <i class="la la-dashboard" style="font-size:1.3rem; color: #fd5806"></i>&nbsp;&nbsp;
+                                                    <span *ngIf="older_24Hrs(noti.datetime); else ago">{{noti.datetime | date:'dd/MM/yyyy'}}</span>
+                                                    <ng-template #ago>{{ noti.datetime | timeAgo }}</ng-template> 
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

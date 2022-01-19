@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="22" height="22" viewBox="0 0 22 22">
+  <defs>
+    <clipPath id="clip-Custom_Size_1">
+      <rect width="22" height="22"/>
+    </clipPath>
+  </defs>
+  <g id="Custom_Size_1" data-name="Custom Size – 1" clip-path="url(#clip-Custom_Size_1)">
+    <rect width="22" height="22" fill="#fff"/>
+    <path id="Ellipse_9" data-name="Ellipse 9" d="M11,.88A10.12,10.12,0,0,0,3.844,18.156,10.12,10.12,0,1,0,18.156,3.844,10.054,10.054,0,0,0,11,.88M11,0A11,11,0,1,1,0,11,11,11,0,0,1,11,0Z" fill="#fc7902"/>
+    <g id="Group_1" data-name="Group 1" transform="translate(6.97 6.774)">
+      <path id="Path_5963" data-name="Path 5963" d="M6.007,63.968H.271A1.027,1.027,0,0,1-.755,62.941V57.1A1.027,1.027,0,0,1,.271,56.07H6.108V56.8H.271a.3.3,0,0,0-.3.3v5.845a.3.3,0,0,0,.3.3H6.007a.3.3,0,0,0,.3-.3V61.68h.726v1.261A1.027,1.027,0,0,1,6.007,63.968Z" transform="translate(0.755 -55.515)" fill="#fc7902"/>
+      <g id="Group_14688" data-name="Group 14688" transform="matrix(0.995, -0.105, 0.105, 0.995, 3.051, 0.679)">
+        <path id="Subtraction_1" data-name="Subtraction 1" d="M.21,5.165A.209.209,0,0,1,0,4.914L.3,3.43a.215.215,0,0,1,.058-.107L3.682,0,5.166,1.484,1.844,4.807a.214.214,0,0,1-.108.058l-1.484.3A.183.183,0,0,1,.21,5.165ZM.535,3.744l-.195.831.287.252.817-.161Z" transform="translate(0 1.334)" fill="#fc7902" stroke="rgba(0,0,0,0)" stroke-miterlimit="10" stroke-width="1"/>
+        <path id="Path_5965" data-name="Path 5965" d="M2.066.307a1.051,1.051,0,0,0-1.484,0L0,.888,1.484,2.373l.581-.581a1.05,1.05,0,0,0,0-1.484Z" transform="translate(4.126 0)" fill="#fc7902"/>
+      </g>
+    </g>
+  </g>
+</svg>

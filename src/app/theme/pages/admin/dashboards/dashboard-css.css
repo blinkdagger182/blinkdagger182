@@ -1,0 +1,118 @@
+.hide-adv-date{
+    opacity: 0; position: absolute; top: -9999px; left: -9999px;
+}
+
+.edit-delete-btn{
+    margin-top: -5rem !important;
+    width: 25px !important;
+    height: 25px !important;
+}
+
+.ed_delBtn:hover{
+    cursor: pointer !important;
+}
+
+.edit-delete-wrap{
+    width: 11rem !important;
+    margin-top: -2rem !important;
+}
+
+.icon-size{
+    font-size: 1.2rem !important
+}
+
+.modal .modal-content .modal-footer {
+    padding: 10px;
+}
+
+.liked{
+    color: #fd5806 !important;
+    font-weight: bold !important;
+}
+
+.like-modal-content{
+    height: 35rem !important;
+}
+
+.like-body{
+    max-height: 335px !important;
+}
+
+.jobInfo_content{
+    /* width: 90% !important; */
+    margin: auto !important;
+    /* margin-top: 3rem !important; */
+    margin-bottom: 2rem !important;
+}
+
+.theme_color {
+    color :#fd5806 !important;
+}
+
+.acc_content{
+    padding-top: 2rem !important;
+    background: #fff !important;
+    border: 2px solid #f7f8fa !important;
+}
+
+.info_title{
+    color: black !important;
+    font-weight: bolder !important;
+}
+
+/*Overwrite style.bundle.css*/
+.btn.btn-outline-brand {
+    color: #ff8000!important;
+    border-color: #ff8000!important;
+}
+
+.btn.btn-outline-brand:hover {
+    color: #fff!important;
+    background-color: #ff8000!important;
+}
+
+.btn.btn-outline-brand:focus {
+    color: #fff!important;
+    background-color: #ff8000!important;
+}
+
+.m-table.m-table--head-bg-brand thead th {
+    background: #ff5A00!important;
+}
+
+.alert-primary {
+    background-color: #0066ff!important;
+    border-color: #0066ff!important;
+}
+
+.btn.btn-outline-primary {
+    color: #0066ff!important;
+}
+
+.btn.btn-outline-primary:hover {
+    color: #fff!important;
+    background-color: #0066ff!important;
+}
+
+.btn.btn-outline-primary:focus {
+    color: #fff!important;
+    background-color: #0066ff!important;
+}
+.btn-primary {
+    background-color: #0066ff!important;
+    border-color: #0066ff!important;
+}
+.btn-brand {
+    background-color: #0066ff!important;
+    border-color: #0066ff!important;
+}
+
+.m-badge.m-badge--primary {
+    background-color: #0066ff!important;
+}
+
+.page-item.active .page-link {
+    background-color: #0066ff!important;
+    border-color: #0066ff!important;
+}
+/*End Overwrite style.bundle.css*/

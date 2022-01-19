@@ -1,0 +1,368 @@
+<div class="sea-bg" [ngClass]="bgClass" [ngStyle]="{ 'background-image': bgChange }"> 
+
+    <div style="padding-top: 8rem;"></div>
+
+    <div class="container fea-container">
+        <h3 class="urgent">Features</h3>
+
+        <div class="row" style="padding-bottom: 1rem;">
+            
+            <div class="col-md-2 col-sm-3 col-xs-6">
+                <div class="fea-menuDiv">
+                    <img class="menuIcons" src="../../../../../assets/svg/covid19.svg" (click)="menuOpen('covid')">
+                    <p class="menuTxt">COVID-19</p>
+                </div>
+            </div>
+
+            <div class="col-md-2 col-sm-3 col-xs-6">
+                <div class="fea-menuDiv">
+                    <img class="menuIcons" src="../../../../../assets/svg/smile.svg" (click)="menuClicked('/happy-meter')">
+                    <p class="menuTxt">Smile</p>
+                </div>
+            </div>
+
+            <!-- <div class="col-md-2 col-sm-3 col-xs-6" *ngIf="showTalent">
+                <div class="fea-menuDiv">
+                    <img class="menuIcons" src="../../../../../assets/svg/talent.svg" (click)="menuClicked('/talent')">
+                    <p class="menuTxt">Talent</p>
+                </div>
+            </div> -->
+
+            <div class="col-md-2 col-sm-3 col-xs-6">
+                <div class="fea-menuDiv">
+                    <img class="menuIcons" src="../../../../../assets/svg/jobs.svg" (click)="menuClicked('/user-job')">
+                    <p class="menuTxt">Jobs</p>
+                </div>
+            </div>
+
+            <div class="col-md-2 col-sm-3 col-xs-6">
+                <div class="fea-menuDiv">
+                    <img class="menuIcons" src="../../../../../assets/svg/tracking.svg" (click)="menuClicked('/user-job/tracking')">
+                    <p class="menuTxt">Tracking</p>
+                </div>
+            </div>
+
+            <div class="col-md-2 col-sm-3 col-xs-6">
+                <div class="fea-menuDiv">
+                    <img class="menuIcons" src="../../../../../assets/svg/sap.svg" (click)="menuOpen('la')">
+                    <p class="menuTxt">GEMS</p>
+                </div>
+            </div>
+
+            <div class="col-md-2 col-sm-3 col-xs-6">
+                <div class="fea-menuDiv">
+                    <img class="menuIcons" src="../../../../../assets/svg/circles.svg" (click)="menuClicked('/circle')">
+                    <p class="menuTxt">Circles</p>
+                </div>
+            </div>
+
+            <div class="col-md-2 col-sm-3 col-xs-6">
+                <div class="fea-menuDiv">
+                    <img class="menuIcons" src="../../../../../assets/svg/grow.svg" (click)="menuOpen('g')">
+                    <p class="menuTxt">Grow</p>
+                </div>
+            </div>
+
+            <div class="col-md-2 col-sm-3 col-xs-6">
+                <div class="fea-menuDiv">
+                    <img class="menuIcons" src="../../../../../assets/svg/myteam.svg" (click)="menuClicked('/idp')">
+                    <p class="menuTxt">IDP</p>
+                </div>
+            </div>
+
+            <div class="col-md-2 col-sm-3 col-xs-6" *ngIf="showMaps">
+                <div class="fea-menuDiv">
+                    <img class="menuIcons" src="../../../../../assets/svg/maps-ne.svg" (click)="menuClicked('/maps')">
+                    <p class="menuTxt">MAPS NE</p>
+                </div>
+            </div>
+
+            <!-- <div class="col-md-2 col-sm-3 col-xs-6">
+                <div class="fea-menuDiv">
+                    <img class="menuIcons" src="../../../../../assets/svg/leave.svg" (click)="menuOpen('la')">
+                    <p class="menuTxt">Leave</p>
+                </div>
+            </div> -->
+
+            <!-- <div class="col-md-2 col-sm-3 col-xs-6">
+                <div class="fea-menuDiv">
+                    <img class="menuIcons" src="../../../../../assets/svg/myteam1.svg" >
+                    <p class="menuTxt">My Team</p>
+                </div>
+            </div> -->
+
+            <div class="col-md-2 col-sm-3 col-xs-6">
+                <div class="fea-menuDiv">
+                    <img class="menuIcons" src="../../../../../assets/svg/notification.svg" (click)="menuClicked('/notifications')">
+                    <p class="menuTxt">Notifications</p>
+                </div>
+            </div>
+
+            <!-- <div class="col-md-2 col-sm-3 col-xs-6">
+                <div class="fea-menuDiv">
+                    <img class="menuIcons" src="../../../../../assets/svg/edubite.svg" (click)="menuOpen('edu')" >
+                    <p class="menuTxt">Edubite</p>
+                </div>
+            </div> -->
+
+            <div class="col-md-2 col-sm-3 col-xs-6">
+                <div class="fea-menuDiv">
+                    <img class="menuIcons" src="../../../../../assets/svg/learn.svg" (click)="menuOpen('tml')">
+                    <p class="menuTxt">Learn</p>
+                </div>
+            </div>
+
+            <!-- <div class="col-md-2 col-sm-3 col-xs-6">
+                <div class="fea-menuDiv">
+                    <img class="menuIcons" src="../../../../../assets/svg/360.svg" (click)="menuOpen('g')">
+                    <p class="menuTxt">360</p>
+                </div>
+            </div> -->
+
+            <!-- <div class="col-md-2 col-sm-3 col-xs-6">
+                <div class="fea-menuDiv">
+                    <img class="menuIcons" src="../../../../../assets/svg/maps.svg" >
+                    <p class="menuTxt">MAPS</p>
+                </div>
+            </div> -->
+
+            <div class="col-md-2 col-sm-3 col-xs-6" *ngIf="showExtra">
+                <div class="fea-menuDiv">
+                    <img class="menuIcons" src="../../../../../assets/svg/extra.svg" (click)="menuClicked('/extraordinaire')">
+                    <p class="menuTxt">Extraordinaire</p>
+                </div>
+            </div>
+
+            <div class="col-md-2 col-sm-3 col-xs-6">
+                <div class="fea-menuDiv">
+                    <img class="menuIcons" src="../../../../../assets/svg/neo.svg" (click)="menuOpen('neo')">
+                    <p class="menuTxt">NEO</p>
+                </div>
+            </div>
+
+            <div class="col-md-2 col-sm-3 col-xs-6">
+                <div class="fea-menuDiv">
+                    <img class="menuIcons" src="../../../../../assets/svg/e-claim.svg" (click)="menuOpen('eclaim')">
+                    <p class="menuTxt">e-Claim</p>
+                </div>
+            </div>
+
+            <div class="col-md-2 col-sm-3 col-xs-6">
+                <div class="fea-menuDiv">
+                    <img class="menuIcons" src="../../../../../assets/svg/iris.svg" (click)="menuOpen('iris')">
+                    <p class="menuTxt">IRIS</p>
+                </div>
+            </div>
+
+            <!-- <div class="col-md-2 col-sm-3 col-xs-6">
+                <div class="fea-menuDiv">
+                    <img class="menuIcons" src="../../../../../assets/svg/checkin.svg" >
+                    <p class="menuTxt">Check-In</p>
+                </div>
+            </div> -->
+
+            <div class="col-md-2 col-sm-3 col-xs-6">
+                <div class="fea-menuDiv">
+                    <img class="menuIcons" src="../../../../../assets/svg/faqs.svg" (click)="menuClicked('/faq')">
+                    <p class="menuTxt">FAQs</p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div  class="container container-features" *ngIf="false">
+        <div class="row">
+            <div class="col-xxs-12 col-xs-6 col-sm-4 col-lg-2 p-t-40"> <!--Covid-->
+                <div class="m-portlet__body text-center grid-enlarge width-icon" (click)="menuOpen('covid')">                        
+                    <div style="height: 80px;">
+                        <img src="../../../../../assets/img/user/sea-portal/corona 225x225.png" class="pt-0 icons-size-sea">
+                    </div>
+                    <div class="box-text-era top-0">
+                        <p class="v-algn-btm">COVID19@TM</p>
+                    </div>  
+                </div>
+            </div>
+            <div class="col-xxs-12 col-xs-6 col-sm-4 col-lg-2 p-t-40" *ngIf="showTalent"> <!--Talent Classification-->
+                <div class="m-portlet__body text-center grid-enlarge width-icon" (click)="menuClicked('/talent')">  
+                    <div style="height: 80px;">
+                        <img src="../../../../../assets/img/user/sea-portal/icon-talent-assessment.png" class="pt-0 icons-size-sea">
+                    </div>
+                    <div class="box-text-era top-0">
+                        <p class="v-algn-btm">TALENT CLASSIFICATION</p>
+                    </div>                        
+                </div>
+            </div>
+            <div class="col-xxs-12 col-xs-6 col-sm-4 col-lg-2 p-t-40" *ngIf="showNomination"> <!-- Succession Depth -->
+                <div class="m-portlet__body text-center grid-enlarge width-icon" (click)="menuClicked('/nomination')">  
+                    <div style="height: 80px;">
+                        <img src="../../../../../assets/img/user/sea-portal/icon-successor-nomination.png" class="pt-0 icons-size-sea">
+                    </div>
+                    <div class="box-text-era top-0">
+                        <p class="v-algn-btm">Succession Depth</p>
+                    </div>                        
+                </div>
+            </div>
+            <div class="col-xxs-12 col-xs-6 col-sm-4 col-lg-2 p-t-40"> <!--Job-->
+                <div class="m-portlet__body text-center grid-enlarge width-icon" (click)="menuClicked('/user-job')">                       
+                    <div style="height: 80px;">
+                        <img src="../../../../../assets/img/user/sea-portal/Jobs225x225.png" class="pt-0 icons-size-sea">
+                    </div>
+                    <div class="box-text-era top-0">
+                        <p class="v-algn-btm">JOBS</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xxs-12 col-xs-6 col-sm-4 col-lg-2 p-t-40"> <!--Tracking-->
+                <div class="m-portlet__body text-center grid-enlarge width-icon" (click)="menuClicked('/user-job/tracking')">
+                    <div style="height: 80px;">
+                        <img src="../../../../../assets/img/user/sea-portal/tracking 225x255.png" class="pt-0 icons-size-sea">
+                    </div>
+                    <div class="box-text-era top-0">
+                        <p class="v-algn-btm">TRACKING</p>    
+                    </div>
+                </div>
+            </div>
+            <div class="col-xxs-12 col-xs-6 col-sm-4 col-lg-2 p-t-40"> <!--Circle-->
+                <div class="m-portlet__body text-center grid-enlarge width-icon" (click)="menuClicked('/circle')">                       
+                    <div style="height: 80px;">
+                        <img src="../../../../../assets/img/user/sea-portal/circle 225x255.png" class="pt-0 icons-size-sea">
+                    </div>
+                    <div class="box-text-era top-0">
+                        <p class="v-algn-btm">CIRCLE</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xxs-12 col-xs-6 col-sm-4 col-lg-2 p-t-40"> <!--IDP-->
+                <div class="m-portlet__body text-center grid-enlarge width-icon" (click)="menuClicked('/idp')">                     
+                    <div style="height: 80px;">
+                        <img src="../../../../../assets/img/user/sea-portal/IDP 225x225.png" class="pt-0 icons-size-sea">
+                    </div>
+                    <div class="box-text-era top-0">
+                        <p class="v-algn-btm">IDP</p>
+                    </div>
+                </div>
+            </div>   
+            <div class="col-xxs-12 col-xs-6 col-sm-4 col-lg-2 p-t-40"> <!--FAQ-->
+                <div class="m-portlet__body text-center grid-enlarge width-icon" (click)="menuClicked('/faq')">                        
+                    <div style="height: 80px;">
+                        <img src="../../../../../assets/img/user/sea-portal/FAQ 225x225.png" class="pt-0 icons-size-sea">
+                    </div>
+                    <div class="box-text-era top-0">
+                        <p class="v-algn-btm">FAQ</p>
+                    </div>  
+                </div>
+            </div>   
+            <div class="col-xxs-12 col-xs-6 col-sm-4 col-lg-2 p-t-40" *ngIf="showExtra"> <!--TM on the Move-->
+                <div class="m-portlet__body text-center grid-enlarge width-icon" (click)="menuClicked('/extraordinaire')">
+                    <div style="height: 80px;">
+                        <img src="../../../../../assets/img/user/sea-portal/extraOrdi 255x225.png" class="pt-0 icons-size-sea">
+                    </div>
+                    <div class="box-text-era top-0">
+                        <p class="v-algn-btm">TM ON THE MOVE</p>
+                    </div>                         
+                </div>
+            </div>  
+            <div class="col-xxs-12 col-xs-6 col-sm-4 col-lg-2 p-t-40"> <!--Profile-->
+                <div class="m-portlet__body text-center grid-enlarge width-icon" (click)="menuClicked('/profile')">
+                    <div style="height: 80px;">
+                        <img src="../../../../../assets/img/user/sea-portal/icon-my-profile.png" class="pt-0 icons-size-sea" >
+                    </div>
+                    <div class="box-text-era top-0">
+                        <p class="v-algn-btm">PROFILE</p>
+                    </div>
+                </div>
+            </div>  
+            <div class="col-xxs-12 col-xs-6 col-sm-4 col-lg-2 p-t-40"> <!--Notification-->
+                <div class="m-portlet__body text-center grid-enlarge width-icon" (click)="menuClicked('/notifications')">
+                    <div style="height: 80px;">
+                        <img src="../../../../../assets/img/user/sea-portal/notification 225x255.png" class="pt-0 icons-size-sea">
+                    </div>
+                    <div class="box-text-era top-0">
+                        <p class="v-algn-btm">NOTIFICATIONS</p>
+                    </div>
+                </div>
+            </div>  
+            <div class="col-xxs-12 col-xs-6 col-sm-4 col-lg-2 p-t-40"> <!--OT Claim System-->
+                <div class="m-portlet__body text-center grid-enlarge width-icon" (click)="menuOpen('otcs')">                        
+                    <div style="height: 80px;">
+                        <img src="../../../../../assets/img/user/sea-portal/icon-ot-claim-system.png" class="pt-0 icons-size-sea">
+                    </div>
+                    <div class="box-text-era top-0">
+                        <p class="v-algn-btm">OT CLAIM SYSTEM</p>
+                    </div>  
+                </div>
+            </div>      
+            <div class="col-xxs-12 col-xs-6 col-sm-4 col-lg-2 p-t-40"> <!--TM Learn-->
+                <div class="m-portlet__body text-center grid-enlarge width-icon" (click)="menuOpen('tml')">                        
+                    <div style="height: 80px;">
+                        <img src="../../../../../assets/img/user/sea-portal/icon-tm-learn.png" class="pt-0 icons-size-sea">
+                    </div>
+                    <div class="box-text-era top-0">
+                        <p class="v-algn-btm">TM LEARN</p>
+                    </div>  
+                </div>
+            </div>     
+            <div class="col-xxs-12 col-xs-6 col-sm-4 col-lg-2 p-t-40"> <!--Leave Application-->
+                <div class="m-portlet__body text-center grid-enlarge width-icon" (click)="menuOpen('la')">                        
+                    <div style="height: 80px;">
+                        <img src="../../../../../assets/img/user/sea-portal/icon-leave-application.png" class="pt-0 icons-size-sea">
+                    </div>
+                    <div class="box-text-era top-0">
+                        <p class="v-algn-btm">LEAVE APPLICATION</p>
+                    </div>  
+                </div>
+            </div>     
+            <div class="col-xxs-12 col-xs-6 col-sm-4 col-lg-2 p-t-40"> <!--Grow-->
+                <div class="m-portlet__body text-center grid-enlarge width-icon" (click)="menuOpen('g')">                        
+                    <div style="height: 80px;">
+                        <img src="../../../../../assets/img/user/sea-portal/icon-grow.png" class="pt-0 icons-size-sea">
+                    </div>
+                    <div class="box-text-era top-0">
+                        <p class="v-algn-btm">GROW</p>
+                    </div>  
+                </div>
+            </div>    
+            <div class="col-xxs-12 col-xs-6 col-sm-4 col-lg-2 p-t-40"> <!--MAPS NE-->
+                <div class="m-portlet__body text-center grid-enlarge width-icon" (click)="menuClicked('/maps')">                      
+                    <div style="height: 80px;">
+                        <img src="../../../../../assets/img/user/sea-portal/icon-maps-ne.png" class="pt-0 icons-size-sea">
+                    </div>
+                    <div class="box-text-era top-0">
+                        <p class="v-algn-btm">MAPS</p>
+                    </div>  
+                </div>
+            </div> 
+            <div class="col-xxs-12 col-xs-6 col-sm-4 col-lg-2 p-t-40"> <!--Ask US-->
+                <div class="m-portlet__body text-center grid-enlarge width-icon" (click)="menuClicked('/ask-us')">                        
+                    <div style="height: 80px;">
+                        <img src="../../../../../assets/img/user/sea-portal/icon-ask-us.png" class="pt-0 icons-size-sea">
+                    </div>
+                    <div class="box-text-era top-0">
+                        <p class="v-algn-btm">ASK US</p>
+                    </div>  
+                </div>
+            </div> 
+            <div class="col-xxs-12 col-xs-6 col-sm-4 col-lg-2 p-t-40"> <!--Smile-->
+                <div class="m-portlet__body text-center grid-enlarge width-icon" (click)="menuClicked('/happy-meter')">                        
+                    <div style="height: 80px;">
+                        <img src="../../../../../assets/app/media/img/emoji/floaticon.png" class="pt-0 icons-size-sea">
+                    </div>
+                    <div class="box-text-era top-0">
+                        <p class="v-algn-btm">HAPPY METER</p>
+                    </div>  
+                </div>
+            </div>              
+        </div>
+    </div>
+
+</div>
+
+<!-- <footer>
+    <div class="col-sm-12 text-center" style="background: #fff; font-size: 12px!important; position: absolute; bottom: 1px;">
+        Copyright &#169; 2020 <b>GHCM</b> Powered by <b>TM R&D</b> All rights reserved.
+    </div>
+</footer> -->
+
+    
+    

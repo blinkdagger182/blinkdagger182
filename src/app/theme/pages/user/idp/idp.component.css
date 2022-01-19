@@ -1,0 +1,264 @@
+.idp-bg {
+    background-image: url(../../../../../assets/img/user/sea-portal/bg-idp.png) !important; 
+    position: relative;
+    height: 20rem; 
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.info-btn {
+    width: 20px !important;
+    height: 20px !important;
+}
+
+.idp_head-label{
+    color:#FFFFFF;
+    border-radius:.55rem!important 
+}
+.idp_portlet{
+    background-color:#f2f3f8; 
+    border-radius:.75rem!important; 
+    box-shadow: 0px 1px 15px 1px #90A4AE !important;
+}
+.idp_portlet_body_moveup{
+    margin-top:-50px;
+}
+.item-body-radious {
+    border-radius: 12px !important;
+}
+
+.simple-save-btn {
+    color: #0FC2D0 !important;
+    border-color: #0FC2D0 !important;
+    background-color: #FFFFFF !important;
+}
+.btn-submitting {
+    color: #ffffff !important;
+    border-color: #0FC2D0 !important;
+    background-color: #0FC2D0 !important;
+}
+.savebtn-top {
+    position: relative;
+    top: 3rem;
+}
+
+.simple-save-btn:hover {
+    color: #FFFFFF !important;
+    background-color: #0FC2D0 !important;
+}
+
+.submit-btn {
+    color: #ffffff !important;
+    border-color: #0FC2D0 !important;
+    background-color: #0FC2D0 !important;
+}
+
+.portlet-item-head {
+    position: relative;
+    top: -2rem;
+    padding: 0 !important;
+}
+.portlet-item-body {
+    background: white;
+    margin-top: -1rem;
+}
+.add-item-btn {
+    color: #0FC2D0 !important;
+    border-color: #0FC2D0 !important;
+    background-color: #FFFFFF !important;
+}
+.add-item-btn:hover {
+    color: #FFFFFF !important;
+    background-color: #0FC2D0 !important;
+}
+.add-modal-btn {
+    color: #FFFFFF !important;
+    border-color: #0FC2D0ed !important;
+    background-color: #0FC2D0ed !important;
+}
+.add-modal-btn:hover {
+    color: #FFFFFF !important;
+    border-color: #0FC2D0 !important;
+    background-color: #0FC2D0 !important;
+}
+.textarea-msg {
+    font-size: 1rem !important;
+    color: #575962d6 !important;
+    font-weight: 400 !important;
+}
+
+.go-form-btn {
+    background-color: #0FC2D0db !important;
+    color: #FFFFFF !important;
+    border-color: #0FC2D0db !important;
+    font-size: 1.3rem !important;
+}
+.go-form-btn:hover {
+    background: #0FC2D0 !important;
+    color: #FFFFFF !important;
+    border-color: #0FC2D0 !important;
+}
+.ngx-charts {
+    width: 100% !important;
+}
+
+.m-accordion .m-accordion__item--info .m-accordion__item-head.collapsed {
+    background-color: #0FC2D0 !important;
+}
+.m-accordion .m-accordion__item--info {
+    border: 1px solid #0FC2D0 !important;
+}
+.m-accordion .m-accordion__item--info .m-accordion__item-head, .m-accordion .m-accordion__item--info .m-accordion__item-head:hover {
+    background-color: #1BA4BE !important;
+}
+
+.m-wizard.m-wizard--2.m-wizard--success .m-wizard__head .m-wizard__steps 
+.m-wizard__step.m-wizard__step--current .m-wizard__step-number > span {
+    background-color: #0FC2D0 !important; 
+}
+.step-number {
+    font-size: 18px;
+    font-weight: 900;
+    color: white;
+}
+.label-title {
+    font-size: 1.2rem;
+}
+.label-data {
+    font-size: 1.2rem;
+    font-weight: 500;
+}
+.m-wizard.m-wizard--2 .m-wizard__head {
+    margin: 3rem 0 0rem 0;
+    padding: 0 0rem;
+}
+
+.chart-legend div {
+    width: 250px !important;
+}
+
+.white-col {
+    color: #FFF !important;
+    font-size: 0.9rem !important;
+}
+.info-col {
+    color: #36a3f7 !important;
+}
+.btn-white {
+    background-color: #ffffff;
+    border-color: #fd5806;
+}
+
+.idpName {
+    text-align: center;
+    color: #fd5806; 
+    margin: 2rem;
+}
+
+.chartNote {
+    top: -5rem;
+    text-align: center;
+    font-size: 1.1rem;
+}
+.chartDetails {
+    padding: 0rem 3rem;
+    margin-top: -3rem;
+}
+
+.cdk-overlay-container {
+    position: fixed !important;
+    z-index: 100000 !important; /* set value you need */
+}
+
+.idpStatus {
+    text-align: center;
+    font-weight: 400;
+}
+
+.trainModal {
+    padding-right: 20px !important;
+}
+
+.idp-table-row1 {
+    display: table !important;
+}
+.idp-table-row2 {
+    display: none !important;
+}
+
+.mat-tab-label {
+    display:inline-block;
+    font-weight: bold;
+    min-width: 0!important;
+    /* padding: 5px!important;
+    margin: 5px!important; */
+    border: 1px solid grey;
+}
+  
+.mat-tab-label-active {
+    background-color: rgb(179, 179, 179) !important;
+}
+
+.mat-tab-header-pagination {
+    display: inline !important;
+    margin: auto;
+    padding: 15px;
+    box-shadow: none !important;
+}
+
+.feedback-whitebox {
+    height: 115px; 
+    width: 100%; 
+    border-radius: 10px; 
+    padding: 10px; 
+    margin-bottom: 10px;
+    background-color: rgb(244, 245, 248);
+    margin-top: 10px;
+    color: rgb(111, 114, 125);
+    overflow-y: auto;
+}
+
+@media (max-width: 1024px) {
+    .savebtn-top {
+        top: 1rem !important;
+        float: right;
+    }   
+}
+
+@media (max-width: 768px) {
+    .idpName {
+        margin: 0;
+    }
+    .chartNote {
+        top: -1rem;
+    }
+    .chartDetails {
+        padding: 0;
+        margin-top: 0;
+    }
+    .idpStatus { 
+        display: none;
+    }
+}
+
+@media (max-width: 742px) {
+    .idp-table-row1 {
+        display: none !important;
+    }
+    .idp-table-row2 {
+        display: table !important;
+        border-top: 1px solid #f4f3f8;
+    }
+}
+
+.height-modal-idp {
+    overflow-y: auto; 
+    max-height: 200px;
+}
+
+@media (min-height: 500px) { .height-modal-idp { max-height: 300px; } }
+@media (min-height: 600px) { .height-modal-idp { max-height: 400px; } }
+@media (min-height: 700px) { .height-modal-idp { max-height: 500px; } }
+@media (min-height: 800px) { .height-modal-idp { max-height: 600px; } }
+@media (min-height: 900px) { .height-modal-idp { max-height: 700px; } }
+@media (min-height: 1000px) { .height-modal-idp { max-height: 800px; } }

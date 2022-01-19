@@ -1,0 +1,585 @@
+:: {{toEdit}} ::
+
+<!--begin::Form  -->
+<form class="m-form" [formGroup]="exOrCreateForm" id="form_create_proj">
+    <!--class="m-form m-form--state m-form--fit m-form--label-align-right" id="form_create_proj"  -->
+    <!--begin::Portlet - Project Info -->
+    <div class="m-portlet m-portlet--creative m-portlet--bordered-semi era_exor_new_portlet ">
+        <div class="m-portlet__head">
+            <div class="m-portlet__head-caption">
+                <h2 class="m-portlet__head-label  era_exor_new_head-label">
+                    <!--m-portlet__head-label--warning -->
+                    <span>
+                        Project Info
+                    </span>
+                </h2>
+            </div>
+        </div>
+        <div class="m-portlet__body era_exor_new_portlet_body_moveup">
+            <div class="form-group m-form__group row">
+                <div class="col-lg-12" id="form_create_proj_msg_act">
+                    <div *ngIf="bcShowMsg" class="m-alert m-alert--icon m-alert--outline alert {{advPosStyle}} alert-dismissible fade show"
+                        role="alert">
+                        <div class="m-alert__icon">
+                            <i class="{{advPosIcon}}"></i>
+                        </div>
+                        <div class="m-alert__text">
+                            {{advPosMsg}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="m-form__content">
+                <div class="m-alert m-alert--icon alert alert-warning m--hide" role="alert" id="form_create_proj_msg">
+                    <div class="m-alert__icon">
+                        <i class="la la-warning"></i>
+                    </div>
+                    <div class="m-alert__text">
+                        {{formErr}}
+                    </div>
+                    <div class="m-alert__close">
+                        <button type="button" class="close" data-close="alert" aria-label="Close"></button>
+                    </div>
+                </div>
+
+                <div class="m-alert m-alert--icon alert {{advPosStyle}} m--hide" role="alert" >
+                    <div class="m-alert__icon">
+                        <i class="{{advPosIcon}}"></i>
+                    </div>
+                    <div class="m-alert__text">
+                        {{advPosMsg}}
+                    </div>
+                    <div class="m-alert__close">
+                        <button type="button" class="close" data-close="alert" aria-label="Close"></button>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="form-group m-form__group row">
+                <label class="col-form-label col-lg-3 col-sm-12">
+                    Project Name *
+                </label>
+                <div class="col-lg-9 col-md-9 col-sm-12">
+                    <div class="input-group m-input-group  m-input-group--pill">
+                        <input type="text" name="projName" id="projName" class="form-control m-input m-input--air m-input--pill"
+                            formControlName="projName" placeholder="{{projNamePlaceHolder}}"> 
+                    </div>
+                    <span class="m-form__help date_help m--hide errMsg" id="errProjName">
+                        <p>Please define project name.</p>
+                    </span>
+                    <span class="m-form__help">{{projNameHelp}}
+                        <span class="m-input-icon__icon m-input-icon__icon--left" *ngIf="(projName.hasError('minlength') || projName.hasError('required')  ) && projName.touched">
+                            <span class="m-badge m-badge--warning m-badge--wide" title="Invalid Character">Invalid
+                                Character</span>
+                        </span>
+                        <span class="m-input-icon__icon m-input-icon__icon--left" *ngIf="projNameDup">
+                            <!--*ngIf="(projName.hasError('duplicateName') ) && projName.touched"-->
+                            <span class="m-badge m-badge--warning m-badge--wide" title="Duplicate Name">Duplicate Name</span>
+                        </span>
+                    </span>
+                </div>
+            </div>
+
+            <div class="form-group m-form__group row">
+                <label class="col-form-label col-lg-3 col-sm-12">
+                    Project Timeline *
+                </label>
+                <div class="col-lg-9 col-md-9 col-sm-12">
+                    <div class="input-daterange input-group  m-input-group  m-input-group--pill" id="exor_new_date_picker">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">
+                                <i class="la la-calendar"></i>
+                            </span>
+                        </div>
+                        <input name="projStart" type="text" readonly class="form-control m-input era_new_readonly_white"
+                            id="startDt" value="" placeholder="{{projTimeStPlaceHolder}}" style="background-color:#FFFFFF" />
+                        <div class="input-group-append">
+                            <span class="input-group-text">
+                                <i class="la la-ellipsis-h"></i>
+                            </span>
+                        </div>
+                        <input name="projEnd" type="text" readonly class="form-control era_new_readonly_white" id="endDt"
+                            value="" placeholder="{{projTimeEdPlaceHolder}}" />
+                        <div class="input-group-append">
+                            <span class="input-group-text">
+                                <i class="la la-calendar"></i>
+                            </span>
+                        </div>
+                    </div>
+                    <!-- END DATE RANGE PICKER - V2 -->
+                    <span class="m-form__help date_help" id="msgTimeline">
+                        <p>Please choose start and end date.</p>
+                    </span>
+                </div>
+            </div>
+
+            <div class="form-group m-form__group row">
+                <label class="col-form-label col-lg-3 col-sm-12">
+                    Approver Name *
+                </label>
+                <div class="col-lg-9 col-md-9 col-sm-12 m-select2 m-input-group--pill">
+                    <input class="form-control m-input m-input--air m-input--pill" type="text" formControlName="projApprover"
+                        disabled #projApprover />
+                </div>
+            </div>
+
+            <div class="form-group m-form__group row ">
+                <label class="col-form-label col-lg-3 col-sm-12">
+                    Project Leader *
+                </label>
+                <div class="col-lg-9 col-md-9 col-sm-12 m-select2  m-select2--pill">
+                    <div class="input-group m-input-group  m-input-group--pill" data-toggle="modal" data-target="#m_modal_contact"
+                        (click)="openSearchContact('2')">
+                        <input class="form-control" type="text" formControlName="projLead" disabled #projLead id="prjLead" />
+                        <div class="input-group-append" data-toggle="modal" data-target="#m_modal_contact">
+                            <span class="input-group-text">
+                                <i class="la la-search"></i>
+                            </span>
+                        </div>
+                    </div>
+                    <span class="m-form__help errMsg m--hide" id="errLeadName" [hidden]="projLead.value.trim().length>0">Please
+                        choose project leader from the list.</span>
+                    <span class="m-form__help" style="cursor: pointer;" *ngIf="(projCtcName.value.trim().length>0)"
+                        (click)="copyContact('2')">Copy from Contact Name</span>
+                </div>
+            </div>
+
+            <div class="form-group m-form__group row">
+                <label class="col-form-label col-lg-3 col-sm-12">
+                    Contact Person *
+                </label>
+                <div class="col-lg-9 col-md-9 col-sm-12">
+                    <div class="input-group m-input-group  m-input-group--pill" data-toggle="modal" data-target="#m_modal_contact"
+                        (click)="openSearchContact('1')">
+                        <input class="form-control" type="text" formControlName="projCtcName" disabled #projCtcName id="ctcName" />
+                        <div class="input-group-append">
+                            <span class="input-group-text">
+                                <i class="la la-search"></i>
+                            </span>
+                        </div>
+                    </div>
+                    <span class="m-form__help errMsg m--hide" id="errCtcName" [hidden]="projCtcName.value.trim().length>0">Please
+                        choose contact person from the list.</span>
+                    <span class="m-form__help" style="cursor: pointer;" *ngIf="(projLead.value.trim().length>0)"
+                        (click)="copyContact('1')">Copy from Project Leader</span>
+                </div>
+            </div>
+
+            <div class="form-group m-form__group row">
+                <label class="col-form-label col-lg-3 col-sm-12">
+                    LOB *
+                </label>
+                <div class="col-lg-9 col-md-9 col-sm-12">
+                    <select class="form-control m-input m-input--air m-input--pill" #projLob id="projLob"
+                        formControlName="projLob">
+                        <option *ngFor="let item of lobList" [value]="item.lob" [selected]="item.lob.match(summData.summDataMySumm.LOB_Desc)">
+                            {{item.lob}}
+                        </option>
+                    </select>
+                    <span class="m-form__help date_help m--hide errMsg" id="errProjLob">
+                        <p>Please define project lob.</p>
+                    </span>
+                </div>
+            </div>
+
+            <div class="form-group m-form__group row">
+                <label class="col-form-label col-lg-3 col-sm-12">
+                    Location *
+                </label>
+                <div class="col-lg-9 col-md-9 col-sm-12">
+                    <input class="form-control m-input m-input--air m-input--pill" formControlName="projLoc" type="text"
+                        #projLoc id="projLoc" />
+                    <span class="m-form__help date_help m--hide errMsg" id="errProjLoc">
+                        <p>Please define project location.</p>
+                    </span>
+                </div>
+            </div>
+
+            <div class="form-group m-form__group row">
+                <label class="col-form-label col-lg-3 col-sm-12">
+                    Tagging
+                </label>
+                <div class="col-lg-9 col-md-9 col-sm-12 m-select2 m-input-group--pill" style="padding-left:30px">
+                    <div class="form-group  m-form__group row " id="m_repeater_tag" formArrayName="projTagArr">
+                        <span *ngFor="let tag of tagArray; let t = index">
+                            <div class="input-group m-input-group m-input-group--pill">
+                                <input type="text" class="form-control m-input m-input--air m-input--pill" placeholder="Tag"
+                                    maxlength="100" [(ngModel)]="tag.tag" [ngModelOptions]="{standalone: true}" name="{{tag.tag}}">
+                                <div class="input-group-append" *ngIf="t>0" (click)="deleteTagValue(t)">
+                                    <span class="input-group-text" id="basic-addon1">
+                                        <i class="la la-remove"></i>
+                                    </span>
+                                </div>
+                            </div>
+                        </span>
+                    </div>
+                    <button class="btn btn-sm btn-brand m-btn m-btn--icon m-btn--pill m-btn--wide pull-right" (click)="addTagValue()"
+                        id="AddMoreTag" [disabled]="!checkCanAddTag()">
+                        <span><i class="la la-plus"></i><span>Add</span></span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--end::Portlet - Project Info -->
+
+    <!--begin::Portlet - Project Objective -->
+    <div class="m-portlet m-portlet--creative m-portlet--bordered-semi era_exor_new_portlet">
+        <div class="m-portlet__head">
+            <div class="m-portlet__head-caption">
+                <h2 class="m-portlet__head-label  era_exor_new_head-label">
+                    <!--m-portlet__head-label--warning -->
+                    <span>
+                        Project Objective *
+                    </span>
+                </h2>
+            </div>
+        </div>
+        <div class="m-portlet__body era_exor_new_portlet_body_moveup">
+            <div class="form-group m-form__group row">
+                <div class="col-lg-12">
+                    <textarea class="form-control m-input m-input--air m-input--pill" name="projObj" id="projObj"
+                        formControlName="projObj" rows="3" placeholder="{{projObjPlaceHolder}}" #projObj maxlength="500"></textarea>
+                    <span class="m-form__help date_help m--hide errMsg" id="errProjObj">
+                        <p>Please define project objective.</p>
+                    </span>
+                    <span class="m-form__help">
+                        {{500 - projObj.value.trim().length}} remaining character<span *ngIf="500 - projObj.value.trim().length>1">s</span>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--end::Portlet - Project Objective -->
+
+    <!--begin::Portlet - Project Summary -->
+    <div class="m-portlet m-portlet--creative m-portlet--bordered-semi era_exor_new_portlet">
+        <div class="m-portlet__head">
+            <div class="m-portlet__head-caption">
+                <h2 class="m-portlet__head-label  era_exor_new_head-label">
+                    <!--m-portlet__head-label--warning -->
+                    <span>
+                        Project Summary *
+                    </span>
+                </h2>
+            </div>
+        </div>
+        <div class="m-portlet__body era_exor_new_portlet_body_moveup">
+            <div class="form-group m-form__group row">
+                <div class="col-lg-12">
+                    <textarea class="form-control m-input m-input--air m-input--pill" name="projSumm" id="projSumm"
+                        formControlName="projSumm" rows="3" #projSumm maxlength="1000"></textarea>
+                    <span class="m-form__help date_help m--hide errMsg" id="errProjSumm">
+                        <p>Please define project summary.</p>
+                    </span>
+
+                    <span class="m-form__help">
+                        {{1000 - projSumm.value.trim().length}} remaining character<span *ngIf="1000 - projSumm.value.trim().length>1">s</span>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--end::Portlet - Project Summary -->
+
+    <!--begin::Portlet - Project Key Milestone  -->
+    <div class="m-portlet m-portlet--creative m-portlet--bordered-semi era_exor_new_portlet">
+        <div class="m-portlet__head">
+            <div class="m-portlet__head-caption">
+                <h2 class="m-portlet__head-label  era_exor_new_head-label">
+                    <!--m-portlet__head-label--warning -->
+                    <span>
+                        Key Milestone *
+                    </span>
+                </h2>
+            </div>
+        </div>
+        <div class="m-portlet__body era_exor_new_portlet_body_moveup">
+            <div id="m_repeater_1" style="margin-top:20px">
+                <div class="form-group  m-form__group row" id="m_repeater_1" formArrayName="projMsArr">
+                    <div class="col-lg-12 col-md-12 col-sm-12">
+                        <div class="form-group m-form__group row align-items-center" style="margin-top:-15px" *ngFor="let field of milestoneArray; let i = index">
+
+                            <div class="col-lg-4 col-md-4" id="showTargetDt_{{i}}">
+                                <div class="m-form__control">
+                                    <div class="input-group date  input-group  m-input-group  m-input-group--pill">
+                                        <input type="text" id="targetDt_{{i}}" class="form-control m-input m-input--air m-input--pill era_new_readonly_white m_datepicker_3_modal m_datepicker_3_modal2"
+                                            readonly [(ngModel)]="field.targetDt" [ngModelOptions]="{standalone: true}"
+                                            name="{{field.targetDt}}" placeholder="{{projDatePlaceHolder}}" />
+                                        <div class="input-group-append">
+                                            <span class="input-group-text">
+                                                <i class="la la-calendar"></i>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="d-md-none m--margin-bottom-10"></div>
+                            </div>
+                            <div class="col-lg-7 col-md-7">
+                                <div class="m-form__control">
+                                    <input type="text" class="form-control m-input m-input--air m-input--pill"
+                                        [(ngModel)]="field.targetMs" [ngModelOptions]="{standalone: true}" name="{{field.targetMs}}"
+                                        placeholder="Key Activity" maxlength="100" />
+                                </div>
+                                <div class="d-md-none m--margin-bottom-10"></div>
+                            </div>
+                            <div class="col-lg-1 col-md-1">
+                                <div class="btn-sm btn btn-danger m-btn m-btn--icon m-btn--pill" (click)="deleteMilestoneValue(i)"
+                                    *ngIf="i>0">
+                                    <span>
+                                        <i class="la la-trash-o"></i>
+                                        <span>Delete</span>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="m-form__group form-group row">
+                    <div class="col-lg-12">
+                        <span class="m-form__help m--hide errMsg" id="errMs" [hidden]="checkCanAddMs()">All target date
+                            and milestone should not be empty.</span>
+                        <span class="m-form__help">{{projMsPlaceHelp}}</span>
+                    </div>
+                    <div class="col-lg-12">
+                        <button class="btn btn-sm btn-brand m-btn m-btn--icon m-btn--pill m-btn--wide pull-right"
+                            (click)="addMilestoneValue()" id="AddMoreMs2" [disabled]="!checkCanAddMs()">
+                            <span>
+                                <i class="la la-plus"></i>
+                                <span>
+                                    Add
+                                </span>
+                            </span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--end::Portlet - Project Key Milestone  -->
+
+    <!--begin::Portlet - Vacancies  -->
+    <div class="m-portlet m-portlet--creative m-portlet--bordered-semi era_exor_new_portlet">
+        <div class="m-portlet__head">
+            <div class="m-portlet__head-caption">
+                <h2 class="m-portlet__head-label  era_exor_new_head-label">
+                    <!--m-portlet__head-label--warning -->
+                    <span>
+                        Vacancies *
+                    </span>
+                </h2>
+            </div>
+        </div>
+        <div class="m-portlet__body era_exor_new_portlet_body_moveup">
+            <div id="m_repeater_vacancies" style="margin-top:20px">
+                <div class="form-group  m-form__group row " id="m_repeater_vacancies" formArrayName="projVacArr">
+                    <div class="col-lg-12 col-md-12 col-sm-12 m--margin-bottom-10" *ngFor="let vac of vacArray; let v = index">
+                        <div class="row m--margin-bottom-3">
+                            <div class="col-lg-6 col-md-6 col-sm-12">
+                                <input type="text" class="form-control m-input m-input--air m-input--pill" placeholder="Position Name"
+                                    maxlength="100" [(ngModel)]="vac.vacPos" [ngModelOptions]="{standalone: true}" name="{{vac.vacPos}}">
+                            </div>
+                            <div class="col-lg-2 col-md-2 col-sm-12">
+                                <!-- <select class="form-control m-input m-input--air m-input--pill" [(ngModel)]="vac.vacTgt"
+                                    [ngModelOptions]="{standalone: true}" name="{{vac.vacTgt}}">
+                                    <option value="2">Exec</option>
+                                    <option value="3">Non-Exec</option>
+                                    <option value="1" selected>Both</option>
+                                </select>-->
+                                <select class="form-control m-input m-input--air m-input--pill" [(ngModel)]="vac.vacTgt"
+                                    [ngModelOptions]="{standalone: true}" name="{{vac.vacTgt}}">
+                                    <option *ngFor="let item of targetList" [value]="item.id" [selected]="item.name.match('ALL')">
+                                        {{item.name}}
+                                    </option>
+                                </select>
+                            </div>
+                            <div class="col-lg-2 col-md-2 col-sm-12">
+                                <input type="number" min="1" class="form-control m-input m-input--air m-input--pill"
+                                    placeholder="#Vacant" [(ngModel)]="vac.vacNum" [ngModelOptions]="{standalone: true}"
+                                    name="{{vac.vacNum}}"></div>
+                            <div class="col-lg-2 col-md-2 col-sm-12"></div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-10 col-md-10 col-sm-12">
+                                <textarea class="form-control m-input m-input--air m-input--pill" row="3" placeholder="Role and Responsibilities"
+                                    [(ngModel)]="vac.vacRole" [ngModelOptions]="{standalone: true}" maxlength="1000"
+                                    name="{{vac.vacRole}}"></textarea>
+                            </div>
+                            <div class="col-lg-2 col-md-2 col-sm-12">
+                                <div class="btn-sm btn btn-danger m-btn m-btn--icon m-btn--pill" style="position:absolute;
+                                    bottom:0;"
+                                    *ngIf="v>0" (click)="deleteVacValue(v)">
+                                    <span>
+                                        <i class="la la-trash-o"></i>
+                                        <span>Delete</span>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="m-form__group form-group row">
+                    <div class="col-lg-12">
+                        <span class="m-form__help m--hide errMsg" id="errVac" [hidden]="checkCanAddVac()">All vacancy
+                            details should not be empty.</span>
+                        <span class="m-form__help">{{projVacPlaceHelp}}</span>
+                    </div>
+                    <div class="col-lg-12">
+                        <button class="btn btn-sm btn-brand m-btn m-btn--icon m-btn--pill m-btn--wide pull-right" id="AddMoreVac"
+                            (click)="addVacValue()" [disabled]="!checkCanAddVac()">
+                            <span>
+                                <i class="la la-plus"></i>
+                                <span>
+                                    Add
+                                </span>
+                            </span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <!--end::Portlet - Vacancies  -->
+
+    <!--begin::Portlet - Remarks -->
+    <div class="m-portlet m-portlet--creative m-portlet--bordered-semi era_exor_new_portlet">
+        <div class="m-portlet__head">
+            <div class="m-portlet__head-caption">
+                <h2 class="m-portlet__head-label  era_exor_new_head-label">
+                    <!--m-portlet__head-label--warning -->
+                    <span>
+                        Remarks
+                    </span>
+                </h2>
+            </div>
+        </div>
+        <div class="m-portlet__body era_exor_new_portlet_body_moveup">
+            <div class="form-group m-form__group row">
+                <div class="col-lg-12">
+                    <textarea class="form-control m-input m-input--air m-input--pill" name="projRmk" id="projRmk"
+                        formControlName="projRmk" rows="3" placeholder="{{projRmkPlaceHolder}}" #projRmk maxlength="500"></textarea>
+                    <span class="m-form__help">
+                        {{500 - projRmk.value.trim().length}} remaining character<span *ngIf="500 - projRmk.value.trim().length>1">s</span>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--end::Portlet - Remarks -->
+
+    <!--begin::Portlet - Buttons  -->
+    <div class="row" style="padding-bottom:20px">
+        <div class="col-lg-2">
+        </div>
+        <div class="col-lg-10">
+            <div class="pull-right">
+                <button style="visibility: hidden" type="button" (click)="exOrCreateFormSave(1)" id="btn_save_draft_hidden"
+                    [disabled]="!exOrCreateForm.valid||!checkCanAddMs()||!checkCanAddVac()">
+                    Save as Draft (Hidden)
+                    <!-- (click)="exOrCreateFormSave()" -->
+                </button>
+                <button style="visibility: hidden" type="button" (click)="exOrCreateFormSave(2)" id="btn_submit_hidden"
+                    [disabled]="!exOrCreateForm.valid||!checkCanAddMs()||!checkCanAddVac()">
+                    Submit (Hidden)
+                    <!-- (click)="exOrCreateFormSubmit()"  [disabled]="!exOrCreateForm.valid||!checkCanAddMs()||!checkCanAddVac()"-->
+                </button>
+                <button type="submit" id="btn_save_draft" value="1" class="btn btn-md btn-accent m-btn m-btn--pill"
+                    [ngClass]="{'m-loader m-loader--right m-loader--light': saving}" [disabled]="saving||submitting">
+                    Save as Draft
+                </button> <!-- (click)="findInvalidControls(); exOrCreateFormSave()"-->
+                <!--[disabled]="!exOrCreateForm.valid||loadingSubmit" -->
+                <button type="submit" id="btn_submit" value="2" class="btn btn-md btn-accent m-btn m-btn--pill"
+                    [ngClass]="{'m-loader m-loader--right m-loader--light': submitting}" [disabled]="saving||submitting">
+                    Submit
+                </button>
+            </div>
+        </div>
+    </div>
+    <!--end::Portlet - Buttons  -->
+
+</form>
+<!--  end::Form-->
+
+
+<!--begin::Modal Search Contact-->
+<div class="modal fade" id="m_modal_contact" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <form [formGroup]="formChooseName">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">
+                        Search Contact
+                    </h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">
+                            &times;
+                        </span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <input type="hidden" value="" formControlName="choosenFor">
+                        <div class="input-group m-input-group  m-input-group--pill">
+                            <input type="text" name="searchCtcName" class="form-control m-input m-input--air m-input--pill"
+                                formControlName="searchCtcName" placeholder="Search Name" #search>
+                            <div class="input-group-append">
+                                <button [disabled]="searchNameLoading||(search.value.trim().length<1)" (click)="searchByName(search.value.trim()) "
+                                    [ngClass]="{'m-loader m-loader--right m-loader--light': searchNameLoading}" class="btn btn-focus m-btn m-btn--pill m-btn--custom m-btn--air m-login__btn m-login__btn--primary">
+                                    Search
+                                </button>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <p *ngIf="searchNameRes.results?.length>0">Search Result: {{searchNameRes.results.length}}</p>
+                    <div style="max-height:350px; overflow-y:auto" *ngIf="searchNameRes.results?.length>0">
+                        <div class="table-responsive">
+                            <table class="table table-striped">
+                                <thead class="thead-inverse">
+                                    <tr>
+                                        <th></th>
+                                        <th>Staff Id</th>
+                                        <th>Name</th>
+                                        <th>Company</th>
+                                        <!--<th >Status</th>-->
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let res of searchNameRes.results;let i = index">
+                                        <td><input id="rad_{{i}}" type="radio" name="choosenName" formControlName="choosenName"
+                                                value="{{res.staffNo}} - {{res.name}}"></td>
+                                        <td><label class="custom-control-label" for="rad_{{i}}">{{res.staffNo}}</label></td>
+                                        <td><label class="custom-control-label" for="rad_{{i}}">{{res.name}}</label></td>
+                                        <td><label class="custom-control-label" for="rad_{{i}}">{{res.company}}</label></td>
+                                        <!--<td><span>
+                                                    <span class="m-input-icon__icon m-input-icon__icon--left">
+                                                        <span class="m-badge m-badge--{{getStatusColor(res.status)}} m-badge--wide"
+                                                            title="{{res.status}}">{{res.status}}</span>
+                                                    </span>
+                                                </span> 
+                                            </td>-->
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary m-btn m-btn--pill" data-dismiss="modal">
+                        Close
+                    </button>
+                    <button type="button" class="btn btn-primary m-btn m-btn--pill" (click)="formChooseNameSubmit()"
+                        data-dismiss="modal" *ngIf="searchNameRes.results?.length>0" [disabled]="!formChooseName.valid">
+                        Select
+                    </button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+<!--end::Modal-->

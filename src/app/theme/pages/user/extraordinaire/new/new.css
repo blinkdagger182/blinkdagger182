@@ -1,0 +1,167 @@
+.era_exor_new_head-label{
+    color:#FFFFFF;
+    background-color:#0FC2D0;
+    border-radius:.55rem!important 
+}
+.era_exor_new_portlet{
+    background-color:#eaeaea; 
+        border-radius:.75rem!important 
+}
+.era_exor_new_portlet_body_moveup{
+    margin-top:-50px;
+}
+.era_new_readonly_white{
+    background-color: #FFFFFF
+}
+.era_new_bg_grey{
+    background-color:#eaeaea;
+}
+
+.errMsg{
+    color:red !important; font-size: 14px;
+    animation: m-animate-blink 3s step-start 0s infinite;
+    animation-fill-mode: initial;
+}
+
+.checkBoxCP{
+    height : 6px !important;
+    padding-left: 20px !important;
+}
+
+.m-checkbox.m-checkbox--solid[_ngcontent-c3] > span[_ngcontent-c3] {
+    background: #fff !important;
+}
+
+.m-checkbox.m-checkbox--brand.m-checkbox--solid > span {
+    border: 2px solid #673AB7 !important;
+}
+
+.m-checkbox.m-checkbox--brand.m-checkbox--solid > span:after {
+    border: solid #673AB7;
+}
+
+/* .m-checkbox.m-checkbox--brand.m-checkbox--solid > span:after{
+    border: solid #673ab7 !important;
+} */
+/* ---- */
+body {
+    background-color:#1d1d1d !important;
+    font-family: "Asap", sans-serif;
+    color:#989898;
+    margin:10px;
+    font-size:16px;
+  }
+  
+  #demo {
+    height:100%;
+    position:relative;
+    overflow:hidden;
+  }
+  
+  
+  .green{
+    background-color:#6fb936;
+  }
+          .thumb{
+              margin-bottom: 30px;
+          }
+          
+          .page-top{
+              margin-top:85px;
+          }
+  
+     
+  img.zoom {
+      width: 100%;
+      height: 200px;
+      border-radius:5px;
+      object-fit:cover;
+      -webkit-transition: all .3s ease-in-out;
+      -moz-transition: all .3s ease-in-out;
+      -o-transition: all .3s ease-in-out;
+      -ms-transition: all .3s ease-in-out;
+  }
+          
+   
+  .transition {
+      -webkit-transform: scale(1.2); 
+      -moz-transform: scale(1.2);
+      -o-transform: scale(1.2);
+      transform: scale(1.2);
+  }
+      .modal-header {
+     
+       border-bottom: none;
+  }
+      .modal-title {
+          color:#000;
+      }
+      .modal-footer{
+        display:none;  
+      }
+  
+
+      .registration_form_option {
+        /* border:1px solid black; */
+        /* -moz-box-shadow: inset 0 0 5px #000000;
+        -webkit-box-shadow: inset 0 0 5px #000000; */
+        height:107px;
+        width:250px;
+        text-align:center;
+        display:inline-block;
+        vertical-align:top;
+        font-size:1.5em;
+        cursor:pointer;
+    }
+    .checked {border:solid 2px orangered}
+
+    .textarea {
+        box-sizing: border-box;
+        resize: none;
+        overflow:hidden;
+    }
+
+    .ql-toolbar .ql-snow{
+        background: white !important;
+    }
+    
+    .clear_btn{
+        position: absolute;
+        right: 4px;
+        border-radius: 50%;
+        z-index: 10;
+        width: 20px;
+        height: 20px;
+        top: 9px;
+    }
+
+    .clear_btn.txt_area{
+        right: -10px !important;
+    }
+
+    .clear_KM{
+        right: 19px !important;
+    }
+
+    .setRadius{
+        border-top-right-radius: 1.3rem !important;
+        border-bottom-right-radius: 1.3rem !important;
+    }
+
+    .errValidation{
+        margin-top: -2.5rem !important;
+        margin-left: 4.7rem !important;
+    }
+
+    .skillset{
+        padding: 6px 10px 6px 10px !important;
+    }
+
+    .skillDiv{
+        border-radius: 1.3rem !important;
+    }
+    
+    .skillBg{
+        background: white;
+    }
+

@@ -1,0 +1,192 @@
+.scrollHeight{
+    height: 800px;
+    overflow:hidden;
+}
+
+.padHeader{
+    padding: 40px 20px 0px 20px;
+}
+
+.scrollable{
+    position: relative; top: 0px; left: 0px;
+}
+
+.marginLoader{
+    margin: 30px 30px 0px 30px !important;
+    border-radius:1.3rem;
+}
+
+.small{
+    color: #afb2c1; font-weight: 300;
+}
+
+.btn-orange {
+    color: white;
+    background-color: #ff8000;
+    border-color: #ff8000;
+  }
+  
+  .btn-orange:hover {
+    color: white;
+    background-color: #ce6802;
+    border-color: #ce6802;
+  }
+  
+  .btn-orange:focus, .btn-warning.focus {
+    box-shadow: 0 0 0 0.2rem rgba(230, 124, 18, 0.5);
+  }
+  
+  .btn-outline-orange {
+    color: #ff8000;
+    background-color: transparent;
+    background-image: none;
+    border-color: #ff8000;
+  }
+  
+  .btn-outline-orange:hover {
+    color: white;
+    background-color: #ff8000;
+    border-color: #ff8000;
+  }
+  
+  .btn-outline-orange:focus, .btn-outline-warning.focus {
+    box-shadow: 0 0 0 0.2rem rgba(230, 124, 18, 0.5);
+  }
+
+  .h3{
+    display: table-cell;
+    vertical-align: middle;
+    font-size: 1.3rem;
+    font-weight: 500;
+    font-family: Roboto;
+    color: #575962;
+  }
+
+  .h3Small {
+    display: inline-block;
+    padding-left: 5px;
+    font-size: 1rem;
+    font-weight: 300;
+    font-family: Roboto;
+    color: #afb2c1;
+  }
+  
+  .skillDescription{
+    display: inline-block;
+    font-size: 12px;
+    font-weight: 300;
+    font-family: Roboto;
+    color: gray;
+  }
+
+  .pdfViewer .page{
+    margin: auto !important;
+  }
+
+  .details {
+    padding: 10px 14px 10px 14px; 
+    border-color: #f4f5f8; 
+    color: #6f727d; 
+    background-color: #f4f5f8;
+    border-radius: 5px;
+  }
+
+  .searchRep {
+    margin-left: 20px;
+    margin-right: 20px;
+  }
+
+  .subportlet {
+    background-color: lightgray; 
+    height: 4.1rem; 
+    border-radius: 1em 1em 0em 0em;
+  }
+
+  .bootstrap-select .dropdown-menu {
+    margin-top: 1px;
+    min-width: 100% !important;
+    max-height: 320px; 
+  }
+
+  .hideProd {
+    display: none;
+  }
+
+  .hideSlider {
+    display: none;
+  }
+
+.m-switch input:checked ~ span:after {
+    background-color: #ff8000!important;
+}
+.m-card-profile .m-card-profile__details {
+    text-align: left!important;
+}
+
+.accordion-t-responsive {
+    background: white!important;
+    width: 90%!important;
+}
+
+.accordion-a-responsive {
+    background: white!important;
+    width: 10%!important;
+}
+
+@media (max-width: 1570px){
+
+  .accordion-t-responsive {
+      background: white!important;
+      width: 85%!important;
+  }
+
+  .accordion-a-responsive {
+      background: white!important;
+      width: 15%!important;
+  }
+}
+
+@media (max-width: 1400px){
+
+  .accordion-t-responsive {
+      background: white!important;
+      width: 80%!important;
+  }
+
+  .accordion-a-responsive {
+      background: white!important;
+      width: 20%!important;
+  }
+}
+
+@media (max-width: 768px){
+
+  .m-card-profile .m-card-profile__details {
+      text-align: center!important;
+  }
+
+  .accordion-t-responsive {
+      background: white!important;
+      width: 65%!important;
+  }
+
+  .accordion-a-responsive {
+      background: white!important;
+      width: 35%!important;
+  }
+}
+
+.noUi-target .noUi-connect {
+    background: #ff8000!important;
+}
+
+.btn-primary.disabled, .btn-primary:disabled {
+    color: #fff;
+    background-color: #ff8000!important;
+    border-color: #ff8000!important;
+}
+
+/*.ui.dropdown .menu>.item:hover{
+  cursor: pointer;
+  background-color: #ffb266;
+}*/

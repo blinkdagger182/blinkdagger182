@@ -1,0 +1,927 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.13/semantic.min.css">
+<!--component html goes here -->
+<!--begin::Portlet-->
+<notifier-container></notifier-container>
+<div class="m-portlet" style="background-color: white">
+
+		<!-- BEGIN: Subheader -->
+		<div class="m-subheader ">
+
+			<div class="d-flex align-items-center">
+				<div class="mr-auto">
+				<!--<button title="Back to User Job" class="btn m-btn--pill btn-outline-info pt-1 pb-1 pr-3 pl-3"
+					(click)="clickBack()">
+					<div class="m-demo-icon__preview">
+						<img style="width:2rem !important" src="../../../../../../assets/img/user/back_icon.svg">
+						<span>Back</span>
+					</div>
+				</button>-->
+					<h3 class="m-subheader__title ">Successor Nomination</h3>
+				</div>
+			</div>
+		</div>
+		<!-- END: Subheader -->
+
+		<div class="m-content">
+			<div class="row">
+
+				<div class="col-lg-12 centred my-auto" *ngIf="pageLoading1 || pageLoading2" >
+					<app-admin-loading></app-admin-loading>
+				</div>
+				<!-- end::Page loader -->
+
+				<!-- Begin left column-->
+
+				<div class="col-md-4" *ngIf="!pageLoading1 && !pageLoading2" >
+
+					<div class="m-portlet m-portlet__body" *ngIf="profile; else pageLoading2">
+
+						<table class="table table-hover">
+							<tr class="onfocus" [ngClass]="{'selectedUser': isCritical}">
+								<td>
+									<div class="m-card-profile__pic" (click)="managerClick(profile); triggerFalseClick();" style="cursor: pointer;" data-target="#m_tabs_6_1">
+										<div class="m-card-profile__pic-wrapper">
+											<img style="max-width: 160px !important;" src="{{imgOptArrList}}" alt="" class="m--img-rounded m--marginless m--img-centered" style="width:45px; height:45px"/>
+										</div>
+									</div>
+								</td>
+								<td>
+									<div class="m-widget4__info">
+										<div  style="cursor: pointer;" (click)="managerClick(profile); triggerFalseClick();">
+											<span class="font-weight-bold">
+												{{profile?.Name}}
+											</span><br>
+											<span class="m-widget4__pos">
+												{{profile?.Post_Desc}} ({{profile?.Position_ID}})
+											</span><br>
+										</div><br>
+
+									</div>
+								</td>
+							</tr>
+						</table>
+					<hr/>
+					<div class="col-md-12 centred my-auto" *ngIf="infoLoading">
+						<div class="m-section__content">
+								<div class="m-card-user m-card-user--skin-dark" align="center" style="height: 600px;" class="m-portlet__body">
+											<span>
+												<img src="../assets/img/user/ERA.gif" alt="" style="width:200px;height:100px; position:initial;">
+											</span>
+								</div>
+						</div>
+					</div>
+
+			
+					<!-- begin of Ready Now Section ! -->
+								
+					<div class="sp_head-label col-md-12" *ngIf="!infoLoading">
+						<div class="row">
+						<div class="col-md-10" >
+							<span style="text-align:left;">
+								<button type="button" class="btn btnSPTrans"  data-target="#divSP2" aria-expanded="false" aria-controls="divSP2">
+								<h4>Ready Now ({{countSuccessType2}})</h4>
+							</button>
+						</span>
+					</div>
+					<div class="col-md-2 icon-center">
+						<button type="button" class="btn btn-plus m-btn m-btn--icon btn-sm m-btn--icon-only  m-btn--pill info-btn" data-toggle="modal" (click)="updateSuccessor(2)"
+								[hidden]="isExpired" data-target="#modal_new_successor">
+								<i class="la la-plus orange-col"></i>
+							</button>
+						</div>
+						</div>
+					</div>
+
+					<div class="col-md-12" id="divSP2" data-scrollable="true" aria-expanded=“true” *ngIf="!infoLoading" ><!-- each sp cat ending-->
+						<div class="row">
+							<table class="table table-hover">
+								<tr class="onfocus" *ngFor="let successor of successorListType2" style="cursor: pointer;" [ngClass]="{'selectedUser': successor.id === successorID}">
+									<td>
+									<div class="row">
+					
+											<div class="m-card-profile__pic col-md-2" (click)="staffDetail(successor); triggerFalseClick();">
+												<span class="m-card-profile__pic-wrapper">
+													<img style="max-width: 160px !important;" src="{{successor.image_url}}"
+														class="m--img-rounded m--marginless m--img-centered"
+														style="width:45px; height:45px" alt="" />
+												</span>
+											</div>
+											<div (click)="staffDetail(successor); triggerFalseClick();" class="m-widget4__info col-md-8">
+												<span class="font-weight-bold">
+													{{successor.name}}
+												</span><br>
+												<span class="m-widget4__pos">
+													{{successor.post_desc}}
+												</span><br>
+												<span class="m-widget4__pos">
+														Flight Risk : {{checkFlightRiskStatus(successor.flight_risk)}}
+													</span><br>
+											</div>
+										
+										<div class="col-md-2 icon-center">
+											<button type="button" class="btn btn-remove m-btn m-btn--icon btn-sm m-btn--icon-only  m-btn--pill info-btn"
+											data-toggle="modal" [hidden]="isExpired" (click)="selectedUser(successor)" data-target="#modal_remove_successor">
+												<i class="la la-remove  orange-col"></i>
+											</button>
+										</div>
+									</div>
+									</td>
+								</tr>
+							</table>
+					</div>
+					</div>		   
+					
+					<br /> 
+					
+					<!-- begin of Ready 2 to 3 years Section ! -->
+
+					<div class="sp_head-label col-md-12" *ngIf="!infoLoading">
+						<div class="row">
+						<div class="col-md-10" >
+							<span style="text-align:left;">
+								<button type="button" class="btn btnSPTrans"  data-target="#divSP3" aria-expanded="false" aria-controls="divSP3">
+								<h4>Ready 2 to 3 years ({{countSuccessType3}})</h4>
+							</button>
+						</span>
+					</div>
+					<div class="col-md-2 icon-center">
+						<button type="button" class="btn btn-plus m-btn m-btn--icon btn-sm m-btn--icon-only  m-btn--pill info-btn" data-toggle="modal" (click)="updateSuccessor(3)"
+								[hidden]="isExpired" data-target="#modal_new_successor">
+								<i class="la la-plus orange-col"></i>
+							</button>
+						</div>
+						</div>
+					</div>
+
+					<div class="col-md-12" id="divSP3" data-scrollable="true" aria-expanded=“true” *ngIf="!infoLoading" ><!-- each sp cat ending-->
+						<div class="row">
+							<table class="table table-hover">
+								<tr class="onfocus" *ngFor="let successor of successorListType3" style="cursor: pointer;" [ngClass]="{'selectedUser': successor.id === successorID}">
+									<td>
+									<div class="row">
+					
+											<div class="m-card-profile__pic col-md-2" (click)="staffDetail(successor); triggerFalseClick();">
+												<span class="m-card-profile__pic-wrapper">
+													<img style="max-width: 160px !important;" src="{{successor.image_url}}"
+														class="m--img-rounded m--marginless m--img-centered"
+														style="width:45px; height:45px" alt="" />
+												</span>
+											</div>
+											<div (click)="staffDetail(successor); triggerFalseClick();" class="m-widget4__info col-md-8">
+												<span class="font-weight-bold">
+													{{successor.name}}
+												</span><br>
+												<span class="m-widget4__pos">
+													{{successor.post_desc}}
+												</span><br>
+												<span class="m-widget4__pos">
+														Flight Risk : {{checkFlightRiskStatus(successor.flight_risk)}}
+													</span><br>
+											</div>
+										
+										<div class="col-md-2 icon-center">
+											<button type="button" class="btn btn-remove m-btn m-btn--icon btn-sm m-btn--icon-only  m-btn--pill info-btn"
+											data-toggle="modal" [hidden]="isExpired" (click)="selectedUser(successor)" data-target="#modal_remove_successor">
+												<i class="la la-remove  orange-col"></i>
+											</button>
+										</div>
+									</div>
+									</td>
+								</tr>
+							</table>
+					</div>
+					</div>
+
+					<br /> 
+
+					<!-- begin of Ready 3 to 5 years section ! -->
+
+					<div class="sp_head-label col-md-12" *ngIf="!infoLoading">
+						<div class="row">
+						<div class="col-md-10" >
+							<span style="text-align:left;">
+								<button type="button" class="btn btnSPTrans"  data-target="#divSP4" aria-expanded="false" aria-controls="divSP4">
+								<h4>Ready 3 to 5 years ({{countSuccessType4}})</h4>
+							</button>
+						</span>
+					</div>
+					<div class="col-md-2 icon-center">
+						<button type="button" class="btn btn-plus m-btn m-btn--icon btn-sm m-btn--icon-only  m-btn--pill info-btn" data-toggle="modal" (click)="updateSuccessor(4)"
+								[hidden]="isExpired" data-target="#modal_new_successor">
+								<i class="la la-plus orange-col"></i>
+							</button>
+						</div>
+						</div>
+					</div>
+
+					<div class="col-md-12" id="divSP4" data-scrollable="true" aria-expanded=“true” *ngIf="!infoLoading" ><!-- each sp cat ending-->
+						<div class="row">
+							<table class="table table-hover">
+								<tr class="onfocus" *ngFor="let successor of successorListType4" style="cursor: pointer;" [ngClass]="{'selectedUser': successor.id === successorID}">
+									<td>
+									<div class="row">
+					
+											<div class="m-card-profile__pic col-md-2" (click)="staffDetail(successor); triggerFalseClick();">
+												<span class="m-card-profile__pic-wrapper">
+													<img style="max-width: 160px !important;" src="{{successor.image_url}}"
+														class="m--img-rounded m--marginless m--img-centered"
+														style="width:45px; height:45px" alt="" />
+												</span>
+											</div>
+											<div (click)="staffDetail(successor); triggerFalseClick();" class="m-widget4__info col-md-8">
+												<span class="font-weight-bold">
+													{{successor.name}}
+												</span><br>
+												<span class="m-widget4__pos">
+													{{successor.post_desc}}
+												</span><br>
+												<span class="m-widget4__pos">
+														Flight Risk : {{checkFlightRiskStatus(successor.flight_risk)}}
+													</span><br>
+											</div>
+										
+										<div class="col-md-2 icon-center">
+											<button type="button" class="btn btn-remove m-btn m-btn--icon btn-sm m-btn--icon-only  m-btn--pill info-btn"
+											data-toggle="modal" [hidden]="isExpired" (click)="selectedUser(successor)" data-target="#modal_remove_successor">
+												<i class="la la-remove  orange-col"></i>
+											</button>
+										</div>
+									</div>
+									</td>
+								</tr>
+							</table>
+					</div>
+					</div>
+
+					<!-- end of Ready 3 to 5 years section -->
+					<br /> 
+					<!-- begin of Emergency Successor Section ! -->
+					<ng-template #tipContent ><label class='my-custom-class'>Emergency Successor refers to an Interim Successor in the absence of an Incumbent Position Holder. 
+																			 Emergency Succesor can be any of the nominees in the above category.</label></ng-template>
+					<div class="sp_head-label col-md-12" *ngIf="!infoLoading" [hidden]="true">
+						<div class="row">
+						<div class="col-md-10" >
+							<span style="text-align:left;">
+								<span class="btn btnSPTrans">
+									<h4>Emergency Successor ({{countSuccessType1}})  &nbsp;&nbsp;
+										<button type="button" class="btn btn-info m-btn m-btn--icon btn-sm m-btn--icon-only  m-btn--pill info-btn"
+										[ngbTooltip]="tipContent" #tooltip3="ngbTooltip" >
+											<i class="la la-info white-col"></i>
+										</button></h4>
+								</span>
+							</span>
+						</div>
+						<div class="col-md-2 icon-center">
+							<button type="button" class="btn btn-plus m-btn m-btn--icon btn-sm m-btn--icon-only  m-btn--pill info-btn" data-toggle="modal" (click)="updateSuccessor(1)"
+							[hidden]="isExpired" data-target="#modal_new_successor">
+								<i class="la la-plus orange-col"></i>
+							</button>
+						</div>
+						</div>
+					</div>
+					
+					<div class="col-md-12" id="divSP1" data-scrollable="true" aria-expanded=“true” *ngIf="!infoLoading" [hidden]="true"><!-- each sp cat ending-->
+						<div class="row" >
+								<table class="table table-hover">
+									<tr class="onfocus" *ngFor="let successor of successorListType1" style="cursor: pointer;" [ngClass]="{'selectedUser': successor.id === successorID}" >
+										<td>
+										<div class="row">
+						
+												<div class="m-card-profile__pic col-md-2" (click)="staffDetail(successor); triggerFalseClick();">
+													<span class="m-card-profile__pic-wrapper">
+														<img style="max-width: 160px !important;" src="{{successor.image_url}}"
+															class="m--img-rounded m--marginless m--img-centered"
+															style="width:45px; height:45px" alt="" />
+													</span>
+												</div>
+												<div (click)="staffDetail(successor); triggerFalseClick();" class="m-widget4__info col-md-8">
+													<span class="font-weight-bold">
+														{{successor.name}}
+													</span><br>
+													<span class="m-widget4__pos">
+														{{successor.post_desc}}
+													</span><br>
+													<span class="m-widget4__pos">
+															Flight Risk : {{checkFlightRiskStatus(successor.flight_risk)}}
+														</span><br>
+												</div>
+											
+											<div class="col-md-2 icon-center">
+												<button type="button" class="btn btn-remove m-btn m-btn--icon btn-sm m-btn--icon-only  m-btn--pill info-btn"
+												data-toggle="modal" [hidden]="isExpired" (click)="selectedUser(successor)" data-target="#modal_remove_successor">
+													<i class="la la-remove  orange-col"></i>
+												</button>
+											</div>
+										</div>
+										</td>
+									</tr>
+								</table>
+						</div>
+					</div>
+
+					</div>
+				</div>
+
+				<!-- begin of right side -->
+
+				<div class="col-md-8" *ngIf="!pageLoading1 && !pageLoading2" >
+					<div class="m-portlet m-portlet--tabs">
+						<div class="m-portlet__head">
+							<div class="m-portlet__head-tools">
+								<ul class="nav nav-tabs" role="tablist" style="background-color:#f4f5f8">
+									<li class="nav-item m-tabs__item" >
+										<a class="nav-link m-tabs__link" #profileLnk data-toggle="tab" href="#m_tabs_6_1" 
+											[class.active]="showPersonalTab" [class.show]="showPersonalTab" role="tab">
+											{{ isCritical ? 'Personal Info' : 'Successor Info'}}
+										</a>
+									</li>
+								<!--<li class="nav-item m-tabs__item" [hidden]="isCritical">
+										<a class="nav-link m-tabs__link" data-toggle="tab" href="#m_tabs_6_2" role="tab"
+											[class.active]="showPerformTab" [class.show]="showPerformTab">
+											Performance Details
+										</a>
+									</li>-->
+									<li class="nav-item m-tabs__item" [hidden]="isCritical">
+										<a class="nav-link m-tabs__link" data-toggle="tab" href="#m_tabs_6_3" role="tab" 
+											[class.active]="showTalentClassTab" [class.show]="showTalentClassTab">
+											Talent Classification
+										</a>
+									</li>
+									<li class="tab-item nav-item" [hidden]="isCritical">
+										<a class="tab-title nav-link" data-toggle="tab" href="#m_tabs_6_4" role="tab"
+										[class.active]="showSuccessInfoTab" [class.show]="showSuccessInfoTab">
+											Nomination Info
+										</a>
+									</li>
+								</ul>
+							</div>
+						</div>
+						<div class="m-portlet__body">
+							<div class="tab-content" data-height="auto" style="height: auto;">
+								<div class="col-lg-12 centred my-auto" *ngIf="loadingData">
+									<div class="m-section__content">
+										<div class="m-card-user m-card-user--skin-dark" align="center"
+											style="height: 200px;" class="m-portlet__body">
+											<span>
+												<img src="../assets/img/user/ERA.gif" alt=""
+													style="width:200px;height:100px; position:initial; margin: 15%">
+											</span>
+										</div>
+									</div>
+								</div>
+
+								<!-- PERSONAL INFO TAB START -->
+								<div class="tab-pane active" [class.active]="showPersonalTab" [class.show]="showPersonalTab"
+								id="m_tabs_6_1" role="tabpanel" >
+								<div class="modal-body" style="padding: 0;">
+
+									<div style="text-align: center; padding: 5rem" *ngIf="infoLoading">
+										<img src="../assets/img/user/ERA.gif" style="width:auto;height:100px;">
+									</div>
+
+									<div *ngIf="!infoLoading">
+										<div class="m-card-user m-card-user--skin-dark" align="center"
+											class="m-portlet__body" *ngFor="let item of personalList">
+											<span class="m-card-user__pic" >
+												<img src="{{profileImg}}"
+													class="m--img-rounded m--marginless" alt="" height="100"
+													width="100" />
+											</span>
+											
+											<br>
+											<div>
+												<span class="font-weight-bold">
+													{{item.name}}
+												</span>
+											</div>
+											<div>
+												<span style="color: #fd5806">
+													{{item.email}}
+												</span>
+											</div>
+											<div>
+												<span>
+													{{item.post_desc}}
+												</span>
+											</div>
+											<div>
+												<span>
+													{{item.company_desc}}
+												</span>
+											</div>
+											<div>
+												<span style="color: #fd5806">
+													{{item.cell_no}}
+												</span>
+											</div>
+											<br>
+											<table class="table table-bordered" style="font-weight: 400;">
+												<thead>
+												</thead>
+												<tbody>
+													<tr>
+														<th scope="row">Name</th>
+														<td>{{item.name}}</td>
+													</tr>
+													<tr>
+														<th scope="row">Employee Number</th>
+														<td>{{item.staff_no}}</td>
+													</tr>
+													<tr>
+														<th scope="row">Employee Group</th>
+														<td colspan="2">{{item.empgroup}}</td>
+													</tr>
+													<tr>
+														<th scope="row">Employee Sub Group</th>
+														<td colspan="2">{{item.empsgroup}}</td>
+													</tr>
+													<tr>
+														<th scope="row">Position</th>
+														<td colspan="2">{{item.post_desc}}</td>
+													</tr>
+													<tr>
+														<th scope="row">Position ID</th>
+														<td colspan="2">{{item.position}}</td>
+													</tr>
+													<tr>
+														<th scope="row">Unit</th>
+														<td colspan="2">{{item.sub_org_unit_desc}}</td>
+													</tr>
+													<tr>
+														<th scope="row">Division</th>
+														<td colspan="2">{{item.org_unit_desc}}</td>
+													</tr>
+													<tr>
+														<th scope="row">Company</th>
+														<td colspan="2">{{item.company_desc}}</td>
+													</tr>
+												</tbody>
+											</table>
+											<div style="align-content: center;">
+												<label class=" col-form-label label-data"
+													style="font-size: 1.0rem;;background-color: white; color: #FF7F24; border-color:#FF7F24;">
+													<button type="button" class="btn m-btn--pill btn-outline-warning"
+														(click)="getUserIDPForm(item.idp_user_id)" [hidden]="isCritical">
+														<span class="fa fa-download"> IDP Form</span>
+													</button>
+												</label>
+											</div>	
+										</div>
+									</div>
+								</div>
+								</div>
+								<!-- PERSONAL INFO TAB END -->
+
+								<!-- TALENT CLASSIFICATION TAB START -->
+								<div class="tab-pane" [hidden]="isCritical && this.assessmentStatus < 3" 
+									id="m_tabs_6_3" role="tabpanel" [class.active]="showTalentClassTab" [class.show]="showTalentClassTab">
+									<div class="modal-body">
+										<div style="text-align: center; padding: 5rem" *ngIf="infoLoading">
+											<img src="../assets/img/user/ERA.gif" style="width:auto;height:100px;">
+										</div>
+										<div *ngIf="!infoLoading && assessmentStatus === 1">
+											<div class="m-card-user m-card-user--skin-dark" align="center" class="m-portlet__body" >
+												<table class="table table-bordered" style="font-weight: 400;" overflow="auto">
+													<tbody>
+														<tr>
+															<th scope="row">assessment not started yet.</th>
+														</tr>
+													</tbody>
+												</table>
+											</div>
+										</div>
+										<div *ngIf="!infoLoading && assessmentStatus > 2">
+											<div class="m-card-user m-card-user--skin-dark" align="center" class="m-portlet__body" style="padding: 0;">
+
+											<div class="m-wizard m-wizard--2 m-wizard--success m-wizard--step-first" id="m_wizard">
+
+												<div class="m-portlet__padding-x">
+													<!-- Here you can put a message or alert -->
+												</div>
+														
+												<div class="m-wizard__head m-portlet__padding-x">
+
+												<div class="m-wizard__progress">
+													<div class="progress">
+														<div class="progress-bar" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" 
+														[ngStyle]="{ 'width' : chkProgressWidth(assessmentStatus) }"
+														style="background: #fd5806"></div>
+													</div>
+												</div>
+
+												<div class="m-wizard__nav">
+													<div class="m-wizard__steps">
+														<div [class.m-wizard__step--current] = "checkStatus(assessmentStatus, 1)" class="m-wizard__step" m-wizard-target="m_wizard_form_step_1">
+															<span class="m-wizard__step-number">
+																<span class="step-number">
+																	1
+																</span>
+															</span>
+															<div class="assessmentStatus">
+																Assessment
+															</div>
+														</div>
+
+														<div [class.m-wizard__step--current] = "checkStatus(assessmentStatus, 2)" class="m-wizard__step" m-wizard-target="m_wizard_form_step_2">
+															<span class="m-wizard__step-number">
+																<span class="step-number">
+																	2
+																</span>
+															</span>
+															<div class="assessmentStatus">
+																Supervisor Review
+															</div>
+														</div>
+
+														<div [class.m-wizard__step--current] = "checkStatus(assessmentStatus, 3)" class="m-wizard__step" m-wizard-target="m_wizard_form_step_3">
+															<span class="m-wizard__step-number">
+																<span class="step-number"> 
+																	3
+																</span>
+															</span>
+															<div class="assessmentStatus">
+																GM Calibration
+															</div>
+														</div>
+
+														<div [class.m-wizard__step--current] = "checkStatus(assessmentStatus, 4)" class="m-wizard__step" m-wizard-target="m_wizard_form_step_4">
+															<span class="m-wizard__step-number">
+																<span class="step-number">
+																	4
+																</span>
+															</span>
+															<div class="assessmentStatus">
+																EVP Calibration
+															</div>
+														</div>
+													</div>
+												</div>
+												</div>
+											</div>
+											<br/>
+												<div class="container">
+													<div class="row" style="max-width: 800px;">
+														<div class="col-lg-2 col-md-2 col-xl-2 col-sm-2 col-xs-2" style="padding: 0;">
+															<img src="assets/blank/images/talent_sustained_performance.jpg" style="max-width: 100%; flex: 0 0 100%; height: 30vw; min-height: 150px; max-height: 450px;">
+														</div>
+														<div class="col-lg-10 col-md-10 col-xl-10 col-sm-10 col-xs-10" style="padding: 0;">
+															<div class="container" style="box-sizing: border-box;">
+																<div class="row" style="height: 10vw; min-height: 50px; min-width: 185px; max-width: 695px; max-height: 150px;">
+																	<div class="col-lg-4 col-md-4 col-sm-4 col-xl-4 col-xs-4" style="box-sizing: border-box; background-color:#33CCFF; border: solid white 3px; border-radius: 1vw;">
+																		<h3 style="position: absolute; right: 8px; font-size: 1.5vw; margin-top: 0.5vw; color: black; background-color: white; border-radius: 100%; width: 2vw">4</h3>
+																		<div class="grid-img-div" *ngIf="selectedSub?.cell === '4'">
+																			<img class="m--img-rounded m--marginless m--img-centered user-grid-img" style="width: 4vw; height: 4vw" [src]="selectedSub.image_url">
+																		</div>
+																		<h5 style="position: absolute; bottom: 0px; font-size: 1vw; text-align: initial; color: white;">SOLID PERFORMER</h5>
+																	</div>
+																	<div class="col-lg-4 col-md-4 col-sm-4 col-xl-4 col-xs-4" style="box-sizing: border-box; background-color:#376B8A; border: solid white 3px; border-radius: 1vw;">
+																		<h3 style="position: absolute; right: 8px; font-size: 1.5vw; margin-top: 0.5vw; color: black; background-color: white; border-radius: 100%; width: 2vw">2</h3>
+																		<div class="grid-img-div" *ngIf="selectedSub?.cell === '2'">
+																			<img class="m--img-rounded m--marginless m--img-centered user-grid-img" style="width: 4vw; height: 4vw" [src]="selectedSub.image_url">
+																		</div>
+																		<h5 style="position: absolute; bottom: 0px; font-size: 1vw; text-align: initial; color: white;">STRONG CONTRIBUTOR</h5>
+																	</div>
+																	<div class="col-lg-4 col-md-4 col-sm-4 col-xl-4 col-xs-4" style="box-sizing: border-box; background-color:#376B8A; border: solid white 3px; border-radius: 1vw;">
+																		<h3 style="position: absolute; right: 8px; font-size: 1.5vw; margin-top: 0.5vw; color: black; background-color: white; border-radius: 100%; width: 2vw">1</h3>
+																		<div class="grid-img-div" *ngIf="selectedSub?.cell === '1'">
+																			<img class="m--img-rounded m--marginless m--img-centered user-grid-img" style="width: 4vw; height: 4vw" [src]="selectedSub.image_url">
+																		</div>
+																		<h5 style="position: absolute; bottom: 0px; font-size: 1vw; text-align: initial; color: white;">STAR TALENT</h5>
+																	</div>
+																</div>
+																<div class="row" style="height: 10vw; min-height: 50px; min-width: 185px; max-width: 695px; max-height: 150px;">
+																	<div class="col-lg-4 col-md-4 col-sm-4 col-xl-4 col-xs-4" style="box-sizing: border-box; background-color:#F1D9BA; border: solid white 3px; border-radius: 1vw;">
+																		<h3 style="position: absolute; right: 8px; font-size: 1.5vw; margin-top: 0.5vw; color: black; background-color: white; border-radius: 100%; width: 2vw">7</h3>
+																		<div class="grid-img-div" *ngIf="selectedSub?.cell === '7'">
+																			<img class="m--img-rounded m--marginless m--img-centered user-grid-img" style="width: 4vw; height: 4vw" [src]="selectedSub.image_url">
+																		</div>
+																		<h5 style="position: absolute; bottom: 0px; font-size: 1vw; text-align: initial; color: black;">SATISFACTORY CONTRIBUTOR</h5>
+																	</div>
+																	<div class="col-lg-4 col-md-4 col-sm-4 col-xl-4 col-xs-4" style="box-sizing: border-box; background-color:#F1D9BA; border: solid white 3px; border-radius: 1vw;">
+																		<h3 style="position: absolute; right: 8px; font-size: 1.5vw; margin-top: 0.5vw; color: black; background-color: white; border-radius: 100%; width: 2vw">5</h3>
+																		<div class="grid-img-div" *ngIf="selectedSub?.cell === '5'">
+																			<img class="m--img-rounded m--marginless m--img-centered user-grid-img" style="width: 4vw; height: 4vw" [src]="selectedSub.image_url">
+																		</div>
+																		<h5 style="position: absolute; bottom: 0px; font-size: 1vw; text-align: initial; color: black;">GOOD CONTRIBUTOR</h5>
+																	</div>
+																	<div class="col-lg-4 col-md-4 col-sm-4 col-xl-4 col-xs-4" style="box-sizing: border-box; background-color:#376B8A; border: solid white 3px; border-radius: 1vw;">
+																		<h3 style="position: absolute; right: 8px; font-size: 1.5vw; margin-top: 0.5vw; color: black; background-color: white; border-radius: 100%; width: 2vw">3</h3>
+																		<div class="grid-img-div" *ngIf="selectedSub?.cell === '3'">
+																			<img class="m--img-rounded m--marginless m--img-centered user-grid-img" style="width: 4vw; height: 4vw" [src]="selectedSub.image_url">
+																		</div>
+																		<h5 style="position: absolute; bottom: 0px; font-size: 1vw; text-align: initial; color: white;">HIGH FLYER</h5>
+																	</div>
+																</div>
+																<div class="row" style="height: 10vw; min-height: 50px; min-width: 185px; max-width: 695px; max-height: 150px;">
+																	<div class="col-lg-4 col-md-4 col-sm-4 col-xl-4 col-xs-4" style="box-sizing: border-box; background-color:#FF3757; border: solid white 3px; border-radius: 1vw;">
+																		<h3 style="position: absolute; right: 8px; font-size: 1.5vw; margin-top: 0.5vw; color: black; background-color: white; border-radius: 100%; width: 2vw">9</h3>
+																		<div class="grid-img-div" *ngIf="selectedSub?.cell === '9'">
+																			<img class="m--img-rounded m--marginless m--img-centered user-grid-img" style="width: 4vw; height: 4vw" [src]="selectedSub.image_url">
+																		</div>
+																		<h5 style="position: absolute; bottom: 0px; font-size: 1vw; text-align: initial; color: white;">TALENT RISK</h5>
+																	</div>
+																	<div class="col-lg-4 col-md-4 col-sm-4 col-xl-4 col-xs-4" style="box-sizing: border-box; background-color:#F1D9BA; border: solid white 3px; border-radius: 1vw;">
+																		<h3 style="position: absolute; right: 8px; font-size: 1.5vw; margin-top: 0.5vw; color: black; background-color: white; border-radius: 100%; width: 2vw">8</h3>
+																		<div class="grid-img-div" *ngIf="selectedSub?.cell === '8'">
+																			<img class="m--img-rounded m--marginless m--img-centered user-grid-img" style="width: 4vw; height: 4vw" [src]="selectedSub.image_url">
+																		</div>
+																		<h5 style="position: absolute; bottom: 0px; font-size: 1vw; text-align: initial; color: black;">PROMISING CONTRIBUTOR</h5>
+																	</div>
+																	<div class="col-lg-4 col-md-4 col-sm-4 col-xl-4 col-xs-4" style="box-sizing: border-box; background-color:#33CCFF; border: solid white 3px; border-radius: 1vw;">
+																		<h3 style="position: absolute; right: 8px; font-size: 1.5vw; margin-top: 0.5vw; color: black; background-color: white; border-radius: 100%; width: 2vw">6</h3>
+																		<div class="grid-img-div" *ngIf="selectedSub?.cell === '6'">
+																			<img class="m--img-rounded m--marginless m--img-centered user-grid-img" style="width: 4vw; height: 4vw" [src]="selectedSub.image_url">
+																		</div>
+																		<h5 style="position: absolute; bottom: 0px; font-size: 1vw; text-align: initial; color: white;">MISMATCHED TALENT</h5>
+																	</div>
+																</div>
+																<div class="row" style="min-width: 185px; max-width: 695px;">
+																	<img style="width: 100%; height: 100%; padding-top: 1vw;" src="assets/blank/images/talent_potential.jpg">
+																</div>
+															</div>
+														</div>
+													</div>
+												</div>
+											<!--<div style="max-width: 800px; margin-top: 20px;">
+													<div class="row">
+														<div class="col-lg-10 col-md-10 col-sm-10 col-xs-10"></div>
+														<div class="col-lg-2 col-md-2 col-sm-2 col-xs-2" style="position: relative; right: 10px">
+															<button class="alert-btn btn" *ngIf="assessmentStatus < 5" data-toggle="modal" data-target="#comfirmation-submitHR-modal" style="background-color: #fd5806; color: white; border: solid 2px white; border-radius: 50px; margin-bottom: 20px;">
+																Complete
+															</button>
+														</div>
+													</div>
+												</div>-->
+											</div>
+										</div>
+									</div>
+								</div>
+								<!-- TALENT CLASSIFICATION TAB END -->
+
+								<!-- SUCCESS INFO TAB START -->
+								<div class="tab-pane active" [class.active]="showSuccessInfoTab" [class.show]="showSuccessInfoTab"
+								id="m_tabs_6_4" role="tabpanel" [hidden]="isCritical">
+								<div class="modal-body">
+
+									<div style="text-align: center; padding: 5rem" *ngIf="infoLoading">
+										<img src="../assets/img/user/ERA.gif" style="width:auto;height:100px;">
+									</div>
+
+									<div *ngIf="!infoLoading">
+										<div class="m-card-user m-card-user--skin-dark" align="center" class="m-portlet__body">
+											<table class="table" style="font-weight: 400;">
+												<tbody>
+													<tr>
+														<th>Successor has been nominated as :-</th>
+													</tr>
+												</tbody>
+											</table>
+											<table class="table table-bordered" style="font-weight: 400;" overflow="auto" *ngFor="let itemOpd of otherPostList; let i = index">
+												<tbody>
+													<tr>
+														<th scope="row">{{i+1}}. {{getSuccessorType(itemOpd.successor_type_id)}} successor for position :- {{itemOpd.post_desc}} ({{itemOpd.ns_post_id}})</th>
+													</tr>
+												</tbody>
+											</table>
+										</div>
+									</div>
+								</div>
+								</div>
+								<!-- SUCCESS INFO TAB END -->
+
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="col-md-12" *ngIf="!pageLoading1 && !pageLoading2" >
+					<!-- submit button ! -->
+						<div class="col-md-12" *ngIf="!infoLoading && btnSubmit">
+							<div class="row">
+							<div class="col-md-2" ></div>
+							<div class="col-md-8" style="overflow: hidden; text-align: center;" >
+								<span class="font-weight-bold">
+								<button type="button" *ngIf="btnSubmit == '7' && countSuccessors > 0" class="btn btn-submitting" data-toggle="modal" [disabled]="!showCalibrate" data-target="#modal_calibrate">
+								Complete Calibration
+								</button>
+								<button type="button" *ngIf="btnSubmit == '6' && countSuccessors > 0 && showVerify" class="btn btn-submitting" data-toggle="modal" [hidden]="!showVerify" (click)="updateStatus(btnSubmit)" >
+								Verify
+								</button>
+								</span>
+								<span class="font-weight-bold" style="padding-left: 5px;">
+									<button type="button" *ngIf="btnSubmit == '6' && countSuccessors > 0" class="btn btn-submitting" [hidden]="!showRevert" (click)="updateStatusR()" >
+									Revert to Nomination
+									</button>
+								</span>
+                                <div class="text-right">
+                                    <button class="btn m-btn m-btn--gradient-from-danger m-btn--gradient-to-warning ml-3" type="button" (click)="clickBack()" style="background: darkgrey; background-color: darkgrey; border-color: darkgrey;" data-toggle="tooltip" data-placement="bottom" title="Back to filter lists">Back</button>
+                                </div>
+							</div>
+							<div class="col-md-2" ></div>
+							</div>
+						</div>
+	
+						<div class="col-md-12" *ngIf="!infoLoading" [hidden]="!showStatus">
+							<div class="row">
+								<div class="col-md-12" >
+									<br/>
+								</div>
+							<div class="col-md-12 btn-posx-mid" >
+								<span class="sts-nomination"><b>Status: {{statusCaption}}</b></span>
+							</div>
+							</div>
+						</div>
+
+				</div>
+
+			</div>
+		</div>
+
+<!-- :start Add/Update Modal -->
+		<!-- Start Requirements Modal   -->
+		<div class="modal fade" id="modal_new_successor" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+			aria-hidden="true">
+			<div class="modal-dialog modal-lg" role="document">
+				<form [formGroup]="addNewForm">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h5 class="modal-title" id="exampleModalLabel">
+								Add New {{addTitle}}
+							</h5>
+							<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+								<span aria-hidden="true">
+									&times;
+								</span>
+							</button>
+						</div>
+						<div class="modal-body">
+							<div class="form-group">
+									<div class="row">
+										<div class="col-md-12">
+										<label for="message-text" class="form-control-label">
+											Search User:*
+										</label>
+										</div>
+										<div class="col-md-10">
+										<sui-multi-select class="form-control" [options]="options" [isSearchable]="true" #multiSelect
+											[optionFormatter]="formatter" (keyup)="onNameKeyUp($event)"
+											(selectedOptionsChange)="multiSelectedUser($event)" formControlName="juUser"
+											[maxSelected]="1">
+											<sui-select-option *ngFor="let option of newData" [value]="option"></sui-select-option>
+										</sui-multi-select>
+
+										</div>
+										<div class="col-md-2">
+											<button [disabled]="!addNewForm.valid || disable" type="submit" class="btn btn-submitting"
+											onclick="$('#modal_new_successor').modal('hide')" (click)="addNewSubmit()" >
+											Add
+											</button>
+											<button #modalflightbtn style="visibility: hidden;" onclick="$('#modal_update_flight').modal('show');"></button>
+										</div>
+									</div>
+							</div>
+							<div *ngIf="disable">
+								<span style="color:red">Please select 1 user only</span>
+							</div>
+						</div>
+						<div class="row" *ngIf="subordinateFiltered.length > 0" >
+							<div class="col-md-12">
+								<h4 class="modal-title" style="margin-left: 10px;;">
+								Recommended successor for you
+								</h4>
+							</div>
+							<div class="col-md-12 ex1">
+							<table class="table">
+								<tr *ngFor="let sub of subordinateFiltered" class="onfocus">
+									<td style="text-align: left;">
+										<div class="row">
+										<div class="m-card-profile__pic"  style="cursor: pointer;" class="col-md-2">
+											<span class="m-card-profile__pic-wrapper">
+												<img style="max-width: 160px !important;" src="{{sub.image_url}}" class="m--img-rounded m--marginless m--img-centered" style="width:45px; height:45px" alt="" />
+											</span>
+										</div>
+										<div class="m-widget4__info col-md-8" style="text-align: left;">
+											<div style="cursor: pointer;">
+												<span class="font-weight-bold">
+													{{sub.name}}
+												</span><br>
+												<span class="m-widget4__pos">
+													{{sub.post_desc}}
+												</span><br>
+											</div>
+										</div>
+										<div style="cursor: pointer;" class="col-md-2">
+											<span class="m-widget4__pos">
+												<button class="btn btn-submitting" type="submit" onclick="$('.modal').modal('hide')" (click)="addNewSubmitSub(sub.staff_no)" >
+													Add</button>
+											</span>
+											</div>
+										</div>						
+									</td>
+								</tr>
+							</table>
+							</div>
+						</div>
+					</div>
+				</form>
+
+			</div>
+		</div>
+<!-- :end Add/Update Modal -->
+
+		<div class="modal fade" id="modal_remove_successor">
+			<div class="modal-dialog modal-dialog-centered">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h4 class="modal-title">Remove?</h4>
+						<button type="button" class="close" data-dismiss="modal">&times;</button>
+					</div>
+					<div class="modal-body">
+						<p>Are you sure to remove {{selSesuccessor.name}} as successor?</p>
+					</div>
+					<div class="modal-footer">
+						<button type="button" id="rejectNo" class="btn btn-default" data-dismiss="modal">NO</button>
+						<button type="button" onclick="$('.modal').modal('hide')" class="btn btn-default" (click)="delSubmit(selSesuccessor.id)">YES</button>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="modal fade" id="modal_calibrate">
+			<div class="modal-dialog modal-dialog-centered">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h4 class="modal-title">Calibrate?</h4>
+						<button type="button" class="close" data-dismiss="modal">&times;</button>
+					</div>
+					<div class="modal-body">
+						<p>You are not allowed to edit the nomination upon completing Calibration. Do you want to proceed?</p>
+					</div>
+					<div class="modal-footer">
+						<button type="button" onclick="$('.modal').modal('hide')" class="btn btn-default" (click)="updateStatus(btnSubmit)">YES</button>
+						<button type="button" id="rejectNo" class="btn btn-default" data-dismiss="modal">NO</button>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="modal fade" id="modal_update_flight">
+			<div class="modal-dialog modal-dialog-centered">
+				<form [formGroup]="flightRiskForm">	
+				<div class="modal-content"><!-- start -->
+					
+					<div class="modal-header">
+						<h4 class="modal-title">Select Flight Risk</h4>
+						<button type="button" class="close" data-dismiss="modal" onclick="$('#modal_new_successor').modal('show');" (click)="updateSuccessor(selnewSuccTypeId)">&times;</button>
+					</div>
+					<div class="modal-body">
+						<div class="form-group">
+							<div class="row">
+								<div class="col-md-9 border" style="padding: 5px;">
+									Potential of Flight Risk (Employee Turnover due to resignation / retirement / termination / location transfer)
+								</div>
+
+								<div class="col-md-3 border" style="padding: 5px;">
+									<div class="radio">
+										<label>
+											<input id="High" type="radio" formControlName="flightRisk"  value="4" (click)="onRadioItemChange(4)">
+											High
+										</label>
+									</div>
+									<div class="radio">
+										<label>
+											<input id="Moderate" type="radio" formControlName="flightRisk" value="3" (click)="onRadioItemChange(3)">
+											Moderate
+										</label>
+									</div>
+									<div class="radio">
+										<label>
+											<input id="Low" type="radio" formControlName="flightRisk" value="2" (click)="onRadioItemChange(2)">
+											Low
+										</label>
+									</div>
+									<div class="radio">
+										<label>
+											<input id="Na" type="radio" formControlName="flightRisk" value="1" checked="checked" (click)="onRadioItemChange(1)">
+											Not Able to Assess
+										</label>
+									</div>
+									<div *ngIf="flightRiskForm.invalid">
+										<p>Please select one of the value</p>
+									 </div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="modal-footer">
+						<button type="submit" class="btn btn-submitting"
+						onclick="$('#modal_update_flight').modal('hide')" (click)="updateNewSubmit()" >
+						Save
+						</button>
+					</div>
+				</div><!--- end -->
+				</form>
+			</div>
+		</div>
+
+</div>

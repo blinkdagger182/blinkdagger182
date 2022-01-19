@@ -1,0 +1,106 @@
+.modal-close-btn:focus {
+    outline: none !important;
+}
+.sea-bg {
+    background-repeat: no-repeat;
+    height: 100%;
+    position: relative;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
+    background-position: center;
+}
+.mor-bg {
+    background-blend-mode: multiply;
+    background-color: rgba(0,0,0,.25);
+    background-image: url('../../../../../assets/img/user/sea-portal/morningBG.jpg');
+}
+.eve-bg {
+    background-image: url('../../../../../assets/img/user/sea-portal/nightBG.jpg');
+}
+.noon-bg {
+    background-image: url('../../../../../assets/img/user/sea-portal/noonBG.jpg');
+}
+
+.fea-container {
+    margin-top: 2rem;
+    background: #00000059;
+    border-radius: 8px;
+}
+.urgent {
+    color: white;
+    font-weight: 500;
+    font-family: 'Lato';
+    font-size: 20px;
+    text-align: center;
+    padding: 1rem;
+}
+.progressText {
+    position: relative;
+    bottom: 120px;
+    cursor: pointer;
+}
+.daysNo {
+    color: white;
+    font-size: 32px;
+    font-weight: 600;
+    height: 36px;
+    margin: 0;
+}
+.daysLeft {
+    font-size: 12px;
+    font-weight: 600;
+    margin: 0;
+    color: white;
+}
+.payDate {
+    font-size: 10px;
+    font-weight: 600;
+    margin: 0;
+    color: white;
+}
+.sal-counters {
+    color: white;
+    font-size: 18px;
+    position: relative;
+    top: -7rem;
+    padding: 0rem 3rem;
+}
+.fea-menuDiv {
+    text-align: center;
+    /* padding: 1rem; */
+}
+.menuIcons {
+    border-radius: 50%;
+    cursor: pointer;
+    width: 60px;
+}
+.menuTxt {
+    color: white;
+    font-family: 'Lato';
+    font-size: 14px;
+    font-weight: 500;
+}
+
+
+@media (min-width: 992px) {
+    .fea-container {
+        max-width: 900px;
+    }
+}
+
+@media (max-width: 576px) {
+    .col-xs-6 {
+        flex: 0 0 50%;
+        max-width: 50%;
+    }
+    .fea-container {
+        width: 85%;
+    }
+}
+
+@media (max-width: 992px) {
+    .eve-bg {
+        background-position: 95%;
+    }
+}

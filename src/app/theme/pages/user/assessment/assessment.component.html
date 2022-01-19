@@ -1,0 +1,780 @@
+
+<!-- START: Subheader -->
+<!-- <div class="m-subheader" appunwraptag="">
+    <div class="d-flex align-items-center">
+        <div class="mr-auto">
+            <h3 class="m-subheader__title m-subheader__title--separator">
+                {{title1}}
+            </h3>
+            <ul class="m-subheader__breadcrumbs m-nav m-nav--inline">
+                <li class="m-nav__item m-nav__item--home">
+                    <a routerLink="/index" class="m-nav__link m-nav__link--icon">
+                        <i class="m-nav__link-icon la la-home"></i>
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <div>
+            <div class="m-dropdown m-dropdown--inline m-dropdown--arrow m-dropdown--align-right m-dropdown--align-push"
+                m-dropdown-toggle="hover" aria-expanded="true">
+            </div>
+        </div>
+    </div>
+</div> -->
+<!-- END: Subheader -->
+
+<div class="m-content">
+    <div class="d-flex justify-content-center">
+        <div class="col-xl-12">
+            <div class="col-lg-12" style="padding-bottom: 1rem; padding-left: 0px !important">
+                <button title="Back to User Job" class="btn m-btn--pill btn-outline-info pt-1 pb-1 pr-3 pl-3"
+                    (click)="btnBackClick()">
+                    <div class="m-demo-icon__preview" style="display: flex; align-items: center;">
+                        <img style="width:2rem !important" src="../../../../../../assets/img/user/back_icon.svg">
+                        <span>{{word.back}}</span>
+                    </div>               
+                </button>
+
+                <!--Begin:Language-->
+                <ul class="btn m-topbar__nav m-nav m-nav--inline" style="float: right !important">
+                    <li class="m-nav__item m-topbar__user-profile m-topbar__user-profile--img" data-toggle="modal"
+                        data-target="#langSelect">
+                        <span > 
+                            <span class="m-topbar__username " style="padding-left:10px; padding-right:10px;">
+                                {{word.lang}} :
+                            </span>
+                            <span class="m-topbar__userpic">
+                                <button *ngIf="enChecked" type="button" title="English" data-toggle="m-tooltip" data-placement="top"
+                                    class="btn m-btn--pill m-btn--air btn-outline-info active btn-sm">
+                                    EN
+                                </button>
+                                <button *ngIf="!enChecked" type="button" title="Malay" data-toggle="m-tooltip" data-placement="top"
+                                    class="btn m-btn--pill m-btn--air btn-outline-info active btn-sm">
+                                    MY
+                                </button>   
+                                <!-- <img *ngIf="enChecked" src="./assets/img/us.png" title="English" data-toggle="m-tooltip" data-placement="top"
+                                    style="width:28px; height:28px" class="m--img-rounded m--marginless m--img-centered" />
+                                <img *ngIf="!enChecked" src="./assets/img/my.png" title="Malay" data-toggle="m-tooltip" data-placement="top" 
+                                    style="width:28px; height:28px" class="m--img-rounded m--marginless m--img-centered" /> -->
+                            </span>
+                        </span>
+                    </li>
+                </ul>
+                <div class="modal fade" id="langSelect" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" style="display: none;" aria-hidden="true">
+                    <div class="modal-dialog msg-dialog modal-dialog-centered" role="document" style="max-width: 235px !important; margin: auto !important">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 style="text-align: center">{{word.lang}}</h5>
+                                <button type="button" id="lang_close" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">×</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="m-dropdown__content">
+                                    <label class="lang-radio m-radio m-radio--solid m-radio--success" style="font-size: 16px">
+                                        <input type="radio" #en name="lang" value="en" [checked]="enChecked" (change)="langChange(en)"> 
+                                        &nbsp;&nbsp; English
+                                        <span style="width:23px; height:23px"></span>
+                                    </label>
+                                    <br>
+                                    <label class="lang-radio m-radio m-radio--solid m-radio--success" style="font-size: 16px">
+                                        <input type="radio" #my name="lang" value="my" [checked]="!enChecked" (change)="langChange(my)"> 
+                                        &nbsp;&nbsp; Malay 
+                                        <span style="width:23px; height:23px"></span>
+                                    </label>
+                                </div>
+                            </div>    
+                        </div>
+                    </div>
+                </div>
+                <!--End:Language-->
+
+            </div>
+            <div class="m-portlet m-portlet--full-height" > 
+                <div class="m-portlet__head">
+                    <div class="m-portlet__head-caption">
+                        <div class="m-portlet__head-title">
+                            <h2 class="m-portlet__head-text" style="font-size: 24px">
+                                {{word.tal_assessment}}
+                            </h2>
+                        </div>
+                    </div>
+                </div>
+                <div class="m-portlet__body">
+                    <ul class="nav nav-tabs" role="tablist" style="background-color:#f4f5f8">
+                        <li class="tab-item nav-item">
+                            <a class="tab-title nav-link active show" data-toggle="tab" href="#profile">
+                                {{word.talent_prof }} &nbsp;
+                            </a>
+                        </li>
+                        <li class="tab-item nav-item">
+                            <a class="tab-title nav-link " data-toggle="tab" href="#form">
+                                {{word.assessment_form }} &nbsp;
+                            </a>
+                        </li>
+                        <li class="tab-item nav-item">
+                            <a class="tab-title nav-link " data-toggle="tab" href="#tracking">
+                                {{word.tracking }} &nbsp;
+                            </a>
+                        </li>
+                    </ul>
+                    <div class="tab-content">
+                        <div class="tab-pane active" id="profile" role="tabpanel">
+                            <div class="row">
+                                  
+                                <!-- :start page loader -->
+                                <div class="col-lg-12 centred my-auto" *ngIf="loading">
+                                    <app-user-loading></app-user-loading>
+                                </div>
+                                <!-- end::Page loader -->
+                                <!-- start: nodata -->
+                                <!-- <div class="col-lg-12 centred my-auto" *ngIf="!loading&&pagedItems.length<1">
+                                        <app-u-no-data></app-u-no-data>
+                                </div> -->
+                                <!-- :end Nodata -->
+                                <!-- start: nodata -->
+                                <!-- <div class="col-lg-12 centred my-auto" *ngIf="!loading&&loadingErr">
+                                    <app-u-loading-error></app-u-loading-error>
+                                </div> -->
+                                <!-- :end Nodata -->
+
+                                <div class="col-lg-12" *ngIf="!loading&&pagedItems.length>0">
+                                    <!--begin::Portlet-->
+                                   
+                                    <div class="m-portlet m-portlet--full-height">
+                                       
+                                        <!--begin::Section-->
+                                        <div class="m-accordion m-accordion--bordered" id="m_accordion_1" role="tablist">
+                                            <!-- :start section 1 -->
+                                            <div class="m-accordion__item">
+                                                
+                                                <form [formGroup]="filterForm" autocomplete="off">
+                                                    <div class="m-accordion__item-body  show" id="m_accordion_adv_info_body" role="tabpanel" aria-labelledby="m_accordion_adv_info_head">
+                                                     
+                                                        <div class="m-accordion__item-content">
+                                                            <div class="row" style="display: none;">
+                                                                <div class="col-md-3">
+                                                                        <div class="row">
+                                                                            <div class="col-md-3">
+                                                                                <label>Status: </label>
+                                                                            </div>
+                                                                            <div class="col-md-7">
+                                                                                 <select #searchStatus name="status" id="status" class="form-control m-input" formControlName="filterStatus" [hidden]="loading">
+                                                                                    <option value="">All</option>
+                                                                                    <option value="{{itemStatus.status}}" *ngFor="let itemStatus of filterArr.status">{{itemStatus.status}}</option>     
+                                                                                 </select>
+                                                                            </div>
+                                                                        </div>
+                                                                </div>
+                                                                <div class="col-md-3">
+                                                                    <div class="row">
+                                                                        <div class="col-md-4">
+                                                                            <label>Sentiment: </label>
+                                                                        </div>
+                                                                            <div class="col-md-8">
+                                                                                 <select #searchSent name="sentiment" id="sentiment" class="form-control m-input" formControlName="filterSent" [hidden]="loading">
+                                                                                        <option value="">All</option>
+                                                                                        <option value="{{itemSent.sentiment}}" *ngFor="let itemSent of filterArr.eraPool">{{itemSent.sentiment}}</option>     
+                                                                                 </select>
+                                                                            </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-3">
+                                                                    <div class="row">
+                                                                        <div class="col-md-4">
+                                                                            <label>Classification: </label>
+                                                                        </div>
+                                                                             <div class="col-md-8">
+                                                                                <select #searchType name="type" id="type" class="form-control m-input" formControlName="filterType" [hidden]="loading">
+                                                                                    <option value="">All</option>
+                                                                                    <option value="{{itemType.type}}" *ngFor="let itemType of filterArr.type">{{itemType.type}}</option>     
+                                                                                </select>                                                                   
+                                                                            </div>
+                                                                        </div>
+                                                                </div>
+                                                                <div class="col-md-3">
+                                                                    <div class="row">
+                                                                        <div class="col-md-4">
+                                                                            <label>Staff ID: </label>
+                                                                        </div>
+                                                                        <div class="col-md-5">
+                                                                             <span class="m-subheader__searchID">
+                                                                                <div class="m-input">
+                                                                               
+                                                                                   <input [value]="" #search class="form-control form-control- m-input" type="search" 
+                                                                                           (keyup)="onNameKeyUp($event)" placeholder="staff Id"> 
+                                                                                </div> 
+                                                                                                                                                                          
+                                                                                <br>
+                                                                                <div class="col-3 col-md-2 m-login__form-action">
+                                                                                    
+                                                                                   <button (click)="submitFilter(1)" [ngClass]="{'m-loader m-loader--right m-loader--light': loading}"
+                                                                                        id="m_login_signin_submit" class="btn btn-primary btn-focus m-btn m-btn--pill m-btn--custom m-btn--air m-login__btn m-login__btn--primary">
+                                                                                        Submit
+                                                                                    </button>
+                                                                                </div>
+                                                                               
+                                                                             </span>
+                                                                             <br />
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <!--end: Filter Form -->      
+                                                            <div>
+                                                                <div class="m-stack__item m-stack__item--center m-stack__item--middle" *ngIf="loading">
+                                                                    <span>
+                                                                        Loading data. Please wait...
+                                                                    </span>
+                                                                    <span>
+                                                                        <div class="m-loader m-loader--lg m-loader--success" style="width: 30px; display: inline-block;"></div>
+                                                                    </span>
+                                                                </div>
+                                                               <!-- begin::Portlet-->
+                                                                <div id=search class="m-portlet" *ngFor="let item of pagedItems; let i = index">
+                                                                    <div class="m-portlet__body">
+                                                                        <div class="row text-center">
+                                                                            <div class="col-md-2" style="background-color: #ccc; padding-left: 0; align-self: center;">
+                                                                                <div class="rectangle">
+                                                                                    <br>
+                                                                                    &nbsp;&nbsp;3 years in Band
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="col-md-8">
+                                                                                <div class="row">
+                                                                                    <div class="col-md-3" style="align-self: center;">
+                                                                                        <img src="../../../../assets/app/media/img/users/ghcm-user-default.jpg" class="m--img-rounded m--marginless m--img-centered userd-image" alt="{{item.Name}}"/>
+                                                                                    </div>
+                                                                                    <div class="col-md-6">
+                                                                                        <span class= "card-body" style="font-size:15px;">
+                                                                                            <div style="color:#ff4700;font-size:18px; font-weight: bold">
+                                                                                            {{item.Name}}
+                                                                                            </div> 
+                                                                                            <b>{{item.EmpSGroup}}</b>
+                                                                                            <div style="font-size:13px">
+                                                                                                <div>
+                                                                                                   <img src="../assets/img/askus/20x20/id20x20.png" alt="">
+                                                                                                   {{item.user_id}}
+                                                                                                </div>
+                                                                                                <div *ngIf="!item.Cell_No"></div>
+                                                                                                <div *ngIf ="item.Email">
+                                                                                                   <img src="../assets/img/askus/20x20/email20x20.png" alt="">
+                                                                                                   <span style="color:#ff4700; font-size:11px;">{{item.Email}}</span> 
+                                                                                                </div>
+                                                                                                <div *ngIf="!item.Email"></div>
+                                                                                                <div>
+                                                                                                    <img src="../assets/img/askus/20x20/contractOrPermenant20x20.png" alt="">
+                                                                                                    {{item.EmpGroup}} | {{item.Job_Grad}}
+                                                                                                </div>
+                                                                                                <div *ngIf="item.HiEduLvl">
+                                                                                                    <img src="../assets/img/askus/20x20/education20x20.png" alt="">
+                                                                                                    {{item.HiEduLvl}}
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        </span>
+                                                                                    </div>
+                                                                                    <div class="col-md-3" style="align-self: center;">
+                                                                                        <div class="text-center" style="padding: 1.25rem; padding-top: 0; padding-bottom: 0">Career Profile</div>
+                                                                                        <img src="../../../../assets/blank/images/view_career.png" class="m--img-rounded m--marginless m--img-centered view-career-image" alt="View Career Profile"/>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="col-md-2" style="border-left: 1px dotted #575962;">
+                                                                                <div class="text-center" style="color:#ffc000;font-size:18px; font-weight: bold">Competency Index</div>
+                                                                                <div class="text-center" style="margin-top: 3rem;font-size:35px; font-weight: bold">86%</div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <!--Reply-->
+                                                                    </div>
+                                                                </div> 
+                                                                <!--modal body-->
+                                                            </div>
+                                                            <!--  end::Portlet-->
+                                                        </div>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                            <!-- :end section 1 -->
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                <div class="col-12" *ngIf="!loading&&pagedItems.length>0"> 
+                                    <nav aria-label="Page navigation example">
+                                        <ul *ngIf="pager.pages && pager.pages.length" class="pagination justify-content-end">
+                                            <li class="page-item" [ngClass]="{disabled:pager.currentPage === 1}">
+                                                <button (click)="setPage(1)" class="page-link" href="#" aria-label="Previous">
+                                                    <span aria-hidden="true">&laquo;</span>
+                                                    <span class="sr-only">First</span>
+                                                </button>
+                                            </li>
+                                            <li class="page-item" [ngClass]="{disabled:pager.currentPage === 1}">
+                                                <button (click)="setPage(pager.currentPage - 1)" class="page-link" href="#" aria-label="Previous">
+                                                    <span aria-hidden="true">&lt;</span>
+                                                    <span class="sr-only">Previous</span>
+                                                </button>
+                                            </li>
+                                            <li class="page-item" *ngFor="let page of pager.pages" [ngClass]="{active:pager.currentPage === page}">
+                                                <button (click)="setPage(page)" class="page-link" href="#">{{page}}</button>
+                                            </li>
+                                            <li class="page-item" [ngClass]="{disabled:pager.currentPage === pager.totalPages}">
+                                                <button (click)="setPage(pager.currentPage + 1)" class="page-link" href="#" aria-label="Previous">
+                                                    <span aria-hidden="true">&gt;</span>
+                                                    <span class="sr-only">Next</span>
+                                                </button>
+                                            </li>
+                                            <li class="page-item" [ngClass]="{disabled:pager.currentPage === pager.totalPages}">
+                                                <button (click)="setPage(pager.totalPages)" class="page-link" href="#" aria-label="Next">
+                                                    <span aria-hidden="true">&raquo;</span>
+                                                    <span class="sr-only">Last</span>
+                                                </button>
+                                            </li>
+                                        </ul>
+                                    </nav>
+                                </div>
+
+                                <div class="col-12" style="text-align: right; margin-top:20px" *ngIf="!loading&&pagedItems.length>0">
+                                    <div class="m-demo__preview m-demo__preview--btn">
+                                        <button class="btn btn-primary m-btn m-btn--icon" (click)="download()">
+                                            <span>
+                                                <i class="la la-download"></i>
+                                                <span>{{downloadAllXLS}}</span>
+                                            </span>
+                                        </button>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="tab-pane" id="form" role="tabpanel">
+                            <div class="row">
+                                  
+                                <!-- :start page loader -->
+                                <div class="col-lg-12 centred my-auto" *ngIf="loadingHist">
+                                    <app-user-loading></app-user-loading>
+                                </div>
+                                <div class="col-lg-12" *ngIf="!loadingHist">
+                                    <!--begin::Portlet-->
+                                    <div class="m-portlet m-portlet--full-height">
+                                        <div class="m-accordion m-accordion--bordered" id="m_accordion_1" role="tablist">
+                                            <div class="m-accordion__item">
+
+                                                <!-- Dummy tester view -->
+                                                <div class="m-portlet__head-tools" style="float: right;position: relative;z-index: 99;">
+                                                    <ul class="nav nav-pills m-nav-pills--align-right m-nav-pills--btn-pill m-nav-pills--btn-sm" role="tablist" style="margin-bottom: -2.2rem!important;">
+                                                        <li class="nav-item m-tabs__item">
+                                                            <a class="nav-link m-tabs__link active" data-toggle="tab" href="#m_multi_first" role="tab" aria-expanded="true">
+                                                                Multi first
+                                                            </a>
+                                                        </li>
+                                                        <li class="nav-item m-tabs__item">
+                                                            <a class="nav-link m-tabs__link" data-toggle="tab" href="#m_single_first" role="tab" aria-expanded="false">
+                                                                Single first
+                                                            </a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                                <br><br>
+                                                <!-- End dummy tester view -->
+
+                                                <div class="tab-content"><!-- Dummy tester view -->
+                                                    <div class="tab-pane active" id="m_multi_first" aria-expanded="true"><!-- Dummy tester view -->
+
+                                                        <!-- Multiple first -->
+                                                        <div style="border: 1px solid darkgrey; border-radius: 10px; margin-top: 20px">
+                                                            <div class="legend-title text-center">
+                                                                Employee's Performance
+                                                            </div>
+                                                            <br>
+                                                            <div>
+                                                                <div style="margin-left: 3rem; font-size: 15px;">
+                                                                    Please rate the employee's performance: *
+                                                                </div>
+                                                                <div class="row table-responsive custom-responsive">
+                                                                    <div style="margin-left: 3rem;" class="col-lg-12 mt-2">
+                                                                        <div class="row">
+                                                                            <div class="col-md-3"></div>
+                                                                            <div class="row col-md-9">
+                                                                                <div class="col-md-4" style="align-self: flex-end;">
+                                                                                    <div class="curve-rectangle">
+                                                                                        1. Deliverables partially / do not meet minimum requirements and standard of the respective Band, with consistent guidance<br>
+                                                                                        2. Seldom complete assignments in a timely manner MAPS Level 1 or 2 in 2018<br><br>
+                                                                                    </div>
+                                                                                    <div class="text-center rect-low">
+                                                                                        &nbsp;&nbsp;&nbsp;&nbsp;Low
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="col-md-4" style="align-self: flex-end;">
+                                                                                    <div class="curve-rectangle">
+                                                                                        1. Deliverables are consistent with expected requirements and standard of the respective Band, with minimal guidance.<br>
+                                                                                        2. Complete all assignments on time,  and with acceptable quality and reliability<br>
+                                                                                        3. Rated with MAPS Level 2 or 3 in 2018<br><br>
+                                                                                    </div>
+                                                                                    <div class="text-center rect-average">
+                                                                                        &nbsp;&nbsp;Average
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="col-md-4" style="align-self: flex-end;">
+                                                                                    <div class="curve-rectangle">
+                                                                                        1. Deliverables consistently exceed requirements and  standards of the respective Band, with no/minimal guidance<br>
+                                                                                        2. Complete all assignments ahead of time, and with high quality and reliability<br>
+                                                                                        3. Serve as a recourse person within division & recognised by outside division<br>
+                                                                                        4. Rated with MAPS Level 3 or 4 in 2018<br><br>
+                                                                                    </div>
+                                                                                    <div class="text-center rect-high">
+                                                                                        &nbsp;&nbsp;&nbsp;High
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <table class="table table-striped table-hover m_datatable">
+                                                                            <thead class="thead-inverse">
+                                                                                <tr>
+                                                                                    <th style="background-color: rgba(127, 127, 127, 0.25);width: 3%!important">No.</th>
+                                                                                    <th style="background-color: rgba(127, 127, 127, 0.25);width: 23%!important">Talent</th>
+                                                                                    <th style="background-color: rgba(127, 127, 127, 0.25);"></th>
+                                                                                    <th style="background-color: rgba(127, 127, 127, 0.25);"></th>
+                                                                                    <th style="background-color: rgba(127, 127, 127, 0.25);"></th>
+                                                                                </tr>
+                                                                            </thead>
+                                                                            <tbody>
+                                                                                <tr *ngFor="let adm of HistList | slice:0:2; let i=index;">
+                                                                                    <td class="font_12px">{{i+1}}</td>
+                                                                                    <td class="font_12px">{{adm.Name}}</td>
+                                                                                    <td class="font_12px">
+                                                                                        <div class="m-form__group">
+                                                                                            <div class="m-radio-list">
+                                                                                                <label class="m-radio m-radio--state-low" style="margin-left: auto;margin-right: auto;">
+                                                                                                    <input type="radio" name="multi_pers_{{i+1}}" value="1">
+                                                                                                    &nbsp;
+                                                                                                    <span></span>
+                                                                                                </label>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </td>
+                                                                                    <td class="font_12px">
+                                                                                        <div class="m-form__group">
+                                                                                            <div class="m-radio-list">
+                                                                                                <label class="m-radio m-radio--state-average" style="margin-left: auto;margin-right: auto;">
+                                                                                                    <input type="radio" name="multi_pers_{{i+1}}" value="1">
+                                                                                                    &nbsp;
+                                                                                                    <span></span>
+                                                                                                </label>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </td>
+                                                                                    <td class="font_12px">
+                                                                                        <div class="m-form__group">
+                                                                                            <div class="m-radio-list">
+                                                                                                <label class="m-radio m-radio--state-high" style="margin-left: auto;margin-right: auto;">
+                                                                                                    <input type="radio" name="multi_pers_{{i+1}}" value="1">
+                                                                                                    &nbsp;
+                                                                                                    <span></span>
+                                                                                                </label>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </td>
+                                                                                </tr>
+                                                                            </tbody>
+                                                                        </table>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="mt-5" style="border: 1px solid darkgrey; border-radius: 10px; margin-top: 20px">
+                                                            <div class="legend-title text-center">
+                                                                Employee's Potential
+                                                            </div>
+                                                            <br>
+                                                            <div>
+                                                                <div style="margin-left: 3rem; font-size: 15px;">
+                                                                    Is the employee able to take up a higher position or take an increased responsibilities within the next 1 year?
+                                                                </div>
+                                                                <br>
+                                                                <div class="row table-responsive custom-responsive">
+                                                                    <div style="margin-left: 3rem;" class="col-lg-12 mt-2">
+                                                                        <table class="table table-striped table-hover m_datatable">
+                                                                            <thead class="thead-inverse">
+                                                                                <tr>
+                                                                                    <th style="background-color: rgba(127, 127, 127, 0.25);">No.</th>
+                                                                                    <th style="background-color: rgba(127, 127, 127, 0.25);">Talent</th>
+                                                                                    <th style="background-color: rgba(146, 208, 80, 0.25);" class="text-center">Yes</th>
+                                                                                    <th style="background-color: rgba(233, 64, 87, 0.25);" class="text-center">No</th>
+                                                                                </tr>
+                                                                            </thead>
+                                                                            <tbody>
+                                                                                <tr *ngFor="let adm of HistList | slice:0:2; let i=index;">
+                                                                                    <td class="font_12px">{{i+1}}</td>
+                                                                                    <td class="font_12px">{{adm.Name}}</td>
+                                                                                    <td class="font_12px">
+                                                                                        <div class="m-form__group">
+                                                                                            <div class="m-radio-list" style="padding-left: 1.75rem">
+                                                                                                <label class="m-radio m-radio--state-high" style="margin-left: auto;margin-right: auto;">
+                                                                                                    <input type="radio" name="multi_{{i+1}}" value="1">
+                                                                                                    &nbsp;
+                                                                                                    <span></span>
+                                                                                                </label>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </td>
+                                                                                    <td class="font_12px">
+                                                                                        <div class="m-form__group">
+                                                                                            <div class="m-radio-list" style="padding-left: 1.75rem">
+                                                                                                <label class="m-radio m-radio--state-low" style="margin-left: auto;margin-right: auto;">
+                                                                                                    <input type="radio" name="multi_{{i+1}}" value="1">
+                                                                                                    &nbsp;
+                                                                                                    <span></span>
+                                                                                                </label>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </td>
+                                                                                </tr>
+                                                                            </tbody>
+                                                                        </table>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="mt-5" style="border: 1px solid darkgrey; border-radius: 10px; margin-top: 20px">
+                                                            <div class="legend-title text-center">
+                                                                Talent Assessment
+                                                            </div>
+                                                            <br>
+                                                            <div>
+                                                                <div class="text-center" style="margin-top: 5rem; font-size: 60px">Thank you</div>
+                                                                <div class="text-center mb-5" style="font-size: 40px">for your commitment</div>
+                                                            </div>
+                                                        </div>
+                                                        <!-- End multiple first -->
+
+                                                    </div><!-- Dummy tester view -->
+                                                    <div class="tab-pane" id="m_single_first" aria-expanded="false"><!-- Dummy tester view -->
+
+                                                        <!-- Single first -->
+                                                        <div style="border: 1px solid darkgrey; border-radius: 10px; margin-top: 20px">
+                                                            <div class="legend-title text-center">
+                                                                Employee's Performance
+                                                            </div>
+                                                            <br>
+                                                            <div>
+                                                                <div style="margin-left: 3rem; font-size: 15px;">
+                                                                    Please rate <b>Mohammad Ali's</b> performance: *
+                                                                </div>
+                                                                <br>
+                                                                <div class="row">
+                                                                    <input type="text" class="form-control" id="m_nouislider_performance_input" style="visibility: hidden"> 
+                                                                    <div class="col-sm-2 pl-0 text-right">
+                                                                        <strong>Low</strong>
+                                                                    </div>
+                                                                    <div class="col-sm-7 pl-0 pr-0 pt-1">
+                                                                        <div id="m_nouislider_performance" class="m-nouislider"></div>
+                                                                    </div>
+                                                                    <div class="col-sm-2">
+                                                                        <strong>High</strong>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="row mt-3 mb-5">
+                                                                    <div class="col-md-1"></div>
+                                                                    <div class="row col-md-11 mb-5">
+                                                                        <div class="col-md-4 pr-5" style="align-self: flex-start;">
+                                                                            <div class="curve-rectangle-2"><br><br>
+                                                                                1. Deliverables partially / do not meet minimum requirements and standard of the respective Band, with consistent guidance<br>
+                                                                                2. Seldom complete assignments in a timely manner MAPS Level 1 or 2 in 2018<br><br>
+                                                                            </div>
+                                                                            <div class="text-center rect-low">
+                                                                                &nbsp;&nbsp;&nbsp;&nbsp;Low
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="col-md-4 pl-4" style="align-self: flex-start;">
+                                                                            <div class="curve-rectangle-2"><br><br>
+                                                                                1. Deliverables are consistent with expected requirements and standard of the respective Band, with minimal guidance.<br>
+                                                                                2. Complete all assignments on time,  and with acceptable quality and reliability<br>
+                                                                                3. Rated with MAPS Level 2 or 3 in 2018<br><br>
+                                                                            </div>
+                                                                            <div class="text-center rect-average">
+                                                                                &nbsp;&nbsp;Average
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="col-md-4 pl-5" style="align-self: flex-start;">
+                                                                            <div class="curve-rectangle-2"><br><br>
+                                                                                1. Deliverables consistently exceed requirements and  standards of the respective Band, with no/minimal guidance<br>
+                                                                                2. Complete all assignments ahead of time, and with high quality and reliability<br>
+                                                                                3. Serve as a recourse person within division & recognised by outside division<br>
+                                                                                4. Rated with MAPS Level 3 or 4 in 2018<br><br>
+                                                                            </div>
+                                                                            <div class="text-center rect-high">
+                                                                                &nbsp;&nbsp;&nbsp;High
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="mt-5" style="border: 1px solid darkgrey; border-radius: 10px; margin-top: 20px">
+                                                            <div class="legend-title text-center">
+                                                                Employee's Potential
+                                                            </div>
+                                                            <br>
+                                                            <div>
+                                                                <div style="margin-left: 3rem; font-size: 15px;">
+                                                                    Please answer all 10 questions for <b>Mohammad Ali’s</b>.
+                                                                </div>
+                                                                <br>
+                                                                <div class="row table-responsive custom-responsive">
+                                                                    <div style="margin-left: 3rem;" class="col-lg-12 mt-2">
+                                                                        <table class="table table-striped table-hover m_datatable">
+                                                                            <thead class="thead-inverse">
+                                                                                <tr>
+                                                                                    <th style="background-color: rgba(0, 102, 255, 0.25);">No.</th>
+                                                                                    <th style="background-color: rgba(0, 102, 255, 0.25);">Question</th>
+                                                                                    <th style="background-color: rgba(146, 208, 80, 0.25);" class="text-center">Yes</th>
+                                                                                    <th style="background-color: rgba(233, 64, 87, 0.25);" class="text-center">No</th>
+                                                                                </tr>
+                                                                            </thead>
+                                                                            <tbody>
+                                                                                <tr *ngFor="let adm of HistList | slice:0:10; let i=index;">
+                                                                                    <td class="font_12px">{{i+1}}</td>
+                                                                                    <td class="font_12px">{{adm.Name}}</td>
+                                                                                    <td class="font_12px">
+                                                                                        <div class="m-form__group">
+                                                                                            <div class="m-radio-list" style="padding-left: 1.75rem">
+                                                                                                <label class="m-radio m-radio--state-high" style="margin-left: auto;margin-right: auto;">
+                                                                                                    <input type="radio" name="single_{{i+1}}" value="1">
+                                                                                                    &nbsp;
+                                                                                                    <span></span>
+                                                                                                </label>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </td>
+                                                                                    <td class="font_12px">
+                                                                                        <div class="m-form__group">
+                                                                                            <div class="m-radio-list" style="padding-left: 1.75rem">
+                                                                                                <label class="m-radio m-radio--state-low" style="margin-left: auto;margin-right: auto;">
+                                                                                                    <input type="radio" name="single_{{i+1}}" value="1">
+                                                                                                    &nbsp;
+                                                                                                    <span></span>
+                                                                                                </label>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </td>
+                                                                                </tr>
+                                                                            </tbody>
+                                                                        </table>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="mt-5" style="border: 1px solid darkgrey; border-radius: 10px; margin-top: 20px">
+                                                            <div class="legend-title text-center">
+                                                                Talent Assessment
+                                                            </div>
+                                                            <br>
+                                                            <div>
+                                                                <div class="text-center" style="margin-top: 5rem; font-size: 60px">Thank you</div>
+                                                                <div class="text-center mb-5" style="font-size: 40px">for your commitment</div>
+                                                            </div>
+                                                        </div>
+                                                        <!-- End single first -->
+
+                                                    </div><!-- Dummy tester view -->
+                                                </div><!-- Dummy tester view -->
+
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane" id="tracking" role="tabpanel">
+                            <div class="row">
+                              
+                            <!-- :start page loader -->
+                                <div class="col-lg-12 centred my-auto" *ngIf="loadingHist">
+                                    <app-user-loading></app-user-loading>
+                                </div>
+                                <div class="col-lg-12" *ngIf="!loadingHist">
+                                    <!--begin::Portlet-->
+                                    <div class="m-portlet m-portlet--full-height">
+                                        <div class="m-accordion m-accordion--bordered" id="m_accordion_1" role="tablist">
+                                            <div class="m-accordion__item">
+                                                <div class="row mt-2" style="display: none;">
+                                                    <div class="col-lg-6 text-left">
+                                                        <!-- <h3>All performance table list</h3> -->
+                                                    </div>
+                                                    <div class="col-lg-6 text-right">
+                                                        <button type="button" class="btn m-btn--pill btn-primary btn-sm" data-toggle="modal" (click)="updateJobUser(1)" data-target="#modal_new_job_user">
+                                                            <i class="la la-download"></i> Download
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                                <div class="row table-responsive custom-responsive">
+                                                    <div class="col-lg-12 mt-2">
+                                                        <table class="table table-striped table-hover m_datatable">
+                                                            <thead class="thead-inverse">
+                                                                <tr>
+                                                                    <th>No.</th>
+                                                                    <th>Talent</th>
+                                                                    <th>Email</th>
+                                                                    <th>Position</th>
+                                                                    <th>Year of Assessment</th>
+                                                                    <th>Status</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr *ngFor="let adm of HistList">
+                                                                    <td class="font_12px">{{adm.staff_id}}</td>
+                                                                    <td class="font_12px">{{adm.Name}}</td>
+                                                                    <td class="font_12px">{{adm.lob}}</td>
+                                                                    <td class="font_12px">{{adm.lob}}</td>
+                                                                    <td class="font_12px">{{adm.lob}}</td>
+                                                                    <td class="font_12px">{{adm.lob}}</td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- <div class="modal fade" id="m_modal_image" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg" role="document" style="text-align: center; width: 100%; height:66.67vh; background-size:cover; overflow:hidden;">
+            <div class="modal-content">
+                <div class="modal-body" style="padding: 0px">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="position: absolute; right: 15px; top: 10px; z-index:100">
+                        <span aria-hidden="true">
+                            &times;
+                        </span>
+                    </button>
+                    <img src="{{imgAskusArrList}}/{{selectedImg}}?api_key={{apiKeyAskusList}}" width="100%" height="100%">
+                </div>
+            </div>
+        </div>
+    </div> -->
+
+<!-- <app-sticky-nav-component></app-sticky-nav-component> -->
+
+<style>
+
+.dropdown-menu a {
+    white-space:normal;
+}
+.dropdown-menu > li{position:relative;}
+
+.dropdown-menu > li > i{position:absolute;left:0;top:3px;}
+
+ </style>

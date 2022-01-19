@@ -1,0 +1,803 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.13/semantic.min.css">
+<notifier-container></notifier-container>
+<div class="m-subheader">
+    <div class="d-flex align-items-center">
+        <div class="mr-auto">
+            <h3 class="m-subheader__title m-subheader__title--separator">
+                Succession Depth Calibration
+            </h3>
+            <ul class="m-subheader__breadcrumbs m-nav m-nav--inline">
+                <li class="m-nav__item m-nav__item--home">
+                    <a routerLink="/admin/index" class="m-nav__link m-nav__link--icon">
+                        <i class="m-nav__link-icon la la-home"></i>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div class="m-content">
+    <div class="row">
+
+        <!-- <div class="col-lg-12 centred my-auto">
+            <ng-template #alertError></ng-template>
+        </div> -->
+
+        <div class="col-lg-12 centred my-auto" *ngIf="loading">
+            <div class="m-section__content">
+                <div class="m-demo" data-code-preview="true" data-code-html="true" data-code-js="false">
+                    <div class="m-demo__preview">
+                        <div class="m-stack m-stack--ver m-stack--general m-stack--demo">
+
+                            <div class="m-stack__item m-stack__item--center m-stack__item--middle">
+                                <span>
+                                    Loading data. Please wait...
+                                </span>
+                                <span>
+                                    <div class="m-loader m-loader--lg m-loader--success"
+                                        style="width: 30px; display: inline-block;"></div>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-12" *ngIf="!loading">
+            <div class="m-portlet m-portlet--rounded">
+                <div class="m-portlet__head m--bg-focus" style="background: #FF5A00!important">
+                    <div class="m-portlet__head-caption">
+                        <div class="m-portlet__head-title">
+                            <h3 class="m-portlet__head-text  m--font-inverse-primary">
+                                Succession Depth
+                                <small>
+                                    <!--portlet sub title-->
+                                </small>
+                            </h3>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="m-portlet__body">
+                    <div class="m-section container" style="max-width: 100% !important;">
+
+                        <form [formGroup]="filterForm" autocomplete="off" (click)="resetDDVal()">
+                            <div class="m-accordion m-accordion--default" id="m_accordion_1" role="tablist">
+                                <div class="m-accordion__item">
+                                    <div class="m-accordion__item-head collapsed" role="tab"
+                                        id="m_accordion_1_item_1_head" data-toggle="collapse"
+                                        href="#m_accordion_1_item_1_body" aria-expanded="false">
+                                        <span class="m-accordion__item-icon">
+                                            <i class="fa fa-filter" style="font-size:25px;"></i>
+                                        </span>
+                                        <span class="m-accordion__item-title" style="font-size:1rem;">
+                                            Filter By
+                                        </span>
+                                        <span class="m-accordion__item-mode"></span>
+                                    </div>
+                                    <div class="m-accordion__item-body collapse show" id="m_accordion_1_item_1_body">
+                                        <div class="m-accordion__item-content">
+
+                                            <div class="row">
+                                                <div class="col-md-3">
+                                                    <div class="row">
+                                                        <div class="col-md-3">
+                                                            <label style="margin-top:9px;">State: </label>
+                                                        </div>
+                                                        <div class="col-md-9">
+                                                            <select name="fltrState" id="fltrState"
+                                                                class="form-control m-input"
+                                                                formControlName="fltrState">
+                                                                <option value="">All</option>
+                                                                <option [value]="item.state"
+                                                                    *ngFor="let item of stateInfo">{{item.state}}
+                                                                </option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div class="row">
+                                                        <div class="col-md-4">
+                                                            <label style="margin-top:9px;">LOB: </label>
+                                                        </div>
+                                                        <div class="col-md-8">
+                                                            <!-- <select name="fltrLOB" id="fltrLOB"
+                                                                class="form-control m-input" formControlName="fltrLOB">
+                                                                <option value="">All</option>
+                                                                <option [value]="item.lob" *ngFor="let item of lobOptions">{{item.lob}}</option>
+                                                            </select> -->
+                                                            <select name="fltrLOB" id="fltrLOB"
+                                                                class="form-control m-input" formControlName="fltrLOB">
+                                                                <option value="" *ngIf="mylob===''">All</option>
+                                                                <option *ngFor="let item of optLobList"
+                                                                    value="{{item.lob}}">{{item.lob}}</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-5">
+                                                    <div class="row">
+                                                        <div class="col-md-2">
+                                                            <label style="margin-top:9px;">Dept: </label>
+                                                        </div>
+                                                        <div class="col-md-10">
+                                                            <input type="text" formControlName="fltrDept"
+                                                                autocomplete="off" class="form-control search-input"
+                                                                (keyup)="onNameKeyUpDept($event)" placeholder="All">
+                                                        </div>
+                                                    </div>
+                                                    <div class="row" *ngIf="selectDeptMult">
+                                                        <div class="col-md-2"></div>
+                                                        <div class="col-md-10">
+                                                            <select name="dept" id="dept" class="form-control m-input"
+                                                                *ngIf="displayNoResult" (click)="resetDept()" multiple>
+                                                                <option value="" *ngIf="displayNoResult"
+                                                                    (click)="resetDept()">No results
+                                                                </option>
+                                                            </select>
+                                                            <select name="dept" id="dept" class="form-control m-input"
+                                                                *ngIf="!displayNoResult"
+                                                                multiple>
+                                                                <option [value]="option" 
+                                                                    *ngFor="let option of newDataDept"
+                                                                    (click)="getFlDept(option)">
+                                                                    {{option.orgUnitDept}}</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="row" style="padding-top: 5px;">
+                                                <div class="col-md-3">
+                                                    <div class="row">
+                                                        <div class="col-md-3">
+                                                            <label style="margin-top:9px;">Batch: </label>
+                                                        </div>
+                                                        <div class="col-md-9">
+                                                            <select name="fltrBatch" id="fltrBatch"
+                                                                class="form-control m-input"
+                                                                formControlName="fltrBatch">
+                                                                <!-- <option value="">All</option> -->
+                                                                <option [value]="item.batch_id"
+                                                                    *ngFor="let item of allbatchInfo">{{item.batch_id}}
+                                                                </option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div class="row">
+                                                        <div class="col-md-4">
+                                                            <label style="margin-top:9px;">Pernr No: </label>
+                                                        </div>
+                                                        <div class="col-md-8">
+                                                            <input [value]="" id="fltrStaffID"
+                                                                class="form-control form-control- m-input" type="search"
+                                                                placeholder="All" formControlName="fltrStaffID">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-5">
+                                                    <div class="row">
+                                                        <div class="col-md-2">
+                                                            <label style="margin-top:9px;">Unit: </label>
+                                                        </div>
+                                                        <div class="col-md-10">
+                                                            <input type="text" formControlName="fltrUnit"
+                                                                autocomplete="off" class="form-control search-input"
+                                                                (keyup)="onNameKeyUpUnit($event)" placeholder="All">
+                                                        </div>
+                                                    </div>
+                                                    <div class="row" *ngIf="selectUnitMult">
+                                                        <div class="col-md-2"></div>
+                                                        <div class="col-md-10">
+                                                            <select name="unit" id="unit" class="form-control m-input"
+                                                                *ngIf="displayNoResult2" (click)="resetUnit()" multiple>
+                                                                <option value="" *ngIf="displayNoResult2"
+                                                                    (click)="resetUnit()">No results</option>
+                                                            </select>
+                                                            <select name="unit" id="unit" class="form-control m-input"
+                                                                *ngIf="!displayNoResult2"
+                                                                multiple>
+                                                                <option [value]="option"
+                                                                    *ngFor="let option of newDataUnit"
+                                                                    (click)="getFlUnit(option)">
+                                                                    {{option.orgUnit}}
+                                                                </option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row" style="padding-top: 5px;">
+                                                <div class="col-md-3">
+                                                    <div class="row">
+                                                        <div class="col-md-3">
+                                                            <label style="margin-top:9px;">Band: </label>
+                                                        </div>
+                                                        <div class="col-md-9"><select name="fltrBand" id="fltrBand"
+                                                                class="form-control m-input" formControlName="fltrBand">
+                                                                <option value="">All</option>
+                                                                <option value="2">2</option>
+                                                                <option value="3">3</option>
+                                                                <option value="4">4</option>
+                                                                <option value="5">5</option>
+                                                                <option value="NS">NS</option>
+                                                                <!-- <option [value]="item.band" *ngFor="let item of bandOptions">Band {{item.band}}</option> -->
+                                                            </select>
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div class="row">
+                                                        <div class="col-md-4">
+                                                            <label style="margin-top:9px;">Post ID: </label>
+                                                        </div>
+                                                        <div class="col-md-8">
+                                                            <input [value]="" id="fltrPostID"
+                                                                class="form-control form-control- m-input" type="search"
+                                                                placeholder="All" formControlName="fltrPostID">
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-5 text-right">
+                                                    <button
+                                                        class="btn m-btn m-btn--gradient-from-primary m-btn--gradient-to-info"
+                                                        type="button"
+                                                        [disabled]="loadingBatch || loadingLob || loadingState || loadingAllBatch || loadingDept || loadingUnit"
+                                                        (click)="submitFilter(1)"
+                                                        style="background: #FF5A00; background-color: #FF5A00; border-color: #FF5A00;">Submit</button>
+                                                    <button
+                                                        class="btn m-btn m-btn--gradient-from-danger m-btn--gradient-to-warning ml-3"
+                                                        type="button" (click)="submitFilter(2)"
+                                                        style="background: darkgrey; background-color: darkgrey; border-color: darkgrey;">Reset</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!--end::Item-->
+                            </div>
+                        </form>
+
+                        <!-- start: no data - 4 n 5 -->
+                        <div class="row" *ngIf="!loading&&displaybutton45">
+                            <div class="col-6"><span style="text-decoration: underline;font-weight:500;">
+                                    Band 4 and Above</span></div>
+                        </div>
+                        <div class="col-lg-12 centred my-auto" *ngIf="!loading2&&pagedItems2.length<1">
+                            <div class="m-demo__preview" style="padding-top:20px">
+                                <div class="m-stack m-stack--ver m-stack--general m-stack--demo">
+                                    <div class="m-stack__item m-stack__item--center m-stack__item--middle">
+
+                                        <span>
+                                            <br>
+                                            {{descEmptyData2}}
+                                            <br><br>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- end: no data - 4 n 5 -->
+
+                        <!-- start: display data - 4 n 5 -->
+                        <div class="row" *ngIf="!loading2&&!displaybutton45&&pagedItems2.length>0">
+                            <div class="col-12"><span style="text-decoration: underline;font-weight:500;">
+                                    Band 4 and Above</span></div>
+                        </div>
+                        <div class="table-responsive" *ngIf="!loading2&&pagedItems2.length>0">
+                            <form [formGroup]="submitForm">
+                                <table class="table table-striped  table-hover">
+                                    <thead class="thead-inverse">
+                                        <tr>
+                                            <th>No</th>
+                                            <th>Position ID</th>
+                                            <th>Position Name</th>
+                                            <!-- <th>Staff ID</th> -->
+                                            <th>Staff Name</th>
+                                            <th>LOB</th>
+                                            <th>Department</th>
+                                            <th>No of Succ.</th>
+                                            <th>Status</th>
+                                            <th>
+                                                <!-- Select All -->
+
+                                            </th>
+                                        </tr>
+                                        <tr>
+                                            <th></th>
+                                            <th>
+                                                <input class="form-control form-control-sm" name="Position_ID"
+                                                    [(ngModel)]="Position_ID" [ngModelOptions]="{standalone: true}">
+                                            </th>
+                                            <th>
+                                                <input class="form-control form-control-sm" name="Position_Name"
+                                                    [(ngModel)]="Position_Name" [ngModelOptions]="{standalone: true}">
+                                            </th>
+                                            <!-- <th>
+                                            <input class="form-control form-control-sm" name="Staff_ID"
+                                                [(ngModel)]="Staff_ID">
+                                        </th> -->
+                                            <th>
+                                                <input class="form-control form-control-sm" name="Staff_Name"
+                                                    [(ngModel)]="Staff_Name" [ngModelOptions]="{standalone: true}">
+                                            </th>
+                                            <th>
+                                                <input class="form-control form-control-sm" name="Lob_Desc"
+                                                    [(ngModel)]="Lob_Desc" [ngModelOptions]="{standalone: true}">
+                                            </th>
+                                            <th>
+                                                <input class="form-control form-control-sm" name="Org_Unit_Department"
+                                                    [(ngModel)]="Org_Unit_Department"
+                                                    [ngModelOptions]="{standalone: true}">
+                                            </th>
+                                            <th></th>
+
+                                            <th>
+                                                <input class="form-control form-control-sm" name="Status"
+                                                    [(ngModel)]="Status" [ngModelOptions]="{standalone: true}">
+                                            </th>
+                                            <th>
+                                                <!-- <input type="checkbox"> -->
+                                            </th>
+
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <!-- if all, data2 -->
+                                        <tr *ngFor="let item of pagedItems2| filter : Position_ID : Position_Name : Staff_Name :
+                                    Lob_Desc : Org_Unit_Department : Status ; let i = index">
+                                            <td>{{(pageSize2 * (pager2.currentPage - 1)) + i + 1 }}</td>
+                                            <td>
+                                                <span>{{item.Position_ID}}</span>
+                                            </td>
+                                            <td>
+                                                <span>{{item.Position_Name}}</span>
+                                            </td>
+                                            <!-- <td>
+                                            <span>{{item.Staff_ID}}</span>
+                                        </td> -->
+                                            <td>
+                                                <span *ngIf="item.Pernr_No==='' || item.Employee_Status===''||
+                                            item.Employee_Status==='Inactive'; else wStaffname">
+                                                    Vacant </span>
+                                                <ng-template #wStaffname>{{item.Staff_Name}}</ng-template>
+                                            </td>
+                                            <td>
+                                                <span>{{item.Lob_Desc}}</span>
+                                            </td>
+                                            <td>
+                                                <span>{{item.Org_Unit_Department}}</span>
+                                            </td>
+                                            <td>
+                                                <span>{{item.NoofSuccessor}}</span>
+                                            </td>
+                                            <td>
+                                                <span><a href="/admin/job/spnomination/{{selBatchVal}}/{{item.Position_ID}}"
+                                                        style="text-decoration: underline;">{{item.Status}}</a></span>
+                                            </td>
+                                            <td *ngIf="admintype === 'HCBD' && item.NoofSuccessor>0 && item.Status==='Nomination'"
+                                                style="text-align: left;vertical-align: top;padding-top: 15px;">
+                                                <input type="checkbox" [value]="item.Position_ID"
+                                                    (change)="onCheckboxChange($event)" />
+                                            </td>
+                                            <td *ngIf="admintype === 'HCBD' && (item.NoofSuccessor<1||item.Status==='Verified'||item.Status==='Calibrated')"
+                                                style="text-align: left;vertical-align: top;padding-top: 15px;">
+                                            </td>
+                                            <td *ngIf="admintype === 'TCM' && item.NoofSuccessor>0 && item.Status!=='Verified'"
+                                                style="text-align: left;vertical-align: top;padding-top: 15px;">
+                                                <input type="checkbox" [value]="item.Position_ID"
+                                                    (change)="onCheckboxChange($event)" />
+                                            </td>
+                                            <td *ngIf="admintype === 'TCM' && (item.NoofSuccessor<1||item.Status==='Verified')"
+                                                style="text-align: left;vertical-align: top;padding-top: 15px;">
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </form>
+                        </div>
+                        <!-- end: display data - 4 n 5 -->
+
+                        <!-- start: paging - 4 n 5 -->
+                        <div class="row">
+                            <div class="col-12">
+                                <nav aria-label="Page navigation example">
+                                    <ul *ngIf="pager2.pages && pager2.pages.length"
+                                        class="pagination justify-content-end">
+                                        <li class="page-item" [ngClass]="{disabled:pager2.currentPage === 1}">
+                                            <button (click)="setPage2(1)" class="page-link" aria-label="Previous">
+                                                <span aria-hidden="true">&laquo;</span>
+                                                <span class="sr-only">First</span>
+                                            </button>
+                                        </li>
+                                        <li class="page-item" [ngClass]="{disabled:pager2.currentPage === 1}">
+                                            <button (click)="setPage2(pager2.currentPage - 1)" class="page-link"
+                                                aria-label="Previous">
+                                                <span aria-hidden="true">&lt;</span>
+                                                <span class="sr-only">Previous</span>
+                                            </button>
+                                        </li>
+                                        <li class="page-item" *ngFor="let page of pager2.pages"
+                                            [ngClass]="{active:pager2.currentPage === page}">
+                                            <button (click)="setPage2(page)" class="page-link">{{page}}</button>
+                                        </li>
+                                        <li class="page-item"
+                                            [ngClass]="{disabled:pager2.currentPage === pager2.totalPages}">
+                                            <button (click)="setPage2(pager2.currentPage + 1)" class="page-link"
+                                                aria-label="Previous">
+                                                <span aria-hidden="true">&gt;</span>
+                                                <span class="sr-only">Next</span>
+                                            </button>
+                                        </li>
+                                        <li class="page-item"
+                                            [ngClass]="{disabled:pager2.currentPage === pager2.totalPages}">
+                                            <button (click)="setPage2(pager2.totalPages)" class="page-link"
+                                                aria-label="Next">
+                                                <span aria-hidden="true">&raquo;</span>
+                                                <span class="sr-only">Last</span>
+                                            </button>
+                                        </li>
+                                    </ul>
+                                </nav>
+                            </div>
+                        </div>
+                        <!-- end: paging - 4 n 5 -->
+
+                        <!-- start: download csv - 4 n 5 -->
+                        <div class="row" *ngIf="!loading2&&pagedItems2.length>0">
+                            <div class="col-12" style="text-align: right; margin-top:20px">
+                                <div class="m-demo__preview m-demo__preview--btn">
+                                    <button *ngIf="admintype === 'HCBD'" class="btn btn-primary"
+                                        (click)="submit(admintype)"
+                                        [disabled]="!submitForm.valid || this.batchInfo[0].displayButton == 0">
+                                        Complete Calibration
+                                    </button>
+                                    <button *ngIf="admintype === 'TCM'" class="btn btn-primary"
+                                        (click)="submit(admintype)" [disabled]="!submitForm.valid">
+                                        Verify
+                                    </button>
+                                    <button href="#" class="btn btn-primary m-btn m-btn--icon" (click)="download2()"
+                                        [disabled]="downloading2">
+                                        <span>
+                                            <i class="la la-download"></i>
+                                            <span>Download</span>
+                                        </span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- end: download csv - 4 n 5 -->
+
+                        <br><br><br>
+
+                        <!-- start: no data - critical -->
+                        <div class="row" *ngIf="!loading&&displaybutton">
+                            <div class="col-6">
+                                <span style="text-decoration: underline;font-weight:500;">
+                                    Critical Position (Band 3 and Below)</span></div>
+                            <div class="col-6 text-right">
+                                <div class="m-demo__preview m-demo__preview--btn">
+                                    <div class="m-demo__preview m-demo__preview--btn">
+                                        <button class="btn m-btn--pill simple-save-btn"
+                                            style="padding:3px;margin:3px;font-size: 11px;" id="create-new-cycle"
+                                            type="button" data-toggle="modal" data-target="#m_modal_advert">
+                                            <i class="flaticon-file-1"></i> Add Position
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-12 centred my-auto" *ngIf="!loading&&displaybutton&&pagedItems.length<1">
+
+                            <div class="m-demo__preview" style="padding-top:20px">
+                                <div class="m-stack m-stack--ver m-stack--general m-stack--demo">
+                                    <div class="m-stack__item m-stack__item--center m-stack__item--middle">
+
+                                        <span>
+                                            <br>
+                                            {{descEmptyData}}
+                                            <br><br>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- end: no data - critical -->
+
+                        <!-- start: display data - critical -->
+                        <div class="row" id="div1" *ngIf="!loading&&!displaybutton&&pagedItems.length>0">
+                            <div class="col-6">
+                                <span style="text-decoration: underline;font-weight:500;">
+                                    Critical Position (Band 3 and Below)</span></div>
+
+                            <div class="col-6 text-right">
+                                <div class="m-demo__preview m-demo__preview--btn">
+
+                                    <button class="btn m-btn--pill simple-save-btn"
+                                        style="padding:3px;margin:3px;font-size: 11px;" id="create-new-cycle"
+                                        type="button" data-toggle="modal" data-target="#m_modal_advert">
+                                        <i class="flaticon-file-1"></i> Add Position
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- <div class="row">
+                        <div class="col-12 alert m-alert m-alert--default" *ngIf="displayerr" role="alert">
+                            <span>Successfully added new Critical Position</span>
+                        </div></div> -->
+
+                        <div class="table-responsive" *ngIf="!loading&&pagedItems.length>0">
+                            <form [formGroup]="submitForm2">
+                                <table class="table table-striped  table-hover">
+                                    <thead class="thead-inverse">
+                                        <tr>
+                                            <th>No</th>
+                                            <th>Position ID</th>
+                                            <th>Position Name</th>
+                                            <!-- <th>Staff ID</th> -->
+                                            <th>Staff Name</th>
+                                            <th>LOB</th>
+                                            <th>Department</th>
+                                            <th>No of Succ.</th>
+                                            <th>Status</th>
+                                            <th></th>
+                                            <th>
+                                                <!-- Select All -->
+                                            </th>
+                                        </tr>
+                                        <tr>
+                                            <th></th>
+                                            <th>
+                                                <input class="form-control form-control-sm" name="cPosition_ID"
+                                                    [(ngModel)]="cPosition_ID" [ngModelOptions]="{standalone: true}">
+                                            </th>
+                                            <th>
+                                                <input class="form-control form-control-sm" name="cPosition_Name"
+                                                    [(ngModel)]="cPosition_Name" [ngModelOptions]="{standalone: true}">
+                                            </th>
+                                            <!-- <th>
+                                                <input class="form-control form-control-sm" name="cStaff_ID"
+                                                    [(ngModel)]="cStaff_ID">
+                                            </th> -->
+                                            <th>
+                                                <input class="form-control form-control-sm" name="cStaff_Name"
+                                                    [(ngModel)]="cStaff_Name" [ngModelOptions]="{standalone: true}">
+                                            </th>
+                                            <th>
+                                                <input class="form-control form-control-sm" name="cLob_Desc"
+                                                    [(ngModel)]="cLob_Desc" [ngModelOptions]="{standalone: true}">
+                                            </th>
+                                            <th>
+                                                <input class="form-control form-control-sm" name="cOrg_Unit_Department"
+                                                    [(ngModel)]="cOrg_Unit_Department"
+                                                    [ngModelOptions]="{standalone: true}">
+                                            </th>
+                                            <th>
+                                            </th>
+                                            <th>
+                                                <input class="form-control form-control-sm" name="cStatus"
+                                                    [(ngModel)]="cStatus" [ngModelOptions]="{standalone: true}">
+                                            </th>
+                                            <th></th>
+                                            <th>
+                                                <!-- <input type="checkbox"> -->
+                                            </th>
+                                        </tr>
+                                    </thead>
+
+                                    <tbody>
+                                        <!-- if all, data2 -->
+                                        <tr
+                                            *ngFor="let item of pagedItems| filterC : cPosition_ID : cPosition_Name: cStaff_ID : cStaff_Name :
+                                                                cLob_Desc : cOrg_Unit_Department : cStatus ; let i = index">
+
+                                            <td>{{(pageSize * (pager.currentPage - 1)) + i + 1 }}</td>
+                                            <td>
+                                                <span>{{item.cPosition_ID}}</span>
+                                            </td>
+
+                                            <td>
+                                                <span>{{item.cPosition_Name}}</span>
+                                            </td>
+                                            <!-- <td>
+                                                <span>{{item.cStaff_ID}}</span>
+                                            </td> -->
+                                            <td>
+                                                <span *ngIf="item.cPernr_No==='' || item.cEmployee_Status===''||
+                                                item.cEmployee_Status==='Inactive'; else wcStaffname">
+                                                    Vacant </span>
+                                                <ng-template #wcStaffname>{{item.cStaff_Name}}</ng-template>
+                                            </td>
+                                            <td>
+                                                <span>{{item.cLob_Desc}}</span>
+                                            </td>
+                                            <td>
+                                                <span>{{item.cOrg_Unit_Department}}</span>
+                                            </td>
+                                            <td>
+                                                <span>{{item.cNoofSuccessor}}</span>
+                                            </td>
+                                            <td>
+                                                <span><a href="/admin/job/spnomination/{{selBatchVal}}/{{item.cPosition_ID}}"
+                                                        style="text-decoration: underline;">{{item.cStatus}}</a></span>
+                                            </td>
+                                            <td style="text-align: right;">
+                                                <a *ngIf="item.cNoofSuccessor<1" class="btn btn-xs"
+                                                    style="padding: 0;margin: 0;color:#4183c4;;" title="Delete"
+                                                    id="delquesweb"
+                                                    (click)="deletePost(item.cPosition_ID,item.cPosition_Name)">
+                                                    <i class="la la-trash"></i>
+                                                </a>
+                                                <button *ngIf="item.cNoofSuccessor<1"
+                                                    [ngClass]="{'disabled':item.cNoofSuccessor>0?true:false}"
+                                                    class="btn btn-xs" style="padding: 0;margin: 0;color:#4183c4;"
+                                                    title="Delete" id="delquesweb2" style="visibility: hidden"
+                                                    (click)="deletePost(item.cPosition_ID,item.cPosition_Name)">
+                                                    <i class="la la-trash"></i>
+                                                </button>
+                                            </td>
+                                            <td *ngIf="admintype === 'HCBD' && item.cNoofSuccessor>0 && item.cStatus==='Nomination'"
+                                                style="text-align: left;vertical-align: top;padding-top: 15px;">
+                                                <input type="checkbox" [value]="item.cPosition_ID"
+                                                    (change)="onCheckboxChange2($event)" />
+                                            </td>
+                                            <td *ngIf="admintype === 'HCBD' && (item.cNoofSuccessor<1||item.cStatus==='Verified'||item.cStatus==='Calibrated')"
+                                                style="text-align: left;vertical-align: top;padding-top: 15px;">
+                                            </td>
+                                            <td *ngIf="admintype === 'TCM' && item.cNoofSuccessor>0 && item.cStatus!=='Verified'"
+                                                style="text-align: left;vertical-align: top;padding-top: 15px;">
+                                                <input type="checkbox" [value]="item.cPosition_ID"
+                                                    (change)="onCheckboxChange2($event)" />
+                                            </td>
+                                            <td *ngIf="admintype === 'TCM' && (item.cNoofSuccessor<1||item.cStatus==='Verified')"
+                                                style="text-align: left;vertical-align: top;padding-top: 15px;">
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </form>
+                            <div></div>
+
+                        </div>
+                        <!-- end: display data - critical -->
+
+                        <!-- start: paging - critical -->
+                        <div class="row">
+                            <div class="col-12">
+                                <nav aria-label="Page navigation example">
+                                    <ul *ngIf="pager.pages && pager.pages.length"
+                                        class="pagination justify-content-end">
+                                        <li class="page-item" [ngClass]="{disabled:pager.currentPage === 1}">
+                                            <button (click)="setPage(1)" class="page-link" aria-label="Previous">
+                                                <span aria-hidden="true">&laquo;</span>
+                                                <span class="sr-only">First</span>
+                                            </button>
+                                        </li>
+                                        <li class="page-item" [ngClass]="{disabled:pager.currentPage === 1}">
+                                            <button (click)="setPage(pager.currentPage - 1)" class="page-link"
+                                                aria-label="Previous">
+                                                <span aria-hidden="true">&lt;</span>
+                                                <span class="sr-only">Previous</span>
+                                            </button>
+                                        </li>
+                                        <li class="page-item" *ngFor="let page of pager.pages"
+                                            [ngClass]="{active:pager.currentPage === page}">
+                                            <button (click)="setPage(page)" class="page-link">{{page}}</button>
+                                        </li>
+                                        <li class="page-item"
+                                            [ngClass]="{disabled:pager.currentPage === pager.totalPages}">
+                                            <button (click)="setPage(pager.currentPage + 1)" class="page-link"
+                                                aria-label="Previous">
+                                                <span aria-hidden="true">&gt;</span>
+                                                <span class="sr-only">Next</span>
+                                            </button>
+                                        </li>
+                                        <li class="page-item"
+                                            [ngClass]="{disabled:pager.currentPage === pager.totalPages}">
+                                            <button (click)="setPage(pager.totalPages)" class="page-link"
+                                                aria-label="Next">
+                                                <span aria-hidden="true">&raquo;</span>
+                                                <span class="sr-only">Last</span>
+                                            </button>
+                                        </li>
+                                    </ul>
+                                </nav>
+                            </div>
+                        </div>
+                        <!-- end: paging - critical -->
+
+                        <!-- start: download csv - critical -->
+                        <div class="row" *ngIf="!loading&&pagedItems.length>0">
+                            <div class="col-12" style="text-align: right; margin-top:20px">
+                                <div class="m-demo__preview m-demo__preview--btn">
+                                    <button *ngIf="admintype === 'HCBD'" class="btn btn-primary"
+                                        (click)="submit2(admintype)"
+                                        [disabled]="!submitForm2.valid || this.batchInfo[0].displayButton == 0">
+                                        Complete Calibration
+                                    </button>
+                                    <button *ngIf="admintype === 'TCM'" class="btn btn-primary"
+                                        (click)="submit2(admintype)" [disabled]="!submitForm2.valid">
+                                        Verify
+                                    </button>
+                                    <button href="#" class="btn btn-primary m-btn m-btn--icon" (click)="download()"
+                                        [disabled]="downloading">
+                                        <span>
+                                            <i class="la la-download"></i>
+                                            <span>Download</span>
+                                        </span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- end: download csv - critical -->
+
+                        <!-- start: add critical Position -->
+                        <div class="modal fade" id="m_modal_advert" tabindex="-1" role="dialog"
+                            aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog modal-lg" role="document">
+                                <form [formGroup]="addNewForm">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalLabel">
+                                                Add New Critical Position
+                                            </h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">
+                                                    &times;
+                                                </span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <div class="col-lg-8" *ngIf="disableDuplicate"
+                                                style="margin-left: 2%!important">
+                                                <span class="m-form__help">
+                                                    <p style="color:red">Fail to add duplicate Position.</p>
+                                                </span>
+                                            </div>
+                                            <div class="form-group">
+                                                <sui-multi-select class="form-control" [options]="options"
+                                                    [isSearchable]="true" #multiSelect [optionFormatter]="formatter"
+                                                    (keyup)="onNameKeyUp($event)"
+                                                    (selectedOptionsChange)="multiSelectedUser($event)"
+                                                    formControlName="juUser" [maxSelected]="2" (focus)="placeholder=''"
+                                                    placeholder="&nbsp;&nbsp;&nbsp;&nbsp;Name or Staff ID or Position ID">
+                                                    <sui-select-option *ngFor="let option of newData; let i=index;"
+                                                        [value]="option" (click)="save(option)"></sui-select-option>
+                                                </sui-multi-select>
+                                            </div>
+                                            <div *ngIf="disable">
+                                                <span style="color:red">Please select max 2 Positions only</span>
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-dismiss="modal"
+                                                (click)="resetForm()">
+                                                Close
+                                            </button>
+                                            <button [disabled]="!addNewForm.valid || disable" type="submit"
+                                                class="btn btn-primary" onclick="$('.modal').modal('hide')"
+                                                (click)="addNewSubmit()">
+                                                Save
+                                            </button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                        <!-- end: add critical Position -->
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--end::Modal APPLICANT INFO -->

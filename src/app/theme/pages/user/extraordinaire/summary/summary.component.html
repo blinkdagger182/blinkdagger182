@@ -1,0 +1,133 @@
+<div>
+    <div class="page-bg extra-bg">
+        <h2 class="head-sub-title">Extraordinaire</h2>
+    </div>
+    <div class="pg-title-div">
+        <h3 class="pg-title">Extraordinaire</h3>
+    </div>
+</div>
+
+<div class="m-content" style="background-color:#FFFFFF; height:100%">
+    <div class="row  justify-content-md-center">
+        <div class="col-lg-11">
+            <!-- LOADING -->
+            <app-user-loading *ngIf="loading"></app-user-loading>
+            <app-u-loading-error *ngIf="errLoading"></app-u-loading-error>
+            <!-- LOADING -->
+
+            <!-- START -->
+            <div class="m-accordion m-accordion--bordered" id="m_accordion_1" role="tablist">
+
+                <!--begin::Pending Approval-->
+                <div class="m-accordion__item" *ngIf="(!loading&&!errLoading)&&displayPendAppr">
+                    <div class="m-accordion__item-head " role="tab" id="m_accor_pend_approval_head"
+                        data-toggle="collapse" href="#m_accor_pend_approval_body" aria-expanded="    false">
+                        <span class="m-accordion__item-mode" style="vertical-align: -9px !important"></span>
+                        <span class="m-accordion__item-title m-accordian__item-mode-title  text-uppercase era-color">
+                            {{hPendApproval}}
+                        </span>
+                        <!-- <span class="m-accordion__item-icon">
+                            <i class="fa {{iPPendApproval}}"></i>
+                        </span> -->
+                        <span class="m-accordion__item-icon">
+                            <img style="width:2.5rem !important" src="../../../../../../assets/img/user/aplicant_icon.svg">
+                        </span>
+                    </div>
+                    <div [class.show] = "true" class="m-accordion__item-body" id="m_accor_pend_approval_body" role="tabpanel"
+                        aria-labelledby="m_accor_pend_approval_head">
+                        <div class="m-accordion__item-content">
+                            <app-u-exor-appr-pending-component></app-u-exor-appr-pending-component>
+                        </div>
+                    </div>
+                </div>
+                <!-- :end pending approval -->
+
+                <!--begin:: Approval History -->
+                <div class="m-accordion__item" *ngIf ="!loading&&!errLoading&&displayHist"> <!--*ngIf="(!loading&&!errLoading)&&displayHist"-->
+                    <div [class.collapsed]="collapseHistory" class="m-accordion__item-head" role="tab" id="m_accor_approval_history_head" data-toggle="collapse"
+                        href="#m_accor_approval_history_body" aria-expanded="    false">
+                        <span class="m-accordion__item-mode" style="vertical-align: -9px !important"></span>
+                        <span class="m-accordion__item-title m-accordian__item-mode-title  text-uppercase era-color">
+                            {{hHistApproval}}
+                        </span>
+                        <!-- <span class="m-accordion__item-icon">
+                            <i class="fa {{iPHistApproval}}"></i>
+                        </span> -->
+                        <span class="m-accordion__item-icon">
+                            <img style="width:2.5rem !important" src="../../../../../../assets/img/user/history_icon.svg">
+                        </span>
+                    </div>
+                    <div [class.collapse]="collapseHistory" class="m-accordion__item-body" id="m_accor_approval_history_body" role="tabpanel"
+                        aria-labelledby="m_accor_approval_history_head">
+                        <div class="m-accordion__item-content">
+                            <app-u-exor-history-component></app-u-exor-history-component>
+                        </div>
+                    </div>
+                </div>
+                <!-- :end Approval History -->
+
+                <!--begin:: Tracking -->
+                <div class="m-accordion__item" *ngIf="(!loading&&!errLoading)&&displayTracking">
+                    <div [class.collapsed]="collapseTracking" class="m-accordion__item-head" role="tab" id="m_accor_tracking_head" data-toggle="collapse"
+                        href="#m_accor_tracking_body" aria-expanded="    false">
+                        <span class="m-accordion__item-mode" style="vertical-align: -9px !important"></span>
+                        <span class="m-accordion__item-title m-accordian__item-mode-title  text-uppercase era-color">
+                            {{hTracking}}
+                        </span>
+                        <!-- <span class="m-accordion__item-icon">
+                            <i class="fa {{iPTracking}}"></i>
+                        </span> -->
+                        <span class="m-accordion__item-icon">
+                            <img style="width:2.5rem !important" src="../../../../../../assets/img/user/tracking_icon.svg">
+                        </span>
+                    </div>
+                    <div [class.collapse]="collapseTracking" class="m-accordion__item-body" id="m_accor_tracking_body" role="tabpanel"
+                        aria-labelledby="m_accor_tracking_head">
+                        <div class="m-accordion__item-content">
+                            <app-u-exor-tracking-component></app-u-exor-tracking-component>
+                        </div>
+                    </div>
+                </div>
+                <!-- :end Tracking -->
+
+                <!--begin:: New -->
+                <div class="m-accordion__item" *ngIf="(!loading&&!errLoading)&&displayNew">
+                    <div [class.collapsed]="collapseCreatePro" class="m-accordion__item-head" role="tab" id="m_accor_new_head" data-toggle="collapse" href="#m_accor_new_body"
+                        aria-expanded="    false">
+                        <span class="m-accordion__item-mode" style="vertical-align: -9px !important"></span>
+                        <span class="m-accordion__item-title m-accordian__item-mode-title  text-uppercase era-color">
+                            <span *ngIf="!toEdit; else toEditTitle" >{{hNew}}</span>
+                            <ng-template #toEditTitle>Edit Adv Info</ng-template>
+                        </span>
+                        <!-- <span class="m-accordion__item-icon">
+                            <i class="fa {{iPNew}}"></i>
+                        </span> -->
+                        <span class="m-accordion__item-icon">
+                            <img style="width:2.5rem !important" src="../../../../../../assets/img/user/project_details_icon.svg">
+                        </span>
+                    </div>
+                    <div [class.collapse]="collapseCreatePro" class="m-accordion__item-body" id="m_accor_new_body" role="tabpanel" aria-labelledby="m_accor_new_head">
+                        <div class="m-accordion__item-content"> 
+                            <app-u-exor-new-component></app-u-exor-new-component>
+                        </div>
+                    </div>
+                </div>
+                <!-- :end New -->
+
+            </div>
+            <!-- END -->
+
+        </div>
+    </div>
+</div>
+
+<style>
+    .m-accordian__item-mode-title {
+        padding-left: 1.5rem;
+    }
+
+    .m-button-advert {
+        float: right;
+        padding-bottom: 1rem;
+    }
+</style>

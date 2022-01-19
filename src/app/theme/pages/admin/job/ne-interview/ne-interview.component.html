@@ -1,0 +1,730 @@
+<notifier-container></notifier-container>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.13/semantic.min.css">
+
+<div class="m-content">
+    <div class="row">
+        <!-- begin::Page loader -->
+        <div class="col-lg-12 centred my-auto">
+            <ng-template #alertError></ng-template>
+        </div>
+
+        <div class="col-lg-12 centred my-auto" *ngIf="loading">
+            <div class="m-section__content">
+                <div class="m-demo" data-code-preview="true" data-code-html="true" data-code-js="false">
+                    <div class="m-demo__preview">
+                        <div class="m-stack m-stack--ver m-stack--general m-stack--demo">
+
+                            <div class="m-stack__item m-stack__item--center m-stack__item--middle">
+                                <span>
+                                    Loading data. Please wait...
+                                </span>
+                                <span>
+                                    <div class="m-loader m-loader--lg m-loader--success" style="width: 30px; display: inline-block;"></div>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+        <!-- end::Page loader -->
+  
+    <div class="row" *ngIf="!loading">
+       <div class="col-lg-12 centred my-auto">
+            <div class="m-portlet m-portlet--rounded">
+                <div class="m-portlet__head m--bg-focus" style="background: #FF5A00!important">
+                    <div class="m-portlet__head-caption">
+                        <div class="m-portlet__head-title">
+                            <h3 class="m-portlet__head-text  m--font-inverse-primary">
+                                NE Promo Interview Session
+                            </h3>
+                        </div>
+                    </div>
+                 </div>
+            </div>
+        </div>
+    </div> 
+ <!--Create Session-->  
+ <div class="row" *ngFor = "let itemSes of applicantDetails">
+    <!-- <div class="col-lg-12" *ngIf="sessionPg"> -->
+        <div class="col-lg-12">
+     <div class="m-portlet m-portlet--rounded">
+       
+        <!-- <div class="m-portlet__body" *ngIf="viewSession && itemSes.start_time == null" id="createSessionView" #createSessionView> -->
+            <div class="m-portlet__body" id="createSessionView" #createSessionView *ngIf = "itemSes.start_time == null" >  
+            <div class="m-section container" style="max-width: 100% !important; text-align: center;">
+              <form class="m-form"[formGroup]="addSessionForm" autocomplete="off">
+                <div class="form-group m-form__group">
+                    <div class="col-md-12">
+                        <div class="row">
+                            <div class="col-md-5">
+                                 <label class="control-label">Ads ID</label>
+                            </div>
+                            <div class="col-md-1">
+                                <label class="control-label">:</label>
+                           </div>
+                            <div class="col-md-6" style="color: blue; text-align: left; font-weight:bold ;">
+                                {{itemSes.adv_id}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                  <div class="form-group m-form__group">
+                      <div class="col-md-12">
+                          <div class="row">
+                              <div class="col-md-5">
+                                   <label class="control-label">Position</label>
+                              </div>
+                              <div class="col-md-1">
+                                <label class="control-label">:</label>
+                              </div>
+                              <div class="col-md-6" style="color: blue; text-align: left; font-weight: bold;">
+                                  {{itemSes.position}}
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+                  <div class="form-group m-form__group">
+                      <div class="col-md-12">
+                          <div class="row">
+                              <div class="col-md-5">
+                                  <label class="control-label col-md-7">Start Date <span style="color: red;">(*)</span></label>
+                              </div>
+                              <div class="col-md-1">
+                                <label class="control-label">:</label>
+                              </div>
+                              <div class="col-md-5">
+                                  <div class="input-group">
+                                    <input type="datetime-local" size="7" class="form-control" required placeholder=""
+                                    formControlName="txtStartDate" #txtStartDate id="txtStartDate">
+                                   </div>
+                              </div>
+                            </div>   
+                      </div>
+                  </div>
+                  <div class="form-group m-form__group">
+                      <div class="col-md-12">
+                          <div class="row">
+                              <div class="col-md-5">
+                                  <label class="control-label col-md-7">End Date <span style="color: red;">(*)</span></label>
+                              </div>
+                              <div class="col-md-1">
+                                <label class="control-label">:</label>
+                              </div>
+                              <div class="col-md-5">
+                                  <div class="input-group">
+                                    <input type="datetime-local" size="7" class="form-control" required placeholder=""
+                                    formControlName="txtEndDate" #txtEndDate id="txtEndDate">
+                                   </div>
+                              </div>
+                          </div>    
+                      </div>
+                  </div>
+                  <div class="form-group m-form__group">
+                      <div class="col-md-12">
+                          <div class="row">
+                              <div class="col-md-5">
+                                  <label class="control-label">Venue Type</label>
+                              </div>
+                              <div class="col-md-1">
+                                <label class="control-label">:</label>
+                              </div>
+                              <div class="col-md-5">
+                                  <div class="input-group">
+                                      <select ng-model= "txtVenueType" class="form-control m-input" required formControlName="txtVenueType" #txtVenueType id="txtVenueType" >
+                                        <option value="" disabled selected>Select Venue Type</option>
+                                        <option value="Physical" >Physical</option>
+                                        <option value="Virtual" >Virtual</option>
+                                      </select>
+                                    </div>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+                  <div class="form-group m-form__group row">
+                      <div class="col-md-12">
+                          <div class="row">
+                              <div class="col-md-5">
+                                  <label class="control-label">Venue &nbsp;<span style="color: red;">(Optional)</span></label>
+                              </div>
+                              <div class="col-md-1">
+                                <label class="control-label">:</label>
+                              </div>
+                              <div class="col-md-5">
+                                <textarea *ngIf= "txtVenueType.value =='Virtual'" type="text" formControlName="txtVenue" class="form-control" rows="6"
+                                    style="overflow-y: scroll;"
+                                    placeholder="Please add venue">
+                                </textarea>
+                                <input *ngIf = "txtVenueType.value == 'Physical'" type="text" maxlength="50" required class="form-control m-input" formControlName="txtVenue" #txtVenue id="txtVenue" placeholder="">
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+                  <br><br>
+                  <div style="text-align:center">
+                      <button type="submit" class="btn m-btn m-btn--gradient-from-primary m-btn--gradient-to-info" 
+                        style="background: #FF5A00; background-color: #FF5A00; border-color: #FF5A00" 
+                        [disabled]="!addSessionForm.valid" (click)="addSession()" (click)="selectedAppName(itemSes.adv_id)" (click)="scrollToViewSession()"> 
+                          Save Session
+                      </button>
+                  </div>
+                </form>
+           </div>   
+        </div>
+        <!-- view session form-->
+        <div class="m-portlet__body" *ngIf="viewSession && itemSes.start_time" id="viewSessionDiv" #viewSessionDiv>
+            <div class="m-section container" style="max-width: 100% !important; text-align: center;">
+              <form class="m-form" autocomplete="off"> 
+                <div class="form-group m-form__group">
+                    <div class="col-md-12">
+                        <div class="row">
+                            <div class="col-md-5" style="text-align: right;">
+                                 <label class="control-label col-md-5">Ads ID</label>
+                            </div>
+                            <div class="col-md-1">
+                                <label class="control-label">:</label>
+                            </div>
+                            <div class="col-md-5" style="color: blue; text-align: left; font-weight: bold;">
+                                {{itemSes.adv_id}}
+                            </div>
+                         </div>
+                    </div>
+                </div>
+                  <div class="form-group m-form__group">
+                      <div class="col-md-12">
+                          <div class="row">
+                              <div class="col-md-5" style="text-align: right;">
+                                   <label class="control-label col-md-5">Position</label>
+                              </div>
+                              <div class="col-md-1">
+                                <label class="control-label">:</label>
+                              </div>
+                              <div class="col-md-5" style="color: blue; text-align: left; font-weight: bold;">
+                                  {{itemSes.position}}
+                              </div>
+                           </div>
+                      </div>
+                  </div>
+                  <div class="form-group m-form__group">
+                      <div class="col-md-12">
+                              <div class="row">
+                                  <div class="col-md-5" style="text-align: right;">
+                                      <label class="control-label col-md-5">Start Date <span style="color: red;">(*)</span></label>
+                                  </div>
+                                  <div class="col-md-1">
+                                    <label class="control-label">:</label>
+                                  </div>
+                                  <div class="col-md-5" style="text-align: left;">
+                                       {{itemSes.start_time | date:'dd MMM yyyy h:mma'}}
+                                   </div>
+                               </div>
+                      </div>
+                  </div>
+                  <div class="form-group m-form__group">
+                      <div class="col-md-12">
+                              <div class="row">
+                                  <div class="col-md-5" style="text-align: right;">
+                                      <label class="control-label col-md-5">End Date <span style="color: red;">(*)</span></label>
+                                  </div>
+                                  <div class="col-md-1">
+                                    <label class="control-label">:</label>
+                                  </div>
+                                  <div class="col-md-5" style="text-align: left;">
+                                   {{itemSes.end_time | date:'dd MMM yyyy h:mma'}}
+                                 </div>
+                               </div>
+                      </div>
+                  </div>
+                  <div class="form-group m-form__group">
+                      <div class="col-md-12">
+                          <div class="row">
+                              <div class="col-md-5" style="text-align: right;">
+                                  <label class="control-label col-md-5">Venue Type</label>
+                              </div>
+                              <div class="col-md-1">
+                                <label class="control-label">:</label>
+                              </div>
+                              <div class="col-md-5" style="text-align: left;">
+                                   {{itemSes.venue_type}}                                         
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+                  <div class="form-group m-form__group">
+                      <div class="col-md-12">
+                          <div class="row">
+                              <div class="col-md-5" style="text-align: right;">
+                                  <label class="control-label col-md-5">Venue &nbsp;<span style="color: red;">(Optional)</span></label>
+                              </div>
+                              <div class="col-md-1">
+                                <label class="control-label">:</label>
+                              </div>
+                              <div class="col-md-5" style="text-align: left;">
+                              <span *ngIf="itemSes.venue_type=='Physical'">{{itemSes.venue}}</span>
+                               <span *ngIf="itemSes.venue_type=='Virtual'" style="font:bold"> 
+                                   <a href="{{itemSes.venue}}" target="_blank">
+                                       Join Virtual Meeting
+                                   </a>
+                               </span>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+                  <br>
+                  <div style="padding-right:30px;" *ngIf="(itemSes.currentStatus == 'Submitted') || (itemSes.currentStatus == 'In Progress')">
+                   <img src="../assets/svg/edit_icon.svg" title="Edit" alt="" style="width:21px;height:21px; position:initial; cursor: pointer;" data-toggle="modal" data-target="#edit_session_modal">
+                  </div>
+               </form>
+           </div>
+      </div>
+        <!--end view session-->
+    </div>
+ </div>
+
+<!--Interview Panel--> 
+ <div *ngIf="viewPanel && itemSes.start_time" class="col-lg-12">
+    <div class="m-portlet m-portlet--rounded">
+        <form [formGroup]="addPanelForm">
+        <div class="m-portlet__head m--bg-focus" style="background: #FF5A00!important">
+            <div class="m-portlet__head-caption">
+                <div class="m-portlet__head-title">
+                    <h3 class="m-portlet__head-text  m--font-inverse-primary">
+                       Interview Panel
+                    </h3>
+                </div>
+            </div>
+        </div>
+        <div class="m-portlet__body">
+            <div class="m-section container" style="max-width: 100% !important;" *ngIf="(itemSes.currentStatus == 'Submitted') || (itemSes.currentStatus == 'In Progress')">
+                <div class="row">
+                    <div class="col-4 col-md-3">
+                        Search by Staff <b>Name</b> or <b>Id</b>:
+                    </div>
+                    <div class="col-md-4">
+                       <input type="text" autocomplete="off" class="form-control search-input" formControlName="txtSearchPanel" placeholder="Search Panel" (keyup)="getPanelDetail(clrPanel.value)" #clrPanel>
+                         <div autocomplete="off" *ngIf="!addPnLoading">
+                             <select name="panelNm" id="panelNm" class="form-control m-input" *ngIf="getPanelDetailData.length > 0 && selectPanelName" multiple>
+                                 <option *ngFor="let item of getPanelDetailData" (click)="getPanel(item)" (click)="clrPanel.value=namePanel">{{item.Staff_No}} - {{item.name}}</option>
+                             </select> 
+                         </div> 
+                     </div>
+                     <div>
+                    <button class="btn" style="background-color: transparent;" 
+                        (click)= "addPanel()" (click)="resetPanelForm()" [disabled]="!addPanelForm.valid">
+                        <img src="../assets/svg/add_btn.svg" title="Add" style="width:21px;height:21px; position:initial;"> 
+                    </button>
+                    </div>
+                </div>     
+            </div>
+                    <br>
+                     <div class="table-responsive">
+                        <table class="table table-striped table-hover">
+                            <thead class="thead-inverse">
+                              <tr> 
+                                <th style="padding-right: 74px;">Panel</th>
+                                <th style="padding-right: 62px;">Position</th>
+                                <th style="padding-left: 55px;">LOB</th>
+                                <th style="padding-left: 50px;">Role</th>
+                                <th *ngIf="(itemSes.currentStatus == 'Submitted') || (itemSes.currentStatus == 'In Progress')" style="padding-left: 48px;">Action</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor = "let itemPanel of panelDetail; let i = index"> 
+                                    <td style="padding-right: 65px;">{{itemPanel.name}}</td>
+                                    <td style="padding-right: 62px;">{{itemPanel.post_Desc}}</td>
+                                    <td style="padding-left: 58px;">{{itemPanel.lob}}</td>
+                                    <td *ngIf= "itemPanel.isReplacement == 0" style="padding-left: 50px;">{{itemPanel.rolename}}</td>
+                                    <td *ngIf= "itemPanel.isReplacement == 1" style="padding-left: 50px;">{{itemPanel.rolename}} (Replacement)</td>
+                                    <td style="padding-left: 45px;">
+                                       
+                                        <span *ngIf="(itemSes.currentStatus == 'Submitted') || (itemSes.currentStatus == 'In Progress')">
+                                            <img src="../assets/svg/edit_icon.svg" *ngIf= "itemPanel.isReplacement == 0" title="Edit" alt="" style="width:21px;height:21px; position:initial; cursor: pointer;" (click)="selectPanel(itemPanel)"> &nbsp;
+                                            <img src="../assets/svg/edit_icon.svg" *ngIf= "itemPanel.isReplacement == 1" title="Cannot Edit Replacement Panel Role" alt="" style="color:red;width:21px;height:21px; position:initial; cursor: not-allowed;" > &nbsp;
+                                            <img src="../assets/svg/delete_btn.svg" *ngIf= "itemPanel.isReplacement == 0 && (itemPanel.rolename == 'Head Interview Panel' || itemPanel.rolename == 'Interview Panel')" title="Delete" alt="" style="width:21px;height:21px; position:initial; cursor: pointer;" (click)="selectInvPanel(itemPanel.panel_id)">
+                                            <img src="../assets/svg/delete_btn.svg" *ngIf= "itemPanel.isReplacement == 1 && (itemPanel.rolename == 'Head Interview Panel' || itemPanel.rolename == 'Interview Panel')" title="Cannot delete Replacement Panel" alt="" style="color:red;width:21px;height:21px; position:initial; cursor: not-allowed;">
+                                        </span>
+                                    </td>
+                                </tr>           
+                            </tbody>  
+                        </table>
+                    </div>
+                </div>
+            <!-- </div> -->
+        </form>
+    </div>
+</div>
+<!-- Button for target modal-->
+<button [hidden]="true" id="editPanelRole" data-toggle="modal" data-target="#edit_panel_modal">x</button>
+<button [hidden]="true" id="editCandidate" data-toggle="modal" data-target="#edit_candidate_modal">x</button>
+<button [hidden]="true" id="saveAsDraftModal" data-toggle="modal" data-target="#save_reminder_modal">x</button>
+ 
+  <!--Candidate Schedule-->
+  <div *ngIf="viewCandidate && itemSes.start_time" class="col-lg-12">
+    <div class="m-portlet m-portlet--rounded">
+        <div class="m-portlet__head m--bg-focus" style="background: #FF5A00!important">
+            <div class="m-portlet__head-caption">
+                <div class="m-portlet__head-title">
+                    <h3 class="m-portlet__head-text  m--font-inverse-primary">
+                     List of Candidates
+                    </h3>
+                </div>
+            </div>
+        </div>
+        <div class="m-portlet__body">
+            <div class="m-section container" style="max-width: 100% !important;">
+              <div class="table-responsive" >
+                    <table class="table table-striped table-hover">
+                        <thead class="thead-inverse">
+                          <tr> 
+                            <th>Staff ID</th>
+                            <th>Name</th>
+                            <th style="padding-right: 72px;">Position</th>
+                            <th style="padding-right: 77px;">Date&Time</th>
+                            <th *ngIf="(itemSes.currentStatus == 'Submitted') || (itemSes.currentStatus == 'In Progress')" style="padding-right: 78px;">Action</th>
+                            <th *ngIf="(itemSes.currentStatus == 'Submitted') || (itemSes.currentStatus == 'In Progress')" style="padding-right: 80px; text-align: center;">Attendance</th>
+                          </tr>
+                        </thead>
+                            <tbody>
+                                <tr *ngFor="let itemCan of candidateDetail"> 
+                                  <td style="padding-right: 78px;">{{itemCan.Staff_No}}</td>
+                                  <td style="padding-right: 76px;">{{itemCan.Name}}</td>
+                                  <td style="padding-right: 74px;">{{itemCan.post_desc}}</td>
+                                  <td style="padding-right: 72px;">  
+                                      {{itemCan.interviewDate | date:'dd MMM yyyy h:mma'}}</td>
+                                  <td *ngIf="(itemSes.currentStatus == 'Submitted') || (itemSes.currentStatus == 'In Progress')" style="padding-right: 66px;"><img src="../assets/svg/edit_icon.svg" title="Edit" alt="" style="width:21px;height:21px; position:initial; cursor: pointer;" data-dismiss="modal"(click)="selectCandidate(itemCan)"></td>
+                                  <td style="padding: 5px;"> 
+                                    <span *ngIf="(itemSes.currentStatus == 'Submitted') || (itemSes.currentStatus == 'In Progress')">
+                                        <button *ngIf= "itemCan.isActive == null || itemCan.isActive == 1" class="btn m-btn m-btn--gradient-from-success m-btn--gradient-to-success">
+                                            Attend
+                                        </button>
+                                        <button *ngIf= "itemCan.isActive == null || itemCan.isActive == 1" class="btn btn-outline-danger" style= "color: rgb(182, 179, 179);" type="button" (click)="candidateAttend(itemCan.applicantId)">
+                                           Absent
+                                        </button>  
+                                         <button *ngIf= "itemCan.isActive == 0" class="btn btn-outline-success" style= "color: rgb(182, 179, 179);" type="button" (click)="candidateAttend(itemCan.applicantId)">
+                                            Attend
+                                        </button>
+                                        <button *ngIf= "itemCan.isActive == 0" class="btn m-btn m-btn--gradient-from-danger m-btn--gradient-to-danger">
+                                            Absent
+                                        </button>
+                                    </span> 
+                                   </td>
+                               </tr>
+                            </tbody>  
+                    </table>
+               </div>
+            </div>
+          </div>
+            <div class="col-md-12 text-right">
+                <button class="btn m-btn m-btn--gradient-from-danger m-btn--gradient-to-warning ml-3" type="button" 
+                *ngIf="(itemSes.currentStatus == 'Submitted') || (itemSes.currentStatus == 'In Progress')"
+                    (click)="saveDraft()" style="background: darkgrey; background-color: darkgrey; border-color: darkgrey;">Save Draft
+                </button>
+                <button class="btn m-btn m-btn--gradient-from-primary m-btn--gradient-to-info" *ngIf="itemSes.currentStatus == 'In Progress'" type="button" 
+                    (click)="submitToHR()"
+                    style="background: #FF5A00; background-color: #FF5A00; border-color: #FF5A00;">Submit
+                </button>
+                <button class="btn m-btn m-btn--gradient-from-primary m-btn--gradient-to-info" *ngIf="itemSes.currentStatus == 'Submitted'" type="button" 
+                    (click)="submitToHR()" style="background: #FF5A00; background-color: #FF5A00; border-color: #FF5A00;">Update
+                </button>
+                <label class=" col-form-label label-data" *ngIf ="itemSes.currentStatus == 'Submitted'"
+                    style="font-size: 1.0rem;color: #FF7F24; border-color:#FF7F24;">
+                    <button type="button" class="btn m-btn--pill btn-outline-warning" (click)="downloadReport()" [disabled]="downloadAll">                                           
+                        <span class="fa fa-download"> Download</span>
+                    </button>				
+                </label>
+            </div>
+            <br>
+        </div>
+    </div>
+</div>
+
+<!-- START: Edit Session Dialog -->
+<div class="modal fade show" #view_1 id="edit_session_modal" role="dialog" aria-labelledby="editSessionTitle" style="display: none;" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document" *ngFor = "let itemEd of applicantDetails">
+        <div class="modal-content dialog-style">	
+            <div class="modal-body">
+                <div class="modal-header" style="padding:20px !important">
+                    <h5 class="modal-title">Edit Session</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">
+                            ×
+                        </span>
+                    </button>
+                </div>
+                <br>
+                <form [formGroup]="editSessionForm"> 
+                    <div class="form-group">
+                        <div class="col-md-12">
+                            <div class="row">
+                                <div class="col-md-5" style="text-align: right;">
+                                     <label class="control-label col-md-5">Position:</label>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="input-group">
+                                        {{itemEd.position}}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-12">
+                            <div class="row">
+                                <div class="col-md-5" style="text-align: right;">
+                                    <label class="control-label col-md-5">Start Date:</label>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="input-group">
+                                        <input type="datetime-local" [ngModel]="itemEd.start_time | date:'yyyy-MM-ddTHH:mm'" size="16" class="form-control" required formControlName="editStartDate" id="editStartDate">
+                                    </div> 
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                   
+                    <div class="form-group">
+                        <div class="col-md-12">
+                            <div class="row">
+                                <div class="col-md-5" style="text-align: right;">
+                                    <label class="control-label col-md-5">End Date:</label>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="input-group">
+                                        <input type="datetime-local" [ngModel]= "itemEd.end_time| date:'yyyy-MM-ddTHH:mm'" size="16" class="form-control m-input" required formControlName="editEndDate" #editEndDate id="editEndDate">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-12">
+                            <div class="row">
+                                <div class="col-md-5" style="text-align: right;">
+                                    <label class="control-label col-md-5">Venue Type:</label>
+                                </div>
+                                <div class="col-md-6">
+                                    <select [ngModel]= "itemEd.venue_type" class="form-control m-input" formControlName="editVenueType" #editVenueType id="editVenueType" >
+                                        <option value="" disabled selected>Select Venue Type</option>
+                                        <option value="Physical" >Physical</option>
+                                        <option value="Virtual" >Virtual</option>
+                                    </select>
+                                  </div>
+                             </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-12">
+                            <div class="row">
+                                <div class="col-md-5" style="text-align: right;">
+                                    <label class="control-label col-md-5">Venue:</label>
+                                </div>
+                                <div class="col-md-6">
+                                     <span>
+                                        <textarea *ngIf= "editVenueType.value =='Virtual'" formControlName="editVenue" class="form-control" value="{{itemEd.venue}}" rows="5" required 
+                                        style="overflow-y: scroll;"
+                                        placeholder="Please add venue">
+                                        </textarea>
+                                        <input *ngIf = "editVenueType.value == 'Physical'" type="text" value="{{itemEd.venue}}" maxlength="50" required class="form-control m-input" formControlName="editVenue" #editVenue id="editVenue" placeholder="">
+                                     </span>
+                                  
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                 
+                    <p style="visibility: hidden;">.</p>
+
+                    <div style="text-align: right;">
+                        <button data-dismiss="modal" class="btn m-btn m-btn--gradient-from-danger m-btn--gradient-to-warning" style="background: darkgrey; background-color: darkgrey; border-color: darkgrey; cursor: pointer;">
+                            Cancel
+                        </button>
+                        <button class="btn m-btn m-btn--gradient-from-primary m-btn--gradient-to-info" style="background: #FF5A00; background-color: #FF5A00; border-color: #FF5A00; cursor: pointer;" onclick="$('.modal').modal('hide')" (click)="editSession()">
+                            Update
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+     </div>
+</div>
+<!-- END: Edit Session Dialog -->
+
+<!-- START: Edit Panel Dialog -->
+    <div class="modal fade show" #edit_panel_modal id="edit_panel_modal" role="dialog" aria-labelledby="editPanelTitle" style="display: none;" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            
+            <div class="modal-content dialog-style">
+                <div class="modal-header" style="padding:20px !important">
+                    <h5 class="modal-title">Edit Panel's Role</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">
+                            ×
+                        </span>
+                    </button>
+                </div>	
+                <br>	
+                <div class="modal-body">
+                    <form [formGroup]="editPanelForm"> 
+                        <div class="form-group">
+                            <div class="col-md-15">
+                                <div class="row">
+                                    <div class="col-md-4" style="text-align: right;">
+                                         <label class="control-label col-md-7">Name:</label>
+                                    </div>
+                                    <div class="col-md-7">
+                                        <div class="input-group">
+                                            {{selectNamePn}}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-15">
+                                <div class="row">
+                                    <div class="col-md-4" style="text-align: right;">
+                                        <label class="control-label col-md-7">Position:</label>
+                                    </div>
+                                    <div class="col-md-7">
+                                        {{selectPosPn}}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                                           
+                        <div class="form-group">
+                            <div class="col-md-15">
+                                <div class="row">
+                                    <div class="col-md-4" style="text-align: right;">
+                                        <label class="control-label col-md-7">Lob:</label>
+                                    </div>
+                                    <div class="col-md-7">
+                                       {{selectLobPn}}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-15">
+                                <div class="row">
+                                    <div class="col-md-4" style="text-align: right;">
+                                        <label class="control-label col-md-7">Role:</label>
+                                    </div>
+                                    <div class="col-md-7">
+                                        <select [ngModel]= "selectRolePn" class="form-control m-input" formControlName="editPnRole" #editPnRole id="editPnRole" >
+                                            <option value="" disabled selected>Select Role</option>
+                                            <option *ngFor="let itemRole of panelRoleType" [value]="itemRole">{{itemRole}}
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                     
+                        <p style="visibility: hidden;">.</p>
+    
+                        <div style="text-align: right;">
+                            <button data-dismiss="modal" class="btn m-btn m-btn--gradient-from-danger m-btn--gradient-to-warning" style="background: darkgrey; background-color: darkgrey; border-color: darkgrey;">
+                                Cancel
+                            </button>
+                            <button class="btn m-btn m-btn--gradient-from-primary m-btn--gradient-to-info" style="background: #FF5A00; background-color: #FF5A00; border-color: #FF5A00;" onclick="$('.modal').modal('hide')" (click)="editPanel()">
+                                Update
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- END: Edit Panel Dialog -->
+
+    <!-- START: Edit Candidate Dialog -->
+    <div class="modal fade show" #edit_candidate_modal id="edit_candidate_modal" role="dialog" aria-labelledby="editCandidateTitle" style="display: none;" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            
+            <div class="modal-content dialog-style">
+                <div class="modal-header" style="padding:20px !important">
+                    <h5 class="modal-title">Edit Candidate's Date & Time</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">
+                            ×
+                        </span>
+                    </button>
+                </div>	
+                <br>
+                <div class="modal-body">
+                    <form [formGroup]="editCandidateForm"> 
+                        <div class="form-group">
+                            <div class="col-md-12">
+                                <div class="row">
+                                    <div class="col-md-5" style="text-align: right;">
+                                         <label class="control-label col-md-7">Staff Id:</label>
+                                    </div>
+                                    <div class="col-md-7">
+                                        <div class="input-group">
+                                            {{selectCnId}}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-12">
+                                <div class="row">
+                                    <div class="col-md-5" style="text-align: right;">
+                                        <label class="control-label col-md-7">Name :</label>
+                                    </div>
+                                    <div class="col-md-7">
+                                        {{selectCnName}}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                                           
+                        <div class="form-group">
+                            <div class="col-md-12">
+                                <div class="row">
+                                    <div class="col-md-5" style="text-align: right;">
+                                        <label class="control-label col-md-7">Position :</label>
+                                    </div>
+                                    <div class="col-md-5">
+                                       {{selectCnPos}}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-12">
+                                <div class="row">
+                                    <div class="col-md-5" style="text-align: right;">
+                                        <label class="control-label col-md-7"> Date and Time :</label>
+                                    </div>
+                                    <div class="col-md-5">
+                                        <input type="datetime-local" [ngModel]="selectIntDate | date:'yyyy-MM-ddTHH:mm'" size="16" class="form-control" required formControlName="editCnDate" #editCnDate id="editCnDate" >
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                     
+                        <p style="visibility: hidden;">.</p>
+    
+                        <div style="text-align: right;">
+                            <button data-dismiss="modal" class="btn m-btn m-btn--gradient-from-danger m-btn--gradient-to-warning" style="background: darkgrey; background-color: darkgrey; border-color: darkgrey;">
+                                Cancel
+                            </button>
+                            <button class="btn m-btn m-btn--gradient-from-primary m-btn--gradient-to-info" style="background: #FF5A00; background-color: #FF5A00; border-color: #FF5A00;" onclick="$('.modal').modal('hide')" (click)="editCandidate()">
+                                Update
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- END: Edit Candidate Dialog -->
+  
+</div>
+
+
+
+ 

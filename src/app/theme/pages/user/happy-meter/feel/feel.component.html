@@ -1,0 +1,86 @@
+<div>
+    <div class="page-bg happy-bg">
+        <h2 class="head-sub-title">Happy Meter</h2>
+    </div>
+    <div class="pg-title-div">
+        <h3 class="pg-title">HAPPY METER</h3>
+    </div>
+</div>
+
+<div class="text-center"> 
+    <div class="row pt-0">
+        <div class="col-sm-12">
+            <br>
+            <br>
+            <div >
+                <div class="feel_today feel_today_400">HOW ARE YOU <span class="feel_today_500">FEELING</span> NOW?</div>
+                <div class="selectOne"><span style="border-bottom: 1px black solid;">Today, {{todayDate | date:'dd MMMM, hh:mm a'}}</span> </div>
+            </div>
+
+            <div class="feel_icons row" style="padding-top:2em !important">
+                <div class="col20 grow">
+                    <div class="smile_icon v_happy" (click)="feelSelected(1)">
+                        
+                        <div class="img-line">
+                            <img class="emoji_width" src="/assets/app/media/img/emoji/v_hpy.svg">
+                        </div>
+
+                        <div class="feel_text">
+                            Very Happy 
+                        </div>
+                    </div>
+                </div>
+                <div class="col20 grow">
+                    <div class="smile_icon happy" (click)="feelSelected(2)">
+
+                        <div class="img-line">
+                            <img class="emoji_width" src="/assets/app/media/img/emoji/hpy.svg">
+                        </div>
+
+                        <span class="feel_text">
+                            Happy 
+                        </span>
+                    </div>
+                </div>
+                <div class="col20 grow">
+                    <div class="smile_icon neutral" (click)="feelSelected(3)">
+
+                        <div class="img-line">
+                            <img class="emoji_width" src="/assets/app/media/img/emoji/neutral.svg">
+                        </div>
+
+                        <span class="feel_text">
+                            Neutral
+                        </span>   
+                    </div>
+                </div>
+                <div class="col20 grow">
+                    <div class="smile_icon upset" (click)="feelSelected(4)">
+
+                        <div class="img-line">
+                            <img class="emoji_width" src="/assets/app/media/img/emoji/upset.svg">
+                        </div>
+
+                        <span class="feel_text">
+                            Upset
+                        </span>
+                    </div>
+                </div>
+                <div class="col20 grow">
+                    <div class="smile_icon v_upset" (click)="feelSelected(5)">
+
+                        <div class="img-line">
+                            <img class="emoji_width" src="/assets/app/media/img/emoji/v_upset.svg">
+                        </div>
+
+                        <span class="feel_text">
+                            Very Upset
+                        </span>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        
+    </div>
+</div>

@@ -1,0 +1,54 @@
+
+.lang-radio.m-radio--success.m-radio--solid > input:checked ~ span {
+    background: #0FC2D0;
+}
+
+@media (min-width: 1025px) {
+    .addPadding {
+        padding-top: 70px !important;
+    }
+}
+
+@media (max-width: 1024px) {
+    .addPadding {
+        transition: padding-top;
+        padding-top: 60px !important;
+    }
+}
+
+.m-content {
+    padding: 30px 30px;
+}
+@media (max-width: 1024px) {
+    .m-content {
+        padding: 20px 20px;
+    }
+}
+
+.pg-title-div {
+    background-color: #11AFBE;
+}
+.head-sub-title {
+    position: absolute;
+    bottom: 3rem;
+    right: 6rem;
+    color: white;
+    font-size: 3rem;
+    text-shadow: 2px 2px 5px #000000ba;
+}
+.pg-title {
+    text-align: center;
+    font-size: 1.5rem;
+    padding: 10px;
+    color: white;
+    margin: 0;
+}
+
+@media (max-width: 992px) {
+    .page-bg {
+        display: none;
+    }
+    .pg-title-div {
+        padding-top: 70px;
+    }
+}

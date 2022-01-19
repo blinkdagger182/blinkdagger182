@@ -1,0 +1,20 @@
+.era_exor_new_head-label{
+    color:#FFFFFF;background-color:#0FC2D0;border-radius:.55rem!important 
+}
+.era_exor_new_portlet{
+    background-color:#eaeaea; 
+        border-radius:.75rem!important 
+}
+.era_exor_new_portlet_body_moveup{
+    margin-top:-50px;
+}
+.era_new_readonly_white{
+    background-color: #FFFFFF
+}
+.era_new_bg_grey{
+    background-color:#eaeaea;
+}
+
+.errMsg{
+    color:rgb(165, 69, 69);
+}

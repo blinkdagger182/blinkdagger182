@@ -1,0 +1,80 @@
+.idp-bg {
+    background-image: url(../../../../../assets/img/user/sea-portal/bg-idp.png) !important; 
+    position: relative;
+    height: 20rem; 
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.font-bold {
+    font-weight: bold;
+}
+
+button:disabled {
+    cursor: not-allowed;
+    pointer-events: all !important;
+    background-color: #848585;
+}
+
+.card-bs4 {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    word-wrap: break-word;
+    background-color: #fff;
+    background-clip: border-box;
+    border: 1px solid rgba(0, 0, 0, 0.125);
+    border-radius: 0.25rem;
+}
+
+@media print {
+    print-section {
+         width: 2480px;
+         height: 3508px;
+            margin: 30mm 45mm 30mm 45mm; 
+        /* change the margins as you want them to be. */
+        
+   } 
+   
+    .table-print-a4 {
+        table-layout: fixed;
+        width: 2480px;
+        height: 3508px;
+        page-break-inside: avoid;
+    }
+    .letter_footer {
+        position: fixed; 
+        bottom: 0;
+    }
+
+}
+
+.logoHedaerTxt {
+    color: #00008B;
+    font-weight: bold;
+}
+
+.div-table-print {
+    border: 1px;
+    border-style: solid;
+    padding: 10px;
+}
+
+.footer-text {
+    font-size: x-small;
+}
+
+.col-label{
+    width: 20%;    
+}
+
+.col-label-val{
+    width: 80%;    
+}
+
+.nopad tr td {
+    padding-right: 0px !important;
+    padding-left: 0px !important;
+}
+

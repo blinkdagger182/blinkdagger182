@@ -1,0 +1,222 @@
+.hideEl {
+    display: none !important;
+}
+
+.adjust_arrow_notification{
+    color: #fd5806 !important; 
+    right:auto !important;
+}
+
+.adjust_arrow_user_icon{
+    color: #fd5806 !important;
+    right: 8px !important;
+}
+
+.logo-center{
+    text-align: center !important;
+}
+.m-timeline-3__item.m-timeline-3__item--info:before {
+    background: #b2b3c9;
+}
+.unReadNoti:before{
+    background: #fd5806 !important;
+}
+
+.unReadNoti{
+    background: #bdc3d438 !important;
+}
+
+.appr-modal{
+    /*font-family: 'helvetica-neue' !important;*/
+    font-family: Lato !important;
+}
+
+.noti_toggle .fa-bell{
+    /*color: white !important;*/
+    font-size:26px; 
+    padding-top:20px;
+    padding-bottom:20px
+}
+
+.noti_toggle .new_notification_icon{
+    font-family: Lato !important;
+    font-size:12px !important; 
+    color:white !important; 
+    height:50px !important; 
+    margin-top:-10px !important; 
+    padding-left: 4px !important;
+    /*background-color:#fd5806 !important;*/
+}
+
+.noti_vav_tab .nav-link.active {
+    border-color: #fff #fff #716aca #fff  !important;
+}
+
+.coming-soon{
+    min-height: 15px !important;
+    color: white !important;
+    margin-top: -16px !important;
+    margin-left: -3px !important;
+    line-height: 13px !important;
+}
+
+.see-all{
+    text-align: center;
+    font-family: Lato !important;
+    font-size: 1.2em;
+    font-weight: 500;
+    color: #6f65e7;
+}
+
+.noti_list{
+    z-index: 101!important;
+}
+
+/* .m-brand {
+    width: 170px !important;
+} */
+
+/* .m-topbar {
+    float: left !important;
+} */
+
+.m-topbar .m-topbar__nav.m-nav {
+    margin: 0 !important;
+}
+
+.m-topbar .m-topbar__nav.m-nav > .m-nav__item {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+}
+
+.nav-link {
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.pointer {
+    cursor: pointer;
+}
+
+.activeNav {
+    font-weight: 800;
+}
+
+/* Start: New Header Style */
+.hd-bg-trans {
+    background-color: #00000059 !important;
+}
+.hd-bg-default {
+    background-color: #f8f9fa !important;
+}
+.routeActive {
+    border-bottom: 3px solid #05BACE;
+}
+.nav-link-styles {
+    color: white !important;
+}
+.nameColorDf {
+    color: black;
+}
+.nameColorCh {
+    color: white;
+}
+
+.nav-item-margin {
+    margin: 0 12px;
+}
+
+@media (max-width: 992px) {
+    .hd-bg-color {
+        background-color: #f8f9fa !important;
+    }
+    .bx-shadow {
+        box-shadow: 3px 3px 20px #80808094;
+    }
+    .userNameColor {
+        color: black;
+    }
+    .nav-link-styles {
+        color: black !important;
+    }
+    .nameColorCh {
+        color: black;
+    }
+}
+@media (min-width: 1025px) {
+    
+}
+
+@media (max-width: 1024px) {
+    .m-header--fixed-mobile .m-topbar {
+        margin-top: 0;
+        top: -70px;
+    }
+}
+
+
+
+@media (max-width: 1024px) and (min-width: 769px){
+    .noti_toggle .fa-bell{
+        color: #FF0000 !important;
+        
+    }
+    .m-topbar__username{
+        color: #fd5806 !important;
+    }
+    .noti_toggle .new_notification_icon{ 
+        color:#fd5806 !important; 
+        background-color:white !important;
+    }
+    .user_details_wrapper {
+        margin-left: -9px !important;
+    }
+
+    .logo-center{
+        text-align: left !important;
+    }
+
+}
+
+@media (max-width: 991px) {
+    .navbar-text {
+        width: 100%;
+        text-align: center;
+    }
+
+    .nav-link {
+        text-align: center;
+    }
+}
+
+@media (max-width: 768px){
+    .logo-center{
+        text-align: left !important;
+    }
+
+    .noti_toggle .fa-bell{
+        color: #FF0000 !important;
+    }
+    .user_details_wrapper {
+        margin-left: -9px !important;
+    }
+
+    .m-topbar__username{
+        width: 100%;
+        padding-left: 0px;
+        display: none;
+    }
+
+    .noti_toggle .new_notification_icon{ 
+        color:#fd5806 !important; 
+        background-color:white !important;
+    }
+
+    .noti_list{
+        z-index: 9999!important;
+    }
+}
+.disable-asidebar-pad {
+    padding-left: 0%!important;
+}
+

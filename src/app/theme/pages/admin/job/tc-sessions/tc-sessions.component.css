@@ -1,0 +1,132 @@
+// component css goes here
+.info-btn {
+    width: 20px !important;
+    height: 20px !important;
+}
+
+.idp_head-label{
+    color:#FFFFFF;background-color:#FC5806;border-radius:.55rem!important 
+}
+.idp_portlet{
+    background-color:#f2f3f8; 
+        border-radius:.75rem!important 
+}
+.idp_portlet_body_moveup{
+    margin-top:-50px;
+}
+.simple-save-btn {
+    color: #fc5806 !important;
+    border-color: #fc5806 !important;
+    background-color: #FFFFFF !important;
+}
+.btn-submitting {
+    color: #ffffff !important;
+    border-color: #fc5806 !important;
+    background-color: #fc5806 !important;
+}
+.savebtn-top {
+    position: relative;
+    top: 3rem;
+}
+
+.simple-save-btn:hover {
+    color: #FFFFFF !important;
+    background-color: #fc5806 !important;
+}
+
+.submit-btn {
+    color: #ffffff !important;
+    border-color: #fc5806 !important;
+    background-color: #fc5806 !important;
+}
+
+.portlet-item-head {
+    position: relative;
+    top: -2rem;
+    padding: 0 !important;
+}
+.portlet-item-body {
+    background: white;
+    margin-top: -1rem;
+}
+.add-item-btn {
+    color: #fc5806 !important;
+    border-color: #fc5806 !important;
+    background-color: #FFFFFF !important;
+}
+.add-item-btn:hover {
+    color: #FFFFFF !important;
+    background-color: #fc5806 !important;
+}
+.add-modal-btn {
+    color: #FFFFFF !important;
+    border-color: #fc5806ed !important;
+    background-color: #fc5806ed !important;
+}
+.add-modal-btn:hover {
+    color: #FFFFFF !important;
+    border-color: #fc5806 !important;
+    background-color: #fc5806 !important;
+}
+.textarea-msg {
+    font-size: 1rem !important;
+    color: #575962d6 !important;
+    font-weight: 400 !important;
+}
+
+.go-form-btn {
+    background-color: #fc5806db !important;
+    color: #FFFFFF !important;
+    border-color: #fc5806db !important;
+    font-size: 1.3rem !important;
+}
+.go-form-btn:hover {
+    background: #fc5806 !important;
+    color: #FFFFFF !important;
+    border-color: #fc5806 !important;
+}
+.ngx-charts {
+    width: 100% !important;
+}
+
+.m-accordion .m-accordion__item--info .m-accordion__item-head.collapsed {
+    background-color: #fb7f40 !important;
+}
+.m-accordion .m-accordion__item--info {
+    border: 1px solid #fb7f40 !important;
+}
+.m-accordion .m-accordion__item--info .m-accordion__item-head, .m-accordion .m-accordion__item--info .m-accordion__item-head:hover {
+    background-color: #fc7029 !important;
+}
+
+.m-wizard.m-wizard--2.m-wizard--success .m-wizard__head .m-wizard__steps 
+.m-wizard__step.m-wizard__step--current .m-wizard__step-number > span {
+    background-color: #fd5806 !important; 
+}
+.step-number {
+    font-size: 18px;
+    font-weight: 900;
+    color: white;
+}
+.label-title {
+    font-size: 1.2rem;
+}
+.label-data {
+    font-size: 1.2rem;
+    font-weight: 500;
+}
+.m-wizard.m-wizard--2 .m-wizard__head {
+    margin: 3rem 0 0rem 0;
+    padding: 0 0rem;
+}
+
+.chart-legend div {
+    width: 250px !important;
+}
+
+@media (max-width: 1024px) {
+    .savebtn-top {
+        top: 1rem !important;
+        float: right;
+    }   
+}

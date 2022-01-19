@@ -1,0 +1,281 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.13/semantic.min.css">
+
+<!-- START: Subheader -->
+<div class="m-subheader" appunwraptag="">
+    <div class="d-flex align-items-center">
+        <div class="mr-auto">
+            <h3 class="m-subheader__title m-subheader__title--separator" *ngIf="!canEditPage">
+                {{title1}} - Add
+            </h3>
+            <h3 class="m-subheader__title m-subheader__title--separator" *ngIf="canEditPage && typeIDPBatchAct == 'edit'">
+                {{title1}} - Edit
+            </h3>
+            <ul class="m-subheader__breadcrumbs m-nav m-nav--inline">
+                <li class="m-nav__item m-nav__item--home">
+                    <a routerLink="/admin/index" class="m-nav__link m-nav__link--icon">
+                        <i class="m-nav__link-icon la la-home"></i>
+                    </a>
+                </li>
+                <!-- <li class="m-nav__separator">
+                    -
+                </li>-->
+                <li class="m-nav__item">
+                    <a href="" class="m-nav__link">
+                        <span class="m-nav__link-text">
+                            <!-- Position -->
+                        </span>
+                    </a>
+                </li>
+                <!-- <li class="m-nav__separator">
+                        -
+                    </li> -->
+                <li class="m-nav__item">
+                    <a href="" class="m-nav__link">
+                        <span class="m-nav__link-text">
+                            <!-- # {{posId2}} -->
+                        </span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <div>
+            <div class="m-dropdown m-dropdown--inline m-dropdown--arrow m-dropdown--align-right m-dropdown--align-push"
+                m-dropdown-toggle="hover" aria-expanded="true">
+            </div>
+        </div>
+    </div>
+</div>
+<div class="m-content">
+  <div class="row">
+      <!-- begin::Page loader -->
+      <div class="col-lg-12 centred my-auto">
+          <ng-template #alertError></ng-template>
+      </div>
+
+<div class="col-lg-12" *ngIf="!loading">
+  <!--begin::Portlet-->
+  <div class="m-portlet m-portlet--full-height">
+      <!--begin::Section-->
+      <div class="m-accordion m-accordion--bordered" id="m_accordion_1" role="tablist">
+          <!--begin::Item:info-->
+          <div class="m-accordion__item"><!-- *ngIf="!canEditPage" -->
+              <div class="m-accordion__item-head" role="tab" id="m_accordion_1_item_1_head" data-toggle="collapse"
+                  href="#m_accordion_1_item_1_body" aria-expanded="    false">
+                  <span class="m-accordion__item-mode"></span>
+                  <span class="m-accordion__item-title m-accordian__item-mode-title">
+                      {{tab1Title}}
+                  </span>
+                  <span class="m-accordion__item-icon">
+                      <i class="fa flaticon-notes"></i>
+                  </span>
+              </div>
+              <div class="m-accordion__item-body show" id="m_accordion_1_item_1_body mb-5" role="tabpanel"
+                  aria-labelledby="m_accordion_1_item_1_head">
+                  <div class="m-accordion__item-content">
+                    <div class="col-12" class="alert m-alert m-alert--default "
+                    role="alert">
+                    <strong>{{updPorposeMsg}}</strong>
+                    </div>
+                      <!-- start: BATCH INFO -->
+
+                      <!-- <form [formGroup]="updPurposeForm" > -->
+                      <form class="m-form" #jobInfo [formGroup]="IdpBatchInfoForm" (ngSubmit)="onIdpBatchInfoFormSubmit()" autocomplete="off">
+                          <table class="table table-bordered">
+                              <tr *ngIf="canEditPage && typeIDPBatchAct == 'edit'">
+                                <td style="width: 30%">
+                                    IDP Batch ID
+                                </td>
+                                <td>
+                                    <div class="form-group m-form__group row">
+                                        <div class="col-lg-9 col-md-9 col-sm-12">
+                                            {{data[0]?.idp_id}} <input type="hidden" formControlName="infoIdpId" required>
+                                        </div>
+                                    </div>
+                                </td>
+                              </tr>
+                              <tr>
+                                  <td style="width: 30%">
+                                      IDP Year 
+                                  </td>
+                                  <td>
+                                      <div class="form-group m-form__group row">
+                                          <div class="col-lg-9 col-md-9 col-sm-12">
+                                              <input required class="form-control m-input" formControlName="infoIdpYear" type="text"
+                                                  #infoIdpYear id="infoIdpYear" />
+                                              <span class="m-form__help date_help m--hide errMsg" id="errInfoIdpYear">
+                                                  <p style="color:red!important">Please define IDP Year.</p>
+                                              </span>
+                                          </div>
+                                      </div>
+                                  </td>
+                              </tr>
+                              <tr>
+                                  <td style="width: 30%">
+                                      Name
+                                  </td>
+                                  <td>
+                                      <div class="form-group m-form__group row">
+                                          <div class="col-lg-9 col-md-9 col-sm-12">
+                                              <input required type="text" class="form-control m-input" formControlName="infoIdpName"
+                  #infoIdpName id="infoIdpName">
+                                              <span class="m-form__help date_help m--hide errMsg" id="errInfoIdpName">
+                                                  <p style="color:red!important">Please define IDP name.</p>
+                                              </span>
+                                          </div>
+                                      </div>
+                                  </td>
+                              </tr>
+                                 <tr>
+                                  <td style="width: 30%">
+                                      IDP Setting Start Date
+                                  </td>
+                                  <td>
+                                      <div class="form-group m-form__group row">
+                                          <div class="col-lg-9 col-md-9 col-sm-12">
+                                              <input type="text" class="form-control m-input" formControlName="infoIdpStart"
+                                               readonly #infoIdpStart id="infoIdpStart" [matDatepicker]="idpStartPicker" placeholder="DD-MM-YYYY" 
+                                                style="width: 50%; display: inline-block;"  (click)="idpStartPicker.open()">
+                                              <span style="padding: 5px;">
+                                                <mat-datepicker-toggle matSuffix [for]="idpStartPicker"></mat-datepicker-toggle>
+                                                <mat-datepicker #idpStartPicker></mat-datepicker></span>
+                                              <span class="m-form__help date_help m--hide errMsg" id="errInfoIdpStart">
+                                                  <p style="color:red!important">Please define IDP Start Date.</p>
+                                              </span>
+                                          </div>
+                                      </div>
+                                  </td>
+                              </tr>
+                                 <tr>
+                                  <td style="width: 30%">
+                                      IDP Setting Due Date
+                                  </td>
+                                  <td>
+                                      <div class="form-group m-form__group row">
+                                          <div class="col-lg-9 col-md-9 col-sm-12">
+                                              <input type="text" class="form-control m-input" formControlName="infoIdpDue"
+                                            readonly #infoIdpDue id="infoIdpDue" [matDatepicker]="idpDuePicker" placeholder="DD-MM-YYYY"
+                                             style="width: 50%; display: inline-block;" (click)="idpDuePicker.open()">
+                                            <span style="padding: 5px;">
+                                                <mat-datepicker-toggle matSuffix [for]="idpDuePicker"></mat-datepicker-toggle>
+                                                <mat-datepicker #idpDuePicker></mat-datepicker></span>
+                                              <span class="m-form__help date_help m--hide errMsg" id="errInfoIdpDue">
+                                                  <p style="color:red!important">Please define IDP Due date.</p>
+                                              </span>
+                                          </div>
+                                      </div>
+                                  </td>
+                              </tr>
+                                 <tr>
+                                  <td style="width: 30%">
+                                      Mobility
+                                  </td>
+                                  <td>
+                                      <div class="form-group m-form__group row">
+                                          <div class="col-lg-9 col-md-9 col-sm-12">
+                                              <input required type="text" class="form-control m-input" formControlName="infoMobility"
+                                                #infoMobility id="infoMobility" list="mobilityData">
+                                                <datalist id="mobilityData" [hidden]="true">
+                                                    <option data-value="" disabled selected>Select mobility</option>
+                                                    <option data-value="1"></option>
+                                                    <option data-value="0"></option>
+                                                </datalist>
+                                              <span class="m-form__help date_help m--hide errMsg" id="errInfoMobility">
+                                                  <p style="color:red!important">Please define Mobility.</p>
+                                              </span>
+                                          </div>
+                                      </div>
+                                  </td>
+                              </tr>
+                              <tr>
+                                <td style="width: 30%">
+                                    IDP Completion Start Date
+                                </td>
+                                <td>
+                                    <div class="form-group m-form__group row">
+                                        <div class="col-lg-9 col-md-9 col-sm-12">
+                                            <input  type="text" class="form-control m-input" formControlName="infoIdpCompStart"
+                                              readonly #infoIdpCompStart id="infoIdpCompStart" [matDatepicker]="idpCompStartPicker" placeholder="DD-MM-YYYY"
+                                               style="width: 50%; display: inline-block;" (click)="idpCompStartPicker.open()"> 
+                                            <span style="padding: 5px;">
+                                              <mat-datepicker-toggle matSuffix [for]="idpCompStartPicker"></mat-datepicker-toggle>
+                                              <mat-datepicker #idpCompStartPicker></mat-datepicker></span>
+                                            <span class="m-form__help date_help m--hide errMsg" id="errinfoIdpCompStart">
+                                                <p style="color:red!important">Please define IDP Completion Start Date.</p>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="width: 30%">
+                                    IDP Completion Due Date
+                                </td>
+                                <td>
+                                    <div class="form-group m-form__group row">
+                                        <div class="col-lg-9 col-md-9 col-sm-12">
+                                            <input type="text" class="form-control m-input" formControlName="infoIdpCompDue"
+                                             readonly #infoIdpCompDue id="infoIdpCompDue" [matDatepicker]="idpCompDuePicker" placeholder="DD-MM-YYYY" 
+                                             style="width: 50%; display: inline-block;" (click)="idpCompDuePicker.open()">
+                                            <span style="padding: 5px;">
+                                              <mat-datepicker-toggle matSuffix [for]="idpCompDuePicker"></mat-datepicker-toggle>
+                                              <mat-datepicker #idpCompDuePicker></mat-datepicker></span>
+                                            <span class="m-form__help date_help m--hide errMsg" id="errinfoIdpCompDue">
+                                                <p style="color:red!important">Please define IDP Completion Due Date.</p>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                            <!--<tr>
+                                  <td style="width: 30%">
+                                      Inactive
+                                  </td>
+                                  <td>
+                                      <div class="form-group m-form__group row">
+                                          <div class="col-lg-9 col-md-9 col-sm-12">
+                                              <input required type="text" class="form-control m-input" formControlName="infoIdpInactive"
+                                                #infoIdpInactive id="infoIdpInactive" list="inactiveData">
+                                                <datalist id="inactiveData" [hidden]="true">
+                                                    <option data-value="" disabled selected>Select inactive</option>
+                                                    <option data-value="TRUE"></option>
+                                                    <option data-value="FALSE"></option>
+                                                </datalist>
+                                              <span class="m-form__help date_help m--hide errMsg" id="errInfoIdpInactive">
+                                                  <p style="color:red!important">Please define IDP inactive.</p>
+                                              </span>
+                                          </div>
+                                      </div>
+                                  </td>
+                              </tr>-->
+                              <tr>
+                                  <td style="width: 30%">
+                                      &nbsp;
+                                  </td>
+                                  <td>
+                                      <div class="text-right" *ngIf="typeIDPBatchAct != 'edit'" style="margin-bottom: 23%!important">
+                                          <button class="btn btn-default btn-sm" [routerLink]="['/admin/job/idp-batches']" type="button">Back</button>
+                                          <button class="btn btn-primary btn-sm" type="submit">Save</button>
+                                      </div>
+                                      <div class="text-right" *ngIf="typeIDPBatchAct == 'edit'">
+                                          <button class="btn btn-default btn-sm" [routerLink]="['/admin/job/idp-batches']" type="button">Back</button>
+                                          <button class="btn btn-primary btn-sm" type="submit">Save</button>
+                                      </div>
+                                      <!-- <button class="btn m-btn--pill btn-outline-danger mt-3" id="go-to-advertise-job" type="button" [routerLink]="['/admin/job/advertisement/new-career']" style="margin-right: 3rem;"> -->
+                                          <!-- <i class="flaticon-file-1"></i>  Cancel-->
+                                      <!-- </button> -->
+
+                                      <!-- <button class="btn m-btn--pill btn-outline-brand mt-3" type="submit"> -->
+                                          <!-- <i class="flaticon-file-1"></i>  Save-->
+                                      <!-- </button> -->
+                                  </td>
+                              </tr>
+                          </table>
+                      </form>
+                      <!-- end: JOB INFO -->
+                  </div>
+              </div>
+          </div>
+
+</div>
+</div>
+</div>

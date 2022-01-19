@@ -1,0 +1,783 @@
+<div>
+    <div class="page-bg vrp-bg">
+      <h2 class="head-sub-title text-center">{{ word.head_sub_title }}</h2>
+    </div>
+    <div class="pg-title-div">
+      <!-- <h3 class="pg-title text-center">{{ word.pg_title }}</h3>     -->
+      
+        <div id="tracking-link">
+            <span class="span-track" (click)="menuClicked('/user-job/tracking')">Jobs</span>
+            <span class="span-track" (click)="menuClicked('/idp')">IDP</span>
+            <span class="span-track" (click)="menuClicked('/vrp/tracking')" style="border-bottom: 4px solid white !important;">MESRA 2021</span>
+        </div>
+    </div>
+</div>
+  
+    
+<div class="col-lg-12 centred my-auto" *ngIf="loading">
+  <idp-loading></idp-loading>
+</div>
+   <!-- start block panel  -->
+    <div class="d-flex justify-content-center m-20"  *ngIf="!loading">
+      <div class="col-lg-12 centred my-auto" *ngIf="loading">
+          <idp-loading></idp-loading>
+      </div>
+        <div class="col-xl-12">
+            <div class="m-portlet m-portlet--full-height">                
+
+                <div class="vrp-portlet m-portlet__body">
+                    
+                    <div class="m-widget4 align-content-center">
+
+                        
+                    <h4 class="text-center mt-5">
+                        {{word.sec_title_greet}}
+                    </h4>
+                    <br><br>
+                        <!-- Start: Step 1 - 2 -->
+                        <div class="row justify-content-center mt-3">
+                          <div class="col-md-8">    
+                              <!-- style="width: 70% !important; margin-left: auto !important; margin-right: auto !important;" -->
+                                <div class="m-widget4__info">
+    <span class="m-widget4__sub">
+
+                                            <div class="m-wizard m-wizard--2 m-wizard--success m-wizard--step-first" id="m_wizard">
+
+                                                <div class="m-wizard__head m-portlet__padding-x">
+                                                    <div class="m-wizard__progress">
+                                                        <div class="progress">
+                                                            <div aria-valuemax="100" aria-valuemin="0" aria-valuenow="100" 
+                                                            class="progress-bar era-color-bk" role="progressbar" 
+                                                            ng-reflect-ng-style="[object Object]" 
+                                                            style="width: 100%;"></div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="m-wizard__nav">
+                                                        <div class="m-wizard__steps text-center">
+                                                            <div class="m-wizard__step" 
+                                                            [class.m-wizard__step--current] = "checkStatus>=1"
+                                                            m-wizard-target="m_wizard_form_step_1">
+                                                                
+                                                                <span class="m-wizard__step-number">
+                                                                    <span class="step-number">
+                                                                        1                                                                    
+                                                                    </span>                                                                
+                                                                </span>
+                                                                <span class="m-step-title mt-2">Permohonan</span>
+                                                            </div>
+
+                                                            <div class="m-wizard__step text-center"                                                         
+                                                            [class.m-wizard__step--current] = "checkStatus>2"
+                                                            m-wizard-target="m_wizard_form_step_2">
+                                                                <span class="m-wizard__step-number">
+                                                                    <span class="step-number">
+                                                                        2                                                                    
+                                                                    </span>                                                                
+                                                                </span>                  
+                                                                <span class="m-step-title mt-2">Kelulusan</span>     
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+    </span>
+                                </div>    
+                          </div>
+                        </div><br>
+                        <!-- End: Step 1 - 2 -->
+                        <div style="clear: both;"></div>
+                          
+                          <div class="row justify-content-center mb-5">
+                            <div class="col-md-8">    
+                              <div class="vrp-status-box vrp-status-bg mt-3 mb-3 m-accordion__item-head collapsed m-accordion--toggle-arrow"
+                              href="#perincian_section"
+                              data-toggle="collapse">
+                                <div class="vrp-status-text font-weight-bold font-size-h2r">Status :<span class="black"> {{convertWordStatus(checkStatus)}}</span></div>
+                                <div class="perincian_arrow" style="z-index: 9;">
+                                  [Perincian                           
+                                    <i class="fa fa-chevron-up" aria-hidden="true"></i>    
+                                    <i class="fa fa-chevron-down" aria-hidden="true"></i> ]
+                              </div>
+                               
+                              </div>             
+                              
+                              <div id="perincian_section" class="collapse mb-5">
+
+                              <!-- [Perincian] if status 5,6,7,8,9 -->
+                              <div *ngIf="checkStatus>=2">
+                                
+                              <!-- <div class="vrp-status-box vrp-status-bg mt-5">
+                                <span class="vrp-status-text font-weight-bold font-size-h2">Perincian</span>
+                              </div> -->
+
+                                <div class="mCSB_container timeLnContainer" dir="ltr" id="mCSB_4_container" style="position: relative; top: 0px; left: 0px;" ng-reflect-dir="ltr">
+                                                  
+                                  <div class="m-timeline-2 mt-3">
+                                      <div class="m-timeline-2__items ">
+                                          <div class="m-timeline-2__item">
+                                              <div class="m-timeline-2__item-cricle">
+                                                  <i class="full era-color fa fa-circle"></i>
+                                                  
+                                              </div>
+                                              <div class="m-timeline-2__item-text m-timeline-2__item-text--bold">
+                                                  Permohonan
+                                                  <br>
+                                                  <span style="font-size: 13px !important" >
+                                                    <span *ngIf="!applied_on">
+                                                      Tidak Memohon
+                                                    </span>
+                                                    <span *ngIf="applied_on">
+                                                      Mohon
+                                                      <br>Tarikh : 
+                                                        {{ applied_on | date: 'd' }} {{ convertMonthBM(applied_on) }} {{ applied_on | date: 'yyyy' }}
+                                                      </span>
+                                                      <br>
+                                                      <a
+                                                        class="m-link m-link--state m-link--info m--font-bolder"
+                                                        [href]="tncMesraPdfURL"
+                                                        target="_blank"
+                                                      >
+                                                      <i class="fa fa-external-link" aria-hidden="true"></i>&nbsp;
+                                                     Terma & Syarat
+                                                      </a>
+                                                      <Br>                                                        
+                                                        <a
+                                                        class="m-link m-link--state m-link--info m--font-bolder"
+                                                        [href]="faqMesraPdfURL"
+                                                        target="_blank"
+                                                      >
+                                                      <i class="fa fa-external-link" aria-hidden="true"></i>&nbsp;
+                                                      Soalan-soalan Lazim
+                                                      </a>
+                                                  </span>
+                                              </div>
+                                          </div>
+                                          <div class="m-timeline-2__item m--margin-top-30" *ngIf="checkStatus>=5">
+                                              <div class="m-timeline-2__item-cricle">
+                                                  <i class="full era-color fa fa-circle"></i>
+                                                  
+                                              </div>
+                                              <div class="m-timeline-2__item-text m-timeline-2__item-text--bold">
+                                                  Kelulusan
+                                                  <br>
+                                                  <span style="font-size: 13px !important">
+                                                        <span *ngIf="checkStatus==5">
+                                                          Tidak Berjaya 
+                                                          <br>                                                      
+                                                          Tarikh : {{ hcbd_remarks_on | date: 'd' }} {{ convertMonthBM(hcbd_remarks_on) }} {{ hcbd_remarks_on | date: 'yyyy' }}
+                                                          <br>
+                                                          Remarks : {{hcbd_remarks}}     
+                                                        </span>                                                        
+                                                        <span *ngIf="generated_on">
+                                                          Berjaya        
+                                                          <br>                                                      
+                                                          Tarikh : {{ generated_on | date: 'd' }} {{ convertMonthBM(generated_on) }} {{ generated_on | date: 'yyyy' }}
+                                                        </span>                                     
+                                                        <span *ngIf="checkStatus==9&&!approved_on">  
+                                                          Tidak Memohon         
+                                                        </span>                                                                             
+                                                  </span>                                                  
+                                              </div>
+                                          </div>
+                                          <div class="m-timeline-2__item m--margin-top-30" *ngIf="checkStatus>6">
+                                              <div class="m-timeline-2__item-cricle">
+                                                  <i class="full era-color fa fa-circle"></i>
+                                                  
+                                              </div>
+                                              <div class="m-timeline-2__item-text m-timeline-2__item-text--bold">
+                                                  Keputusan
+                                                  <br>
+                                                  <span style="font-size: 13px !important">
+                                                      <span>
+                                                          <span>{{convertWordStatus(checkStatus)}}</span>     
+                                                          <span *ngIf="checkStatus==7"> 
+                                                            <span *ngIf="accepted_on">                                                  
+                                                              <br>Tarikh : 
+                                                              {{ accepted_on | date: 'd' }} {{ convertMonthBM(accepted_on) }} {{ accepted_on | date: 'yyyy' }}
+                                                            </span>
+                                                          </span>   
+                                                          <span *ngIf="checkStatus==8"> 
+                                                            <span *ngIf="rejected_on">                                                  
+                                                              <br>Tarikh : 
+                                                              {{ rejected_on | date: 'd' }} {{ convertMonthBM(rejected_on) }} {{ rejected_on | date: 'yyyy' }}
+                                                            </span>
+                                                          </span>
+                                                          <span *ngIf="checkStatus==6||checkStatus==9"> 
+                                                            <span *ngIf="expired_on">                                                  
+                                                              <br>Tarikh : 
+                                                              {{ expired_on | date: 'd' }} {{ convertMonthBM(expired_on) }} {{ expired_on | date: 'yyyy' }}
+                                                            </span>
+                                                          </span>
+                                                          <span *ngIf="checkStatus==8">
+                                                            <br>Remarks: {{remarks}}
+                                                          </span>                                                          
+                                                          <span *ngIf="checkStatus==10"> 
+                                                            <span *ngIf="cessation_on">                                                  
+                                                              <br>Tarikh : 
+                                                              {{ cessation_on | date: 'd' }} {{ convertMonthBM(cessation_on) }} {{ cessation_on | date: 'yyyy' }}
+                                                            </span>
+                                                          </span>   
+                                                          <span *ngIf="checkStatus==7||checkStatus==10"> 
+                                                            
+                                                          <span *ngIf="staff_comp=='1000'||staff_comp=='1071'">
+                                                            <br>No Rujukan: {{ref_no}}
+                                                            <br>
+                                                            <a id="btnGenOffer2" 
+                                                            [routerLink]=""
+                                                            (click)="getOfferLetter(staff_no)"
+                                                            class="m-link m-link--state m-link--info m--font-bolder"
+                                                            data-toggle="modal"
+                                                            data-target="#modalLoading">
+                                                              <i class="fa fa-download" aria-hidden="true"></i>&nbsp;
+                                                              Surat Tawaran MESRA 2021 <span id="timerEnableBtn"></span>
+                                                          </a>
+                                                            <br>                                                         
+                                                              <a
+                                                              class="m-link m-link--state m-link--info m--font-bolder"
+                                                              [href]="returnAssetFormPdfURL"
+                                                              target="_blank"
+                                                            >
+                                                            <i class="fa fa-download" aria-hidden="true"></i>&nbsp;
+                                                            Borang Pemulangan Harta Syarikat & Data Peribadi
+                                                            </a>
+                                                          </span>  
+                                                        </span>
+
+                                                      </span>    
+                                                      
+                                                  </span>
+                                                  
+                                              </div>
+                                          </div>
+
+                                      </div>
+                                  </div>
+                                  
+                                </div>
+                              </div>
+
+                              </div><!-- perincian_section  -->    
+
+                              <!-- [Status: 5 Not Successful - HCBD reject (final decision)] -->
+                              <div  *ngIf="checkStatus==5">  
+                                  <div class="text-center">
+                                      <h4>Maaf permohonan anda tidak berjaya.</h4>                                            
+                                      <span class="font-1em">
+                                          Sila hubungi pihak HCBD yang berkenaan untuk keterangan lanjut.
+                                      </span>
+                                      <!-- start: table contact HCBD -->  
+                                      <div class="mt-3">
+                                          <table class="table table-bordered table-striped table-hover">
+                                            <thead class="bg-info">
+                                              <tr>
+                                                <th data-label="NAMA" scope="col">NAMA</th>
+                                                <th data-label="LOBS/BF/CF" scope="col">LOBS/BF/CF</th>
+                                                <th data-label="NO TELEFON" scope="col">NO TELEFON</th>
+                                                <th data-label="EMAIL" scope="col">EMAIL</th>
+                                              </tr>
+                                            </thead>
+                                            <tbody>
+                                              <tr>
+                                                <th data-label="NAMA" scope="row">En. Fairos Idros</th>
+                                                <td data-label="LOBS/BF/CF">HCBD GNT &amp; GITD</td>
+                                                <td data-label="NO TELEFON">013-3425095</td>
+                                                <td data-label="EMAIL">fairos@tm.com.my </td>
+                                              </tr>
+                                              <tr>
+                                                <th data-label="NAMA" scope="row">Pn. Alicia Boey Wai Fun</th>
+                                                <td data-label="LOBS/BF/CF">HCBD Unifi, BIG, CX and TSSSB</td>
+                                                <td data-label="NO TELEFON">013-3311830</td>
+                                                <td data-label="EMAIL">aliciab@tm.com.my </td>
+                                              </tr>
+                                              <tr>
+                                                <th data-label="NAMA" scope="row">Pn Najibah Hashim</th>
+                                                <td data-label="LOBS/BF/CF">HCBD Central &amp; HCBD TM Wholesale</td>
+                                                <td data-label="NO TELEFON">013-3414417</td>
+                                                <td data-label="EMAIL">najibah@tm.com.my </td>
+                                              </tr>
+                                              <tr>
+                                                <th data-label="NAMA" scope="row">En Suhaimi Sulong</th>
+                                                <td data-label="LOBS/BF/CF">HCBD TM ONE / VADS / VADS BPO</td>
+                                                <td data-label="NO TELEFON">017-2000181</td>
+                                                <td data-label="EMAIL">suhaimi.sulong@tm.com.my </td>
+                                              </tr>
+                                              <tr>
+                                                <th data-label="NAMA" scope="row">Pn Khairul Haniza Yeop Hashim</th>
+                                                <td data-label="LOBS/BF/CF">HCBD Support Business / TMFA</td>
+                                                <td data-label="NO TELEFON">013-3404510</td>
+                                                <td data-label="EMAIL">haniza@tm.com.my </td>
+                                              </tr>
+                                              <tr>
+                                                <th data-label="NAMA" scope="row">En Zaidi Bin Abd Ghani @ Mukhtar </th>
+                                                <td data-label="LOBS/BF/CF">HCBD TM R&amp;D</td>
+                                                <td data-label="NO TELEFON">013-3658120</td>
+                                                <td data-label="EMAIL">zaidi@tmrnd.com.my </td>
+                                              </tr>
+                                              <tr>
+                                                <th data-label="NAMA" scope="row">Pn Zariah Binti Ahmad</th>
+                                                <td data-label="LOBS/BF/CF">HCBD webe</td>
+                                                <td data-label="NO TELEFON">019-3349342</td>
+                                                <td data-label="EMAIL">zariah.ahmad@webe.com.my </td>
+                                              </tr>
+                                              <tr>
+                                                <th data-label="NAMA" scope="row">En Azhar Omar</th>
+                                                <td data-label="LOBS/BF/CF">HCBD Central</td>
+                                                <td data-label="NO TELEFON">011-10010315</td>
+                                                <td data-label="EMAIL">azharo@tm.com.my </td>
+                                              </tr>
+                                              <tr>
+                                                <th data-label="NAMA" scope="row">En Mohd Aisha Jaafar</th>
+                                                <td data-label="LOBS/BF/CF">HCBD Northern</td>
+                                                <td data-label="NO TELEFON">013-4200377</td>
+                                                <td data-label="EMAIL">mdaisha@tm.com.my </td>
+                                              </tr>
+                                              <tr>
+                                                <th data-label="NAMA" scope="row">En Mohamad Zainuddin Ahmad </th>
+                                                <td data-label="LOBS/BF/CF">HCBD Southern</td>
+                                                <td data-label="NO TELEFON">013-3644599</td>
+                                                <td data-label="EMAIL">zainudin@tmrnd.com.my </td>
+                                              </tr>
+                                              <tr>
+                                                <th data-label="NAMA" scope="row">En Rosli Ismail </th>
+                                                <td data-label="LOBS/BF/CF">HCBD Eastern</td>
+                                                <td data-label="NO TELEFON">013-3364464</td>
+                                                <td data-label="EMAIL">rismail@tm.com.my </td>
+                                              </tr>
+                                              <tr>
+                                                <th data-label="NAMA" scope="row">En Mohamad Zaidell Hj Mohamad Abdullah </th>
+                                                <td data-label="LOBS/BF/CF">HCBD Sarawak</td>
+                                                <td data-label="NO TELEFON">019-6961188</td>
+                                                <td data-label="EMAIL">zaidell@tm.com.my </td>
+                                              </tr>
+                                              <tr>
+                                                <th data-label="NAMA" scope="row">En Syuhaili Bin A Hamid </th>
+                                                <td data-label="LOBS/BF/CF">HCBD Sabah</td>
+                                                <td data-label="NO TELEFON">011-10006105</td>
+                                                <td data-label="EMAIL">syuhaili@tm.com.my</td>
+                                              </tr>
+                                              <tr>
+                                                <th data-label="NAMA" scope="row">Pn Sarina Sarif</th>
+                                                <td data-label="LOBS/BF/CF">HCBD TMIM</td>
+                                                <td data-label="NO TELEFON">012-2398488</td>
+                                                <td data-label="EMAIL">sarina.msarif@tm.com.my </td>
+                                              </tr>
+                                              <tr>
+                                                <th data-label="NAMA" scope="row">Norhajamiah Binti Mohd Hanafiah </th>
+                                                <td data-label="LOBS/BF/CF">HCBD GITN</td>
+                                                <td data-label="NO TELEFON">013-3838833</td>
+                                                <td data-label="EMAIL">haja@gitn.com.my </td>
+                                              </tr>
+                                              <tr>
+                                                <th data-label="NAMA" scope="row">Siti Rohani Binti Yatim Bahari </th>
+                                                <td data-label="LOBS/BF/CF">HCBD TAB</td>
+                                                <td data-label="NO TELEFON">013-2655971</td>
+                                                <td data-label="EMAIL">rohani@tab.com.my </td>
+                                              </tr>
+                                            </tbody>
+                                          </table>
+                                          </div>
+                                      <!-- end: table contact HCBD -->
+                                  </div>
+                              </div>
+
+                              <!-- [Status: 6 Successful - Offer letter submitted] -->
+                              <div  *ngIf="checkStatus==6">
+                                  <div class="text-center">
+                                      <h4>Tahniah permohonan anda telah diluluskan!</h4>
+                                      <br>
+                                      <span class="font-1em">
+                                          Sila baca surat dan pakej tawaran dengan teliti. Tawaran hanya sah dalam tempoh dua minggu dari tarikh surat tawaran dikeluarkan . 
+                                          Anda boleh membuat pilihan untuk menerima atau menolak tawaran ini.
+                                      </span>
+                                      <br>
+                                      <br>
+                                      <div *ngIf="staff_comp=='1000'||staff_comp=='1071'">
+                                          <button 
+                                          id="btnGenOffer"
+                                          class="btn btn-offer" 
+                                          (click)="getOfferLetter(staff_no)"
+                                          data-toggle="modal"
+                                          data-target="#modalLoading">
+                                          <i class="fa fa-check"></i>&nbsp; Surat Tawaran MESRA 2021 <span id="timerEnableBtn"></span>
+                                        </button>
+                                      </div>
+                                      <div *ngIf="!(staff_comp=='1000'||staff_comp=='1071')" class="font-weight-bold">Anda akan menerima Surat Tawaran, Terma & Syarat dan borang borang yang berkaitan melalui email daripada HCBD/Mobility Centre</div>
+                                      <br />                                      
+                                      <span class="font-1em">
+                                        Anda bersetuju dengan pakej MESRA 2021 yand ditawarkan?
+                                    </span>
+                                    <div class="col-md-12 mt-3">
+                                      <div class="row justify-content-center">
+                                        <div class="col-md-4">
+                                      <button
+                                        id="btn_setuju"
+                                        type="button"
+                                        data-toggle="modal"
+                                        data-target="#form-agree-offer"
+                                        class="btn text-white btn-agree btn-block">
+                                        Terima
+                                      </button>
+                                      </div>
+                                      
+                                      <div class="col-md-4">
+                                      <button
+                                        id="btn_batal"
+                                        type="button"
+                                        data-toggle="modal"
+                                        data-target="#form-cancel-offer"
+                                        (click)="resetApplyFormConfirm();"
+                                        class="btn btn-outline-danger btn-block"
+                                        data-dismiss="modal">
+                                        Tolak
+                                      </button>
+                                    </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                              </div>
+
+                              <!-- [Status: 7 Accept - Eligible employee accept the offer] -->
+                              <div  *ngIf="checkStatus==7 && !showRating">
+                                <div class="m-accordion__item-body">
+                                  <div class="acc_content m-accordion__item-content text-center">
+                                      <span class="font-1em">
+                                      Anda perlu memuat turun dan melengkapkan <b>Borang Pemulangan Harta Syarikat & Data Peribadi</b>, dan <b>Borang A</b>. 
+                                      <br>Borang-borang yang lengkap dan telah diisi perlu di hantar ke Mobility Centre melalui
+                                      <br><b>email : mobilitycentre@tm.com.my</b>
+                                      <br>sebelum tarikh akhir perkhidmatan
+                                      <br><br>
+                                      <h4 class="font-weight-bold">Terima kasih!</h4>
+                                      </span>
+                                  </div>
+                                </div>
+                              </div>
+
+                              <!-- [Status: 8 Reject - Employee reject the offer] -->
+                              <div  *ngIf="checkStatus==8 && !showRating">
+                                <div class="m-accordion__item-body">
+                                  <div class="acc_content m-accordion__item-content text-center">
+                                      <span class="font-1em">
+                                      Terima Kasih atas kerjasama anda!
+                                      <br><br>
+                                      <h4 class="font-weight-bold">Terima kasih!</h4>
+                                      </span>
+                                  </div>
+                                </div>
+                              </div>                       
+
+                              <!-- rating form -->
+                              <div *ngIf="showRating&&(checkStatus==7||checkStatus==8)">
+                                <div class="m-accordion__item-body mt-5">
+                                  <div class="m-widget4__item" style="width: 100% !important">
+                                    <span class="m-widget4__title" style="font-weight: bold">
+                                      Bagaimana pengalaman anda dengan permohonan MESRA 2021?
+                                    </span><br><br>
+                                    <div class="m-widget4__sub" style="text-align: center !important">                                      
+                                      <span class="m-demo-icon__preview" *ngFor="let num of [1,2,3,4,5]">
+                                        <span [hidden]="checkRate1(num)" id="{{num}}"
+                                            (click)="ratingClicked(i,num);">
+                                            <i class="star-icon fa fa-star-o"></i>
+                                        </span>
+                                        <span  [hidden]="checkRate2(num)" id="{{num}}"
+                                            (click)="ratingClicked(i,num);">
+                                            <i class="star_color star-icon fa fa-star"></i>
+                                        </span>
+                                    </span>
+                                    </div>
+                                    <input class="m--hide ng-untouched ng-pristine ng-valid" type="text" id="rate">
+                                   
+                                    <br>
+                                    <span class="m-widget4__title" style="font-weight: bold">
+                                        Komen
+                                    </span><br><br>
+                                    <div class="m-widget4__sub">
+                                        <textarea class="form-control" rows="3" id="comnt"
+                                            (keyup)="checkComnt()" style="overflow-y: scroll;"
+                                            [ngModel]="ratingComment" placeholder="Tuliskan komen...">
+                                        </textarea>
+                                        <!-- <br>
+                                        Rate: {{rating}} {{newRating}}
+                                        <br>
+                                        Comment: {{ratingComment}}
+                                        <br> -->
+                                        <div id="rateSubmit"
+                                            style="text-align:center !important; display: none">
+                                            <button type="button" class="theme_btn btn btn-brand"
+                                                (click)="updateComnt()" 
+                                                data-target="#rateSubmit">
+                                                {{word.submit}}
+                                            </button>
+                                        </div>
+                                        <div style="display: none">
+                                            <button type="button" id="success" class="theme_btn btn btn-brand"
+                                                data-toggle="modal" data-target="#rateSubmitSucc">
+                                                success
+                                            </button>
+                                            <button type="button" id="error" class="theme_btn btn btn-brand"
+                                                data-toggle="modal" data-target="#rateSubmitErr">
+                                                error
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                                </div>
+                              </div>       
+
+                            </div><!--- col-md-8 -->
+                          </div><!-- row -->
+
+
+                    </div>
+                </div>
+            </div>
+      </div>
+    </div>
+   <!-- end block panel  -->
+
+
+<!-- start: agree offer -->
+<div class="modal fade" id="form-agree-offer">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <!-- Modal Header -->
+        <div class="modal-header form-header-bg text-center">
+          <h4 class="modal-title text-white">PENGESAHAN PENERIMAAN TAWARAN MESRA 2021</h4>
+          <button type="button" class="close" data-dismiss="modal">
+            &times;
+          </button>
+        </div>
+  
+        <!-- Modal body -->
+        <div class="modal-body">
+          <form [formGroup]="confirmOffer" id="form_agree">
+            <div class="form-group row">
+              <div class="col-12">
+                Dimaklumkan bahawa saya <b>{{ staff_name }}</b> menerima tawaran Skim MESRA 2021 atas terma-terma yang dinyatakan dalam Surat Tawaran (RUJ: <b>{{ref_no}}</b>).
+              </div>
+            </div>
+            <div class="form-check">
+                <input
+                  id="tnc"
+                  formControlName="tnc"
+                  [(ngModel)]="tncCheck"
+                  id="tnc1"
+                  name="tnc1"
+                  type="checkbox"
+                  required
+                  class="form-check-input"
+                />&nbsp;{{ word.from_check_disclaimer }}           
+            </div>
+            <div class="form-group row">
+              <label class="col-md-4 col-form-label">              
+                <!-- <div class="pad-top-5px"> -->
+                  {{ word.form_label_verify_ic }}
+                <!-- </div> -->
+              </label>
+              <div class="col-md-8">
+                <div class="input-group">
+                  <div class="input-group-prepend">
+                    <div class="input-group-text">
+                      <i class="fa fa-address-card"></i>
+                    </div>
+                  </div>
+                  <input
+                    (change)="resetErrIc()"
+                    formControlName="ic"
+                    id="ic1"
+                    name="ic1"
+                    type="text"
+                    class="form-control"
+                    placeholder="eg: 871230145259"
+                    maxlength="12"
+                  />
+                </div>
+                
+                <div [ngClass]="{ 'text-danger': err_ic || checkForm != 0 }">
+                  <small>{{ err_ic }}</small>
+                </div>
+              </div>
+            </div>
+            <div class="form-group row">
+              <div class="col-12">
+                {{ word.date }}: {{ currentDate | date: 'd' }} {{ convertMonthBM(currentDate) }} {{ currentDate | date: 'yyyy' }}
+                <!-- <br>       
+                      <input formControlName="selectedPlan" type="text" name="selectedPlan" id="selectedPlan" 
+                      value="{{selectedExitDate}}"/> -->
+              </div>
+            </div>
+            <div class="form-group row justify-content-center">
+              <div class="col-md-4">
+                <button
+                  (click)="submitFormConfirm()"
+                  [disabled]="!tncCheck"
+                  id="btn_setuju1"
+                  type="submit"
+                  class="btn btn-block text-white btn-agree"
+                >
+                  Setuju
+                </button>
+              </div>
+              <div class="col-md-4">
+                <button
+                  id="btn_batal1"
+                  type="button"
+                  (click)="resetApplyFormConfirm();"
+                  class="btn btn-outline-danger btn-block"
+                  data-dismiss="modal"
+                >
+                  Kembali
+                </button>
+              </div>
+            </div>
+          </form>
+          <!-- <button (click)="test()">test</button> -->
+        </div>
+  
+        <!-- Modal footer -->
+        <!-- <div class="modal-footer justify-content-center"> -->
+        <!-- <div class="col-md-4">
+                      <button id="btn_setuju" type="button" disabled class="btn btn-default btn-block" style="background-color:#11AFBE;">Setuju</button>
+                  </div>
+                  <div class="col-md-4">
+                      <button id="btn_batal" type="button" class="btn btn-outline-danger btn-block" data-dismiss="modal">Batal</button>
+                  </div>      -->
+        <!-- <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button> -->
+        <!-- </div> -->
+      </div>
+    </div>
+</div>
+<!-- end: agree offer -->
+
+<!-- start: cancel offer -->
+<div class="modal fade" id="form-cancel-offer">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <!-- Modal Header -->
+      <div class="modal-header form-header-bg text-center">
+        <h4 class="modal-title text-white">PENGESAHAN PENOLAKAN TAWARAN MESRA 2021</h4>
+        <button type="button" class="close" data-dismiss="modal">
+          &times;
+        </button>
+      </div>
+
+      <!-- Modal body -->
+      <div class="modal-body">
+        <form [formGroup]="cancelOffer" id="form_cancel">
+          <div class="form-group row">
+            <div class="col-12">
+              <p>Saya <b>{{ staff_name }}</b> membuat pilihan untuk menolak tawaran yang diberi.</p>
+              <div class="form-group">
+                <p>Sila nyatakan sebab:</p>
+                <textarea class="form-control" rows="5" id="remarks" 
+                formControlName="remarks"></textarea>                
+              <div [ngClass]="{ 'text-danger': err_reason }">
+                <small>{{ err_reason }}</small>
+              </div>
+              </div> 
+            </div>
+          </div>
+          <div class="checkbox">
+              <input
+              id="tnc2"
+              formControlName="tnc"
+              [(ngModel)]="tncCheck2"
+              id="tnc2"
+              name="tnc2"
+              type="checkbox"
+              required />&nbsp;{{ word.from_cancel_disclaimer }}
+          </div> 
+          <div class="form-group row">
+            <label class="col-md-4 col-form-label">              
+              <!-- <div class="pad-top-5px"> -->
+                {{ word.form_label_verify_ic }}
+              <!-- </div> -->
+            </label>
+            <div class="col-md-8">
+              <div class="input-group">
+                <div class="input-group-prepend">
+                  <div class="input-group-text">
+                    <i class="fa fa-address-card"></i>
+                  </div>
+                </div>
+                <input
+                  (change)="resetErrIc()"
+                  formControlName="ic"
+                  id="ic2"
+                  name="ic2"
+                  type="text"
+                  class="form-control"
+                  placeholder="eg: 871230145259"
+                  maxlength="12"
+                />
+              </div>
+              
+              <div [ngClass]="{ 'text-danger': err_ic }">
+                <small>{{ err_ic }}</small>
+              </div>
+            </div>
+          </div>
+          <div class="form-group row">
+            <div class="col-12">
+              {{ word.date }}: {{ currentDate | date: 'd' }} {{ convertMonthBM(currentDate) }} {{ currentDate | date: 'yyyy' }}
+              <!-- <br>       
+                    <input formControlName="selectedPlan" type="text" name="selectedPlan" id="selectedPlan" 
+                    value="{{selectedExitDate}}"/> -->
+            </div>
+          </div>
+          <div class="form-group row justify-content-center">
+            <div class="col-md-4">
+              <button
+                (click)="submitFormCancel()"
+                [disabled]="!tncCheck2"
+                id="btn_setuju2"
+                type="submit"
+                class="btn btn-block text-white btn-agree"
+              >
+                Setuju
+              </button>
+            </div>
+            <div class="col-md-4">
+              <button
+                id="btn_batal2"
+                type="button"
+                (click)="resetApplyFormCancel();"
+                class="btn btn-outline-danger btn-block"
+                data-dismiss="modal"
+              >
+                Kembali
+              </button>
+            </div>
+          </div>
+        </form>
+        <!-- <button (click)="test()">test</button> -->
+      </div>
+    </div>
+  </div>
+</div>
+<!-- end: cancel offer -->
+
+<!-- start: Modal Loading -->
+<div id="modalLoading" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <!-- Modal content-->
+    <div class="modal-content">
+ <!-- model body section -->
+      <div class="modal-body justify-content-center">
+            <span>
+                <div class="m-loader m-loader--lg m-loader--success" style="width: 30px; display: inline-block;"></div>
+            </span>
+            <span>
+                Downloading...
+            </span>
+        <Br />
+          <div class="progress-bar progress-bar-striped progress-bar-animated" 
+          style="width: 50%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>    
+      </div>
+    </div>
+  </div>
+</div>
+<!-- end: Modal Loading -->
+
+<notifier-container></notifier-container>

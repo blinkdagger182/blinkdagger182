@@ -1,0 +1,800 @@
+<div>
+    <div class="page-bg idp-bg">
+        <h2 class="head-sub-title">IDP</h2>
+    </div>
+    <div class="pg-title-div">
+        <h3 class="pg-title">INDIVIDUAL DEVELOPMENT PLAN (IDP)</h3>
+    </div>
+</div>
+
+<div class="m-subheader" style="background-color:#FFFFFF;">
+    <div class="d-flex align-items-center">
+        <div class="mr-auto">
+            <h3 class="m-subheader__title m-subheader__title--separator">
+                {{word.idpHome}}
+            </h3>
+            <ul class="m-subheader__breadcrumbs m-nav m-nav--inline" *ngIf="!loading">
+                <li class="m-nav__item m-nav__item--home">
+                    <a routerLink="/index" class="m-nav__link m-nav__link--icon">
+                        <i class="m-nav__link-icon la la-home"></i>
+                    </a>
+                </li>
+            </ul>
+        </div>
+
+        <!--Begin:Language-->
+        <ul class="m-topbar__nav m-nav m-nav--inline">
+            <li class="m-nav__item m-topbar__user-profile m-topbar__user-profile--img" data-toggle="modal"
+                data-target="#langSelect">
+                <span>
+                    <span class="m-topbar__username " style="padding-left:10px; padding-right:10px;">
+                        {{word.lang}} :
+                    </span>
+                    <span class="m-topbar__userpic">
+                        <button *ngIf="enChecked" type="button" title="English" data-toggle="m-tooltip"
+                            data-placement="top" class="btn m-btn--pill m-btn--air btn-outline-info active btn-sm">
+                            EN
+                        </button>
+                        <button *ngIf="!enChecked" type="button" title="Malay" data-toggle="m-tooltip"
+                            data-placement="top" class="btn m-btn--pill m-btn--air btn-outline-info active btn-sm">
+                            MY
+                        </button>
+                    </span>
+                </span>
+            </li>
+        </ul>
+        <div class="modal fade" id="langSelect" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+            style="display: none;" aria-hidden="true">
+            <div class="modal-dialog msg-dialog modal-dialog-centered" role="document"
+                style="max-width: 235px !important; margin: auto !important">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 style="text-align: center; font-size: 1.25rem;">{{word.lang}}</h5>
+                        <button type="button" id="lang_close" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="m-dropdown__content">
+                            <label class="lang-radio m-radio m-radio--solid m-radio--success" style="font-size: 16px">
+                                <input type="radio" #en name="lang" value="en" [checked]="enChecked"
+                                    (change)="langChange(en)">
+                                &nbsp;&nbsp; English
+                                <span style="width:23px; height:23px"></span>
+                            </label>
+                            <br>
+                            <label class="lang-radio m-radio m-radio--solid m-radio--success" style="font-size: 16px">
+                                <input type="radio" #my name="lang" value="my" [checked]="!enChecked"
+                                    (change)="langChange(my)">
+                                &nbsp;&nbsp; Malay
+                                <span style="width:23px; height:23px"></span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--End:Language-->
+    </div>
+</div>
+
+<div class="m-content" style="background-color:#FFFFFF;">
+    <div class="row justify-content-md-center">
+
+        <div class="col-lg-12 centred my-auto" *ngIf="loading">
+            <idp-loading></idp-loading>
+        </div>
+
+        <div class="col-lg-11" *ngIf="!loading">
+
+            <div style="margin: 2rem 0rem;text-align: justify;">
+                <h3>{{word.welcomeIDP}}</h3>
+                <p style="font-size: 1.2rem;">
+                    {{word.welcomePara}}
+                </p>
+                
+                <p style="font-size: 1.2rem;text-align: justify;">
+                    {{word.hbClick}} 
+                    <a class="m-link m-link--state m-link--success m--font-bolder" [href]="handbookURL" target="_blank">{{word.hbHere}}</a> 
+                    {{word.hbView}} 
+                    <b>{{word.hbBook}}</b> 
+                    {{word.hbUnderstanding}} 
+                    <a class="m-link m-link--state m-link--success m--font-bolder" 
+                        [href]="ccToolURL" download="Career Conversation Tool.pptx">
+                        {{word.hbCareerTool}}
+                    </a> 
+                    {{word.hbActivity}}{{word.plsClick}} 
+                    <a class="m-link m-link--state m-link--success m--font-bolder" href="https://era.tm.com.my:8443/api/get/image/User_Guide_IDP_2021?api_key=6wc0PzSPHUWN2ojiNYz9MLMV11bUOoeD8GDXEgYY" target="_blank">{{word.hbHere}}</a>
+                    {{word.completionGuide}}
+                </p>
+
+                <p style="font-size: 1.2rem;">{{word.idpLetsStart}}</p>
+            </div>
+
+            <ul class="nav nav-tabs" role="tablist" style="background-color:#f4f5f8">
+                <li class="tab-item nav-item"> <!-- My IDP tab -->
+                    <a class="tab-title nav-link active" id="idp_summary" data-toggle="tab" href="#summary">
+                        {{word.myIDP}} &nbsp;
+                    </a>
+                </li>
+                <li class="tab-item nav-item"  *ngIf="sup_PendingList?.length > 0" > <!-- Review tab -->
+                    <a class="tab-title nav-link " data-toggle="tab" href="#review">
+                        {{word.idpReview}} 
+                        &nbsp;
+                        <sup *ngIf="sup_PendingList?.length > 0">
+                            <span class="badge badge-danger">{{sup_PendingList.length}}</span>
+                        </sup>
+                    </a>
+                </li>
+                <li class="tab-item nav-item"  *ngIf="sup_MyTeamList?.length > 0" > <!-- My Team tab -->
+                    <a class="tab-title nav-link " data-toggle="tab" href="#myTeam">
+                        {{word.myTeam}} 
+                        &nbsp;
+                        <sup *ngIf="sup_MyTeamList?.length > 0">
+                            <!-- <span class="badge badge-danger">{{sup_MyTeamList.length}}</span> -->
+                        </sup>
+                    </a>
+                </li>
+                <li class="tab-item nav-item" *ngIf="sup_MyMenteeList?.length > 0"> <!-- My Mentee tab -->
+                    <a class="tab-title nav-link" data-toggle="tab" href="#myMentee">
+                        {{word.myMentee}} 
+                        &nbsp;
+                        <sup *ngIf="sup_MyMenteeList?.length > 0">
+                            <!-- <span class="badge badge-danger">{{sup_MyMenteeList.length}}</span> -->
+                        </sup>
+                    </a>
+                </li>
+            </ul>
+
+            <div class="tab-content">
+                <div class="tab-pane active" id="summary" role="tabpanel"> <!-- My IDP tab -->
+
+                    <!-- START -->
+                    <div class="m-accordion m-accordion--bordered" id="idp_home_accordian" role="tablist"
+                        style="padding: 2rem 0rem;">
+
+                        <!--begin:: New -->
+                        <div class="m-accordion__item" *ngIf="newIDP_list?.length > 0">
+
+                            <div class="m-accordion__item-head" role="tablist" id="new_idp_head" data-toggle="collapse"
+                                href="#new_idp_body" aria-expanded="false">
+                                <span class="m-accordion__item-mode" style="vertical-align: -9px !important"></span>
+                                <span
+                                    class="m-accordion__item-title m-accordian__item-mode-title  text-uppercase hSummary">
+                                    <span>{{word.newIDP}}</span>
+                                    <sup *ngIf="newIDP_list?.length > 0">
+                                        <span class="badge badge-danger">{{newIDP_list.length}}</span>
+                                    </sup>
+                                </span>
+                                <span class="m-accordion__item-icon">
+                                    <img style="width:2.5rem !important"
+                                        src="../../../../../../assets/img/user/project_details_icon.svg">
+                                </span>
+                            </div>
+                            <div class="m-accordion__item-body" id="new_idp_body" role="tabpanel"
+                                aria-labelledby="new_idp_head" data-parent="#idp_home_accordian">
+                                <div class="m-accordion__item-content">
+
+                                    <div class="m-accordion m-accordion--bordered" id="m_accordion_new" role="tablist">
+                                        <div class="m-accordion__item m-accordion__item--info"
+                                            *ngFor="let new of newIDP_list; let i=index">
+                                            <div class="m-accordion__item-head collapsed" role="tab"
+                                                id="m_accordion_8_item_3_head" data-toggle="collapse"
+                                                attr.href="#new_{{i}}" aria-expanded="false">
+                                                <span class="m-accordion__item-icon">
+                                                    <i class="fa flaticon-file-1"></i>
+                                                </span>
+                                                <span class="m-accordion__item-title">
+                                                    {{new.idp_name}}
+                                                </span>
+                                                <span class="m-accordion__item-mode"></span>
+                                            </div>
+                                            <div class="m-accordion__item-body collapse" id="new_{{i}}" role="tabpanel"
+                                                aria-labelledby="m_accordion_6_item_3_head"
+                                                data-parent="#m_accordion_new">
+                                                <div class="m-accordion__item-content">
+                                                    <div class="row">
+                                                        <div class="col-lg-12 idpName">
+                                                            <h3>{{new.idp_name}}</h3>
+                                                        </div>
+                                                        <div
+                                                            style="padding: 3rem 0rem; max-width: 650px; margin: auto;">
+                                                            <ngx-charts-pie-chart 
+                                                                [view]="view" [scheme]="colorScheme"
+                                                                [results]="chartData" [gradient]="gradient"
+                                                                [legendTitle]="''" [legend]="showLegend"
+                                                                [trimLabels]="false"
+                                                                [labels]="showLabels" [doughnut]="isDoughnut"
+                                                                (select)="onSelect($event)"
+                                                                (activate)="onActivate($event)"
+                                                                (deactivate)="onDeactivate($event)">
+                                                                <ng-template #tooltipTemplate>
+                                                                    <h4>
+                                                                        {{getItemName()}}
+                                                                    </h4>
+                                                                </ng-template>
+                                                            </ngx-charts-pie-chart>
+                                                        </div>
+                                                        <div class="col-lg-12 chartNote">
+                                                            <p>{{word.chartClick}}</p>
+                                                        </div>
+                                                        <div class="col-lg-12 chartDetails">
+                                                            <div *ngIf="itemClicked">
+                                                                <h4>
+                                                                    {{clickedItemHead}}
+                                                                </h4>
+                                                                <p style="font-size: 1.2rem;">
+                                                                    {{clickedItemBody}} <br>
+                                                                    <span>{{clickedItemEx}}</span>
+                                                                </p>
+                                                            </div>
+                                                            <div>
+                                                                <p style="margin-top: 3rem; text-align: center;">
+                                                                    <!-- [routerLink]="['form', new.id]" -->
+                                                                    <a (click)="startIDP(new.id)"
+                                                                        class="btn m-btn m-btn--custom m-btn--icon m-btn--pill m-btn--air go-form-btn">
+                                                                        <span>
+                                                                            <span>{{word.startIDP}}</span>
+                                                                            &nbsp;&nbsp;
+                                                                            <i class="fa fa-arrow-right"></i>
+                                                                        </span>
+                                                                    </a>
+                                                                </p>
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <!--end:: New -->
+
+                        <!--begin:: Pending -->
+                        <div class="m-accordion__item" *ngIf="pendingList?.length > 0">
+                            <div class="m-accordion__item-head collapsed" role="tab" id="pending_idp_head"
+                                data-toggle="collapse" href="#pending_idp_body" aria-expanded="false">
+                                <span class="m-accordion__item-mode" style="vertical-align: -9px !important"></span>
+                                <span
+                                    class="m-accordion__item-title m-accordian__item-mode-title  text-uppercase hSummary">
+                                    <span>{{word.inProgress}}</span>
+                                    <sup *ngIf="pendingList?.length > 0">
+                                        <span class="badge badge-danger">
+                                            {{pendingList.length}}
+                                        </span>
+                                    </sup>
+                                </span>
+                                <span class="m-accordion__item-icon">
+                                    <img style="width:2.5rem !important"
+                                        src="../../../../../../assets/img/user/project_details_icon.svg">
+                                </span>
+                            </div>
+                            <div class="m-accordion__item-body collapse" id="pending_idp_body" role="tabpanel"
+                                aria-labelledby="pending_idp_head" data-parent="#idp_home_accordian">
+                                <div class="m-accordion__item-content">
+
+                                    <div class="m_datatable m-datatable m-datatable--default m-datatable--loaded">
+                                        <table class="m-datatable__table" style="display: block; min-height: 200px;border: 1px solid #f4f3f8;border-radius: 10px;">
+                                            <thead class="m-datatable__head">
+                                                <tr class="m-datatable__row idp-table-row1" style="left: 0px;">
+                                                    <th class="m-datatable__cell" style="width: 50%;">
+                                                        <span >{{word.name}}</span>
+                                                    </th>
+                                                    <th class="m-datatable__cell" style="width: 25%;text-align: center;">
+                                                        <span >Status</span>
+                                                    </th>
+                                                    <th class="m-datatable__cell" style="width: 15%;text-align: center;">
+                                                        <span >{{word.actionPercent}}</span>
+                                                    </th>
+                                                    <th class="m-datatable__cell" style="width: 10%;text-align: center;">
+                                                        <span >{{word.view}}</span>
+                                                    </th>
+                                                </tr>
+                                                <tr class="m-datatable__row idp-table-row2" style="left: 0px;">
+                                                    <th class="m-datatable__cell" style="width: 90%;">
+                                                        <span >IDP Info</span>
+                                                    </th>
+                                                    <th class="m-datatable__cell" style="width: 10%;text-align: center;">
+                                                        <span >{{word.view}}</span>
+                                                    </th>
+                                                </tr>
+                                            </thead>
+                                            <tbody class="m-datatable__body">
+                                                <tr class="m-datatable__row idp-table-row1" style="left: 0px;" *ngFor="let pend of pendingList">
+                                                    <td class="m-datatable__cell" style="width: 50%;">
+                                                        <span>
+                                                            <a [routerLink]="['form', pend.id]">{{pend.idp_name}}</a>
+                                                        </span>
+                                                    </td>
+                                                    <td class="m-datatable__cell" style="width: 25%;text-align: center">
+                                                        <span >
+                                                            <span class="m-badge m-badge--wide"
+                                                                [ngClass]="{'m-badge--metal': pend.status === 1, 'm-badge--warning': pend.status === 2, 
+                                                                'm-badge--info': pend.status === 3, 'm-badge--info': pend.status === 3}">
+                                                                <span *ngIf="enChecked">{{pend.text_en}}</span>
+                                                                <span *ngIf="!enChecked">{{pend.text_bm}}</span>
+                                                            </span>
+                                                        </span>
+                                                    </td>
+                                                    <td class="m-datatable__cell" style="width: 15%;text-align: center">
+                                                        <span *ngIf="pend.status === 3 || pend.status === 4; else actionComplete">
+                                                            {{pend.action_complete}}/{{pend.action_count}} Complete
+                                                        </span>
+                                                        <ng-template #actionComplete> - </ng-template>
+                                                    </td>
+                                                    <td class="m-datatable__cell" style="width: 10%;text-align: center">
+                                                        <span style="overflow: visible; position: relative;">
+                                                            <a [routerLink]="['form', pend.id]" title="View" class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only m-btn--pill"> 
+                                                                <i class="la la-eye"></i> 
+                                                            </a>
+                                                        </span>
+                                                    </td>
+                                                </tr>
+
+                                                <tr class="m-datatable__row idp-table-row2" style="left: 0px;" *ngFor="let pend of pendingList">
+                                                    <td class="m-datatable__cell" style="width: 90%;">
+                                                        <p><a [routerLink]="['form', pend.id]">{{pend.idp_name}} </a></p>
+                                                        <p>
+                                                            Status : 
+                                                            <span class="m-badge m-badge--wide"
+                                                                [ngClass]="{'m-badge--metal': pend.status === 1, 'm-badge--warning': pend.status === 2, 
+                                                                'm-badge--info': pend.status === 3, 'm-badge--info': pend.status === 3}">
+                                                                <span *ngIf="enChecked">{{pend.text_en}}</span>
+                                                                <span *ngIf="!enChecked">{{pend.text_bm}}</span>
+                                                            </span>
+                                                        </p>
+                                                        <p>
+                                                            {{word.actionPercent}}: 
+                                                            <span *ngIf="pend.status === 3 || pend.status === 4; else actionComplete">
+                                                                {{pend.action_complete}}/{{pend.action_count}} Complete
+                                                            </span>
+                                                            <ng-template #actionComplete> - </ng-template>
+                                                        </p>
+                                                    </td>
+                                                    <td class="m-datatable__cell" style="width: 10%;text-align: center">
+                                                        <span style="overflow: visible; position: relative;">
+                                                            <a [routerLink]="['form', pend.id]" title="View" class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only m-btn--pill"> 
+                                                                <i class="la la-eye"></i> 
+                                                            </a>
+                                                        </span>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                        <!--end:: Pending -->
+
+                        <!--begin:: Completed -->
+                        <div class="m-accordion__item" *ngIf="completedList?.length > 0">
+                            <div class="m-accordion__item-head collapsed" role="tab" id="complete_idp_head"
+                                data-toggle="collapse" href="#complete_idp_body" aria-expanded="false">
+                                <span class="m-accordion__item-mode" style="vertical-align: -9px !important"></span>
+                                <span
+                                    class="m-accordion__item-title m-accordian__item-mode-title  text-uppercase hSummary">
+                                    <span>{{word.completed}}</span>
+                                    <sup *ngIf="completedList?.length > 0">
+                                        <span class="badge badge-success">{{completedList.length}}</span>
+                                    </sup>
+                                </span>
+                                <span class="m-accordion__item-icon">
+                                    <img style="width:2.5rem !important"
+                                        src="../../../../../../assets/img/user/project_details_icon.svg">
+                                </span>
+                            </div>
+                            <div class="m-accordion__item-body collapse" id="complete_idp_body" role="tabpanel"
+                                aria-labelledby="complete_idp_head" data-parent="#idp_home_accordian">
+                                <div class="m-accordion__item-content">
+
+                                    <div class="m_datatable m-datatable m-datatable--default m-datatable--loaded">
+                                        <table class="m-datatable__table" style="display: block; min-height: 200px;border: 1px solid #f4f3f8;border-radius: 10px;">
+                                            <thead class="m-datatable__head">
+                                                <tr class="m-datatable__row idp-table-row1" style="left: 0px;">
+                                                    <th class="m-datatable__cell" style="width: 50%;">
+                                                        <span >{{word.name}}</span>
+                                                    </th>
+                                                    <th class="m-datatable__cell" style="width: 25%;text-align: center;">
+                                                        <span >Status</span>
+                                                    </th>
+                                                    <th class="m-datatable__cell" style="width: 15%;text-align: center;">
+                                                        <span >{{word.actionPercent}}</span>
+                                                    </th>
+                                                    <th class="m-datatable__cell" style="width: 10%;text-align: center;">
+                                                        <span >{{word.view}}</span>
+                                                    </th>
+                                                </tr>
+                                                <tr class="m-datatable__row idp-table-row2" style="left: 0px;">
+                                                    <th class="m-datatable__cell" style="width: 90%;">
+                                                        <span >IDP Info</span>
+                                                    </th>
+                                                    <th class="m-datatable__cell" style="width: 10%;text-align: center;">
+                                                        <span >{{word.view}}</span>
+                                                    </th>
+                                                </tr>
+                                            </thead>
+                                            <tbody class="m-datatable__body">
+                                                <tr class="m-datatable__row idp-table-row1" style="left: 0px;" *ngFor="let comp of completedList">
+                                                    <td class="m-datatable__cell" style="width: 50%;">
+                                                        <span >
+                                                            <a [routerLink]="['form', comp.id]">{{comp.idp_name}}</a>
+                                                        </span>
+                                                    </td>
+                                                    <td class="m-datatable__cell" style="width: 25%;text-align: center">
+                                                        <span >
+                                                            <span class="m-badge m-badge--success m-badge--success">
+                                                                <span *ngIf="enChecked">{{comp.text_en}}</span>
+                                                                <span *ngIf="!enChecked">{{comp.text_bm}}</span>
+                                                            </span>
+                                                        </span>
+                                                    </td>
+                                                    <td class="m-datatable__cell" style="width: 15%;text-align: center">
+                                                        <span *ngIf="comp.status === 3 || comp.status === 4; else actionComplete">
+                                                            {{comp.action_complete}}/{{comp.action_count}} Complete
+                                                        </span>
+                                                        <ng-template #actionComplete> - </ng-template>
+                                                    </td>
+                                                    <td class="m-datatable__cell" style="width: 10%;text-align: center">
+                                                        <span style="overflow: visible; position: relative;">
+                                                            <a [routerLink]="['form', comp.id]" title="View" class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only m-btn--pill"> 
+                                                                <i class="la la-eye"></i> 
+                                                            </a>
+                                                        </span>
+                                                    </td>
+                                                </tr>
+
+                                                <tr class="m-datatable__row idp-table-row2" style="left: 0px;" *ngFor="let comp of completedList">
+                                                    <td class="m-datatable__cell" style="width: 90%;">
+                                                        <p><a [routerLink]="['form', comp.id]">{{comp.idp_name}}</a></p>
+                                                        <p>
+                                                            Status : 
+                                                            <span class="m-badge m-badge--wide"
+                                                                [ngClass]="{'m-badge--metal': comp.status === 1, 'm-badge--warning': comp.status === 2, 
+                                                                'm-badge--info': comp.status === 3, 'm-badge--info': comp.status === 3}">
+                                                                <span *ngIf="enChecked">{{comp.text_en}}</span>
+                                                                <span *ngIf="!enChecked">{{comp.text_bm}}</span>
+                                                            </span>
+                                                        </p>
+                                                        <p>
+                                                            {{word.actionPercent}}: 
+                                                            <span *ngIf="comp.status === 3 || comp.status === 4; else actionComplete">
+                                                                {{comp.action_complete}}/{{comp.action_count}} Complete
+                                                            </span>
+                                                            <ng-template #actionComplete> - </ng-template>
+                                                        </p>
+                                                    </td>
+                                                    <td class="m-datatable__cell" style="width: 10%;text-align: center">
+                                                        <span style="overflow: visible; position: relative;">
+                                                            <a [routerLink]="['form', comp.id]" title="View" class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only m-btn--pill"> 
+                                                                <i class="la la-eye"></i> 
+                                                            </a>
+                                                        </span>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                        <!--end:: Completed -->
+
+                    </div>
+                </div>
+
+                <div class="tab-pane" id="review" role="tabpanel"> <!-- Review tab -->
+                    
+                    <div class="m_datatable m-datatable m-datatable--default m-datatable--loaded" style="padding: 2rem 0rem;">
+                        <table class="m-datatable__table" style="display: block; min-height: 200px;border: 1px solid #f4f3f8;border-radius: 10px;">
+                            <thead class="m-datatable__head">
+                                <tr class="m-datatable__row idp-table-row1" style="left: 0px;">
+                                    <th class="m-datatable__cell" style="width: 35%;">
+                                        <span >IDP {{word.name}}</span>
+                                    </th>
+                                    <th class="m-datatable__cell" style="width: 30%;">
+                                        <span >Staff {{word.name}}</span>
+                                    </th>
+                                    <th class="m-datatable__cell" style="width: 15%;text-align: center;">
+                                        <span >Status</span>
+                                    </th>
+                                    <th class="m-datatable__cell" style="width: 10%;text-align: center;">
+                                        <span >{{word.actionPercent}}</span>
+                                    </th>
+                                    <th class="m-datatable__cell" style="width: 10%;text-align: center;">
+                                        <span >{{word.view}}</span>
+                                    </th>
+                                </tr>
+                                <tr class="m-datatable__row idp-table-row2" style="left: 0px;">
+                                    <th class="m-datatable__cell" style="width: 90%;">
+                                        <span >IDP Info</span>
+                                    </th>
+                                    <th class="m-datatable__cell" style="width: 10%;text-align: center;">
+                                        <span >{{word.view}}</span>
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody class="m-datatable__body">
+                                <tr class="m-datatable__row idp-table-row1" style="left: 0px;" *ngFor="let review of sup_PendingList">
+                                    <td class="m-datatable__cell" style="width: 35%;">
+                                        <span >
+                                            <a [routerLink]="['form', review.det.id]">{{review.det.idp_name}}</a>
+                                        </span>
+                                    </td>
+                                    <td class="m-datatable__cell" style="width: 30%;">
+                                        <div>
+                                            <img src="{{review.imgUrl}}" style="width: 3rem; height: 3rem; border-radius: 50%;">
+                                            <span >{{review.det.staff_name}}</span>
+                                        </div>
+                                    </td>
+                                    
+                                    <td class="m-datatable__cell" style="width: 15%;text-align: center">
+                                        <span >
+                                            <span class="m-badge m-badge--wide" 
+                                                [ngClass]="{'m-badge--metal': review.det.status === 1, 'm-badge--warning': review.det.status === 2, 
+                                                'm-badge--info': review.det.status === 3, 'm-badge--success': review.det.status === 4 }">
+                                                <span *ngIf="enChecked">{{review.det.text_en}}</span>
+                                                <span *ngIf="!enChecked">{{review.det.text_bm}}</span>
+                                            </span>
+                                        </span>
+                                    </td>
+                                    <td class="m-datatable__cell" style="width: 10%;text-align: center">-</td>
+                                    <td class="m-datatable__cell" style="width: 10%;text-align: center">
+                                        <span style="overflow: visible; position: relative;">
+                                            <a [routerLink]="['form', review.det.id]" title="View" class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only m-btn--pill"> 
+                                                <i class="la la-eye"></i> 
+                                            </a>
+                                        </span>
+                                    </td>
+                                </tr>
+                                <tr class="m-datatable__row idp-table-row2" style="left: 0px;" *ngFor="let review of sup_PendingList">  <!-- Review tab mobile version-->
+                                    <td class="m-datatable__cell" style="width: 90%;">
+                                        <p>IDP : <a [routerLink]="['form', review.det.id]">{{review.det.idp_name}}</a></p>
+                                        <p>Staff : 
+                                            <img src="{{review.imgUrl}}" style="width: 3rem; height: 3rem; border-radius: 50%;">
+                                            {{review.det.staff_name}}
+                                        </p>
+                                        <!-- <p >
+                                            Percentage : {{((review.det.action_complete/review.det.action_count)*100).toString().slice(0, 5)}} %
+                                        </p> -->
+                                        <p>Status :
+                                            <span class="m-badge m-badge--wide" 
+                                                [ngClass]="{'m-badge--metal': review.det.status === 1, 'm-badge--warning': review.det.status === 2, 
+                                                'm-badge--info': review.det.status === 3, 'm-badge--success': review.det.status === 4 }"> 
+                                                <span *ngIf="enChecked">{{review.det.text_en}}</span>
+                                                <span *ngIf="!enChecked">{{review.det.text_bm}}</span>
+                                            </span>
+                                        </p>
+                                        <!-- <p>
+                                            {{word.action}} / Percentage : {{((review.det.action_complete/review.det.action_count)*100).toFixed()}} % 
+                                        </p> -->
+                                        <p *ngIf="review.det.status === 3 || review.det.status === 4; else actionComplete">
+                                            {{word.actionPercent}}: {{((review.det.action_complete/review.det.action_count)*100).toFixed()}} % ( {{review.det.action_complete}}/{{review.det.action_count}} Complete )
+                                        </p>
+                                        <ng-template #actionComplete><p>{{word.actionPercent}}: - </p></ng-template>
+                                    </td>
+                                    
+                                    <td class="m-datatable__cell" style="width: 10%;text-align: center">
+                                        <span style="overflow: visible; position: relative;">
+                                            <a [routerLink]="['form', review.det.id]" title="View" class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only m-btn--pill"> 
+                                                <i class="la la-eye"></i> 
+                                            </a>
+                                        </span>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="tab-pane" id="myTeam" role="tabpanel" *ngIf="sup_MyTeamList?.length > 0"> <!-- My Team tab -->
+                    
+                    <div class="m_datatable m-datatable m-datatable--default m-datatable--loaded" style="padding: 2rem 0rem;">
+                        <table class="m-datatable__table" style="display: block; min-height: 200px;border: 1px solid #f4f3f8;border-radius: 10px;">
+                            <thead class="m-datatable__head">
+                                <tr class="m-datatable__row idp-table-row1" style="left: 0px;"> <!-- for web view -->
+                                    <th class="m-datatable__cell" style="width: 35%;">
+                                        <span >IDP {{word.name}}</span>
+                                    </th>
+                                    <th class="m-datatable__cell" style="width: 30%;">
+                                        <span >Staff {{word.name}}</span>
+                                    </th>
+                                    
+                                    <th class="m-datatable__cell" style="width: 15%;text-align: center;">
+                                        <span >Status</span>
+                                    </th>
+                                    <th class="m-datatable__cell" style="width: 10%;text-align: center;">
+                                        <span >{{word.actionPercent}}</span>
+                                    </th>
+                                    <th class="m-datatable__cell" style="width: 10%;text-align: center;">
+                                        <span >{{word.view}}</span>
+                                    </th>
+                                </tr>
+                                <tr class="m-datatable__row idp-table-row2" style="left: 0px;"><!-- for mobile view -->
+                                    <th class="m-datatable__cell" style="width: 90%;">
+                                        <span >IDP Info</span>
+                                    </th>
+                                    <th class="m-datatable__cell" style="width: 10%;text-align: center;">
+                                        <span >{{word.view}}</span>
+                                    </th>
+                                </tr>
+                            </thead>
+
+                            <tbody class="m-datatable__body">
+                                <tr class="m-datatable__row idp-table-row1" style="left: 0px;" *ngFor="let team of sup_MyTeamList"> <!-- for web view -->
+                                    <td class="m-datatable__cell" style="width: 35%;">
+                                        <span >
+                                            <a [routerLink]="['form', team.det.id]">{{team.det.idp_name}}</a>
+                                        </span>
+                                    </td>
+                                    <td class="m-datatable__cell" style="width: 30%;">
+                                        <div>
+                                            <img src="{{team.imgUrl}}" style="width: 3rem; height: 3rem; border-radius: 50%;">
+                                            <span >{{team.det.staff_name}}</span>
+                                        </div>
+                                    </td>
+                                    <td class="m-datatable__cell" style="width: 15%;text-align: center">
+                                        <span >
+                                            <span class="m-badge m-badge--wide" 
+                                                [ngClass]="{'m-badge--metal': team.det.status === 1, 'm-badge--warning': team.det.status === 2, 
+                                                'm-badge--info': team.det.status === 3, 'm-badge--success': team.det.status === 4 }">
+                                                <span *ngIf="enChecked">{{team.det.text_en}}</span>
+                                                <span *ngIf="!enChecked">{{team.det.text_bm}}</span>
+                                            </span>
+                                        </span>
+                                    </td>
+                                    <td class="m-datatable__cell" style="width: 10%;text-align: center">
+                                        <div *ngIf="team.det.action_count; else actionComplete">
+                                            <div>{{((team.det.action_complete/team.det.action_count)*100).toFixed()}}%</div>
+                                            <div>({{team.det.action_complete}}/{{team.det.action_count}}&nbsp;Complete)</div>
+                                        </div>
+                                        <ng-template #actionComplete>-</ng-template>
+                                    </td>
+                                    <td class="m-datatable__cell" style="width: 10%;text-align: center">
+                                        <span style="overflow: visible; position: relative;">
+                                            <a [routerLink]="['form', team.det.id]" title="View" class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only m-btn--pill"> 
+                                                <i class="la la-eye"></i> 
+                                            </a>
+                                        </span>
+                                    </td>
+                                </tr>
+
+                                <tr class="m-datatable__row idp-table-row2" style="left: 0px;" *ngFor="let team of sup_MyTeamList"> <!-- for mobile view -->
+                                    <td class="m-datatable__cell" style="width: 90%;">
+                                        <p>IDP : <a [routerLink]="['form', team.det.id]">{{team.det.idp_name}}</a></p>
+                                        <p>Staff : 
+                                            <img src="{{team.imgUrl}}" style="width: 3rem; height: 3rem; border-radius: 50%;">
+                                            {{team.det.staff_name}}
+                                        </p>
+                                        
+                                        <p>Status :
+                                            <span class="m-badge m-badge--wide" 
+                                                [ngClass]="{'m-badge--metal': team.det.status === 1, 'm-badge--warning': team.det.status === 2, 
+                                                'm-badge--info': team.det.status === 3, 'm-badge--success': team.det.status === 4 }"> 
+                                                <span *ngIf="enChecked">{{team.det.text_en}}</span>
+                                                <span *ngIf="!enChecked">{{team.det.text_bm}}</span>
+                                            </span>
+                                        </p>
+                                       
+                                        <p *ngIf="team.det.status === 3 || team.det.status === 4; else actionComplete">
+                                            {{word.actionPercent}}: {{((team.det.action_complete/team.det.action_count)*100).toFixed()}} % ( {{team.det.action_complete}}/{{team.det.action_count}} Complete )
+                                        </p>
+                                        <ng-template #actionComplete><p>{{word.actionPercent}} : -</p></ng-template>
+                                    </td>
+                                    
+                                    <td class="m-datatable__cell" style="width: 10%;text-align: center">
+                                        <span style="overflow: visible; position: relative;">
+                                            <a [routerLink]="['form', team.det.id]" title="View" class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only m-btn--pill"> 
+                                                <i class="la la-eye"></i> 
+                                            </a>
+                                        </span>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="tab-pane" id="myMentee" role="tabpanel" *ngIf="sup_MyMenteeList?.length > 0"> <!-- My Mentee tab -->
+                    
+                    <div class="m_datatable m-datatable m-datatable--default m-datatable--loaded" style="padding: 2rem 0rem;">
+                        <table class="m-datatable__table" style="display: block; min-height: 200px;border: 1px solid #f4f3f8;border-radius: 10px;">
+                            <thead class="m-datatable__head">
+                                <tr class="m-datatable__row idp-table-row1" style="left: 0px;"> <!-- for web view -->
+                                    <th class="m-datatable__cell" style="width: 35%;">
+                                        <span >IDP {{word.name}}</span>
+                                    </th>
+                                    <th class="m-datatable__cell" style="width: 30%;">
+                                        <span >Staff {{word.name}}</span>
+                                    </th>
+                                    
+                                    <th class="m-datatable__cell" style="width: 15%;text-align: center;">
+                                        <span >Status</span>
+                                    </th>
+                                    <th class="m-datatable__cell" style="width: 10%;text-align: center;">
+                                        <span >{{word.view}}</span>
+                                    </th>
+                                </tr>
+                                <tr class="m-datatable__row idp-table-row2" style="left: 0px;"><!-- for mobile view -->
+                                    <th class="m-datatable__cell" style="width: 90%;">
+                                        <span >IDP Info</span>
+                                    </th>
+                                    <th class="m-datatable__cell" style="width: 10%;text-align: center;">
+                                        <span >{{word.view}}</span>
+                                    </th>
+                                </tr>
+                            </thead>
+
+                            <tbody class="m-datatable__body">
+                                <tr class="m-datatable__row idp-table-row1" style="left: 0px;" *ngFor="let team of sup_MyMenteeList"> <!-- for web view -->
+                                    <td class="m-datatable__cell" style="width: 35%;">
+                                        <span >
+                                            <a (click)="menteeValue()" [routerLink]="['form', team.det.id]">{{team.det.idp_name}}</a>
+                                        </span>
+                                    </td>
+                                    <td class="m-datatable__cell" style="width: 30%;">
+                                        <div>
+                                            <img src="{{team.imgUrl}}" style="width: 3rem; height: 3rem; border-radius: 50%;">
+                                            <span >{{team.det.staff_name}}</span>
+                                        </div>
+                                    </td>
+                                    <td class="m-datatable__cell" style="width: 15%;text-align: center">
+                                        <span >
+                                            <span class="m-badge m-badge--wide" 
+                                                [ngClass]="{'m-badge--metal': team.det.status === 1, 'm-badge--warning': team.det.status === 2, 
+                                                'm-badge--info': team.det.status === 3, 'm-badge--success': team.det.status === 4 }">
+                                                <span *ngIf="enChecked">{{team.det.text_en}}</span>
+                                                <span *ngIf="!enChecked">{{team.det.text_bm}}</span>
+                                            </span>
+                                        </span>
+                                    </td>
+                                    <td class="m-datatable__cell" style="width: 10%;text-align: center">
+                                        <span  style="overflow: visible; position: relative;">
+                                            <a (click)="menteeValue()" [routerLink]="['form', team.det.id]" title="View" class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only m-btn--pill"> 
+                                                <i class="la la-eye"></i> 
+                                            </a>
+                                        </span>
+                                    </td>
+                                </tr>
+
+                                <tr class="m-datatable__row idp-table-row2" style="left: 0px;" *ngFor="let team of sup_MyMenteeList"> <!-- for mobile view -->
+                                    <td class="m-datatable__cell" style="width: 90%;">
+                                        <p>IDP : <a (click)="menteeValue()" [routerLink]="['form', team.det.id]">{{team.det.idp_name}}</a></p>
+                                        <p>Staff : 
+                                            <img src="{{team.imgUrl}}" style="width: 3rem; height: 3rem; border-radius: 50%;">
+                                            {{team.det.staff_name}}
+                                        </p>
+                                        
+                                        <p>Status :
+                                            <span class="m-badge m-badge--wide" 
+                                                [ngClass]="{'m-badge--metal': team.det.status === 1, 'm-badge--warning': team.det.status === 2, 
+                                                'm-badge--info': team.det.status === 3, 'm-badge--success': team.det.status === 4 }"> 
+                                                <span *ngIf="enChecked">{{team.det.text_en}}</span>
+                                                <span *ngIf="!enChecked">{{team.det.text_bm}}</span>
+                                            </span>
+                                        </p>
+                                    </td>
+                                    <td class="m-datatable__cell" style="width: 10%;text-align: center">
+                                        <span style="overflow: visible; position: relative;">
+                                            <a (click)="menteeValue()" [routerLink]="['form', team.det.id]" title="View" class="m-portlet__nav-link btn m-btn m-btn--hover-accent m-btn--icon m-btn--icon-only m-btn--pill"> 
+                                                <i class="la la-eye"></i> 
+                                            </a>
+                                        </span>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+

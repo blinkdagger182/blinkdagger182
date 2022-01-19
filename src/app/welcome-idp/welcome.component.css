@@ -1,0 +1,39 @@
+.login_form_btn {
+    margin: auto !important;
+    color:white !important;
+    text-align: left !important;
+    background-color: #f05a26;
+}
+
+.login_modal{
+    border-radius: 35px !important;
+}
+
+.input_field{
+    height: 3.1rem !important;
+    width: 75% !important;
+    margin: auto;
+}
+
+.header_modal{
+    text-align: center !important;
+    width:100% !important;
+    margin-left: 21px !important;
+}
+
+.modal_logo{
+    width: 35% !important;
+}
+
+.modal-title{
+    margin-left: 4rem !important;
+}
+
+.login_icon{
+    font-size: 2rem !important;
+    color: #fd5806 !important;
+}
+
+.form-control:focus{
+    border: 2px solid #fd5806 !important;
+}

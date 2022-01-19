@@ -1,0 +1,924 @@
+<div>
+    <div class="page-bg circle-bg">
+        <h2 class="head-sub-title">Circle</h2>
+    </div>
+    <div class="pg-title-div">
+        <h3 class="pg-title">CIRCLE</h3>
+    </div>
+</div>
+
+<!--begin::Portlet-->
+<div class="m-portlet">
+	
+	<!-- BEGIN: Subheader -->
+	<div class="m-subheader ">
+		<div class="d-flex align-items-center">
+			 <div class="mr-auto">
+				<h3 class="m-subheader__title ">My Circle</h3>			
+			</div>
+		 	<div>
+			 	<span class="m-subheader__searchName">
+				<div class="m-input-icon m-input-icon--left">
+					<input type="search" class="form-control m-input" required (keyup)="onNameKeyUp($event)" onfocus="this.value=''" value="" list="scUserName" placeholder="Search Circle Name"> 
+					<span class="m-input-icon__icon m-input">
+						<span><i class="la la-search"></i></span>
+					</span> 
+				</div>
+				</span>
+		 	</div>
+    	</div>
+	</div>
+	<!-- END: Subheader -->	
+
+	<div class="m-content">
+		<div class="row">	
+
+			<!-- Begin left column -->
+			<div class="col-md-6">								
+				<div class="m-portlet m-portlet--bordered m-portlet--rounded">
+					<div class="col-lg-12 centred my-auto" *ngIf="loadingDataSearch || loadingCircle || loadingEndorseFr">
+						<div class="m-section__content">
+							<div class="m-card-user m-card-user--skin-dark" align="center" style="height: 600px;" class="m-portlet__body">
+								<span>
+									<img src="../assets/img/user/ERA-loading.gif" alt="" style="width:150px;height:150px; position:initial; margin: 30%">
+								</span>
+							</div>
+						</div>
+					</div>
+
+					<!--begin: Search Form -->	
+					<div class="modal-body" *ngIf="isOpen && !loadFriend && !loadCirclefriend && !getEndorseFriend">
+						<div class="alert alert-dismissible">
+							<h2>Search</h2>
+							<button id="btnClose" type="button" class="close" data-dismiss="alert" (click)="displayFollowfr()"></button>
+							<div class="m-scrollable" data-scrollable="true" data-height="600" style="height: 600px; overflow:auto;">
+								<table class="table table-hover">
+									<tr *ngFor="let item of newData" (click)="staffDetail(item.peopleID, item.people)">
+										<td>
+											<div class="m-card-profile__pic-wrapper">
+												<img src="{{imgFriendArrList}}/{{item.peopleImage}}?api_key={{apiKeyFriendArrList}}" class="m--img-rounded m--marginless" alt="" height="42" width="42"/>
+											</div>
+										</td>
+										<td>
+											<div class="m-widget4__info">
+												<span class="font-weight-bold">
+													{{item.people}}
+												</span>
+												<br> 
+												<span class="m-widget4__sub">
+													{{item.peopleCompany}}
+												</span>
+												<br>
+												<span class="m-widget4__mutual">
+													{{item.mutualFriendsNum}}
+												</span>		
+												<span class="m-widget4__mutualtxt">
+													mutual friends
+												</span>								 		 
+											</div>
+										</td>
+									</tr>
+								</table>
+							</div>
+						</div>
+					</div>
+					<!--end: Search Form -->
+
+					<!-- List of circle -->
+					<div class="col-lg-12 centred my-auto" *ngIf="loadingCircle">
+						<div class="m-section__content">
+							<div class="m-card-user m-card-user--skin-dark" align="center" style="height: 600px;" class="m-portlet__body">
+								<span>
+									<img src="../assets/img/user/ERA-loading.gif" alt="" style="width:150px;height:150px; position:initial; margin: 30%">
+								</span>
+							</div>
+						</div>
+					</div>
+
+					<div class="container" *ngIf="loadCirclefriend && !loadFriend && !getEndorseFriend && !isOpen">
+						<div class="alert alert-dismissible">
+							<button id="btnClose" type="button" class="close" data-dismiss="alert" (click)="displayFollowfr()"></button>
+							<div class="m-portlet__head">
+								<div class="m-portlet__head-caption">
+									<div class="m-portlet__head-title">
+										<h3 class="m-portlet__head-text">
+											All friends in circle
+										</h3>
+									</div>
+								</div>
+							</div>
+							<div class="m_scrollable" data-scrollable="true" data-height="500" style="height: 500px; overflow: auto;">	
+								<div class="m-portlet__body">
+									<table class="table table-hover">
+										<tr *ngFor="let circleItem of circleList" (click)="staffDetail(circleItem.friendID, circleItem.friendName)">
+											<td>
+												<div class="m-card-profile__pic">
+													<div class="m-card-profile__pic-wrapper">
+														<img src="{{imgFriendArrList}}/{{circleItem.peopleImage}}?api_key={{apiKeyFriendArrList}}" class="m--img-rounded m--marginless" alt="" height="42" width="42"/>
+													</div>
+												</div>
+											</td>
+											<td>
+												<div class="m-widget4__info">
+													<span class="font-weight-bold">
+														{{circleItem.friendName}}
+													</span>
+													<br> 
+													<span class="m-widget4__pos">
+														{{circleItem.peoplePosition}}
+													</span>
+													<br>
+												</div>
+											</td>
+											<td></td>
+										</tr>
+									</table>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<!-- List of friends who endorse skills-->
+					<div class="col-lg-12 centred my-auto" *ngIf="loadingEndorseFr">
+						<div class="m-section__content">
+							<div class="m-card-user m-card-user--skin-dark" align="center" style="height: 600px;" class="m-portlet__body">
+								<span>
+									<img src="../assets/img/user/ERA-loading.gif" alt="" style="width:150px;height:150px; position:initial; margin: 30%">
+								</span>
+							</div>
+						</div>
+					</div>
+					<div class="container" *ngIf="getEndorseFriend && !loadFriend && !isOpen && !loadCirclefriend">
+						<div class="alert alert-dismissible">
+							<button id="btnClose" type="button" class="close" data-dismiss="alert" (click)="displayFollowfr()"></button>
+							<div class="m-portlet__head">
+								<div class="m-portlet__head-caption">
+									<div class="m-portlet__head-title">
+										<h3 class="m-portlet__head-text">Endorsement List - {{selSkillName}}</h3>
+									</div>
+								</div>
+							</div>
+							<div class="m-portlet__body">
+								<div class="m-scrollable" data-scrollable="true" data-height="500" style="height: 500px; overflow: auto;">	
+									<table class="table table-hover">
+										<tr *ngFor="let endorseFrItem of endorseFrList" (click)="staffDetail(endorseFrItem.friendID, endorseFrItem.friendName)">
+											<td>
+												<div class="m-card-profile__pic">
+													<div class="m-card-profile__pic-wrapper">
+														<img src="{{imgFriendArrList}}/{{endorseFrItem.peopleImage}}?api_key={{apiKeyFriendArrList}}" class="m--img-rounded m--marginless" alt="" height="42" width="42"/>
+													</div>
+												</div>
+											</td>
+											<td>
+												<div class="m-widget4__info">
+													<span class="font-weight-bold">
+														{{endorseFrItem.friendName}}
+													</span>
+													<br> 
+													<span class="m-widget4__pos">
+														{{endorseFrItem.peoplePosition}}
+													</span>
+													<br>
+													<span>Status: </span>
+													<span *ngIf="endorseFrItem.pendingFriendRequest === true" class="m-widget4__pos">
+															Request Sent
+													</span>
+													<br>
+													<span *ngIf="endorseFrItem.pendingFriendRequest === false" class="m-widget4__pos">
+															Not Following
+													</span>
+													<br>
+												</div>
+											</td>
+											<td></td>
+										</tr>
+									</table>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<!-- Begin tab -->
+					<div class="m-portlet__head" *ngIf="!isOpen && loadFriend && !loadCirclefriend && !getEndorseFriend">
+						<div class="m-portlet__head-caption">
+							<div class="m-portlet__head-title">
+								<h3 class="m-portlet__head-text">Follow friends to endorse their skill etc</h3>
+							</div>
+						</div>
+					</div>
+					<div class="m-portlet m-portlet--tabs" *ngIf="!isOpen && loadFriend && !loadCirclefriend && !getEndorseFriend">
+						<div class="m-portlet__head">
+							<div class="m-portlet__head-tools">
+								<ul class="nav nav-tabs m-tabs-line m-tabs-line--primary m-tabs-line--2x" role="tablist">
+									<li class="nav-item m-tabs__item">
+										<a class="nav-link m-tabs__link active" data-toggle="tab" href="#m_tabs_6_1" role="tab">
+											<i class="fa fa-user"></i> Recommended
+										</a>
+									</li>
+									<li class="nav-item m-tabs__item">
+										<a class="nav-link m-tabs__link" data-toggle="tab" href="#m_tabs_6_2" role="tab">
+											<i class="fa fa-user-circle"></i> Contact
+										</a>
+									</li>
+									<li class="nav-item m-tabs__item">
+										<a class="nav-link m-tabs__link" data-toggle="tab" href="#m_tabs_6_3" role="tab">
+											<i class="fa fa-users"></i> Friends
+										</a>
+									</li>
+									<li class="nav-item m-tabs__item">
+										<a class="nav-link m-tabs__link" data-toggle="tab" href="#m_tabs_6_4" role="tab">	
+											<i class="fa fa-user-plus"></i> Pending
+											<span *ngIf = "notify && !loadingData && data.length >= 1" class="badge badge-danger">{{total}}</span>
+											<span *ngIf = "!notify && !loadingData && data.length == 0"> </span>
+										</a>
+									</li>
+								</ul>
+							</div>
+						</div>
+						<!-- <div class="modal-body" data-scrollable="true" data-height="600" style="height:600px; overflow: hidden">	 -->
+						<div class="m-portlet__body">                   
+							<div class="tab-content">	
+
+								<!-- Recommended Tab -->
+								<div class="tab-pane active" id="m_tabs_6_1" role="tabpanel">
+									<div class="col-lg-12 centred my-auto" *ngIf="remLoading || reqLoading">
+										<div class="m-section__content">
+											<div class="m-card-user m-card-user--skin-dark" align="center" style="height: 600px;" class="m-portlet__body">
+												<span>
+													<img src="../assets/img/user/ERA-loading.gif" alt="" style="width:150px;height:150px; position:initial; margin: 30%">
+												</span>
+											</div>
+										</div>
+									</div>
+									<div class="modal-body" data-scrollable="true" data-height="500" style="height:500px; overflow: auto">	
+										<table class="table table-hover">
+											<!-- <tr *ngFor="let fList of recTemp" (click)="onSelect(fList.friendID, fList.friendName)" data-target="#selectRecFriend"> -->
+											<tr *ngFor="let fList of recTemp"  (click)="staffDetail(fList.friendID, fList.friendName)"> <!--  (click)="getProfile(fList.friendID)" -->
+												<td>
+													<div class="m-card-profile__pic">
+														<div class="m-card-profile__pic-wrapper">
+																<img src="{{imgFriendArrList}}/{{fList.peopleImage}}?api_key={{apiKeyFriendArrList}}" class="m--img-rounded m--marginless" alt="" height="42" width="42"/>
+														</div>
+													</div>
+												</td>
+												<td>
+													<div class="m-widget4__info">
+														<span class="font-weight-bold">
+															{{fList.friendName}}
+														</span>
+														<br> 
+														<span class="m-widget4__sub">
+															{{fList.peoplePosition}}
+														</span>
+														<br>
+														<span class="m-widget4__mutual">
+															{{fList.mutualFriendsNum}}
+														</span>		
+														<span class="m-widget4__mutualtxt">
+															mutual friends
+														</span>								 		 
+													</div>
+												</td>
+												<td> 
+													<div class="m-widget4__progress">
+														<div class="row align-items-right">
+															<button *ngIf="!remLoading" type="button" class="btn m-btn--pill" style="background-color: #e7e5e3; color: #0FC2D0" (click)="selectRemove(fList.friendID)">REMOVE</button> &nbsp;
+															<button *ngIf="!reqLoading" type="button" class="btn m-btn--pill" style="background-color: #0FC2D0; color: white" (click)="sendRequest(fList.friendID)">FOLLOW</button>
+														</div>
+													</div>
+												</td>
+											</tr>
+										<!-- </div> -->
+										</table>
+									</div>
+								</div>
+
+								<!-- Contact Tab -->
+								<div class="tab-pane" id="m_tabs_6_2" role="tabpanel">
+									<div class="col-lg-12 centred my-auto" *ngIf="remLoading || reqLoading">
+										<div class="m-section__content">
+											<div class="m-card-user m-card-user--skin-dark" align ="center" style="height: 600px;" class="m-portlet__body">
+												<span>
+													<img src="../assets/img/user/ERA-loading.gif" alt="" style="width:150px;height:150px; position:initial; margin: 30%">
+												</span>
+											</div>
+										</div>
+									</div>
+									<table class="table table-hover">
+										<div class="m-scrollable" data-scrollable="true" data-height="500" style="height: 500px; overflow: auto;">	
+											<tr *ngFor="let itemCtc of contactTemp" (click)="staffDetail(itemCtc.friendID, itemCtc.friendName)" data-target="#selectFriend">
+												<td>
+													<div class="m-card-profile__pic">
+														<div class="m-card-profile__pic-wrapper">
+															<img src="{{imgFriendArrList}}/{{itemCtc.peopleImage}}?api_key={{apiKeyFriendArrList}}" class="m--img-rounded m--marginless" alt="" height="42" width="42"/>
+														</div>
+													</div>
+												</td>
+												<td>
+													<div class="m-widget4__info">
+														<span class="font-weight-bold">
+															{{itemCtc.friendName}}
+														</span><br> 
+														<span class="m-widget4__pos">
+															{{itemCtc.peoplePosition}}
+														</span><br >
+														<span class="m-widget4__mutual">
+															{{itemCtc.mutualFriendsNum}}
+														</span>		
+														<span class="m-widget4__mutualtxt">
+															mutual friends
+														</span>							 		 
+													</div>
+												</td>
+												<td> 
+													<div class="m-widget4__progress">
+														<div class="row align-items-right">
+															<button *ngIf="!remLoading" type="button" class="btn m-btn--pill" style="background-color: #e7e5e3; color: #0FC2D0" (click)="selectRemove(itemCtc.friendID)">REMOVE</button> &nbsp;
+															<button *ngIf="!reqLoading" type="button" class="btn m-btn--pill" style="background-color: #0FC2D0; color: white" (click)="sendRequest(itemCtc.friendID)">FOLLOW</button>
+														</div>
+													</div>
+												</td>
+											</tr>
+										</div>
+									</table>
+								</div>
+
+								<!-- Friends Tab -->
+								<div class="tab-pane" id="m_tabs_6_3" role="tabpanel">
+									<div class="col-lg-12 centred my-auto" *ngIf="rejectLoading">
+										<div class="m-section__content">
+											<div class="m-card-user m-card-user--skin-dark" align="center" style="height: 600px;" class="m-portlet__body">
+												<span>
+													<img src="../assets/img/user/ERA-loading.gif" alt="" style="width:150px;height:150px; position:initial; margin: 30%">
+												</span>
+											</div>
+										</div>
+									</div>
+									<table class="table table-hover">
+										<div class="m-scrollable" data-scrollable="true" data-height="500" style="height: 500px; overflow: auto;">	
+									<!-- <tr *ngFor="let allFr of friendTemp" (click)="onSelect(allFr.friendID, allFr.friendName)" data-target="#selectFriend"> -->
+											<tr *ngFor="let allFr of friendTemp" (click)="staffDetail(allFr.friendID, allFr.friendName)" data-target="#selectFriend">
+												<td>
+													<div class="m-card-profile__pic">
+														<div class="m-card-profile__pic-wrapper">
+															<img src="{{imgFriendArrList}}/{{allFr.peopleImage}}?api_key={{apiKeyFriendArrList}}" class="m--img-rounded m--marginless" alt="" height="42" width="42"/>
+														</div>
+													</div>
+												</td>
+												<td>
+													<div class="m-widget4__info">
+														<span class="font-weight-bold">
+															{{allFr.friendName}}
+														</span>
+														<br> 
+														<span class="m-widget4__pos">
+															{{allFr.peoplePosition}}
+														</span>
+														<br>
+														<span class="m-widget4__mutual">
+															{{allFr.mutualFriendsNum}}
+														</span>		
+														<span class="m-widget4__mutualtxt">
+															mutual friends
+														</span>							 		 
+													</div>
+												</td>
+												<td> 
+													<div class="container">
+														<button type="button" class="btn m-btn--pill" data-toggle="modal" data-target="#rejectFrModal" (click)="selectedFrName(allFr.friendID)" style="background-color: #0FC2D0; color: white">
+															FOLLOWING 
+														</button>
+													</div>	
+													<div class="modal fade" id="rejectFrModal">
+														<div class="modal-dialog modal-dialog-centered">
+															<div class="modal-content">
+																<div class="modal-header" >
+																	<h4 class="modal-title">Unfollow?</h4>
+																	<button type="button" class="close" data-dismiss="modal">&times;</button>
+																</div>
+																<div class="modal-body">
+																	<p>Are you sure you want to unfollow {{userDetail}}?</p>
+																	<input type="hidden" formControlName="rejFriendId" required>
+																</div>
+																<div class="modal-footer">
+																	<button type="button" class="btn btn-default" data-dismiss="modal">NO</button>
+																	<button *ngIf="!rejectLoading" type="button" class="btn btn-default" data-dismiss="modal" (click)="selectReject()">YES</button>
+																</div>
+															</div>
+														</div>
+													</div>
+												</td>
+											</tr>
+										</div>
+									</table>
+								</div>
+
+								<!-- Pending Tab -->
+								<div class="tab-pane" id="m_tabs_6_4" role="tabpanel">
+									<div class="col-lg-12 centred my-auto" *ngIf="acceptLoading">
+										<div class="m-section__content">
+											<div class="m-card-user m-card-user--skin-dark" align="center" style="height: 600px;" class="m-portlet__body">
+												<span>
+													<img src="../assets/img/user/ERA-loading.gif" alt="" style="width:150px;height:150px; position:initial; margin: 30%">
+												</span>
+											</div>
+										</div>
+									</div>
+									<table class="table table-hover">
+										<div class="m-scrollable" data-scrollable="true" data-height="500" style="height: 500px; overflow: hidden">		
+											<tr *ngFor="let pendList of pendTemp" (click)="staffDetail(pendList.peopleID, pendList.people)">
+												<td>
+													<div class="m-card-profile__pic-wrapper">
+														<img src="{{imgFriendArrList}}/{{pendList.peopleImage}}?api_key={{apiKeyFriendArrList}}" class="m--img-rounded m--marginless" alt="" height="42" width="42"/>
+													</div>
+												</td>
+												<td>
+													<div class="m-widget4__info">
+														<span class="font-weight-bold">{{pendList.people}}</span>
+														<br> 
+														<span class="m-widget4__sub">{{pendList.peopleCompany}}</span>
+														<br>
+														<span class="m-widget4__mutual">{{pendList.mutualFriendsNum}}</span>		
+														<span class="m-widget4__mutualtxt">mutual friends</span>								 		 
+													</div>
+												</td>
+												<td> 
+													<!-- Remove Request -->
+													<span class = "container">
+														<button type="button" class="btnRemove" data-toggle="modal" data-target="#rejectPendingFriend" (click)="selectedPendName(pendList.peopleID)">
+															<i class="la la-times"></i>
+														</button>
+													</span>		
+
+													<!-- Modal -->
+													<div class="modal fade" id="rejectPendingFriend" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+														<div class="modal-dialog modal-dialog-centered" role="document">
+															<div class="modal-content">
+																<div class="modal-header">
+																	<h5 class="modal-title" id="rejectPendingLbl">Remove Follow Request?</h5>
+																	<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+																		<span aria-hidden="true">&times;</span>
+																	</button>
+																</div>
+																<div class="modal-body">Are you sure you want to cancel your follow request?</div>
+																<div class="modal-footer">
+																	<button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+																	<button type="button" class="btn btn-primary" data-dismiss="modal" (click)="RejectPending()">Yes</button>
+																</div>
+															</div>
+														</div>
+													</div>	
+															
+													<!-- Accept Request -->
+													<span *ngIf ="!acceptLoading" type="button" class="btnAccept" (click)="selectAccept(pendList.peopleID)"><i class="la la-check" aria-hidden="true"></i></span>
+												</td>
+											</tr>
+										</div>
+									</table>
+								</div>
+							</div>      
+						</div>
+					</div>	
+					<!--end::tab-->
+ 
+				</div>
+			</div>
+			<!-- End left column -->
+
+			<!-- Begin right column-->
+			<div class="col-md-6">
+
+				<!--begin::Section-->
+				<div class="m-portlet m-portlet--bordered m-portlet--rounded">
+					<div class="col-lg-12 centred my-auto" *ngIf="loadingData || rejectLoadingProf || reqLoadingProfile">
+						<div class="m-section__content">
+							<div class="m-card-user m-card-user--skin-dark" align="center" style="height: 500px;" class="m-portlet__body">
+								<span>
+									<img src="../assets/img/user/ERA-loading.gif" alt="" style="width:150px;height:150px; position:initial; margin: 30%">
+								</span>
+							</div>
+						</div>
+					</div>
+					
+					<div class="col-lg-12 centred my-auto" *ngIf="displayERA && !loadingData">
+						<div class="m-section__content">
+							<div class="m-card-user m-card-user--skin-dark" align="center" style="height:100px;" class="m-portlet__body">
+								<span>
+									<img src="../assets/demo/default/media/img/logo/era-logo-new.png" alt="" style="width:200px;height:100px; position:initial; margin: 30%">
+								</span>
+							</div>
+						</div>
+					</div>
+					
+					<div class="m-scrollable" data-scrollable="true" data-height="700" style="height: 700px; overflow: auto">
+
+						<!--begin::displayTbl Details-->
+						<div *ngIf="displayTbl">
+							<div class="m-card-user m-card-user--skin-dark" align="center" class="m-portlet__body" *ngFor="let item of profileList">
+								<div class="m-card-user__pic">
+									<img src="{{imgFriendArrList}}/{{item.friendImageUrl}}?api_key={{apiKeyFriendArrList}}" class="m--img-rounded m--marginless" alt="" height="100" width="100"/>
+								</div>
+								<br>
+								<div>							 
+									<span class="font-weight-bold">{{item.friendName}}</span>
+								</div>
+								<div>
+									<span style="color: #0FC2D0">{{item.email}}</span>
+								</div>
+								<div>
+									<span>{{item.position}}</span>
+								</div>
+								<div>
+									<span>{{item.RawDetails.company}}</span>
+								</div>
+								<div>
+									<span style = "color: #0FC2D0">{{item.updatedPhone}}</span>
+								</div>
+								<div>
+									<span>Status: </span>
+									<span *ngIf="item.isMutualFriend === false && item.pendingFriendRequest === false && item.hasSentRequest === false" class="font-weight-bold">Not Following</span>
+									<span *ngIf="item.isMutualFriend === true && item.pendingFriendRequest === false" class="font-weight-bold">Following</span>
+									<span *ngIf="item.isMutualFriend === false && item.pendingFriendRequest === true" class="font-weight-bold">Pending Approval</span>
+									<span *ngIf="item.isMutualFriend === false && item.pendingFriendRequest === false && item.hasSentRequest === true" class="font-weight-bold">Request Sent</span>
+								</div>
+								<div>
+									<span style="color: blue" (click)="postCircleFriend(item.friendID)">
+										{{item.totalFriendsNum}}  
+										in circle
+									</span>
+									<span>
+										(
+									</span>
+									<span>
+										{{item.mutualFriendsNum}}  
+									</span>
+									<span>
+										mutuals)  
+									</span>
+								</div>
+								<br>	
+								<div class="m-widget7__button">	
+
+									<!-- Follow -->
+									<div>
+										<button type="button" *ngIf="item.isMutualFriend === false && item.pendingFriendRequest === false && item.hasSentRequest === false && !reqLoadingProfile" class="btn m-btn--pill m-btn m-btn--custom m-btn--label-brand m-btn--bolder" style="background-color: #0FC2D0; color: white" (click)="sendRequestProfile(item.friendID, item.friendName)">
+											Follow
+										</button>
+									</div>
+
+									<!-- UnFollow -->
+									<div>
+										<div class="container" *ngIf="item.isMutualFriend === true && item.pendingFriendRequest === false" >
+											<button type="button" class="btn m-btn--pill btn-secondary m-btn m-btn--custom m-btn--label-brand m-btn--bolder" style="color:#0FC2D0" data-toggle="modal" data-target="#unFollowModal" (click)="selectedFrName(item.friendID)">
+												Unfollow
+											</button>
+																
+											<!-- The Modal -->
+											<div class="modal fade" id="unFollowModal">
+												<div class="modal-dialog modal-dialog-centered">
+													<div class="modal-content">
+
+														<!-- Modal Header -->
+														<div class="modal-header">
+															<h4 class="modal-title">Unfollow?</h4>
+															<button type="button" class="close" data-dismiss="modal">&times;</button>
+														</div>
+
+														<!-- Modal body -->
+														<div class="modal-body">
+															<p>Are you sure you want to unfollow {{item.friendName}}?</p>
+														</div>
+
+														<!-- Modal footer -->
+														<div class="modal-footer">
+															<button type="button" class="btn btn-default" data-dismiss="modal">NO</button>
+															<button type="button" class="btn btn-default" data-dismiss="modal" (click)="selectReject()">YES</button>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+
+									<!-- Reject -->
+									<div class="m-widget4__ext">
+										<button type="button" *ngIf="item.isMutualFriend === false && item.pendingFriendRequest === true" class="btn m-btn--pill btn-secondary m-btn m-btn--custom m-btn--label-brand m-btn--bolder" style="color:#0FC2D0" data-toggle="modal" data-target="#rejectModalProfile" (click)="selectedPendName(item.friendID)">
+													Reject
+										</button>
+
+										<!-- Modal -->
+										<div class="modal fade" id="rejectModalProfile" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+											<div class="modal-dialog modal-dialog-centered" role="document">
+												<div class="modal-content">
+													<div class="modal-header">
+														<h5 class="modal-title" id="rejectModalProfileLabel">Remove Follow Request?</h5>
+														<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+															<span aria-hidden="true">&times;</span>
+														</button>
+													</div>
+													<div class="modal-body">Are you sure you want to cancel your follow request?</div>
+													<div class="modal-footer">
+														<button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+														<button type="button" class="btn btn-primary" data-dismiss="modal" (click)="RejectPending()">Yes</button>
+													</div>
+												</div>
+											</div>
+										</div>		
+
+										<!-- Accept	 -->
+										&nbsp;
+										<span *ngIf="item.isMutualFriend === false && item.pendingFriendRequest === true" class="btn m-btn--pill m-btn m-btn--custom m-btn--label-brand m-btn--bolder" style="background-color: #0FC2D0; color: white" (click)="selectAccept(item.friendID)">
+											Accept
+										</span>
+									</div>
+								
+									<!-- Cancel Request -->
+									<div class="container">
+										<button type="button" *ngIf="item.isMutualFriend === false && item.pendingFriendRequest === false && item.hasSentRequest === true && !rejectLoadingProf" class="btn m-btn--pill btn-secondary m-btn m-btn--custom m-btn--label-brand m-btn--bolder" style="color:#0FC2D0" data-toggle="modal" data-target="#cancelReqModal" (click)="selectedFrName(item.friendID)">
+											Cancel Request
+										</button>
+												
+										<!-- The Modal -->
+										<div class="modal fade" id="cancelReqModal">
+											<div class="modal-dialog modal-dialog-centered">
+												<div class="modal-content">
+													
+													<!-- Modal Header -->
+													<div class="modal-header">
+														<h4 class="modal-title">Remove Follow Request?</h4>
+														<button type="button" class="close" data-dismiss="modal">&times;</button>
+													</div>
+																
+													<!-- Modal body -->
+													<div class="modal-body">
+														<p>Are you sure you want to cancel your follow request?</p>
+													</div>
+																
+													<!-- Modal footer -->
+													<div class="modal-footer">
+														<button type="button" class="btn btn-default" data-dismiss="modal">NO</button>
+														<button type="button" class="btn btn-default" data-dismiss="modal" (click)="cancelReqProfile()">YES </button>
+													</div>
+
+												</div>
+											</div>
+										</div>
+									</div>
+
+								</div>	  	   	 
+
+								<!--begin::Details-->
+								<div class="m-portlet__body">
+																				
+									<!--begin::Portlet-->
+									<div class="m-portlet m-portlet--bordered m-portlet--rounded">
+										<div class="m-portlet__head">
+											<div class="m-portlet__head-caption">
+												<div class="m-portlet__head-title">
+													<h3 class="m-portlet__head-text">ABOUT</h3>
+												</div>			
+											</div>
+										</div>
+										<div class="m-portlet__body">
+											<table class="table">
+												<div *ngFor="let profileItem of profileList">
+													<span *ngIf="profileItem.about_me">{{profileItem.about_me}}</span>
+													<span *ngIf="!profileItem.about_me">Hey there! I am using ERA</span>
+												</div>
+											</table>	
+										</div>
+									</div>	
+									<!--end::Portlet-->
+
+									<!--begin::Portlet-->
+									<div *ngIf="expList.length" class="m-portlet m-portlet--bordered m-portlet--rounded">
+										<div class="m-portlet__head">
+											<div class="m-portlet__head-caption">
+												<div class="m-portlet__head-title">
+													<h3 class="m-portlet__head-text">JOB EXPERIENCE</h3>
+												</div>			
+											</div>
+										</div>
+										<div class="m-portlet__body">
+											<table class="table">
+												<div *ngFor="let jobItem of expList">
+													<tr>
+														<th><i class="fa fa-circle" style= "color:#FF6600"></i></th>
+														<th><div class="font-weight-bold">{{jobItem.Post_Desc}}</div>
+																<div>{{jobItem.Org_Unit_Desc}}</div>
+																<div>	{{jobItem.Start_Date}} - {{jobItem.End_Date}}</div>
+															<br>
+															<div *ngIf="jobItem.Achievements" style= "color:#FF6600">ACHIEVEMENTS:</div>
+															<div> {{jobItem.Achievements}} </div>
+														</th>
+													</tr>
+												</div>
+											</table>	
+										</div>
+									</div>	
+									<div *ngIf="expList.length == 0"></div>
+									<!--end::Portlet-->
+											
+									<!--begin::Portlet-->
+									<div *ngIf="expPrevList.length" class="m-portlet m-portlet--bordered m-portlet--rounded">
+										<div class="m-portlet__head">
+											<div class="m-portlet__head-caption">
+												<div class="m-portlet__head-title">
+													<h3 class="m-portlet__head-text">PREVIOUS EMPLOYMENT</h3>
+												</div>			
+											</div>
+										</div>
+										<div class="m-portlet__body">
+											<table class="table">
+												<div *ngFor="let jobPrevItem of expPrevList">
+													<tr>
+														<th><i class="fa fa-circle" style= "color:#FF6600"></i></th>
+														<th>
+															<div class="font-weight-bold">{{jobPrevItem.Employer}}</div>
+															<div>{{jobPrevItem.Position}}</div>
+															<div>{{jobPrevItem.Start_Date}}</div>
+														</th>
+													</tr>
+												</div>
+											</table>	
+										</div>
+										<div *ngIf="expPrevList.length == 0"></div>
+									</div>	
+									<!--end::Portlet-->
+
+									<!--begin::Portlet-->
+									<div *ngIf="eduList.length" class="m-portlet m-portlet--bordered m-portlet--rounded">
+										<div class="m-portlet__head">
+											<div class="m-portlet__head-caption">
+												<div class="m-portlet__head-title">
+													<h3 class="m-portlet__head-text">EDUCATIONAL BACKGROUND</h3>
+												</div>			
+											</div>
+										</div>
+										<div class="m-portlet__body">
+											<table class="table">
+												<div *ngFor="let eduItem of eduList">
+													<tr>
+														<th><i class="fa fa-graduation-cap" style= "color:#FF6600"></i></th>
+														<th>
+															<div class="font-weight-bold">{{eduItem.Qualification_Desc}}</div>
+															<div>{{eduItem.Start_Date}}</div>
+															<div>{{eduItem.Branch_of_Study}}</div>
+															<div>{{eduItem.University}}</div>
+														</th>
+													</tr>
+												</div>
+											</table>	
+										</div>
+									</div>	
+									<div *ngIf="eduList.length == 0"></div>
+									<!--end::Portlet-->
+
+									<!--begin::Portlet-->
+									<div *ngIf="profCertList.length || awardList.length" class="m-portlet m-portlet--bordered m-portlet--rounded">
+										<div class="m-portlet__head">
+											<div class="m-portlet__head-caption">
+												<div class="m-portlet__head-title">
+													<h3 class="m-portlet__head-text">ACCOMPLISHMENTS</h3>
+												</div>			
+											</div>
+										</div>
+										<div class="m-portlet__body">
+											<table class="table">
+												<div style= "color:#FF6600; font-weight: bold">CERTIFICATIONS</div>
+												<div *ngFor="let profcerItem of profCertList">
+													<tr>
+														<th><i class="fa fa-certificate" style= "color:#FF6600"></i></th>
+														<th>
+															<div class="font-weight-bold">{{profcerItem.Qualification}}</div>
+															<div>{{profcerItem.Start_Date}} - {{profcerItem.End_Date}}</div>
+														</th>
+													</tr>
+												</div>
+											</table>	
+											<div *ngIf="profCertList.length == 0"></div>
+											<table class="table">
+												<div style= "color:#FF6600; font-weight: bold">AWARDS/MERITS</div>
+												<div *ngFor="let accompItem of awardList">
+													<tr>
+														<th><i class="la la-certificate" style= "color:#FF6600"></i></th>
+														<th>
+															<div class="font-weight-bold">{{accompItem.Award}}</div>
+															<div>{{accompItem.Start_Date}}</div>
+														</th>
+													</tr>
+												</div>
+											</table>	
+											<div *ngIf="awardList.length == 0"></div>
+										</div>
+									</div>	
+									<!--end::Portlet-->
+
+									<!--begin::Portlet-->
+									<div class="m-portlet m-portlet--bordered m-portlet--rounded">
+										<div class="m-portlet__head">
+											<div class="m-portlet__head-caption">
+												<div class="m-portlet__head-title">
+													<h3 class="m-portlet__head-text">SKILLS & ENDORSEMENT</h3>
+												</div>			
+											</div>
+										</div>
+										<div class="m-portlet__body">
+											<table class="table">
+												<tr *ngFor="let skillItem of temp; let i=index">
+													<td>
+														<div>
+															<span class="btn btn-light btn-elevate-hover btn-icon" style="color: blue" (click)= "postEndorseFriend(item.friendID, skillItem.id, skillItem.name)">{{skillItem.name}}
+																<span style = "color: #0FC2D0">|</span>
+																<span *ngIf="!skillItem.isLoading && skillItem.endorse === true" style = "color: #0FC2D0">{{skillItem.endorse_point}}</span> 
+																<span *ngIf="!skillItem.isLoading && skillItem.endorse === false" style = "color: #0FC2D0">{{skillItem.endorse_point}}</span> 
+															</span>
+														</div>
+													</td>
+													<td> 
+														<div class="m-widget4__ext">
+															<span *ngIf="item.isMutualFriend === true && item.pendingFriendRequest === false">
+																<span *ngIf="!skillItem.isLoading && skillItem.endorse === false" class="btn m-btn--pill m-btn m-btn--custom m-btn--label-brand m-btn--bolder" style="background-color: #0FC2D0; color: white" (click)="selectEndorse(item.friendID, skillItem.id, i, skillItem.endorse_point)">Endorse</span>
+																<div *ngIf="skillItem.isLoading" class="m-loader m-loader--primary" style="width: 30px; display: inline-block;"></div>
+																<span *ngIf="!skillItem.isLoading && skillItem.endorse === true" class="btn m-btn--pill btn-secondary" style="color:#0FC2D0" (click)="selectDeEndorse(item.friendID, skillItem.id, i, skillItem.endorse_point)">De-Endorse</span>
+															</span>
+														</div>
+													</td>
+												</tr>
+												<div *ngIf="skillList.length == 0">No skill is added yet</div>
+											</table>
+										</div>	
+									</div>
+									<!--end::Portlet-->
+
+									<!--begin::Portlet-->
+									<div class="m-portlet m-portlet--bordered m-portlet--rounded">
+										<div class="m-portlet__head">
+											<div class="m-portlet__head-caption">
+												<div class="m-portlet__head-title">
+													<h3 class="m-portlet__head-text">INTERESTS</h3>
+												</div>			
+											</div>
+										</div>
+										<div class="m-portlet__body">
+											<table class="table">
+												<tr *ngFor="let interestItem of interestList">
+													<td>
+														<span>{{interestItem.name}}</span>
+													</td>
+												</tr>
+												<div *ngIf="interestList.length == 0">No interest is added yet</div>
+											</table>	
+										</div>
+									</div>	
+
+									<!--Supervisor-->
+									<div *ngFor="let profileSpItem of profileList">
+										<div *ngIf= "profileSpItem.supervisor" class="m-portlet m-portlet--bordered m-portlet--rounded">
+											<div class="m-portlet__head">
+												<div class="m-portlet__head-caption">
+													<div class="m-portlet__head-title">
+														<h3 class="m-portlet__head-text">DIRECT SUPERVISOR</h3>
+													</div>			
+												</div>
+											</div>
+											<div class="m-portlet__body">
+												<table class="table">
+													<tr>
+														<td>
+															<div>
+															<img src="{{imgFriendArrList}}/{{profileSpItem.supervisorImage}}?api_key={{apiKeyFriendArrList}}" class="m--img-rounded m--marginless" alt="" height="42" width="42"/>
+															</div>
+														</td>
+														<td>
+															<div style="font-weight:bold">{{profileSpItem.supervisor}}</div>
+															<div>{{profileSpItem.supervisorPosition}}</div>
+														</td>
+														<td>
+															<div>
+																<button type="button" class="btn btn-light btn-elevate-hover btn-icon"><i class="fa fa-chevron-right" style= "color:#FF6600" (click)="staffDetail(profileSpItem.supervisorID, profileSpItem.supervisor)"></i></button>
+															</div>
+														</td>
+													</tr>
+												</table>	
+											</div>
+										</div>
+										<div *ngIf= "profileSpItem.supervisor == null"></div>	
+									</div>
+								</div>
+								<!--end::Details-->
+							</div>
+						</div>
+						<!--end::displayTbl Details-->
+					</div>
+				</div>
+				<!--end section-->
+
+			</div>	
+			<!-- End right column-->
+
+		</div>
+	</div>
+</div>
+<!--end::Portlet-->
+

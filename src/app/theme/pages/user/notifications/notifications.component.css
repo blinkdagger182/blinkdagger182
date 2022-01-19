@@ -1,0 +1,17 @@
+.notifi-bg {
+    background-image: url(./../../../../../assets/img/user/sea-portal/bg-notification.png) !important; 
+    position: relative;
+    height: 20rem; 
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+.appr-modal{
+    font-family: 'helvetica-neue' !important;
+}
+.unreadNoti:before{
+    background: #0FC2D0 !important;
+}
+
+.unreadNoti{
+    background: #bdc3d438 !important;
+}

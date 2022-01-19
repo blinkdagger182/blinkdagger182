@@ -1,0 +1,285 @@
+<div>
+  <div class="page-bg vrp-bg">
+    <h2 class="head-sub-title text-center">{{ word.head_sub_title }}</h2>
+  </div>
+  <div class="pg-title-div">
+    <h3 class="pg-title text-center">{{ word.pg_title }}</h3>
+  </div>
+</div>
+
+
+
+<!--Start:subheadr-->
+<div class="m-subheader" style="background-color: #ffffff">
+  <div class="d-flex align-items-center">
+    <div class="mr-auto">
+      <h3 class="m-subheader__title m-subheader__title--separator">
+        {{ word.h3_subheader }}
+      </h3>
+      <ul class="m-subheader__breadcrumbs m-nav m-nav--inline" *ngIf="!loading">
+        <li class="m-nav__item m-nav__item--home">
+          <a routerLink="/index" class="m-nav__link m-nav__link--icon">
+            <i class="m-nav__link-icon la la-home"></i>
+          </a>
+        </li>
+      </ul>
+    </div>
+    <!--Begin:Language-->
+    <ul class="m-topbar__nav m-nav m-nav--inline d-none">
+      <li
+        class="m-nav__item m-topbar__user-profile m-topbar__user-profile--img"
+        data-toggle="modal"
+        data-target="#langSelect"
+      >
+        <span>
+          <span
+            class="m-topbar__username"
+            style="padding-left: 10px; padding-right: 10px"
+          >
+            {{ word.lang }} :
+          </span>
+          <span class="m-topbar__userpic">
+            <button
+              *ngIf="enChecked"
+              type="button"
+              title="English"
+              data-toggle="m-tooltip"
+              data-placement="top"
+              class="btn m-btn--pill m-btn--air btn-outline-info active btn-sm"
+            >
+              EN
+            </button>
+            <button
+              *ngIf="!enChecked"
+              type="button"
+              title="Malay"
+              data-toggle="m-tooltip"
+              data-placement="top"
+              class="btn m-btn--pill m-btn--air btn-outline-info active btn-sm"
+            >
+              MY
+            </button>
+          </span>
+        </span>
+      </li>
+    </ul>
+    <div
+      class="modal fade"
+      id="langSelect"
+      tabindex="-1"
+      role="dialog"
+      aria-labelledby="exampleModalCenterTitle"
+      style="display: none"
+      aria-hidden="true"
+    >
+      <div
+        class="modal-dialog msg-dialog modal-dialog-centered"
+        role="document"
+        style="max-width: 235px !important; margin: auto !important"
+      >
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 style="text-align: center; font-size: 1.25rem">
+              {{ word.lang }}
+            </h5>
+            <button
+              type="button"
+              id="lang_close"
+              class="close"
+              data-dismiss="modal"
+              aria-label="Close"
+            >
+              <span aria-hidden="true">×</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <div class="m-dropdown__content">
+              <label
+                class="lang-radio m-radio m-radio--solid m-radio--success"
+                style="font-size: 16px"
+              >
+                <input
+                  type="radio"
+                  #en
+                  name="lang"
+                  value="en"
+                  [checked]="enChecked"
+                  (change)="langChange(en)"
+                />
+                &nbsp;&nbsp; English
+                <span style="width: 23px; height: 23px"></span>
+              </label>
+              <br />
+              <label
+                class="lang-radio m-radio m-radio--solid m-radio--success"
+                style="font-size: 16px"
+              >
+                <input
+                  type="radio"
+                  #my
+                  name="lang"
+                  value="my"
+                  [checked]="!enChecked"
+                  (change)="langChange(my)"
+                />
+                &nbsp;&nbsp; Malay
+                <span style="width: 23px; height: 23px"></span>
+              </label>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--End:Language-->
+  </div>
+</div>
+<!--End:subheadr-->
+
+<!--Start:Content-->
+<div class="m-content" style="background-color: #ffffff">
+  
+  <div class="col-lg-12 centred my-auto" *ngIf="loading">
+    <idp-loading></idp-loading>
+  </div>  
+
+  <div *ngIf="!loading&&showVrp">
+    <div class="row">
+      <div class="col-xl-10 mx-auto justify-content-center">
+        <div class="section-title text-center">
+          <h2>{{ word.sec_title_greet }}</h2>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-xl-10 mx-auto justify-content-center">
+      <div class="text-center"><Br>
+        Permohonan anda untuk MESRA 2021 dengan
+        <b>Tarikh Tamat Perkhidmatan</b> pada
+        <b>{{ date_apply | date: 'd' }} {{ convertMonthBM(date_apply) }} {{ date_apply | date: 'yyyy' }}</b>
+        {{ word.content_instruction2 }}
+        <br>
+        <br>
+        {{word.result_instruction}}
+        <br>
+      </div>
+      </div>
+    </div>
+    <div class="row justify-content-center mt-3">
+      <div class="col-md-10">
+      <div class="card">
+        <div class="card-body">
+          <table class="table table-bordered table-striped table-hover">
+            <thead class="bg-info">
+              <tr>
+                <th data-label="NAMA" scope="col">NAMA</th>
+                <th data-label="LOBS/BF/CF" scope="col">LOBS/BF/CF</th>
+                <th data-label="NO TELEFON" scope="col">NO TELEFON</th>
+                <th data-label="EMAIL" scope="col">EMAIL</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <th data-label="NAMA" scope="row">En. Fairos Idros</th>
+                <td data-label="LOBS/BF/CF">HCBD GNT &amp; GITD</td>
+                <td data-label="NO TELEFON">013-3425095</td>
+                <td data-label="EMAIL">fairos@tm.com.my </td>
+              </tr>
+              <tr>
+                <th data-label="NAMA" scope="row">Pn. Alicia Boey Wai Fun</th>
+                <td data-label="LOBS/BF/CF">HCBD Unifi, BIG, CX and TSSSB</td>
+                <td data-label="NO TELEFON">013-3311830</td>
+                <td data-label="EMAIL">aliciab@tm.com.my </td>
+              </tr>
+              <tr>
+                <th data-label="NAMA" scope="row">Pn Najibah Hashim</th>
+                <td data-label="LOBS/BF/CF">HCBD Central &amp; HCBD TM Wholesale</td>
+                <td data-label="NO TELEFON">013-3414417</td>
+                <td data-label="EMAIL">najibah@tm.com.my </td>
+              </tr>
+              <tr>
+                <th data-label="NAMA" scope="row">En Suhaimi Sulong</th>
+                <td data-label="LOBS/BF/CF">HCBD TM ONE / VADS / VADS BPO</td>
+                <td data-label="NO TELEFON">017-2000181</td>
+                <td data-label="EMAIL">suhaimi.sulong@tm.com.my </td>
+              </tr>
+              <tr>
+                <th data-label="NAMA" scope="row">Pn Khairul Haniza Yeop Hashim</th>
+                <td data-label="LOBS/BF/CF">HCBD Support Business / TMFA</td>
+                <td data-label="NO TELEFON">013-3404510</td>
+                <td data-label="EMAIL">haniza@tm.com.my </td>
+              </tr>
+              <tr>
+                <th data-label="NAMA" scope="row">En Zaidi Bin Abd Ghani @ Mukhtar </th>
+                <td data-label="LOBS/BF/CF">HCBD TM R&amp;D</td>
+                <td data-label="NO TELEFON">013-3658120</td>
+                <td data-label="EMAIL">zaidi@tmrnd.com.my </td>
+              </tr>
+              <tr>
+                <th data-label="NAMA" scope="row">Pn Zariah Binti Ahmad</th>
+                <td data-label="LOBS/BF/CF">HCBD webe</td>
+                <td data-label="NO TELEFON">019-3349342</td>
+                <td data-label="EMAIL">zariah.ahmad@webe.com.my </td>
+              </tr>
+              <tr>
+                <th data-label="NAMA" scope="row">En Azhar Omar</th>
+                <td data-label="LOBS/BF/CF">HCBD Central</td>
+                <td data-label="NO TELEFON">011-10010315</td>
+                <td data-label="EMAIL">azharo@tm.com.my </td>
+              </tr>
+              <tr>
+                <th data-label="NAMA" scope="row">En Mohd Aisha Jaafar</th>
+                <td data-label="LOBS/BF/CF">HCBD Northern</td>
+                <td data-label="NO TELEFON">013-4200377</td>
+                <td data-label="EMAIL">mdaisha@tm.com.my </td>
+              </tr>
+              <tr>
+                <th data-label="NAMA" scope="row">En Mohamad Zainuddin Ahmad </th>
+                <td data-label="LOBS/BF/CF">HCBD Southern</td>
+                <td data-label="NO TELEFON">013-3644599</td>
+                <td data-label="EMAIL">zainudin@tmrnd.com.my </td>
+              </tr>
+              <tr>
+                <th data-label="NAMA" scope="row">En Rosli Ismail </th>
+                <td data-label="LOBS/BF/CF">HCBD Eastern</td>
+                <td data-label="NO TELEFON">013-3364464</td>
+                <td data-label="EMAIL">rismail@tm.com.my </td>
+              </tr>
+              <tr>
+                <th data-label="NAMA" scope="row">En Mohamad Zaidell Hj Mohamad Abdullah </th>
+                <td data-label="LOBS/BF/CF">HCBD Sarawak</td>
+                <td data-label="NO TELEFON">019-6961188</td>
+                <td data-label="EMAIL">zaidell@tm.com.my </td>
+              </tr>
+              <tr>
+                <th data-label="NAMA" scope="row">En Syuhaili Bin A Hamid </th>
+                <td data-label="LOBS/BF/CF">HCBD Sabah</td>
+                <td data-label="NO TELEFON">011-10006105</td>
+                <td data-label="EMAIL">syuhaili@tm.com.my</td>
+              </tr>
+              <tr>
+                <th data-label="NAMA" scope="row">Pn Sarina Sarif</th>
+                <td data-label="LOBS/BF/CF">HCBD TMIM</td>
+                <td data-label="NO TELEFON">012-2398488</td>
+                <td data-label="EMAIL">sarina.msarif@tm.com.my </td>
+              </tr>
+              <tr>
+                <th data-label="NAMA" scope="row">Norhajamiah Binti Mohd Hanafiah </th>
+                <td data-label="LOBS/BF/CF">HCBD GITN</td>
+                <td data-label="NO TELEFON">013-3838833</td>
+                <td data-label="EMAIL">haja@gitn.com.my </td>
+              </tr>
+              <tr>
+                <th data-label="NAMA" scope="row">Siti Rohani Binti Yatim Bahari </th>
+                <td data-label="LOBS/BF/CF">HCBD TAB</td>
+                <td data-label="NO TELEFON">013-2655971</td>
+                <td data-label="EMAIL">rohani@tab.com.my </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+  <!--End:Content-->
+</div>

@@ -1,0 +1,8 @@
+[{
+	"relation": ["delegate_permission/common.handle_all_urls"],
+	"target" : {
+		"namespace": "android_app",
+		"package_name": "my.com.tmrnd.ghcm",
+		"sha256_cert_fingerprints": ["c9:85:f4:9e:81:f0:96:20:bd:27:2b:b9:fd:c8:8b:11:91:8d:64:3a:29:84:c6:6a:46:e8:0a:fb:d4:64:3d:d8"]
+	}
+}]

@@ -1,0 +1,85 @@
+.normalUser{
+    background-image: url('../../../../../assets/img/user/under-construction.png');
+    width:594px;
+    height:289px;
+    background-repeat:no-repeat;
+    background-position: center center;
+}
+
+.pleaseDw{
+    background-color:#f05a22;
+    border-radius: 28px;
+    text-transform:uppercase;
+    color:#FFFFFF;
+    padding:15px;
+    margin:20px;
+    font-size: 1.2em;
+    width:400; 
+    text-align: center;
+}
+
+.dllink{
+    background-color:#ffffff00;
+    border-radius: 28px;
+    color:#FFFFFF;
+    font-size: 1.2em;
+    width: 50%;
+    text-align: center;
+    position: center;
+} 
+
+.btn-download {
+    color: #fff;
+    background-color: #f05a22;
+    border-color: #f05a22; }
+    .btn-download:hover {
+      color: #fff;
+      background-color: #f05a22;
+      border-color: #f05a22; }
+    .btn-download:focus, .btn-download.focus {
+      box-shadow: 0 0 0 0.2rem rgba(54, 52, 55, 0.5); }
+    .btn-download.disabled, .btn-download:disabled {
+      color: #fff;
+      background-color: #f05a22;
+      border-color: #f05a22; }
+    .btn-download:not(:disabled):not(.disabled):active, .btn-download:not(:disabled):not(.disabled).active,
+    .show > .btn-download.dropdown-toggle {
+      color: #fff;
+      background-color: #f05a22;
+      border-color: #f05a22; }
+      .btn-download:not(:disabled):not(.disabled):active:focus, .btn-download:not(:disabled):not(.disabled).active:focus,
+      .show > .btn-download.dropdown-toggle:focus {
+        box-shadow: 0 0 0 0.2rem rgba(54, 52, 55, 0.5); }
+
+
+
+.dwAndroid, .dwIos{
+    
+    width:440px;
+    height:276px;
+    background-repeat:no-repeat;
+    background-position: center center;
+}
+
+.bg1, .bg2, .bg3{
+    background-repeat:no-repeat;
+    background-size: cover;
+}
+
+.dwAndroid{ 
+    background-image: url('../../../../../assets/img/user/QR_Code_icon.png');
+} 
+
+.dwIos{
+    background-image: url('../../../../../assets/img/user/QR_iOS_icon.png');
+}
+
+.bg1{
+    background-image: url('../../../../../assets/app/media/img/logos/background-1.png');
+}
+.bg2{
+    background-image: url('../../../../../assets/app/media/img/logos/background-2.png');
+}
+.bg3{
+    background-image: url('../../../../../assets/app/media/img/logos/background-3.png');
+}
