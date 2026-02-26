@@ -7,8 +7,8 @@
   <a href="https://riskstudios.my" target="_blank">
     <img src="https://img.shields.io/badge/Portfolio-riskstudios.my-0f172a?style=for-the-badge&logo=googlechrome&logoColor=white" alt="Portfolio" />
   </a>
-  <a href="https://cln.it.app" target="_blank">
-    <img src="https://img.shields.io/badge/Product-cln.it.app-0b7285?style=for-the-badge&logo=rocket&logoColor=white" alt="CLN" />
+  <a href="https://cln.it.com/" target="_blank">
+    <img src="https://img.shields.io/badge/Product-cln.it.com-0b7285?style=for-the-badge&logo=rocket&logoColor=white" alt="CLN" />
   </a>
   <a href="mailto:rizhanruslan@gmail.com">
     <img src="https://img.shields.io/badge/Email-Contact_Me-334155?style=for-the-badge&logo=gmail&logoColor=white" alt="Email" />
@@ -22,7 +22,7 @@
 
 ## Featured Websites
 - `riskstudios.my` - Portfolio and studio presence.
-- `cln.it.app` - Product website for CLN.
+- `cln.it.com` - Product website for CLN.
 
 ## Tech Stack
 <p>
@@ -47,6 +47,6 @@
 
 ## Connect
 - Portfolio: https://riskstudios.my
-- Product: https://cln.it.app
+- Product: https://cln.it.com/
 - LinkedIn: https://www.linkedin.com/in/azhanrizhan/
 - Email: rizhanruslan@gmail.com
