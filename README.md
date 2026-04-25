@@ -7,7 +7,7 @@
   <a href="https://riskstudios.my" target="_blank">
     <img src="https://img.shields.io/badge/Portfolio-riskstudios.my-0f172a?style=for-the-badge&logo=googlechrome&logoColor=white" alt="Portfolio" />
   </a>
-  <a href="https://cln.it.com/" target="_blank">
+  <a href="https://getwaktu.app/" target="_blank">
     <img src="https://img.shields.io/badge/Product-cln.it.com-0b7285?style=for-the-badge&logo=rocket&logoColor=white" alt="CLN" />
   </a>
   <a href="mailto:rizhanruslan@gmail.com">
@@ -22,7 +22,7 @@
 
 ## Featured Websites
 - `riskstudios.my` - Portfolio and studio presence.
-- `cln.it.com` - Product website for CLN.
+- `getwaktu.app` - Product website for Waktu.
 
 ## Tech Stack
 <p>
@@ -46,7 +46,6 @@
 - Building useful tools with measurable impact.
 
 ## Connect
-- Portfolio: https://riskstudios.my
-- Product: https://cln.it.com/
+- Product: https://getwaktu.app
 - LinkedIn: https://www.linkedin.com/in/azhanrizhan/
 - Email: rizhanruslan@gmail.com
